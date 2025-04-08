@@ -1,0 +1,25 @@
+
+<div class="stage-details">
+  <div class="stage_details_container1">
+  <h2>Stage à {{ stage!.city }}</h2>
+    <hr><br/>
+  <p>📍{{ stage!.street }}</p>
+  <p>{{ stage!.arrondissement }} arrondissement</p>
+    <p>📆 Le {{ stage?.dateDeStage | date:'d MMMM yyyy':'fr' }}</p>
+    <p>💰{{ stage!.price }}€/personne</p>
+  </div>
+  <div>
+    <img style="height:402px" src="/ruebordeaux.png"/>
+  </div>
+  <div id="infos-stage-details">
+    <ul>
+      <p>✓ Engagement ACF</p>
+      <p>✓ Organisme local et agrée</p>
+      <p>✓ Paiement des stages par carte bancaire et chèque</p>
+      <p>✓ Remboursement simple et rapide</p>
+    </ul>
+    Infos et renseignements
+    02 98 26 10 52
+  </div>
+</div>
+

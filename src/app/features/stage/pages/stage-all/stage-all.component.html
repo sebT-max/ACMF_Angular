@@ -1,0 +1,38 @@
+<div class="margin_top_130"></div>
+<h1>Choisissez votre stage
+<input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" id="city_filter" placeholder="Rechercher par ville">
+</h1>
+<div class="card-container">
+  @for (stage of stages; track stage.id) {
+    <div class="card_stages">
+
+      <div class="card_stages_date">
+        {{ stage?.dateDeStage | date:'d MMMM yyyy':'fr' }}
+      </div>
+
+      <div class="card_stages_all_datas">
+        <h2>{{ stage.city }}</h2>
+        <hr>
+        <p>{{ stage!.arrondissement }} arrondissement: </p>
+        <p>Accès: {{ stage.price }}€/personne</p>
+      </div>
+<div style="float:right;">
+      <!-- Bouton Détails pour afficher les informations -->
+      <button class="details_button" (click)="selectStage(stage)">
+        {{ selectedStage?.id === stage.id ? 'Fermer' : 'Détails' }}
+      </button>
+  <br/>
+  <br/>
+
+      <!-- Bouton "Je m'inscris" -->
+      <button class="inscription_button" [routerLink]="['/inscriptions/create',stage.id]" >Je m'inscris</button>
+</div>
+</div>
+
+    <!-- Affichage des détails en dehors de la carte, sous la carte sélectionnée -->
+    <div *ngIf="selectedStage?.id === stage.id">
+      <app-stage-details [stage]="selectedStage" (close)="closeDetails()"></app-stage-details>
+    </div>
+  }
+</div>
+

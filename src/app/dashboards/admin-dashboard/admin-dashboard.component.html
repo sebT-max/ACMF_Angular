@@ -1,0 +1,185 @@
+<div class="dashboard_client">
+  <h1>Bienvenue sur votre espace admin</h1>
+
+  <div class="tabs">
+    <button
+      (click)="activeTab = 'inscriptions'"
+      [class.active]="activeTab === 'inscriptions'"
+    >
+      Inscriptions
+    </button>
+
+    <button
+      (click)="activeTab = 'stages'"
+      [class.active]="activeTab === 'stages'"
+    >
+      Stages
+    </button>
+    <button
+      (click)="activeTab = 'codePromo'"
+      [class.active]="activeTab === 'codePromo'"
+    >
+      Code Promo
+    </button>
+
+    <button
+      (click)="activeTab = 'demandeDevisAll'"
+      [class.active]="activeTab === 'demandeDevisAll'"
+    >
+      Demandes de Devis
+    </button>
+  </div>
+
+  <div *ngIf="activeTab === 'inscriptions'" class="tab-content">
+  <h2>Inscriptions</h2>
+  @if (inscriptions.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Personnes inscrites</th>
+        <th>Adresse du stage</th>
+        <th>Type de stage</th>
+        <th>Statut</th>
+        <th>Documents</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(inscription of inscriptions;track inscription.id){
+      <tr>
+        <td style="text-align:left;">
+          {{inscription.user?.lastname}}
+          {{inscription.user?.firstname}}<br>
+          <strong>Email:{{inscription.user?.email}}</strong>
+          </td>
+        <td>
+          <div style="text-align:left;" *ngIf="inscription.stage; else loading">
+            <strong>Ville :</strong> {{ inscription.stage.city }} <br>
+            <strong>Rue :</strong> {{ inscription.stage.street }} <br>
+          </div>
+          <ng-template #loading>
+            <span>Chargement...</span>
+          </ng-template>
+        </td>
+        <td>{{ inscription.stageType }}</td>
+          <td>{{ inscription.inscriptionStatut }}</td>
+
+        <td>
+          <button class="text-primary" *ngIf="inscription.lettrePdf" (click)="viewFile(inscription.lettrePdf)">Voir la lettre</button>
+        </td>
+
+        <td>
+          <button
+            (click)="onDeleteInscription(inscription.id)"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+          >
+           <!-- <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-1 w-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>-->
+            <i class="fas fa-trash-alt"></i>
+            Supprimer
+          </button>
+          <!--<button
+            (click)="editInscription(inscription.id)"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+          >
+            <i class="fas fa-edit"></i>
+          </button>-->
+          <br>
+          <button
+            *ngIf="inscription.inscriptionStatut === 'EN_ATTENTE'"
+            (click)="validerInscription(inscription.id)"
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+          >
+            <i class="fas fa-check"></i> Valider
+          </button>
+        </td>
+      </tr>
+        }
+    </tbody>
+  </table>
+  }
+  @else{
+
+  <ng-template #noInscriptions>
+    <p>Aucune inscription trouvée.</p>
+  </ng-template>
+  }
+  </div>
+
+  <div *ngIf="activeTab === 'stages'" class="tab-content">
+    <h2>Stages</h2>
+    <button [routerLink]="['/stages/create']" style="float:right;color:white;font-size:20px;"> + Créer un stage</button>
+  @if (stages.length > 0) {
+    <table>
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Détails</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        @for(stage of stages;track stage.id){
+          <tr>
+          <td>
+            {{ stage?.dateDeStage | date:'d MMMM yyyy':'fr' }}
+          </td>
+          <td>
+            <div style="text-align:left;">
+              <strong>Ville :</strong> {{ stage.city }} <br>
+              <strong>Arrondissement :</strong> {{ stage.arrondissement }} <br>
+              <strong>Rue :</strong> {{ stage.street }} <br>
+            </div>
+            <ng-template #loading>
+              <span>Chargement...</span>
+            </ng-template>
+          </td>
+
+          <td>
+            <button
+              (click)="onDeleteStage(stage.id)"
+              class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Supprimer
+            </button>
+          </td>
+      </tr>
+        }
+      </tbody>
+    </table>
+  }
+  @else{
+    <ng-template #noInscriptions>
+      <p>Aucune inscription trouvée.</p>
+    </ng-template>
+  }
+</div>
+
+  <div *ngIf="activeTab === 'codePromo'" class="tab-content">
+    <h2>Code Promo</h2>
+    <app-code-promo-create></app-code-promo-create>
+  </div>
+
+  <div *ngIf="activeTab === 'demandeDevisAll'" class="tab-content">
+    <app-demande-devis-all></app-demande-devis-all>
+    <div>
+</div>

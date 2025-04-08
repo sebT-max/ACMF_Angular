@@ -1,0 +1,32 @@
+.dashboard_client{
+  width:80%;
+  margin:0 auto;
+  padding:20px;
+  h1{
+    background: rgba(0, 0, 0, 0.37);
+  }
+  h2{
+    text-align: center;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.37);
+    color: white;
+  }
+  td{
+    text-align: center;
+    margin-top:20px;
+    height:20px;
+    padding:20px;
+  }
+  th{
+    padding:20px;
+  }
+  button{
+    border:none;
+    background:transparent;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:0 auto;
+  }
+}

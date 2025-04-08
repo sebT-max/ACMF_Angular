@@ -1,0 +1,36 @@
+<div class="miseEnPage">
+  @if(userResponseModel){
+    <h2>C'est moi 😜 :</h2>
+    <ul>
+      <li>
+        id : {{userResponseModel.id}}
+      </li>
+      <li>
+        Nom : {{userResponseModel.lastname}}
+      </li>
+      <li>
+        Prénom : {{userResponseModel.firstname}}
+      </li>
+      <li>
+        Prénom : {{userResponseModel.email}}
+      </li>
+      <li>
+        Role :
+        <ul>
+          <li>
+            id du rôle : {{userResponseModel.role.id}}
+          </li>
+          <li>
+            Nom du rôle : {{userResponseModel.role.name}}
+          </li>
+          <li>
+            Description de se dernier : {{userResponseModel.role.description}}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  } @else {
+    <p>En Attente....</p>
+  }
+
+</div>

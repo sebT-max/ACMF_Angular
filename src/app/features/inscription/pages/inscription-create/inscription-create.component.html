@@ -1,0 +1,36 @@
+<div class="inscription-continer">
+  <!-- Formulaire d'inscription -->
+  <div>
+
+
+
+
+  <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
+      <label for="stageType">Type de Stage</label>
+      <select id="stageType" formControlName="stageType">
+        <option value="" disabled selected>Sélectionner un type de stage</option>
+        <option *ngFor="let type of stageTypes" [value]="type.value">
+          {{ type.label }}
+        </option>
+      </select>
+
+    <label for="lettre_48N">Chargez la lettre 48N</label>
+
+      <input type="file" id="lettre_48N" class="form-control" (change)="onFileChange($event)" accept="application/pdf">
+      <small class="form-text text-muted">Format accepté : PDF uniquement</small>
+    <button type="submit" [disabled]="inscriptionCreationForm.invalid">S'inscrire</button>
+  </form>
+  </div>
+
+
+  <!-- Détails du stage -->
+  <div class="stage-details" *ngIf="stageDetails">
+    <h2>Stage à {{ stageDetails.city }}</h2>
+    <hr>
+    <p>📍Adresse: {{ stageDetails.street }}</p>
+    <p>{{ stageDetails.arrondissement }} arrondissement</p>
+    <p>📆 Le {{ stageDetails?.dateDeStage | date:'d MMMM yyyy':'fr' }}</p>
+    <p>Organisation: {{ stageDetails.organisation }}</p>
+    <p>💰Prix: {{ stageDetails.price }}€/personne</p>
+  </div>
+</div>

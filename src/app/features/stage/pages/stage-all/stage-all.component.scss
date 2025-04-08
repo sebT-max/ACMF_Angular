@@ -1,0 +1,91 @@
+.card_stages{
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(270deg, #292c32ba, #242b34e6, #292c32);
+  border-radius: 15px 15px 0px 0px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 80%;
+  color: #fff;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover{
+    border:2px solid white;
+  }
+}
+.inscription_button{
+  background-color: #f8a633;
+  width: 200px;
+  font-size: 23px;
+  align-items: center;
+  background-color: #f8a633;
+  border: 1px solid white;
+  color: #2d333b;
+  padding: 10px;
+  border-radius: 3px;
+}
+.details_button{
+  width: 200px;
+  font-size: 23px;
+  align-items: center;
+  background-color: #e0e4e9;
+  border: 1px solid white;
+  color: #2d333b;
+  padding: 10px;
+  border-radius: 3px;
+}
+.close_button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 16px;
+  cursor: pointer;
+  height: 100px;
+  align-items: center;
+  font-size: 24px;
+  margin-top: 24px;
+  border-radius: 4px;
+}
+
+.close_button:hover {
+  background-color: darkred;
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.card_stages {
+  border: 1px solid #ccc;
+  padding: 20px;
+  font-size:20px;
+  margin:0 auto;
+}
+
+h1{
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.card_stages_date{
+  height: 100px;
+  border: 1px solid #ccc;
+  align-items: baseline;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+.card_stages_all_datas{
+  width:80%;
+  padding:20px;
+}
+
+#city_filter{
+  padding: 10px;
+  border-radius: 10px;
+  width:100%;
+}
+
+
+

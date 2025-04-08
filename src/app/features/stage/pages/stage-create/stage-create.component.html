@@ -1,0 +1,42 @@
+<div class="margin_top_130"></div>
+<h1>Créer un stage</h1>
+
+<form [formGroup]="stageCreationForm" id="stage_creation_form" (ngSubmit)="handleStageCreation()">
+  <div>
+    <label for="dateDeStage"></label>
+    <input id="dateDeStage" type="date" placeholder="Date de stage" formControlName="dateDeStage" required>
+  </div>
+  <div>
+    <label for="price"></label>
+    <input id="price" type="number" placeholder="prix" formControlName="price" required>
+  </div>
+
+  <div>
+    <label for="city"></label>
+    <input id="city" type="text" placeholder="Ville" formControlName="city" required>
+  </div>
+
+  <div>
+    <label for="street"></label>
+    <input id="street" type="text" placeholder="Rue" formControlName="street" required>
+  </div>
+
+  <div>
+    <label for="arrondissement"></label>
+    <input id="arrondissement" type="text" placeholder="Arrondissement" formControlName="arrondissement" required>
+  </div>
+
+  <div>
+    <label for="capacity"></label>
+    <input id="capacity" type="text" placeholder="Capacité" formControlName="capacity" required>
+  </div>
+
+  <div>
+    <label for="organisation"></label>
+    <input id="organisation" type="text" placeholder="organisation" formControlName="organisation" required>
+  </div>
+
+  <button type="submit">Créer stage</button>
+</form>
+<div class="see_all_button"><a  routerLink="/stages/all"> > Voir tous les stages</a></div>
+

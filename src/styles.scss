@@ -1,0 +1,270 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yesteryear&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-image: url('/banner_acf3.jpg');
+  font-family: 'Montserrat', sans-serif;
+  padding-top: 130px;
+
+}
+html {
+  scroll-behavior: smooth;
+}
+
+form{
+  width: 60%;
+  padding: 20px;
+  margin: 0px auto;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.16);
+}
+form label{
+  text-transform:uppercase;
+  margin:30px 10px 10px 0px;
+  background:transparent
+}
+form div {
+  margin:0 auto;
+  color:white;
+  display:flex;
+  flex-direction: column;
+  width:30%;
+}
+
+form input,select{
+  width:100%;
+  padding:10px;
+  font-size: 20px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 3px;
+  border: none;
+  &:hover{
+    background:white;
+  }
+}
+form textarea{
+  min-height:60px;
+}
+
+
+form button{
+  padding:20px;
+  margin:20px;
+  background: #e61616;
+  color:white;
+}
+
+button a{
+  text-decoration: none;
+  color:white;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+table{
+  h2{
+    margin:30px 0;
+  }
+  width:100%;
+  background:white;
+  font-size:20px;
+  border-radius:0px 0px 10px 10px;
+  thead{
+    background:white;
+  }
+  tr{
+
+  }
+  th{
+    background:white;
+  }
+  td{
+
+  }
+}
+
+table tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.flexCenter{
+  width:100%;
+  margin:0 auto;
+  padding:20px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1{
+  text-align:center;
+  color:white;
+  width:52%;
+  padding:10px;
+  margin:0 auto;
+  border:3px solid white;
+  margin-bottom: 40px;
+  border-radius: 10px;
+}
+
+.text-primary {
+  color: #007bff;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.back_button {
+  padding: 20px;
+  font-size: 18px;
+  background: #160f35;
+  opacity: 0.8;
+  border:1px solid black;
+}
+
+.back_button:hover {
+  background: #160f35;
+  opacity: 1;
+  border:1px solid whitesmoke;
+}
+
+.see_all_button {
+  margin: 0 auto;
+  width:30%;
+  background: rgba(0, 0, 0, 0.1215686275);
+  text-align:center;
+  border:3px solid white;
+  padding:10px;
+  margin-top:20px;
+  a{
+    color:white;
+    text-decoration: none;
+  }
+}
+
+.yesteryear-regular {
+  font-family: "Yesteryear", cursive;
+  font-weight: 400;
+  font-style: italic;
+}
+
+//CARDS
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  a{
+    text-decoration: none;
+  }
+}
+
+.card {
+  background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 300px;
+  color: #fff;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  h2 {
+    margin-bottom: 10px;
+    font-size: 1.8em;
+    height: 67px;
+  }
+  img{
+    height: 250px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+  }
+  button{
+    background: #d61b33e6;
+    padding: 16px;
+    margin-top: 25px;
+    border-radius: 5px;
+    font-size: 15px;
+    &:hover{
+      background: red;
+    }
+    .btn_register{
+      color:black;
+    }
+  }
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+}
+
+.index_img{
+  width:220px;
+  margin:8px 0px;
+  border-radius:10px;
+}
+
+.bg_white{
+  background:white;
+
+}
+
+.btn_register{
+  color:black;
+}
+.btn_login{
+  color:black;
+}
+
+.margin_top_130{
+  margin-top:130px;
+}
+#infos-stage-details{
+  background-color: #f8a733;
+  color: #383f4e;
+  padding: 28px;
+  line-height: 30px;
+  border-radius: 0px;
+}
+
+
+
+
+
+
+

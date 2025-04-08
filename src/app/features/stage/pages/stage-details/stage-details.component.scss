@@ -1,0 +1,69 @@
+.close_button {
+  color: #383f4e;
+  border: none;
+  padding: 16px;
+  cursor: pointer;
+  height: 100px;
+  align-items: center;
+  font-size: 24px;
+  margin-top: 24px;
+  border-radius: 4px;
+}
+
+.close_button:hover {
+  background-color: darkred;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.app-stage-details {
+  margin-top: 0px; /* Espacement entre la carte et les détails */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+.stage-details{
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.1215686275), #12aed0);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  width: 80%;
+  color: #fff;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 1s ease;
+  margin: 0 auto;
+}
+
+.stage_details_container1{
+  border: 1px solid white;
+  padding: 20px;
+  background: white;
+  color: #292c32;
+  line-height: 45px;
+  height: 402px;
+  width: 30%;;
+  hr{
+    height:5px;
+    background: #9c7d2c;
+    margin-top:2px;
+  }
+  p{
+    margin-top:2px;
+  }
+}
+#infos-stage-details{
+  background-color: #f8a733;
+  color: rgb(56 63 78);
+  padding: 54px 30px;
+  line-height: 39px;
+  height: 402px;
+  width: 38%;
+}
+

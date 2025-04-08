@@ -1,0 +1,32 @@
+.inscription-continer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top:250px;
+}
+
+.stage-details {
+  background: #383f4e;
+  padding: 30px;
+  border-radius: 8px;
+  font-size: 20px;
+  line-height: 59px;
+  color: white;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width:100%;
+}
+
+#inscription_form{
+
+}
+.file-input {
+  display: none;
+}
+form input:hover{
+  background: rgba(0, 0, 0, 0.37);
+}

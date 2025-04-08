@@ -1,0 +1,171 @@
+.home_container{
+  padding: 80px;
+  width: 90%;
+  background: rgba(0, 0, 0, 0.37);
+  margin: 0 auto;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  div{
+    padding: 0px 0px;
+    font-size: 16px;
+    line-height: 34px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  p,ul,li{
+    padding: 10px 0px;
+    font-size: 24px;
+    line-height: 66px;
+    text-align:center;
+    margin:40px;
+    }
+  h1{
+    background: rgba(0, 0, 0, 0.16);
+    text-align: center;
+    height: auto;
+    padding: 36px 160px;
+  }
+h2,h3,h4{
+  font-size:24px;
+  background: rgba(0, 0, 0, 0.16);
+  text-align: center;
+  height: auto;
+  padding: 10px 0px;
+}
+h4{
+  margin:40px;
+  background: rgba(0, 0, 0, 0);
+  font-size:30px;
+  }
+}
+
+.planet-icons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+
+div {
+  text-align: center;
+  margin:20px 30px;
+}
+
+img{
+  margin:0px;
+}
+p{
+  color:white;
+  font-size:36px;
+  }
+}
+
+.text-red {
+  color: #ff4d4d;
+}
+
+.text-yellow {
+  color: #ffcc00;
+}
+
+.text-lightblue {
+  color: #80dfff;
+}
+.home_journeys_catalogue{
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.37);
+  hr{
+    width:50%;
+    background-color: #ffb606;
+    height:2px;
+    margin:0 auto;
+    margin-bottom:20px;
+  }
+  p{
+    color:white;
+    font-size:36px;
+    text-transform: uppercase;
+    font-style:italic;
+    text-align:center;
+    margin:10px;
+  }
+}
+
+.journey_catalogue_button{
+  font-size: 16px;
+  padding: 24px;
+  text-transform: uppercase;
+  border: 5px double whitesmoke;
+  width: auto;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  background: rgba(0, 0, 0, 0.1215686275);
+&:hover{
+  background: rgba(0, 0, 0, 0.37);
+  }
+}
+
+#main_title{
+  background:transparent;
+  width:100%;
+  text-align:center;
+  font-size:80px;
+  transform: rotate(-10deg);
+  display: inline-block;
+  border:none;
+}
+
+.booking_button {
+  width: 30%;
+  background: rgba(0, 0, 0, 0.1215686275);
+  color: white;
+  font-size: 30px;
+  border: 3px solid whitesmoke;
+
+&:hover {
+  background: rgba(0, 0, 0, 0.37);
+  border: 3px solid white;
+  }
+}
+
+#infos-home-aside{
+  background-color: #f8a733;
+  color: #383f4e;
+  line-height: 30px;
+  text-align:left;
+  width:60%;
+  p{
+    margin:20px;
+  }
+}
+
+#home_contact_datas{
+  padding:20px;
+  width:90%;
+  text-align:center;
+  margin:0 auto;
+  margin-bottom:20px;
+  h2{
+    background:transparent;
+    border:1px solid white;
+    margin-bottom:20px;
+  }
+}
+.call_to_register_home_bottom_container{
+  background: #292c32;
+  padding: 20px 20%;
+  color: white;
+
+
+
+  button{
+    color:white;
+  }
+}
+
+.call_to_register_home_bottom_container_button{
+  display:flex;
+  justify-content: center;
+}

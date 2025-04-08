@@ -1,0 +1,52 @@
+<form [formGroup]="companyRegisterForm" id="company_register_form" (ngSubmit)="handleCompagnyRegisterFormSubmit()">
+  <h1>Inscription de votre entreprise</h1>
+
+  <!-- Nom de l'entreprise -->
+  <div>
+    <label for="name">Nom de l'entreprise</label>
+    <input id="name" name="companyName" type="text" placeholder="Nom de l'entreprise" formControlName="name" required />
+    <div *ngIf="companyRegisterForm.get('name')?.invalid && companyRegisterForm.get('name')?.touched" class="error-message">
+      Le nom de l'entreprise est requis.
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" placeholder="email" formControlName="email" required />
+    <div *ngIf="companyRegisterForm.get('email')?.invalid && companyRegisterForm.get('email')?.touched" class="error-message">
+      <span *ngIf="companyRegisterForm.get('email')?.errors?.['required']">L'email est requis.</span>
+      <span *ngIf="companyRegisterForm.get('email')?.errors?.['email']">L'email n'est pas valide.</span>
+    </div>
+  </div>
+
+  <!-- Mot de passe -->
+  <div>
+    <label for="password">Mot de passe</label>
+    <input id="password" name="password" type="password" placeholder="Mot de passe" formControlName="password" required />
+    <div *ngIf="companyRegisterForm.get('password')?.invalid && companyRegisterForm.get('password')?.touched" class="error-message">
+      <span *ngIf="companyRegisterForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
+      <span *ngIf="companyRegisterForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
+    </div>
+  </div>
+
+  <!-- Téléphone -->
+  <div>
+    <label for="telephone">Contact</label>
+    <input id="telephone" name="telephone" type="text" placeholder="n° téléphone" formControlName="telephone" required />
+    <div *ngIf="companyRegisterForm.get('telephone')?.invalid && companyRegisterForm.get('telephone')?.touched" class="error-message">
+      Le contact est requis.
+    </div>
+  </div>
+
+  <!-- Acceptation des termes -->
+  <div class="flexCenter" style="margin-top: 20px;">
+    <input id="acceptTerms" name="acceptTerms" type="checkbox" formControlName="acceptTerms" required />
+    <span><br />Je suis d'accord avec les conditions RGPD</span>
+  </div>
+
+  <!-- Affichage du message d'erreur (ex: email déjà utilisé) -->
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+  <button type="submit" [disabled]="companyRegisterForm.invalid">S'enregistrer</button>
+</form>

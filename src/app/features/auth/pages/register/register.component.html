@@ -1,0 +1,38 @@
+<form [formGroup]="registerForm"  id="register_form" (ngSubmit)="handleRegisterFormSubmit()">
+  <div>
+  <label for="lastname">Nom : </label>
+  <input id="lastname" name="lastname" type="text" placeholder="Nom" formControlName="lastname" />
+    </div>
+    <div>
+  <label for="firstname">Prénom</label>
+  <input id="firstname" name="firstname" type="text" placeholder="Prénom" formControlName="firstname" required />
+    </div>
+  <div>
+  <label for="email">email</label>
+  <input id="email" name="email" type="email" placeholder="email" formControlName="email" required />
+  </div>
+    <div>
+    <label for="password">Mot de passe</label>
+  <input id="password" name="password" type="password" placeholder="Mot de passe" formControlName="password" required />
+    </div>
+  <div>
+    <label for="birthDate">Date de naissance</label>
+   <input id="birthDate" name="birthDate" type="date" placeholder="Date de naissance" formControlName="birthDate" required />
+  </div>
+  <div>
+    <label for="telephone">Contact</label>
+    <input id="telephone" name="telephone" type="string" placeholder="Téléphone" formControlName="telephone" required />
+  </div>
+  <div class="flexCenter" style="margin-top:20px;">
+    <input
+      id="acceptTerms"
+      name="acceptTerms"
+      type="checkbox"
+      formControlName="acceptTerms"
+      required
+    />
+    <span> <br/>Je suis d'accord avec les conditions RGPD</span>
+  </div>
+
+  <button type="submit">S'enregistrer</button>
+</form>

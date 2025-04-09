@@ -6,6 +6,7 @@ import {StageDetailsModel} from '../../features/stage/models/stage-details-model
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {DemandeDevisComponent} from '../../features/demande-devis/pages/demande-devis-create/demande-devis.component';
 import {Router} from '@angular/router';
+import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -14,7 +15,8 @@ import {Router} from '@angular/router';
     DatePipe,
     NgForOf,
     NgIf,
-    DemandeDevisComponent
+    DemandeDevisComponent,
+    InscriptionStatutPipe
   ],
   templateUrl: './company-dashboard.component.html',
   styleUrl: './company-dashboard.component.scss'

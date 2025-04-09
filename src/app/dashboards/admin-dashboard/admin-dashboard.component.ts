@@ -11,6 +11,7 @@ import {DemandeDevisComponent} from '../../features/demande-devis/pages/demande-
 import {
   DemandeDevisAllComponent
 } from '../../features/demande-devis/pages/demande-devis-all/demande-devis-all.component';
+import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,7 +23,8 @@ import {
     NgClass,
     CodePromoCreateComponent,
     DemandeDevisComponent,
-    DemandeDevisAllComponent
+    DemandeDevisAllComponent,
+    InscriptionStatutPipe
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'

@@ -6,13 +6,15 @@ import {InscriptionService} from '../../features/inscription/inscription-service
 import {InscriptionFormModel} from '../../features/inscription/models/inscription-form.model';
 import {CommonModule, DatePipe, NgClass} from '@angular/common';
 import {TokenModel} from '../../features/auth/models/token.model';
+import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 
 @Component({
   selector: 'app-client-dashboard',
   imports: [
     NgClass,
     DatePipe,
-    CommonModule
+    CommonModule,
+    InscriptionStatutPipe
   ],
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.scss'

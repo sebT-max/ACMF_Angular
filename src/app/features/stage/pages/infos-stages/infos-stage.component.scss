@@ -2,13 +2,18 @@
   background: #d8dcde;
   padding: 125px 40px;
   line-height: 32px;
-  ol{
+
+  ul{
     margin:10px;
     padding:20px;
 
   }
-  ul{
-    padding:20px;
+  ol{
+    padding: 40px;
+    float: right;
+    color: blue;
+    background: #f8a733;
+    border-radius: 10px;
 
   }
   li{

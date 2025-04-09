@@ -35,7 +35,7 @@ header {
 
 #logo_acf{
   width: auto;
-  font-size: 80px;
+  font-size: 56px;
   border: 1px solid white;
   color: #383f4e;
   padding: 20px;
@@ -78,7 +78,7 @@ header.scrolled {
     position: relative;
     bottom:0px;
     height:160px;
-    font-size:60px;
+    font-size:43px;
   }
   button{
     border:1px solid white;
@@ -133,12 +133,18 @@ nav a {
 .modal-container {
   position: absolute;
   top: 100%;
-  left: 0px;
-  background: #147286;
+  background: #222730;
   padding: 10px;
   border-radius: 5px;
   z-index: 100;
   opacity: 0;
+
+  button{
+    margin:2px 0px;
+  }
+  button:hover{
+    border:1px solid #f8a733;
+  }
 }
 
 .modal-container.show {

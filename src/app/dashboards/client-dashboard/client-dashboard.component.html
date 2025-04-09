@@ -28,7 +28,7 @@
         </ng-template>
       </td>
       <td>{{ inscription.stageType }}</td>
-      <td>{{ inscription.inscriptionStatut }}</td>
+      <td>{{ inscription.inscriptionStatut | inscriptionStatut}}</td>
       <td>
         <button
           (click)="onDeleteInscription(inscription.id)"

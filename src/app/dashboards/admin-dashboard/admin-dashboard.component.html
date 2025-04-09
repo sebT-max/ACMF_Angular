@@ -62,7 +62,7 @@
           </ng-template>
         </td>
         <td>{{ inscription.stageType }}</td>
-          <td>{{ inscription.inscriptionStatut }}</td>
+          <td>{{ inscription.inscriptionStatut | inscriptionStatut }}</td>
 
         <td>
           <button class="text-primary" *ngIf="inscription.lettrePdf" (click)="viewFile(inscription.lettrePdf)">Voir la lettre</button>
@@ -94,7 +94,7 @@
           </button>-->
           <br>
           <button
-            *ngIf="inscription.inscriptionStatut === 'EN_ATTENTE'"
+            *ngIf="inscription.inscriptionStatut === 'PENDANT'"
             (click)="validerInscription(inscription.id)"
             class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
           >

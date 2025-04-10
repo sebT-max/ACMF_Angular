@@ -24,7 +24,8 @@ import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
     CodePromoCreateComponent,
     DemandeDevisComponent,
     DemandeDevisAllComponent,
-    InscriptionStatutPipe
+    InscriptionStatutPipe,
+    NgForOf
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'

@@ -4,7 +4,6 @@
 
 
 
-
   <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
       <label for="stageType">Type de Stage</label>
       <select id="stageType" formControlName="stageType">
@@ -14,11 +13,70 @@
         </option>
       </select>
 
-    <label for="lettre_48N">Chargez la lettre 48N</label>
 
-      <input type="file" id="lettre_48N" class="form-control" (change)="onFileChange($event)" accept="application/pdf">
-      <small class="form-text text-muted">Format accepté : PDF uniquement</small>
+    <label for="documents">Chargez vos documents</label>
+
+    <p-fileUpload
+      name="documents"
+      [customUpload]="true"
+      (uploadHandler)="uploadFiles($event)"
+      (onSelect)="onFilesChange($event)"
+      [multiple]="true"
+      accept=".pdf,image/*"
+      [auto]="false"
+      [showUploadButton]="false"
+      [showCancelButton]="false"
+      Width= "100"
+      mode="advanced"
+      [maxFileSize]="5000000"
+    >
+      <div>
+        <ng-template #empty>
+          <div>Glissez-déposez vos fichiers PDF ou images ici (PDF, JPG, PNG).</div>
+        </ng-template>
+      </div>
+
+    <ng-template #content>
+      <ul *ngIf="uploadedFiles?.length">
+        <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} octets</li>
+      </ul>
+    </ng-template>
+    </p-fileUpload>
+    <small class="form-text text-muted">
+      Formats acceptés : PDF, JPEG, PNG. <br/>Plusieurs fichiers autorisés (lettres officielles, carte d'identité...).
+    </small>
+
+    <!--<button (click)="uploadFiles()" class="btn btn-primary">Envoyer les fichiers</button>-->
     <button type="submit" [disabled]="inscriptionCreationForm.invalid">S'inscrire</button>
+
+
+
+    <!--<label for="documents">Chargez vos documents</label>
+    <input type="file"
+           id="documents"
+           class="form-control"
+           (change)="onFilesChange($event)"
+           accept="application/pdf"
+           multiple>
+    <small class="form-text text-muted">Formats acceptés : PDF uniquement. Plusieurs fichiers autorisés.</small>
+
+    &lt;!&ndash; Bouton pour envoyer les fichiers &ndash;&gt;
+    <button (click)="uploadFiles()" class="btn btn-primary">Envoyer les fichiers</button>
+
+    &lt;!&ndash;<label for="documents">Chargez vos documents</label>
+    <input type="file"
+           id="documents"
+           class="form-control"
+           (change)="onFilesChange($event)"
+           accept="application/pdf"
+           multiple>
+    <small class="form-text text-muted">Formats acceptés : PDF uniquement. Plusieurs fichiers autorisés.</small>
+&ndash;&gt;
+    &lt;!&ndash;<label for="lettre_48N">Chargez la lettre 48N</label>
+
+      <input type="file" id="lettre_48N" class="form-control" (change)="onFileChange($event)" accept="application/pdf" multiple>
+      <small class="form-text text-muted">Format accepté : PDF uniquement</small>&ndash;&gt;
+    <button type="submit" [disabled]="inscriptionCreationForm.invalid">S'inscrire</button>-->
   </form>
   </div>
 

@@ -3,12 +3,15 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {StageService} from '../../services/stage.service';
 import {Router, RouterLink} from '@angular/router';
 import {StageDetailsModel} from '../../models/stage-details-model';
+import {DatePicker} from 'primeng/datepicker';
+import { DatePickerModule } from 'primeng/datepicker';
+import {Calendar} from 'primeng/calendar';
 
 @Component({
   selector: 'app-stage-create',
   imports: [FormsModule,
     ReactiveFormsModule,
-    RouterLink],
+    RouterLink, DatePicker, Calendar],
   templateUrl: './stage-create.component.html',
   styleUrl: './stage-create.component.scss',
   standalone: true
@@ -22,7 +25,7 @@ export class StageCreateComponent {
 
   constructor(){
     this.stageCreationForm= this._fb.group({
-      dateDeStage: ['', Validators.required],
+      dateDeStage: [null, Validators.required],
       price: [null, Validators.required],
       city: ['', Validators.required],
       street: ['', Validators.required],

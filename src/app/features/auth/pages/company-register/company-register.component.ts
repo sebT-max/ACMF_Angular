@@ -1,15 +1,21 @@
 import {Component, inject} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {CompanyRegisterFormModel} from '../../models/company-register-form-model';
 import {NgIf} from '@angular/common';
+import {CheckboxModule} from 'primeng/checkbox';
+import {Password} from 'primeng/password';
+
 
 @Component({
   selector: 'app-company-register',
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    CheckboxModule,
+    Password,
+    FormsModule
   ],
   templateUrl: './company-register.component.html',
   styleUrl: './company-register.component.scss'
@@ -50,7 +56,6 @@ export class CompanyRegisterComponent {
       acceptTerms: this.companyRegisterForm.get('acceptTerms')!.value,
       roleId:3
     };
-    console.log('CompanyRegisterFormModel', this.CompanyRegisterFormModel);
 
     this.$_authService.entrepriseRegister(this.CompanyRegisterFormModel).subscribe({
       next: (datas:number) => {

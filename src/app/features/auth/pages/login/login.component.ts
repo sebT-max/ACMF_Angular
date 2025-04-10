@@ -8,10 +8,11 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TokenModel } from '../../models/token.model';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -21,6 +22,7 @@ export class LoginComponent {
   private readonly _router: Router = inject(Router);
 
   loginForm: FormGroup;
+  errorMessage: string | null = null; // Ajout de la gestion d'erreur
 
   constructor() {
     this.loginForm = this._formBuilder.group({
@@ -37,6 +39,7 @@ export class LoginComponent {
 
     this._$authService.login(this.loginForm.value).subscribe({
       next: (resp: TokenModel | null): void => {
+        this.errorMessage = null;
         this._router.navigate(['/']);
       },
       error: (error): void => {

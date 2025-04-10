@@ -1,14 +1,14 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { StageService } from '../../../stage/services/stage.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { InscriptionService } from '../../inscription-services';
 import { InscriptionFormModel } from '../../models/inscription-form.model';
 import { TokenModel } from '../../../auth/models/token.model';
 import { StageDetailsModel } from '../../../stage/models/stage-details-model';
-import {DatePipe, NgForOf, NgIf} from '@angular/common';
-import {CreateInscriptionResponseBody} from '../../models/CreateInscriptionResponseBody';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-inscription-create',
@@ -16,25 +16,26 @@ import {CreateInscriptionResponseBody} from '../../models/CreateInscriptionRespo
     ReactiveFormsModule,
     NgIf,
     NgForOf,
-    DatePipe
+    DatePipe,
+    FileUpload
   ],
   templateUrl: './inscription-create.component.html',
   styleUrls: ['./inscription-create.component.scss']
 })
 export class InscriptionCreateComponent implements OnInit {
-  private readonly _stageService: StageService = inject(StageService);
-  private readonly _authService: AuthService = inject(AuthService);
-  private readonly _inscriptionService: InscriptionService = inject(InscriptionService);
-  private readonly _fb: FormBuilder = inject(FormBuilder);
-  private readonly _router: Router = inject(Router);
+  private readonly _stageService = inject(StageService);
+  private readonly _authService = inject(AuthService);
+  private readonly _inscriptionService = inject(InscriptionService);
+  private readonly _fb = inject(FormBuilder);
+  private readonly _router = inject(Router);
 
   inscriptionCreationForm!: FormGroup;
-  selectedFile: File | null = null;  // Variable pour stocker le fichier sélectionné
-
-
   currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
-  stageId!: number;  // Stage ID est maintenant un nombre
-  stageDetails: StageDetailsModel | null = null; // Stage details
+
+  stageId!: number;
+  stageDetails: StageDetailsModel | null = null;
+
+  uploadedFiles: File[] = [];
 
   stageTypes = [
     { value: 'VOLONTAIRE', label: 'Volontaire' },
@@ -43,106 +44,101 @@ export class InscriptionCreateComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    // Charger l'utilisateur depuis le localStorage
     const localStorageUser = localStorage.getItem('currentUser');
-    console.log("Token récupéré du localStorage :", localStorageUser);
     if (localStorageUser) {
       try {
         this.currentUser.set(JSON.parse(localStorageUser));
-        console.log("Token après parsing JSON :", this.currentUser());
       } catch (error) {
         console.error("Erreur lors du parsing du token :", error);
-        localStorage.removeItem('currentUser'); // Nettoie le localStorage si le JSON est corrompu
+        localStorage.removeItem('currentUser');
       }
     }
 
-    // Récupérer l'ID du stage depuis l'URL
     const stageIdFromRoute = this._router.url.split('/').pop();
     if (stageIdFromRoute) {
-      this.stageId = Number(stageIdFromRoute); // Convertir l'ID en nombre
-      // Charger les détails du stage avec l'ID
+      this.stageId = Number(stageIdFromRoute);
       this._stageService.getStageById(this.stageId).subscribe({
-        next: (stage: StageDetailsModel) => {
-          this.stageDetails = stage;
-        },
-        error: (err) => {
-          console.error('Erreur lors du chargement du stage', err);
-        }
+        next: (stage: StageDetailsModel) => this.stageDetails = stage,
+        error: (err) => console.error('Erreur lors du chargement du stage', err)
       });
     }
-    // Créer le formulaire avec les valeurs par défaut
+
     this.inscriptionCreationForm = this._fb.group({
       userId: [this.currentUser()?.id || '', Validators.required],
       stageId: [this.stageId || '', Validators.required],
       stageType: ['', Validators.required],
-      inscriptionStatut: ['EN_ATTENTE', Validators.required] // Initialisé avec EN_ATTENTE par défaut
+      inscriptionStatut: ['EN_ATTENTE', Validators.required]
     });
   }
 
-  // Méthode pour gérer le changement de fichier
-  onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
+  onFilesChange(event: any) {
+    const files: File[] = event.files || event.target?.files || [];
+    for (let file of files) {
+      const isValid = file.type === 'application/pdf' || file.type.startsWith('image/');
+      if (isValid) {
+        this.uploadedFiles.push(file);
+      }
     }
   }
-  handleInscription(): void {
-    console.log(this.inscriptionCreationForm.value);
 
-    if (this.inscriptionCreationForm.invalid) {
+  uploadFiles(event?: any): void {
+    if (!this.uploadedFiles.length) {
+      console.warn('Aucun fichier à envoyer.');
       return;
     }
 
-    const currentUserValue = this.currentUser();
-    if (!currentUserValue) {
+    const formData = new FormData();
+    this.uploadedFiles.forEach(file => formData.append('documents', file));
+
+    this._inscriptionService.createInscription(formData).subscribe({
+      next: () => console.log('Fichiers envoyés avec succès'),
+      error: (err: any) => console.error('Erreur d’envoi de fichiers :', err)
+    });
+  }
+
+  handleInscription(): void {
+    if (this.inscriptionCreationForm.invalid) return;
+
+    const user = this.currentUser();
+    if (!user) {
       console.error('Utilisateur non trouvé');
       return;
     }
 
-    // Assurer que userId et stageId sont bien assignés
     this.inscriptionCreationForm.patchValue({
-      userId: currentUserValue.id,
+      userId: user.id,
       stageId: this.stageId
     });
 
+    const stageType = this.inscriptionCreationForm.value.stageType;
 
-    // Créer les données d'inscription à envoyer
     const inscriptionData: InscriptionFormModel = {
-      id: this.inscriptionCreationForm.value.id,
       userId: this.inscriptionCreationForm.value.userId,
-      stageId: Number(this.inscriptionCreationForm.value.stageId),
-      stageType: this.inscriptionCreationForm.value.stageType,
+      stageId: this.inscriptionCreationForm.value.stageId,
+      stageType: stageType,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
     };
 
-    // Soumettre l'inscription via le service
-    this._inscriptionService.createInscription(inscriptionData, this.selectedFile).subscribe({
-      next: (resp: CreateInscriptionResponseBody): void => {
-        console.log('Inscription créée avec succès', resp);
-        // Redirection après inscription réussie
+    const formData = new FormData();
+    formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
+
+    // Cas spécifiques : on n’ajoute les fichiers que s’il y en a ET si c’est pertinent
+    const shouldSendFiles =
+      this.uploadedFiles.length > 0 &&
+      (stageType === 'TRIBUNAL' || stageType === 'PROBATOIRE');
+
+    if (shouldSendFiles) {
+      this.uploadedFiles.forEach(file => {
+        formData.append('files', file);
+      });
+    }
+
+    this._inscriptionService.createInscription(formData).subscribe({
+      next: (resp) => {
+        console.log('Inscription avec ou sans fichiers réussie', resp);
         this._router.navigate(['/stages/all']);
       },
-      error: (err) => {
-        console.error('Erreur lors de la création de l\'inscription', err);
-      }
+      error: (err) => console.error('Erreur lors de l’inscription', err)
     });
-
-   /* const inscriptionData: InscriptionFormModel = {
-      userId: this.inscriptionCreationForm.value.userId,
-      stageId: Number(this.inscriptionCreationForm.value.stageId),
-      stageType: this.inscriptionCreationForm.value.stageType,
-      inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut
-    };
-
-    // Pass the data object and the file to the service
-    this._inscriptionService.createInscription(inscriptionData, this.selectedFile || undefined).subscribe({
-      next: (resp: CreateInscriptionResponseBody): void => {
-        console.log('Inscription créée avec succès', resp);
-        this._router.navigate(['/stages/all']);
-      },
-      error: (err) => {
-        console.error('Erreur lors de la création de l\'inscription', err);
-      }
-    });*/
   }
 }

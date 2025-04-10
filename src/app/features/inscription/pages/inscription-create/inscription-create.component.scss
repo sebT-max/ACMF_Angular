@@ -6,7 +6,7 @@
 }
 
 .stage-details {
-  background: #383f4e;
+  background: #222730;
   padding: 30px;
   border-radius: 8px;
   font-size: 20px;
@@ -18,6 +18,9 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width:100%;
+}
+form div{
   width:100%;
 }
 

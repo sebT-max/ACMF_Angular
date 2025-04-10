@@ -1,16 +1,18 @@
 
-<div id="resume" class="infos_stages_container">
-  <nav>
-    <ol>
-      <li><a [routerLink]="['/stages-infos']" fragment="resume">Un stage de récupération de points en résumé</a></li>
-      <li><a [routerLink]="['/stages-infos']" fragment="objectifs">Objectifs d’un stage de récupération de points</a></li>
-      <li><a [routerLink]="['/stages-infos']" fragment="inscription">Qui peut s’inscrire à un stage ?</a></li>
-      <li><a [routerLink]="[]" fragment="documents">Quels documents rassembler ?</a></li>
-      <li><a [routerLink]="[]" fragment="programme">Programme type d’un stage</a></li>
-      <li><a [routerLink]="[]" fragment="types">Quels sont les différents types de stages ?</a></li>
-    </ol>
-  </nav>
-
+<div id="resume" class="infos_stages_container" style="display:flex;">
+  <div id="info_stages_aside_navbar">
+    <nav>
+      <ol>
+        <li><a [routerLink]="['/stages-infos']" fragment="resume">Un stage de récupération de points en résumé</a></li>
+        <li><a [routerLink]="['/stages-infos']" fragment="objectifs">Objectifs d’un stage de récupération de points</a></li>
+        <li><a [routerLink]="['/stages-infos']" fragment="inscription">Qui peut s’inscrire à un stage ?</a></li>
+        <li><a [routerLink]="[]" fragment="documents">Quels documents rassembler ?</a></li>
+        <li><a [routerLink]="[]" fragment="programme">Programme type d’un stage</a></li>
+        <li><a [routerLink]="[]" fragment="types">Quels sont les différents types de stages ?</a></li>
+      </ol>
+    </nav>
+  </div>
+<div id="info_stages_content">
   <h2>Un stage de récupération de points en résumé</h2>
     <ul>
       <li>Durée : deux jours consécutifs obligatoires, soit 14 heures</li>
@@ -65,4 +67,5 @@
       <li>Cas 3 : stage en alternative ou composition pénale</li>
       <li>Cas 4 : stage dans le cadre d’une peine complémentaire, du sursis avec mis à l’épreuve ou d’une ordonnance pénale</li>
     </ul>
+</div>
 </div>

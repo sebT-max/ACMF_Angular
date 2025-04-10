@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { CheckboxModule } from 'primeng/checkbox';
+
 import {
   FormBuilder,
   FormGroup,
@@ -9,10 +11,11 @@ import {
 import { Router } from '@angular/router';
 import { UserFormModel } from '../../models/user-form.model';
 import {RegisterFormModel} from '../../models/register-form.model';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -23,6 +26,7 @@ export class RegisterComponent {
 
   registerForm: FormGroup;
   registerFormModel!: RegisterFormModel;
+  errorMessage: string | null = null; // Ajout de la gestion d'erreur
 
   constructor() {
     this.registerForm = this._formBuilder.group({
@@ -60,14 +64,20 @@ export class RegisterComponent {
     this.$_authService.register(this.registerFormModel).subscribe({
       next: (datas:number) => {
         console.log('Création du user réussie, voici son Id :', datas);
+        this.errorMessage = null;
         this._router.navigate(['']);
       },
-      error: (err: Error) => {
-        if(err){
-          console.log("Erreur d'enregistrement");
-          console.log(err);
+      error: (error: any) => {
+        console.error("Erreur d'enregistrement", error);
+
+        // Gestion des erreurs spécifiques
+        if (error.status === 400 && error.error.message === "Email already in use.") {
+          this.errorMessage = "Cet email est déjà utilisé.";
+        } else if (error.status === 500 && error.error.message === "Email already in use.") {
+          this.errorMessage = "Cet email est déjà utilisé.";
         }
       },
     });
-  }}
+  }
+}
 

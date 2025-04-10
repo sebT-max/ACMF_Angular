@@ -4,8 +4,9 @@
 <form [formGroup]="stageCreationForm" id="stage_creation_form" (ngSubmit)="handleStageCreation()">
   <div>
     <label for="dateDeStage"></label>
-    <input id="dateDeStage" type="date" placeholder="Date de stage" formControlName="dateDeStage" required>
+    <input id="dateDeStage" type="date" selectionMode="range" placeholder="Date de stage" formControlName="dateDeStage" required>
   </div>
+
   <div>
     <label for="price"></label>
     <input id="price" type="number" placeholder="prix" formControlName="price" required>

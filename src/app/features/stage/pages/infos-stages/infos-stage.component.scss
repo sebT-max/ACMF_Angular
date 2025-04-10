@@ -23,3 +23,15 @@
     padding:12px;
   }
 }
+#info_stages_aside_navbar {
+  position: fixed;
+  top: 130px;
+  right: 0;
+  height: 100vh; /* Assure que la navbar prenne toute la hauteur de la fenêtre */
+  overflow-y: auto; /* Permet de scroller si le contenu dépasse la hauteur de la fenêtre */
+}
+
+#info_stages_content {
+  margin-right: 30%; /* Décale le contenu pour qu'il ne soit pas caché par la navbar */
+  padding-right: 10px; /* Espace pour éviter que le texte touche la barre latérale */
+}

@@ -30,6 +30,8 @@
     </div>
   </div>
 
+
+
   <!-- Téléphone -->
   <div>
     <label for="telephone">Contact</label>
@@ -38,12 +40,15 @@
       Le contact est requis.
     </div>
   </div>
-
-  <!-- Acceptation des termes -->
+  <br>
+<hr>
+  <br>
+   Acceptation des termes
   <div class="flexCenter" style="margin-top: 20px;">
     <input id="acceptTerms" name="acceptTerms" type="checkbox" formControlName="acceptTerms" required />
     <span><br />Je suis d'accord avec les conditions RGPD</span>
   </div>
+
 
   <!-- Affichage du message d'erreur (ex: email déjà utilisé) -->
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>

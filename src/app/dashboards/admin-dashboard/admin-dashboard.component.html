@@ -54,8 +54,8 @@
           </td>
         <td>
           <div style="text-align:left;" *ngIf="inscription.stage; else loading">
-            <strong>Ville :</strong> {{ inscription.stage.city }} <br>
-            <strong>Rue :</strong> {{ inscription.stage.street }} <br>
+            <strong>{{ inscription.stage.city }}</strong> <br>
+            {{ inscription.stage.street }} <br>
           </div>
           <ng-template #loading>
             <span>Chargement...</span>
@@ -70,13 +70,35 @@
         <!--<ng-container *ngIf="inscription.lettrePdf?.length > 0">
           <button *ngFor="let file of inscription.lettrePdf" class="text-primary" (click)="viewFile(file)">Afficher document</button>
         </ng-container>-->
-        <td>
+        <!--<td>
           <ng-container *ngIf="inscription.lettrePdf && inscription.lettrePdf.length > 0">
             <button *ngFor="let file of inscription.lettrePdf" class="text-primary" (click)="viewFile(file)">
               Afficher document
             </button>
           </ng-container>
-        </td>
+        </td>-->
+        @if(inscription.documents && inscription.documents.length > 0){
+          <td>
+          <ng-container >
+            <div *ngFor="let doc of inscription.documents">
+              <button class="text-primary" (click)="viewFile(doc.url)">
+                {{ doc.type }}
+              </button>
+            </div>
+          </ng-container>
+          </td>
+        }
+        @else{
+          <td>
+          <ng-container >
+
+             <p style="font-size:16px;">Pas de documents chargés</p>
+
+          </ng-container>
+          </td>
+        }
+
+
 
         <td>
           <button
@@ -190,6 +212,7 @@
   </div>
 
   <div *ngIf="activeTab === 'demandeDevisAll'" class="tab-content">
+    <h2>Demandes de devis</h2>
     <app-demande-devis-all></app-demande-devis-all>
     <div>
 </div>

@@ -55,13 +55,33 @@ export class AdminDashboardComponent implements OnInit  {
       },
       error: (err) => {
         console.error('Erreur lors du chargement des inscriptions', err);
+        alert("Une erreur est survenue lors du chargement des inscriptions.");
+
       }
     });
   }
 
 
-  viewFile(fileName: string) {
-    window.open(`${API_URL}inscriptions/file/${fileName}`, '_blank');
+  viewFile(url: string) {
+    window.open(`${API_URL}inscriptions/file/${url}`, '_blank');
+  }
+  /*viewFile(url: string) {
+    window.open(url, '_blank');
+  }*/
+
+  loadStages(): void {
+    this._stageService.getAllStage().subscribe({
+      next: (stages) => {
+        console.log(`stages récupérés:`, stages);
+        this.stages = stages;
+        this.loadStagesDetails();// Charger les détails des stages après avoir récupéré les stages
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des stages", err);
+        alert("Une erreur est survenue lors du chargement des stages.");
+
+      }
+    });
   }
   loadStagesDetails(): void {
     this.inscriptions.forEach(inscription => {
@@ -81,59 +101,42 @@ export class AdminDashboardComponent implements OnInit  {
   }
 
   onDeleteInscription(id: number | undefined): void {
+    if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
+    console.log('Suppression en cours...');
 
-    if (confirm('Es-tu sûr de vouloir supprimer cet élément ?')) {
-      console.log('Suppression en cours...');
-
-      this._inscriptionService.deleteInscription(id).subscribe({
-        next: () => {
-          alert('Élément supprimé avec succès.');
-          // Rediriger si besoin :
-          this.inscriptions = this.inscriptions.filter(i => i.id !== id);
-
-          this._router.navigate(['/dashboard-admin']);
-        },
-        error: (err) => {
-          console.error('Erreur lors de la suppression :', err);
-          alert("Une erreur est survenue lors de la suppression.");
-        }
-      });
-    }
-  }
-
-  onDeleteStage(id: number | undefined): void {
-
-    if (confirm('Es-tu sûr de vouloir supprimer cet élément ?')) {
-      console.log('Suppression en cours...');
-
-      this._stageService.deleteStage(id).subscribe({
-        next: () => {
-          alert('Élément supprimé avec succès.');
-          // Rediriger si besoin :
-          this.stages = this.stages.filter(s => s.id !== id);
-
-          this._router.navigate(['/dashboard-admin']);
-        },
-        error: (err) => {
-          console.error('Erreur lors de la suppression :', err);
-          alert("Une erreur est survenue lors de la suppression.");
-        }
-      });
-    }
-  }
-
-  loadStages(): void {
-    this._stageService.getAllStage().subscribe({
-      next: (stages) => {
-        console.log(`stages récupérés:`, stages);
-        this.stages = stages;
-        this.loadStagesDetails();// Charger les détails des stages après avoir récupéré les stages
+    this._inscriptionService.deleteInscription(id).subscribe({
+      next: () => {
+        alert('Élément supprimé avec succès.');
+        // Rediriger si besoin :
+        this.inscriptions = this.inscriptions.filter(i => i.id !== id);
+        this._router.navigate(['/dashboard-admin']);
       },
       error: (err) => {
-        console.error("Erreur lors du chargement des stages", err);
+        console.error('Erreur lors de la suppression :', err);
+        alert("Une erreur est survenue lors de la suppression.");
       }
     });
   }
+
+
+  onDeleteStage(id: number | undefined): void {
+    if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
+    console.log('Suppression en cours...');
+
+    this._stageService.deleteStage(id).subscribe({
+      next: () => {
+        alert('Élément supprimé avec succès.');
+        // Rediriger si besoin :
+        this.stages = this.stages.filter(s => s.id !== id);
+        this._router.navigate(['/dashboard-admin']);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suppression :', err);
+        alert("Une erreur est survenue lors de la suppression.");
+      }
+    });
+  }
+
 
   validerInscription(id: number | undefined): void {
     if (id === undefined) {
@@ -159,7 +162,6 @@ export class AdminDashboardComponent implements OnInit  {
       }
     });
   }
-
 }
 
 /*editInscription(id: number | undefined): void {}*/

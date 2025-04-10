@@ -2,9 +2,23 @@
 <h1>Créer un stage</h1>
 
 <form [formGroup]="stageCreationForm" id="stage_creation_form" (ngSubmit)="handleStageCreation()">
-  <div>
+  <!--<div>
     <label for="dateDeStage"></label>
     <input id="dateDeStage" type="date" selectionMode="range" placeholder="Date de stage" formControlName="dateDeStage" required>
+  </div>-->
+  <div>
+
+    <p-datepicker
+      selectionMode="range"
+      id="dateDeStage"
+      formControlName="dateDeStage"
+      [showIcon]="true"
+      [showButtonBar]="true"
+      [readonlyInput]="true"
+      dateFormat="dd/mm/yy"
+      placeholder="Sélectionnez les dates"
+      [required]="true">
+    </p-datepicker>
   </div>
 
   <div>

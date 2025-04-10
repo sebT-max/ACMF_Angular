@@ -5,13 +5,14 @@ import {Router, RouterLink} from '@angular/router';
 import {StageDetailsModel} from '../../models/stage-details-model';
 import {DatePicker} from 'primeng/datepicker';
 import { DatePickerModule } from 'primeng/datepicker';
-import {Calendar} from 'primeng/calendar';
+import {Calendar, CalendarModule} from 'primeng/calendar';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-stage-create',
-  imports: [FormsModule,
+  imports: [CommonModule, FormsModule,
     ReactiveFormsModule,
-    RouterLink, DatePicker, Calendar],
+    RouterLink, CalendarModule, DatePicker],
   templateUrl: './stage-create.component.html',
   styleUrl: './stage-create.component.scss',
   standalone: true
@@ -39,6 +40,20 @@ export class StageCreateComponent {
     if(this.stageCreationForm.invalid){
       return;
     }
+    // Clone le formulaire pour traiter les dates
+    const formData = {...this.stageCreationForm.value};
+
+    // Si nécessaire, formatez les dates selon les besoins de votre API
+    // Par exemple, si votre API s'attend à recevoir un objet avec dateDebut et dateFin
+    if (formData.dateDeStage && formData.dateDeStage.length === 2) {
+      const [dateDebut, dateFin] = formData.dateDeStage;
+      formData.dateDeStage = {
+        dateDebut: dateDebut,
+        dateFin: dateFin
+      };
+    }
+
+
     this._stageService.createStage(this.stageCreationForm.value).subscribe({
       next: (resp:StageDetailsModel):void => {
         this._router.navigate(['/stages/all']);

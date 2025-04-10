@@ -11,13 +11,16 @@
   ol{
     padding: 40px;
     float: right;
-    color: blue;
+    color: #222730;
     background: #f8a733;
-    border-radius: 10px;
-
+    border-radius: 0px 0px 0px 80px;
+    text-underline: #33165b;
   }
-  li{
-
+  li a{
+    color:#222730;
+  }
+  li a:hover{
+    color:white;
   }
   h2{
     padding:12px;

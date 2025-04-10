@@ -1,5 +1,6 @@
 import {StageDetailsModel} from '../../stage/models/stage-details-model';
 import {UserFormModel} from '../../auth/models/user-form.model';
+import {DocumentDTO} from './DocumentDTO';
 
 export interface InscriptionFormModel {
   id?: number;
@@ -9,5 +10,6 @@ export interface InscriptionFormModel {
   inscriptionStatut: string;
   stage?: StageDetailsModel;
   user?: UserFormModel;
-  lettrePdf?: string;
+  documents?: DocumentDTO[]; // <-- à ajouter
+
 }

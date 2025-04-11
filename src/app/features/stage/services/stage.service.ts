@@ -48,5 +48,8 @@ export class StageService{
   deleteStage(id:number | undefined): Observable<void> {
     return this._httpClient.delete<void>(`${API_URL}stages/delete/${id}`);
   }
-}
 
+  updateStage(id: number | undefined, updatedStage: StageDetailsModel): Observable<StageDetailsModel> {
+    return this._httpClient.put<StageDetailsModel>(`${API_URL}stages/update/${id}`, updatedStage);
+  }
+}

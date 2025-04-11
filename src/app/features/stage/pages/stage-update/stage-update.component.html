@@ -1,7 +1,7 @@
 <div class="margin_top_130"></div>
 <h1>Créer un stage</h1>
 
-<form [formGroup]="stageCreationForm" id="stage_creation_form" (ngSubmit)="handleStageCreation()">
+<form [formGroup]="stageUpdateCreationForm" id="stage_creation_form" (ngSubmit)="handleUpdateStageCreation()">
   <!--<div>
     <label for="dateDeStage"></label>
     <input id="dateDeStage" type="date" selectionMode="range" placeholder="Date de stage" formControlName="dateDeStage" required>
@@ -44,7 +44,7 @@
     <input id="organisation" type="text" placeholder="organisation" formControlName="organisation" required>
   </div>
 
-  <button type="submit">Créer stage</button>
+  <button type="submit">Modifier stage</button>
 </form>
 <div class="see_all_button"><a  routerLink="/stages/all"> > Voir tous les stages</a></div>
 

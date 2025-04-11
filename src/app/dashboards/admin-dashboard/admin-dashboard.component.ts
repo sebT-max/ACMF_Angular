@@ -12,7 +12,9 @@ import {
   DemandeDevisAllComponent
 } from '../../features/demande-devis/pages/demande-devis-all/demande-devis-all.component';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
-
+import {StageUpdateComponent} from '../../features/stage/pages/stage-update/stage-update.component';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
@@ -24,8 +26,10 @@ import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
     CodePromoCreateComponent,
     DemandeDevisComponent,
     DemandeDevisAllComponent,
+    StageUpdateComponent,
     InscriptionStatutPipe,
-    NgForOf
+    NgForOf,
+    FaIconComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
@@ -34,6 +38,7 @@ export class AdminDashboardComponent implements OnInit  {
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _stageService = inject(StageService);
   private readonly _router: Router = inject(Router);
+  faEdit = faEdit;
 
   inscriptions: InscriptionFormModel[] = [];
   stages: StageDetailsModel[] = [];
@@ -118,6 +123,13 @@ export class AdminDashboardComponent implements OnInit  {
     });
   }
 
+
+  onUpdateStage(id: number | undefined): void {
+    if (id === undefined || !confirm('Es-tu sûr de vouloir modifier cet élément ?')) return;
+
+    // Rediriger l'utilisateur vers le formulaire de modification du Stage
+    this._router.navigate([`/stages/update/${id}`]);
+  }
 
   onDeleteStage(id: number | undefined): void {
     if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;

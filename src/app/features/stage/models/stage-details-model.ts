@@ -1,6 +1,7 @@
 export interface StageDetailsModel {
   id:number;
-  dateDeStage: string;
+  dateDebut: string;
+  dateFin: string;
   price: number;
   city: string;
   street: string;

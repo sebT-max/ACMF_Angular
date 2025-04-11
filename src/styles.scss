@@ -395,5 +395,10 @@ h1{
   color: var(--p-datepicker-dropdown-hover-color);
   border-radius: 30px;
 }
+.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input:hover {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  background:transparent !important;
+}
 
 

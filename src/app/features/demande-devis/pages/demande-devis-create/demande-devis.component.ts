@@ -5,15 +5,16 @@ import {StageDetailsModel} from '../../../stage/models/stage-details-model';
 import {StageService} from '../../../stage/services/stage.service';
 import {DemandeDevisService} from '../../services/demande-devis.services';
 import {DemandeDevisModel} from '../../models/DemandeDevisModel';
-import { TextareaModule } from 'primeng/textarea';
+import {Textarea, TextareaModule} from 'primeng/textarea';
 
 
 @Component({
   selector: 'app-demande-devis',
-    imports: [
-        ReactiveFormsModule,
-        RouterLink
-    ],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    Textarea
+  ],
   templateUrl: './demande-devis.component.html',
   styleUrl: './demande-devis.component.scss'
 })
@@ -30,7 +31,7 @@ export class DemandeDevisComponent {
       contactFirstName: ['', Validators.required],
       contactLastName: [null, Validators.required],
       numberOfInterns: ['', Validators.required],
-      acceptDevis: ['', Validators.required]
+      message: [null, Validators.required]
     });
   }
 

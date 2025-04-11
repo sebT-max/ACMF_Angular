@@ -3,8 +3,8 @@ export interface DemandeDevisModel {
   entrepriseName: string;
   contactFirstName: string;
   contactLastName: string;
-  telephone: string;
-  email: string;
+  /*telephone: string;
+  email: string;*/
   numberOfInterns: number;
-  acceptDevis: boolean;
+  message: string;
 }

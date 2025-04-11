@@ -1,32 +1,42 @@
-import {Component, inject} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {StageService} from '../../services/stage.service';
-import {Router, RouterLink} from '@angular/router';
-import {StageDetailsModel} from '../../models/stage-details-model';
-import {DatePicker} from 'primeng/datepicker';
-import { DatePickerModule } from 'primeng/datepicker';
-import {Calendar, CalendarModule} from 'primeng/calendar';
-import {CommonModule} from '@angular/common';
+import { Component, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { StageService } from '../../services/stage.service';
+import { Router, RouterLink } from '@angular/router';
+import { StageDetailsModel } from '../../models/stage-details-model';
+import { CalendarModule } from 'primeng/calendar';
+import { CommonModule } from '@angular/common';
+import { DatePicker } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-stage-create',
-  imports: [CommonModule, FormsModule,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    RouterLink, CalendarModule, DatePicker],
+    RouterLink,
+    CalendarModule,
+    DatePicker
+  ],
   templateUrl: './stage-create.component.html',
-  styleUrl: './stage-create.component.scss',
-  standalone: true
+  styleUrl: './stage-create.component.scss'
 })
 export class StageCreateComponent {
-  private readonly _stageService: StageService = inject(StageService);
-  private readonly _fb: FormBuilder = inject(FormBuilder);
-  private readonly _router: Router = inject(Router);
+  private readonly _stageService = inject(StageService);
+  private readonly _fb = inject(FormBuilder);
+  private readonly _router = inject(Router);
 
   stageCreationForm: FormGroup;
 
-  constructor(){
-    this.stageCreationForm= this._fb.group({
-      dateDeStage: [null, Validators.required],
+  constructor() {
+    this.stageCreationForm = this._fb.group({
+      dateDeStage: [[], Validators.required], // array: [dateDebut, dateFin]
       price: [null, Validators.required],
       city: ['', Validators.required],
       street: ['', Validators.required],
@@ -36,31 +46,28 @@ export class StageCreateComponent {
     });
   }
 
-  handleStageCreation(){
-    if(this.stageCreationForm.invalid){
+  handleStageCreation() {
+    if (this.stageCreationForm.invalid) {
       return;
     }
-    // Clone le formulaire pour traiter les dates
-    const formData = {...this.stageCreationForm.value};
 
-    // Si nécessaire, formatez les dates selon les besoins de votre API
-    // Par exemple, si votre API s'attend à recevoir un objet avec dateDebut et dateFin
-    if (formData.dateDeStage && formData.dateDeStage.length === 2) {
+    const formData = { ...this.stageCreationForm.value };
+
+    // Transforme [dateDebut, dateFin] en objet { dateDebut, dateFin }
+    if (formData.dateDeStage?.length === 2) {
       const [dateDebut, dateFin] = formData.dateDeStage;
-      formData.dateDeStage = {
-        dateDebut: dateDebut,
-        dateFin: dateFin
-      };
+      formData.dateDebut = dateDebut;
+      formData.dateFin = dateFin;
+      delete formData.dateDeStage; // supprime l'ancien champ
     }
 
-
-    this._stageService.createStage(this.stageCreationForm.value).subscribe({
-      next: (resp:StageDetailsModel):void => {
+    this._stageService.createStage(formData).subscribe({
+      next: (resp: StageDetailsModel): void => {
         this._router.navigate(['/stages/all']);
       },
-      error: (err)=>{
-        console.log(err);
+      error: (err) => {
+        console.error('Erreur lors de la création du stage :', err);
       }
-    })
+    });
   }
 }

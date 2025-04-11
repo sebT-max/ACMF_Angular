@@ -93,6 +93,13 @@ export const routes: Routes = [
         (c) => c.StageCreateComponent,
       ),
   },
+  {
+    path: 'stages/update/:id',
+    loadComponent: () =>
+      import('./features/stage/pages/stage-update/stage-update.component').then(
+        (c) => c.StageUpdateComponent,
+      ),
+  },
 
   {
     path: 'inscriptions/create/:id',

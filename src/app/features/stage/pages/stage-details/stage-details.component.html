@@ -5,7 +5,8 @@
     <hr><br/>
   <p>📍{{ stage!.street }}</p>
   <p>{{ stage!.arrondissement }} arrondissement</p>
-    <p>📆 Le {{ stage?.dateDeStage | date:'d MMMM yyyy':'fr' }}</p>
+    <p>📆 Le {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
+    </p>
     <p>💰{{ stage!.price }}€/personne</p>
   </div>
   <div>

@@ -1,20 +1,21 @@
 
 <div class="stage-details">
   <div class="stage_details_container1">
-  <h2>Stage à {{ stage!.city }}</h2>
+    <h2>Stage à {{ stage!.city }}</h2>
     <hr><br/>
-  <p>📍{{ stage!.street }}</p>
-  <p>{{ stage!.arrondissement }} arrondissement</p>
-    <p>📆 Le {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
-    </p>
+    <p>📍{{ stage!.street }}</p>
+    <p>{{ stage!.arrondissement }} arrondissement</p>
+    <p>📆 Le {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</p>
     <p>💰{{ stage!.price }}€/personne</p>
   </div>
-  <div>
-    <app-map [address]="stage!.street + ', ' + stage!.city"></app-map>
-    <div class="map-container" id="map" style="height: 400px;"></div>
 
-    <!--<img style="height:402px" src="/ruebordeaux.png"/>-->
-  </div>
+
+    <div class="map-container">
+      <!-- Le conteneur de la carte -->
+      <div id="map" style="border-radius:0px;"></div>
+    </div>
+
+
   <div id="infos-stage-details">
     <ul>
       <p>✓ Engagement ACF</p>

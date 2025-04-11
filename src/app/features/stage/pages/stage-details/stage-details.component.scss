@@ -34,11 +34,13 @@
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.1215686275), #12aed0);
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-  width: 80%;
   color: #fff;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 1s ease;
   margin: 0 auto;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 80%;
 }
 
 .stage_details_container1{
@@ -48,7 +50,7 @@
   color: #292c32;
   line-height: 45px;
   height: 402px;
-  width: 30%;;
+  width: 250px;
   hr{
     height:5px;
     background: #9c7d2c;
@@ -61,9 +63,51 @@
 #infos-stage-details{
   background-color: #f8a733;
   color: rgb(56 63 78);
-  padding: 54px 30px;
   line-height: 39px;
   height: 402px;
-  width: 38%;
+  width: 250px;
+  padding:20px;
 }
+
+.map-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.map-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  height: 402px;
+  background: transparent;
+}
+
+#map {
+  height: 402px;
+  width: 100% !important; /* Override inline style for responsive design */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+#infos-stage-details ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .stage-details {
+    flex-direction: column;
+  }
+
+  .map-container {
+    width: 100%;
+  }
+
+  #map {
+    width: 100% !important;
+  }
+}
+
 

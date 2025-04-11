@@ -1,15 +1,18 @@
 import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {StageDetailsModel} from '../../models/stage-details-model';
 import {DatePipe} from '@angular/common';
+import {MapComponent} from '../../../map-component/map.component';
 
 
 @Component({
   selector: 'app-stage-details',
   templateUrl: './stage-details.component.html',
   imports: [
-    DatePipe
+    DatePipe,
+    MapComponent
   ],
-  styleUrls: ['./stage-details.component.scss']
+  styleUrls: ['./stage-details.component.scss'],
+  standalone: true
 })
 export class StageDetailsComponent {
   @Input() stage: StageDetailsModel | null = null;  // Accepter `null` comme valeur

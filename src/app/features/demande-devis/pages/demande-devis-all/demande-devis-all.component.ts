@@ -11,10 +11,7 @@ import {DemandeDevisService} from '../../services/demande-devis.services';
 @Component({
   selector: 'app-demande-devis-all',
   imports: [
-    DatePipe,
-    NgIf,
-    ReactiveFormsModule,
-    StageDetailsComponent
+    ReactiveFormsModule
   ],
   templateUrl: './demande-devis-all.component.html',
   styleUrl: './demande-devis-all.component.scss'

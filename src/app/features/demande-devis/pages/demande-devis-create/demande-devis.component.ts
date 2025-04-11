@@ -11,9 +11,7 @@ import {Textarea, TextareaModule} from 'primeng/textarea';
 @Component({
   selector: 'app-demande-devis',
   imports: [
-    ReactiveFormsModule,
-    RouterLink,
-    Textarea
+    ReactiveFormsModule
   ],
   templateUrl: './demande-devis.component.html',
   styleUrl: './demande-devis.component.scss'

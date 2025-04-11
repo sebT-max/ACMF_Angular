@@ -7,8 +7,7 @@ import {Button} from 'primeng/button';
 @Component({
   selector: 'app-home',
   imports: [
-    RouterLink,
-    Button
+    RouterLink
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'], // Correction ici

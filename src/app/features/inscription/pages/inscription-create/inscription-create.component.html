@@ -55,7 +55,7 @@
     <hr>
     <p>📍Adresse: {{ stageDetails.street }}</p>
     <p>{{ stageDetails.arrondissement }} arrondissement</p>
-    <p>📆 {{ stageDetails?.dateDebut | date:'d':'fr' }} & {{ stageDetails?.dateFin | date:'d MMMM yyyy':'fr' }}</p>
+    <p>📆 {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
     <p>Organisation: {{ stageDetails.organisation }}</p>
     <p>💰Prix: {{ stageDetails.price }}€/personne</p>
   </div>

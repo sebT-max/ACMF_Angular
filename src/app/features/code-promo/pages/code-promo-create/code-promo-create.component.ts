@@ -9,8 +9,7 @@ import {CodePromoFormModel} from '../../models/code-promo-Form.Model';
 @Component({
   selector: 'app-code-promo-create',
   imports: [
-    ReactiveFormsModule,
-    RouterLink
+    ReactiveFormsModule
   ],
   templateUrl: './code-promo-create.component.html',
   styleUrl: './code-promo-create.component.scss'

@@ -10,7 +10,10 @@
     <p>💰{{ stage!.price }}€/personne</p>
   </div>
   <div>
-    <img style="height:402px" src="/ruebordeaux.png"/>
+    <app-map [address]="stage!.street + ', ' + stage!.city"></app-map>
+    <div class="map-container" id="map" style="height: 400px;"></div>
+
+    <!--<img style="height:402px" src="/ruebordeaux.png"/>-->
   </div>
   <div id="infos-stage-details">
     <ul>

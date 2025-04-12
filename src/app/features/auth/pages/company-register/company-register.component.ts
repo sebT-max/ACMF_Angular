@@ -6,6 +6,7 @@ import {CompanyRegisterFormModel} from '../../models/company-register-form-model
 import {NgIf} from '@angular/common';
 import {CheckboxModule} from 'primeng/checkbox';
 import {Password} from 'primeng/password';
+import {CompanyTokenModel} from '../../models/CompanyTokenModel';
 
 
 @Component({
@@ -14,7 +15,6 @@ import {Password} from 'primeng/password';
     ReactiveFormsModule,
     NgIf,
     CheckboxModule,
-    Password,
     FormsModule
   ],
   templateUrl: './company-register.component.html',
@@ -58,14 +58,17 @@ export class CompanyRegisterComponent {
     };
 
     this.$_authService.entrepriseRegister(this.CompanyRegisterFormModel).subscribe({
-      next: (datas:number) => {
+      next: (datas:CompanyTokenModel | null) => {
+        if (!datas) {
+          this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+          return;
+        }
         console.log('Création réussie, voici son Id :', datas);
         this.errorMessage = null;
         this._router.navigate(['']);
       },
       error: (error: any) => {
         console.error("Erreur d'enregistrement", error);
-
         // Gestion des erreurs spécifiques
         if (error.status === 400 && error.error.message === "Email already in use.") {
           this.errorMessage = "Cet email est déjà utilisé.";

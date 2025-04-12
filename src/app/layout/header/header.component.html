@@ -7,13 +7,13 @@
   <div class="header_nav_links_container">
     <button routerLink="stages/all">Stages</button>
     <button routerLink="stages-infos">Informations générales</button>
-    <!--<button routerLink="qui-sommes-nous ?">Qui nous sommes ? (SEO)</button>-->
+    <button routerLink="qui-sommes-nous ?">Qui nous sommes ?</button>
     <!--
       <button routerLink="b2b">Professionnels</button>
 
       <button routerLink="statistiques-et-législation">Statistiques et législation (SEO)</button>
       -->
-    @if(!userConnected()){
+    @if(!userConnected() && !companyConnected()){
     <div class="register-container" (mouseover)="openRegisterModal()" (mouseleave)="startCloseRegisterModal()">
       <button class="btn-register">S'inscrire</button>
       <div
@@ -41,7 +41,7 @@
     @if(userConnected()?.role?.name === 'ADMIN'){
       <button routerLink="dashboard-admin">Mon espace admin</button>
     }
-    @if(userConnected()?.role?.name === 'ENTREPRISE' ){
+    @if(companyConnected()){
       <button routerLink="dashboard-company">Mon espace professionnel</button>
     }
     @if(userConnected()?.role?.name === 'PARTICULIER'){

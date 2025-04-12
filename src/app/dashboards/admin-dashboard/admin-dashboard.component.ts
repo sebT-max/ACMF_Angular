@@ -18,15 +18,11 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
-    CurrencyPipe,
     DatePipe,
     NgIf,
     RouterLink,
-    NgClass,
     CodePromoCreateComponent,
-    DemandeDevisComponent,
     DemandeDevisAllComponent,
-    StageUpdateComponent,
     InscriptionStatutPipe,
     NgForOf,
     FaIconComponent

@@ -11,7 +11,6 @@ import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 @Component({
   selector: 'app-client-dashboard',
   imports: [
-    NgClass,
     DatePipe,
     CommonModule,
     InscriptionStatutPipe

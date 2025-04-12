@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { UserFormModel } from '../../models/user-form.model';
 import {RegisterFormModel} from '../../models/register-form.model';
 import {NgIf} from '@angular/common';
+import {TokenModel} from '../../models/token.model';
+import {catchError} from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -61,8 +63,13 @@ export class RegisterComponent {
     };
     console.log('registerFormModel', this.registerFormModel);
 
-    this.$_authService.register(this.registerFormModel).subscribe({
-      next: (datas:number) => {
+    this.$_authService.register(this.registerFormModel).pipe(
+      catchError((error) => {
+        this.errorMessage = error.message;
+        return [];
+      })
+    ).subscribe({
+      next: (datas:TokenModel | null) => {
         console.log('Création du user réussie, voici son Id :', datas);
         this.errorMessage = null;
         this._router.navigate(['']);

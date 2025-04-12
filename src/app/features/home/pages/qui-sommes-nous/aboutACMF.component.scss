@@ -1,0 +1,40 @@
+.infos_stages_container{
+  background: #d8dcde;
+  padding: 125px 40px;
+  line-height: 32px;
+
+  ul{
+    margin:10px;
+    padding:20px;
+
+  }
+  ol{
+    padding: 40px;
+    float: right;
+    color: #222730;
+    background: #f8a733;
+    border-radius: 0px 0px 0px 80px;
+    text-underline: #33165b;
+  }
+  li a{
+    color:#222730;
+  }
+  li a:hover{
+    color:white;
+  }
+  h2{
+    padding:12px;
+  }
+}
+#info_stages_aside_navbar {
+  position: fixed;
+  top: 130px;
+  right: 0;
+  height: 100vh; /* Assure que la navbar prenne toute la hauteur de la fenêtre */
+  overflow-y: auto; /* Permet de scroller si le contenu dépasse la hauteur de la fenêtre */
+}
+
+#info_stages_content {
+  margin-right: 30%; /* Décale le contenu pour qu'il ne soit pas caché par la navbar */
+  padding-right: 10px; /* Espace pour éviter que le texte touche la barre latérale */
+}

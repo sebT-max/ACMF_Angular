@@ -1,6 +1,5 @@
+<h1>Inscription en tant que particulier</h1>
 <form [formGroup]="registerForm"  id="register_form" (ngSubmit)="handleRegisterFormSubmit()">
-  <h1>Inscription en tant que particulier</h1>
-  <br/>
 
   <div>
     <label for="lastname">Nom : </label>
@@ -41,6 +40,8 @@
     />
     <span> <br/>Je suis d'accord avec les conditions RGPD</span>
   </div>
-
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
   <button type="submit">S'enregistrer</button>
 </form>

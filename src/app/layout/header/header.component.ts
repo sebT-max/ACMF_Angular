@@ -15,6 +15,8 @@ export class HeaderComponent {
   private readonly _router: Router = inject(Router);
 
   userConnected = this.$_authService.currentUser;
+  companyConnected = this.$_authService.currentCompany;
+
   role: string | undefined = '';
 
 

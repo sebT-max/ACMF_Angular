@@ -19,14 +19,15 @@ export const routes: Routes = [
 ((c) => c.InfosStageComponent,
 ),
   },
+  {
+    path: 'qui-sommes-nous ?',
+    loadComponent:()=>
+      import('./features/home/pages/qui-sommes-nous/aboutACMF.component').then
+      ((c) => c.AboutACMFComponent),
+  },
   /*
   {
     path:'b2b',
-  },
-
-  {
-    path: 'qui-sommes-nous ?',
-
   },
   {
     path: 'statistiques-et-législation',

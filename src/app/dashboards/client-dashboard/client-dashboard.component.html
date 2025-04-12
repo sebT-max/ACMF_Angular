@@ -18,7 +18,7 @@
         <div style="text-align:left;" *ngIf="inscription.stage; else loading">
           <strong>Ville :</strong> {{ inscription.stage.city }} <br>
           <strong>Arrondissement :</strong> {{ inscription.stage.arrondissement }} <br>
-          <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} &  & {{ inscription.stage?.dateFin | date:'d MMMM yyyy':'fr' }}<br>
+          <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} &  & {{ inscription.stage.dateFin | date:'d MMMM yyyy':'fr' }}<br>
           <strong>Rue :</strong> {{ inscription.stage.street }} <br>
           <strong>Organisation :</strong> {{ inscription.stage.organisation }}<br>
           <strong>Prix :</strong> {{ inscription.stage.price | currency:'EUR' }}

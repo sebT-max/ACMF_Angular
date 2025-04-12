@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import {catchError, Observable, tap, throwError} from 'rxjs';
 
 import { TokenModel } from '../models/token.model';
 import { RegisterFormModel } from '../models/register-form.model';
@@ -10,6 +10,7 @@ import { CompanyRegisterFormModel } from '../models/company-register-form-model'
 import { InscriptionFormModel } from '../../inscription/models/inscription-form.model';
 
 import { API_URL } from '../../../core/constants/api-constant';
+import { CompanyTokenModel } from '../models/CompanyTokenModel';
 
 @Injectable({
   providedIn: 'root',
@@ -18,36 +19,76 @@ export class AuthService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
   private userRoles: string[] = [];
 
+  // Signaux pour l'utilisateur et l'entreprise
   currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
-  currentCompany: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
+  currentCompany: WritableSignal<CompanyTokenModel | null> = signal<CompanyTokenModel | null>(null);
 
   constructor() {
+    this.loadUserFromLocalStorage();
+    this.loadCompanyFromLocalStorage();
+  }
+
+  // Charger l'utilisateur depuis le localStorage
+  private loadUserFromLocalStorage() {
     const localStorageUser = localStorage.getItem('currentUser');
     if (localStorageUser) {
       try {
-        this.currentUser.set(JSON.parse(localStorageUser));
+        const user = JSON.parse(localStorageUser);
+        this.currentUser.set(user);
       } catch (error) {
-        console.error('Erreur lors du parsing du token :', error);
+        console.error('Erreur lors du parsing du token utilisateur :', error);
         localStorage.removeItem('currentUser');
       }
     }
-    this.loadUserRoles();
   }
 
-  private loadUserRoles(): void {
-    const storedRoles = localStorage.getItem('roles');
-    this.userRoles = storedRoles ? JSON.parse(storedRoles) : [];
+  // Charger l'entreprise depuis le localStorage
+  private loadCompanyFromLocalStorage() {
+    const localStorageCompany = localStorage.getItem('currentCompany');
+    if (localStorageCompany) {
+      try {
+        const company = JSON.parse(localStorageCompany);
+        this.currentCompany.set(company);
+      } catch (error) {
+        console.error('Erreur lors du parsing du token entreprise :', error);
+        localStorage.removeItem('currentCompany');
+      }
+    }
   }
 
+  // Vérifier si un utilisateur ou une entreprise est authentifié
+  isAuthenticated(): boolean {
+    return this.currentUser() !== null || this.currentCompany() !== null;
+  }
+
+  // Vérifier si l'utilisateur ou l'entreprise a un rôle spécifique
   hasRole(role: string): boolean {
-    return this.userRoles.includes(role);
+    if (this.currentUser()) {
+      const userRoles = this.currentUser()?.role ? [this.currentUser()?.role.name] : [];
+      if (userRoles.includes(role)) {
+        return true;
+      }
+    }
+
+    if (this.currentCompany()) {
+      const companyRoles = ['company'];  // Rôle pour toute entreprise
+      if (companyRoles.includes(role)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
+
+  // Récupérer le token de l'utilisateur ou de l'entreprise
   getToken(): string | null {
     const currentUserValue = this.currentUser();
-    return currentUserValue?.token ?? null;
+    const currentCompanyValue = this.currentCompany();
+    return currentUserValue?.token ?? currentCompanyValue?.token ?? null;
   }
 
+  // Récupérer le header d'autorisation avec le token
   getAuthorizationHeader(): string {
     const token = this.getToken();
     return token ? `Bearer ${token}` : '';
@@ -66,13 +107,25 @@ export class AuthService {
     };
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();
-  }
-
   // PART Particulier
   register(user: RegisterFormModel) {
-    return this._httpClient.post<number>(`${API_URL}particulier/register`, user);
+    return this._httpClient.post<TokenModel>(`${API_URL}particulier/register`, user).pipe(
+      tap((resp: TokenModel | null) => {
+        if (resp) {
+          this.currentUser.set(resp);
+          localStorage.setItem('currentUser', JSON.stringify(resp));
+          this.loadUserRoles(resp); // Charger les rôles après enregistrement
+        }
+      }),
+      catchError((error) => {
+        // Si l'email est déjà utilisé, vous pouvez gérer l'erreur ici
+        if (error.status === 400 && error.error?.message === 'Email already used') {
+          // Lancer une erreur avec un message spécifique
+          return throwError(() => new Error('L\'email est déjà utilisé.'));
+        }
+        return throwError(() => error);
+      })
+    );
   }
 
   login(user: LoginFormModel) {
@@ -88,23 +141,46 @@ export class AuthService {
 
   // PART Entreprise
   entrepriseRegister(entreprise: CompanyRegisterFormModel) {
-    return this._httpClient.post<number>(`${API_URL}company/register`, entreprise);
+    return this._httpClient.post<CompanyTokenModel>(`${API_URL}company/register`, entreprise).pipe(
+      tap((resp: CompanyTokenModel | null) => {
+        if (resp) {
+          const companyTokenModel: CompanyTokenModel = {
+            id: resp.id,
+            name: resp.name,
+            email: resp.email,
+            telephone: resp.telephone,
+            token: resp.token,
+          };
+
+          this.currentCompany.set(companyTokenModel);
+          localStorage.setItem('currentCompany', JSON.stringify(companyTokenModel));
+        }
+      })
+    );
   }
 
   companyLogin(entreprise: LoginFormModel) {
-    return this._httpClient.post<TokenModel>(`${API_URL}company/login`, entreprise).pipe(
-      tap((resp: TokenModel | null): void => {
+    return this._httpClient.post<CompanyTokenModel>(`${API_URL}company/login`, entreprise).pipe(
+      tap((resp: CompanyTokenModel | null): void => {
         if (resp) {
-          this.currentUser.set(resp); // Si tu veux faire une distinction, utilise `currentCompany`
-          localStorage.setItem('currentUser', JSON.stringify(resp));
+          const companyTokenModel: CompanyTokenModel = {
+            id: resp.id,
+            name: resp.name,
+            email: resp.email,
+            telephone: resp.telephone,
+            token: resp.token,
+          };
+
+          this.currentCompany.set(companyTokenModel);
+          localStorage.setItem('currentCompany', JSON.stringify(companyTokenModel));
         }
-      }),
+      })
     );
   }
 
   logout(): void {
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('token'); // Sécurité en plus
+    localStorage.removeItem('currentCompany');
     this.currentUser.set(null);
     this.currentCompany.set(null);
   }
@@ -136,4 +212,9 @@ export class AuthService {
       this.getAuthOptions(),
     );
   }
+  private loadUserRoles(resp: TokenModel): void {
+    const storedRoles = localStorage.getItem('roles');
+    this.userRoles = storedRoles ? JSON.parse(storedRoles) : [];
+  }
+
 }

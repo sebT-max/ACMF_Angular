@@ -48,110 +48,71 @@ export class StageDetailsComponent implements AfterViewInit, OnDestroy {
   initializeMap() {
     if (this.stage && this.stage.street && this.stage.city) {
       const address = `${this.stage.street}, ${this.stage.city}`;
-
       const mapContainer = document.getElementById('map');
+
       if (!mapContainer) {
         console.error('Map container not found');
         return;
       }
 
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11', // Style standard
-        center: [0, 0],
-        zoom: 12,
-      });
+      // 1. Géocoder manuellement AVANT de créer la carte
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
 
-      // Ajouter un gestionnaire pour les images manquantes
-      this.map.on('styleimagemissing', (e) => {
-        // Créer une image de remplacement
-        const width = 64;
-        const height = 64;
-        const data = new Uint8Array(width * height * 4);
-
-        // Remplir avec une couleur jaune semi-transparente
-        for (let i = 0; i < width * height; i++) {
-          data[i * 4] = 255;        // R
-          data[i * 4 + 1] = 200;    // G
-          data[i * 4 + 2] = 0;      // B
-          data[i * 4 + 3] = 128;    // alpha
-        }
-
-        // Ajouter l'image au style
-        this.map?.addImage(e.id, { width, height, data });
-      });
-
-      // Attendre que la carte soit chargée avant d'ajouter le geocoder
-      this.map.on('load', () => {
-        // Create geocoder with any type
-        const geocoder = new MapboxGeocoder({
-          accessToken: environment.mapboxToken,
-          mapboxgl: mapboxgl,
-          marker: false
-        }) as any;  // Use 'any' type to bypass TypeScript errors
-
-        // Add geocoder to the map
-        this.map?.addControl(geocoder as unknown as mapboxgl.IControl);
-
-        geocoder.on('result', (e: any) => {
-          const coordinates = e.result.geometry.coordinates;
-          console.log('Coordinates:', coordinates);
-
-          if (this.map) {
-            this.map.flyTo({
-              center: coordinates,
-              zoom: 14
-            });
-
-            if (this.marker) {
-              this.marker.remove();
-            }
-
-            this.marker = new mapboxgl.Marker()
-              .setLngLat(coordinates)
-              .addTo(this.map);
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.features || data.features.length === 0) {
+            throw new Error('No results found');
           }
-        });
 
-        // Use direct geocoding with fallback
-        try {
-          geocoder.query(address);
-        } catch (error) {
-          console.error('Error using geocoder.query:', error);
-          this.geocodeAddress(address);
-        }
-      });
-    }
-  }
-
-  private geocodeAddress(address: string) {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (data.features && data.features.length > 0) {
           const coordinates = data.features[0].center;
 
-          if (this.map) {
-            this.map.flyTo({
-              center: coordinates,
-              zoom: 14
+          // 2. Créer la carte avec les bonnes coordonnées directement
+          this.map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: coordinates,
+            zoom: 14
+          });
+
+          // 3. Ajouter le marqueur
+          this.marker = new mapboxgl.Marker()
+            .setLngLat(coordinates)
+            .addTo(this.map);
+
+          // 4. Optionnel : ajouter le geocoder
+          this.map.on('load', () => {
+            const geocoder = new MapboxGeocoder({
+              accessToken: environment.mapboxToken,
+              mapboxgl: mapboxgl,
+              marker: false
+            }) as any;
+
+            this.map?.addControl(geocoder as unknown as mapboxgl.IControl);
+
+            geocoder.on('result', (e: any) => {
+              const coords = e.result.geometry.coordinates;
+
+              this.map?.flyTo({
+                center: coords,
+                zoom: 14
+              });
+
+              if (this.marker) this.marker.remove();
+
+              if (this.map instanceof mapboxgl.Map) {
+                this.marker = new mapboxgl.Marker()
+                  .setLngLat(coords)
+                  .addTo(this.map);
+              }
             });
+          });
 
-            if (this.marker) {
-              this.marker.remove();
-            }
-
-            this.marker = new mapboxgl.Marker()
-              .setLngLat(coordinates)
-              .addTo(this.map);
-          }
-        }
-      })
-      .catch(error => {
-        console.error('Error geocoding address:', error);
-      });
+        })
+        .catch(error => {
+          console.error('Error fetching geocoding data:', error);
+        });
+    }
   }
 
   onClose() {

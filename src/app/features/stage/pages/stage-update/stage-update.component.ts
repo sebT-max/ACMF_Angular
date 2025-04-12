@@ -26,13 +26,13 @@ export class StageUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.stageUpdateCreationForm = this.fb.group({
-      dateDebut: ['', Validators.required],
-      dateFin: ['', Validators.required],
+      dateDeStage: [[], Validators.required],
       city: ['', Validators.required],
       street: ['', Validators.required],
       arrondissement: ['', Validators.required],
       capacity: [0, [Validators.required, Validators.min(1)]],
-      price: [0, [Validators.required, Validators.min(0)]]
+      price: [0, [Validators.required, Validators.min(0)]],
+      organisation: [0, [Validators.required]]
     });
   }
   ngOnInit(): void {
@@ -56,8 +56,16 @@ export class StageUpdateComponent implements OnInit {
   // Soumettre la mise à jour du stage
   handleUpdateStageCreation(): void {
     if (this.stageUpdateCreationForm.valid && this.id !== undefined) {
-      const updatedStage = this.stageUpdateCreationForm.value;
-      this.stageService.updateStage(this.id, updatedStage).subscribe({
+      const formData = { ...this.stageUpdateCreationForm.value };
+
+      if (formData.dateDeStage?.length === 2) {
+        const [dateDebut, dateFin] = formData.dateDeStage;
+        formData.dateDebut = dateDebut;
+        formData.dateFin = dateFin;
+        delete formData.dateDeStage;
+      }
+
+      this.stageService.updateStage(this.id, formData).subscribe({
         next: () => {
           alert('Stage mis à jour avec succès');
           this.router.navigate(['/dashboard-admin']);

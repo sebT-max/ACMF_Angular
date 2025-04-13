@@ -15,6 +15,12 @@ import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 import {StageUpdateComponent} from '../../features/stage/pages/stage-update/stage-update.component';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {
+  PrivateLinkCreateComponent
+} from '../../features/private-link/pages/private-link-create/private-link-create.component';
+import {
+  PrivateLinkListComponent
+} from '../../features/private-link/pages/private-link-list/private-link-list.component';
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
@@ -25,7 +31,9 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
     DemandeDevisAllComponent,
     InscriptionStatutPipe,
     NgForOf,
-    FaIconComponent
+    FaIconComponent,
+    PrivateLinkCreateComponent,
+    PrivateLinkListComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
@@ -39,7 +47,7 @@ export class AdminDashboardComponent implements OnInit  {
   inscriptions: InscriptionFormModel[] = [];
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
-  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll' = 'inscriptions';
+  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'| 'privateLinks'| 'privateLinksList' = 'inscriptions';
 
 
   ngOnInit(): void {

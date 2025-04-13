@@ -28,6 +28,19 @@
     >
       Demandes de Devis
     </button>
+    <button
+      (click)="activeTab = 'privateLinks'"
+      [class.active]="activeTab === 'privateLinks'"
+    >
+      Créer Liens privés
+    </button>
+    <button
+      (click)="activeTab = 'privateLinksList'"
+      [class.active]="activeTab === 'privateLinksList'"
+    >
+      Liens privés
+    </button>
+
   </div>
 
   <div *ngIf="activeTab === 'inscriptions'" class="tab-content">
@@ -206,4 +219,14 @@
     <h2>Demandes de devis</h2>
     <app-demande-devis-all></app-demande-devis-all>
   </div>
+  <div *ngIf="activeTab === 'privateLinks'" class="tab-content">
+    <h2>Créer un lien privé</h2>
+    <app-private-link></app-private-link>
+  </div>
+
+  <div *ngIf="activeTab === 'privateLinksList'" class="tab-content">
+    <h2>Liens privés</h2>
+    <app-private-link-list></app-private-link-list>
+  </div>
+
 </div>

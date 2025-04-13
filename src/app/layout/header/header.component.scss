@@ -22,9 +22,13 @@ header {
     font-size: 12px;
     text-transform: uppercase;
     color: white;
-    border: none;
+    border: 1px solid white;
     margin: 0px 10px;
     border-radius: 10px;
+  }
+  button:hover{
+    background-color: rgba(0, 0, 0, 0.1215686275);
+    border:1px solid rgb(248, 166, 51);;
   }
 }
 .header_nav_links_container{
@@ -45,10 +49,6 @@ header {
   background: rgb(248, 166, 51);
 }
 
-header button:hover{
-  background-color: rgba(0, 0, 0, 0.1215686275);
-  border:1px solid white;
-}
 header:not(.scrolled) {
   .logo_header{
     width:200px;
@@ -61,9 +61,7 @@ header:not(.scrolled) {
     bottom: -60px;
     left: 10px;
     height: 200px;
-  }
-  button{
-    border:1px solid white;
+    font-size:78px;
   }
 }
 
@@ -78,10 +76,7 @@ header.scrolled {
     position: relative;
     bottom:0px;
     height:160px;
-    font-size:43px;
-  }
-  button{
-    border:1px solid white;
+    font-size:57px;
   }
 }
 

@@ -133,5 +133,30 @@ export const routes: Routes = [
     loadComponent:()=>import('./dashboards/company-dashboard/company-dashboard.component').then(
       (c)=>c.CompanyDashboardComponent,
     )
-  }
+  },
+  {
+    path: 'dashboard-company',
+    loadComponent:()=>import('./dashboards/company-dashboard/company-dashboard.component').then(
+      (c)=>c.CompanyDashboardComponent,
+    )
+  },
+  {
+    path: 'private-links/create',
+    canActivate: [isConnectedGuard], // Peut être protégé par le rôle admin si nécessaire
+    loadComponent: () =>
+      import('./features/private-link/pages/private-link-create/private-link-create.component').then(
+        (c) => c.PrivateLinkCreateComponent
+      ),
+  },
+
+  // Route pour lister les liens privés (accessible par l'admin)
+  {
+    path: 'private-links/list',
+    canActivate: [isConnectedGuard], // Peut être protégé par le rôle admin si nécessaire
+    loadComponent: () =>
+      import('./features/private-link/pages/private-link-list/private-link-list.component').then(
+        (c) => c.PrivateLinkListComponent
+      ),
+  },
+
 ];

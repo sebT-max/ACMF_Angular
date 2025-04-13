@@ -6,22 +6,27 @@
   <table *ngIf="inscriptions.length > 0; else noInscriptions">
     <thead>
     <tr>
-      <th>Détails</th>
+      <th style="width:auto;">Détails</th>
       <th>Type</th>
       <th>Statut</th>
-      <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let inscription of inscriptions">
-      <td>
-        <div style="text-align:left;" *ngIf="inscription.stage; else loading">
-          <strong>Ville :</strong> {{ inscription.stage.city }} <br>
-          <strong>Arrondissement :</strong> {{ inscription.stage.arrondissement }} <br>
-          <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} &  & {{ inscription.stage.dateFin | date:'d MMMM yyyy':'fr' }}<br>
-          <strong>Rue :</strong> {{ inscription.stage.street }} <br>
-          <strong>Organisation :</strong> {{ inscription.stage.organisation }}<br>
-          <strong>Prix :</strong> {{ inscription.stage.price | currency:'EUR' }}
+      <td style="width:50%;">
+        <div id="agencement_details" *ngIf="inscription.stage; else loading">
+          <div style="margin-right:40px;">
+            <strong>Ville :</strong> {{ inscription.stage.city }} <br>
+            <strong>Arrondissement :</strong> {{ inscription.stage.arrondissement }} <br>
+            <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} &  & {{ inscription.stage.dateFin | date:'d MMMM yyyy':'fr' }}<br>
+          </div>
+
+
+          <div>
+            <strong>Rue :</strong> {{ inscription.stage.street }} <br>
+            <strong>Organisation :</strong> {{ inscription.stage.organisation }}<br>
+            <strong>Prix :</strong> {{ inscription.stage.price | currency:'EUR' }}
+          </div>
         </div>
         <ng-template #loading>
           <span>Chargement...</span>
@@ -29,7 +34,7 @@
       </td>
       <td>{{ inscription.stageType }}</td>
       <td>{{ inscription.inscriptionStatut | inscriptionStatut}}</td>
-      <td>
+      <!--<td>
         <button
           (click)="onDeleteInscription(inscription.id)"
           class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
@@ -37,7 +42,7 @@
           <i style="font-size:30px;" class="fa fa-trash"></i>
           Supprimer
         </button>
-      </td>
+      </td>-->
     </tr>
     </tbody>
   </table>

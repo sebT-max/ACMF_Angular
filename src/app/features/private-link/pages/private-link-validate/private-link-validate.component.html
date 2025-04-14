@@ -1,0 +1,19 @@
+<div class="container">
+  <form [formGroup]="linkForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" formControlName="email" class="form-control" id="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="token">Token du lien privé</label>
+      <input type="text" formControlName="token" class="form-control" id="token" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="linkForm.invalid">S'inscrire</button>
+  </form>
+
+  <div *ngIf="message" class="alert alert-danger mt-3">
+    {{ message }}
+  </div>
+</div>

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrivateLinkCreateComponent } from './private-link-create.component';
+import { PrivateLinkCreateComponent } from './private-link-validate.component';
 
-describe('PrivateLinkCreateComponent', () => {
+describe('PrivateLinkComponent', () => {
   let component: PrivateLinkCreateComponent;
   let fixture: ComponentFixture<PrivateLinkCreateComponent>;
 

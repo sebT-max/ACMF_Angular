@@ -1,20 +1,22 @@
 <div class="container">
-  <h2>Inscription via lien privé</h2>
-  <form [formGroup]="linkForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" formControlName="email" class="form-control" id="email" required>
+  <form [formGroup]="createLinkForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="email">Email de l’entreprise</label>
+      <input id="email" class="form-control" formControlName="email" type="email" required>
     </div>
 
-    <div class="form-group">
-      <label for="token">Token du lien privé</label>
-      <input type="text" formControlName="token" class="form-control" id="token" required>
+    <div class="form-group mb-3">
+      <label for="stageId">Stage</label>
+      <select id="stageId" class="form-control" formControlName="stageId" required>
+        <option value="">-- Sélectionner un stage --</option>
+        <option *ngFor="let stage of stages" [value]="stage.id">
+          {{ stage.nom || stage.title || 'Stage ' + stage.id }}
+        </option>
+      </select>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="linkForm.invalid">S'inscrire</button>
+    <button type="submit" class="btn btn-primary" [disabled]="createLinkForm.invalid">Créer le lien</button>
   </form>
 
-  <div *ngIf="message" class="alert alert-danger mt-3">
-    {{ message }}
-  </div>
+  <div *ngIf="message" class="alert alert-info mt-3">{{ message }}</div>
 </div>

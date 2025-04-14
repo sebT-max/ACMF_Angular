@@ -148,6 +148,14 @@ export const routes: Routes = [
         (c) => c.PrivateLinkCreateComponent
       ),
   },
+  {
+    path: 'private-links/validate',
+    canActivate: [isConnectedGuard], // Peut être protégé par le rôle admin si nécessaire
+    loadComponent: () =>
+      import('./features/private-link/pages/private-link-validate/private-link-validate.component').then(
+        (c) => c.PrivateLinkValidateComponent
+      ),
+  },
 
   // Route pour lister les liens privés (accessible par l'admin)
   {

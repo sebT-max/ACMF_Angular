@@ -3,25 +3,21 @@ import {InscriptionService} from '../../features/inscription/inscription-service
 import {StageService} from '../../features/stage/services/stage.service';
 import {InscriptionFormModel} from '../../features/inscription/models/inscription-form.model';
 import {StageDetailsModel} from '../../features/stage/models/stage-details-model';
-import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import {DatePipe,NgForOf, NgIf} from '@angular/common';
 import {API_URL} from '../../core/constants/api-constant';
 import {Router, RouterLink} from '@angular/router';
 import {CodePromoCreateComponent} from '../../features/code-promo/pages/code-promo-create/code-promo-create.component';
-import {DemandeDevisComponent} from '../../features/demande-devis/pages/demande-devis-create/demande-devis.component';
-import {
-  DemandeDevisAllComponent
-} from '../../features/demande-devis/pages/demande-devis-all/demande-devis-all.component';
+import {DemandeDevisAllComponent} from '../../features/demande-devis/pages/demande-devis-all/demande-devis-all.component';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
-import {StageUpdateComponent} from '../../features/stage/pages/stage-update/stage-update.component';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {
-  PrivateLinkCreateComponent
-} from '../../features/private-link/pages/private-link-create/private-link-create.component';
-import {
-  PrivateLinkListComponent
-} from '../../features/private-link/pages/private-link-list/private-link-list.component';
+import {PrivateLinkListComponent} from '../../features/private-link/pages/private-link-list/private-link-list.component';
 import {FactureComponent} from '../../features/facture/facture.component';
+import {PrivateLinkCreateComponent} from '../../features/private-link/pages/private-link-create/private-link-create.component';
+import {
+  ConvocationCreateComponent
+} from '../../features/convocation/pages/convocation-create/convocation-create.component';
+
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
@@ -35,7 +31,9 @@ import {FactureComponent} from '../../features/facture/facture.component';
     FaIconComponent,
     PrivateLinkCreateComponent,
     PrivateLinkListComponent,
-    FactureComponent
+    FactureComponent,
+    PrivateLinkCreateComponent,
+    ConvocationCreateComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
@@ -49,7 +47,7 @@ export class AdminDashboardComponent implements OnInit  {
   inscriptions: InscriptionFormModel[] = [];
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
-  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinks'| 'privateLinksList' = 'inscriptions';
+  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinksCreate'| 'privateLinksList'|'convocations' = 'inscriptions';
 
 
   ngOnInit(): void {

@@ -55,6 +55,15 @@ export class AuthService {
       }
     }
   }
+  // Récupérer l'entreprise par email
+  getCompanyByEmail(email: string): Observable<CompanyTokenModel> {
+    return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`).pipe(
+      tap((resp: CompanyTokenModel) => {
+        this.currentCompany.set(resp);
+        localStorage.setItem('currentCompany', JSON.stringify(resp));
+      })
+    );
+  }
 
   // Vérifier si un utilisateur ou une entreprise est authentifié
   isAuthenticated(): boolean {

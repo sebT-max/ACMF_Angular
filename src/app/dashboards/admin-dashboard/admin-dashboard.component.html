@@ -35,8 +35,8 @@
       Créer Facture
     </button>
     <button
-      (click)="activeTab = 'privateLinks'"
-      [class.active]="activeTab === 'privateLinks'"
+      (click)="activeTab = 'privateLinksCreate'"
+      [class.active]="activeTab === 'privateLinksCreate'"
     >
       Créer Liens privés
     </button>
@@ -45,6 +45,12 @@
       [class.active]="activeTab === 'privateLinksList'"
     >
       Liens privés
+    </button>
+    <button
+      (click)="activeTab = 'convocations'"
+      [class.active]="activeTab === 'convocations'"
+    >
+      Créer Convocation
     </button>
 
   </div>
@@ -156,7 +162,6 @@
     </table>
     }
     @else{
-
     <ng-template #noInscriptions>
       <p>Aucune inscription trouvée.</p>
     </ng-template>
@@ -229,14 +234,18 @@
     <h2>Factures</h2>
     <app-facture></app-facture>
   </div>
-  <div *ngIf="activeTab === 'privateLinks'" class="tab-content">
+  <div *ngIf="activeTab === 'privateLinksCreate'" class="tab-content">
     <h2>Créer un lien privé</h2>
-    <app-private-link></app-private-link>
+    <app-private-link-create></app-private-link-create>
   </div>
 
   <div *ngIf="activeTab === 'privateLinksList'" class="tab-content">
     <h2>Liens privés</h2>
     <app-private-link-list></app-private-link-list>
+  </div>
+  <div *ngIf="activeTab === 'convocations'" class="tab-content">
+    <h2>Créer une convocations</h2>
+    <app-convocation-create></app-convocation-create>
   </div>
 
 </div>

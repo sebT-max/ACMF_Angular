@@ -16,21 +16,21 @@ export class PrivateLinkService {
   // Créer un lien privé
   createPrivateLink(entrepriseId: number, stageId: number): Observable<any> {
     const payload = { entrepriseId, stageId };
-    return this._httpClient.post<any>(`${API_URL}/create`, payload);
+    return this._httpClient.post<any>(`${API_URL}privateLinks/create`, payload);
   }
 
   // Vérifier la validité d'un lien privé avec son token
   validatePrivateLink(token: string): Observable<any> {
-    return this._httpClient.get<any>(`${API_URL}/validate/${token}`);
+    return this._httpClient.get<any>(`${API_URL}privateLinks/validate/${token}`);
   }
   // Récupérer la liste des liens privés
 
   getPrivateLinks(): Observable<any[]> {
-    return this._httpClient.get<any[]>(`${API_URL}/list`);
+    return this._httpClient.get<any[]>(`${API_URL}particulier/private-links`);
   }
   // Optionnel : une méthode pour désactiver un lien privé
   deactivatePrivateLink(linkId: number): Observable<any> {
-    return this._httpClient.put<any[]>(`${API_URL}/deactivate/${linkId}`, {});
+    return this._httpClient.put<any[]>(`${API_URL}company/deactivate/${linkId}`, {});
   }
 
 }

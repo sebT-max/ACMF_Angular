@@ -125,7 +125,6 @@ table tr:nth-child(even) {
 h1{
   text-align:center;
   color:white;
-  width:52%;
   padding:10px;
   margin:0 auto;
   border:3px solid white;
@@ -164,8 +163,14 @@ h1{
   padding:10px;
   margin-top:20px;
   a{
-    color:white;
+    color: #383f4e;
     text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover{
+    color: #383f4e;
+    text-decoration: none;
+    font-weight: 600;
   }
 }
 
@@ -173,6 +178,7 @@ h1{
   font-family: "Yesteryear", cursive;
   font-weight: 400;
   font-style: italic;
+  font-size: 32px;
 }
 
 //CARDS
@@ -186,6 +192,27 @@ h1{
     text-decoration: none;
   }
 }
+
+.bg_white{
+  background: #ffffff;
+}
+.bg_transparent_37{
+  background: #292c32;;
+}
+.aside_form{
+  width: 30%;
+  background: rgba(0, 0, 0, 0.37);
+  padding: 40px;
+  border-radius: 10px;
+  margin-right:20px;
+  p{
+    color:whitesmoke;
+    font-size:24px;
+    line-height:50px;
+  }
+
+}
+
 
 .card {
   background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);

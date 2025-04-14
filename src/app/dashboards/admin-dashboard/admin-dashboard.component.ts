@@ -21,6 +21,7 @@ import {
 import {
   PrivateLinkListComponent
 } from '../../features/private-link/pages/private-link-list/private-link-list.component';
+import {FactureComponent} from '../../features/facture/facture.component';
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
@@ -33,7 +34,8 @@ import {
     NgForOf,
     FaIconComponent,
     PrivateLinkCreateComponent,
-    PrivateLinkListComponent
+    PrivateLinkListComponent,
+    FactureComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
@@ -47,7 +49,7 @@ export class AdminDashboardComponent implements OnInit  {
   inscriptions: InscriptionFormModel[] = [];
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
-  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'| 'privateLinks'| 'privateLinksList' = 'inscriptions';
+  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinks'| 'privateLinksList' = 'inscriptions';
 
 
   ngOnInit(): void {

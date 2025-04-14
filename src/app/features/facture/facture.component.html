@@ -1,0 +1,28 @@
+
+<form>
+  <input type="text" name="nomEntreprise" placeholder="Nom de l'entreprise" [(ngModel)]="entreprise.nom"><br><br>
+  <input type="text" name="adresseEntreprise" placeholder="Adresse" [(ngModel)]="entreprise.adresse"><br><br>
+  <input type="text" name="tvaEntreprise" placeholder="Numéro TVA" [(ngModel)]="entreprise.tva"><br><br>
+</form>
+
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Quantité</th>
+    <th>Prix unitaire (€)</th>
+    <th>Total (€)</th>
+  </tr>
+  <tr *ngFor="let ligne of lignes; let i = index">
+    <td id="description_ligne_facture"><input [(ngModel)]="ligne.description" name="desc{{i}}"></td>
+    <td id="quantité_ligne_facture"><input type="number" [(ngModel)]="ligne.quantite" name="quantite{{i}}"></td>
+    <td id="prix_unitaire_ligne_facture"><input type="number" [(ngModel)]="ligne.prixUnitaire" name="prix{{i}}"></td>
+    <td id="total_ligne_facture">{{ ligne.quantite * ligne.prixUnitaire | number:'1.2-2' }}</td>
+  </tr>
+
+</table>
+<br/>
+<button (click)="addLigne()">+ Ajouter une ligne</button>
+<br/>
+<h1>Total : {{ total() | number:'1.2-2' }} €</h1>
+
+<button (click)="generatePDF()">Générer la facture PDF</button>

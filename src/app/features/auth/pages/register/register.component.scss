@@ -1,11 +1,24 @@
-#register_form{
-  display:flex;
-  flex-wrap:wrap;
-  button{
-    margin:0 auto;
-    margin-top:40px;
+
+#user_register_form_container{
+  width:80%;
+  form{
+    width:80%;
   }
 }
-h1{
-  background: #222730;
+
+#user_register_form{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border: 0.1px solid white;
+  box-shadow: 0px 0px 1px white;
+  border-radius: 10px;
+  div{
+    margin:20px;
+  }
+  h1{
+    background:transparent;
+    width:300px;
+  }
 }

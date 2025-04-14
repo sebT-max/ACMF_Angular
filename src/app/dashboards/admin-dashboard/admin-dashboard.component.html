@@ -29,6 +29,12 @@
       Demandes de Devis
     </button>
     <button
+      (click)="activeTab = 'Factures'"
+      [class.active]="activeTab === 'Factures'"
+    >
+      Créer Facture
+    </button>
+    <button
       (click)="activeTab = 'privateLinks'"
       [class.active]="activeTab === 'privateLinks'"
     >
@@ -218,6 +224,10 @@
   <div *ngIf="activeTab === 'demandeDevisAll'" class="tab-content">
     <h2>Demandes de devis</h2>
     <app-demande-devis-all></app-demande-devis-all>
+  </div>
+  <div *ngIf="activeTab === 'Factures'" class="tab-content">
+    <h2>Factures</h2>
+    <app-facture></app-facture>
   </div>
   <div *ngIf="activeTab === 'privateLinks'" class="tab-content">
     <h2>Créer un lien privé</h2>

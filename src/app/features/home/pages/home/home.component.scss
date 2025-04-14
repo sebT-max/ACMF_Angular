@@ -10,7 +10,7 @@
   font-family: "Montserrat", sans-serif;
   div{
     padding: 0px 0px;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 34px;
     background: rgba(0, 0, 0, 0.1);
   }
@@ -95,77 +95,81 @@ p{
 
 .journey_catalogue_button{
   font-size: 16px;
-  padding: 24px;
+  padding: 10px;
   text-transform: uppercase;
-  border: 5px double whitesmoke;
+  border: 5px double rgba(0, 0, 0, 0.1);
   width: auto;
   margin: 0 auto;
   margin-bottom: 50px;
-  background: rgba(0, 0, 0, 0.1215686275);
+  background: white;
+  border-radius: 10px;
 &:hover{
-  background: rgba(0, 0, 0, 0.37);
-  }
+  border: 5px double rgba(0, 0, 0, 0.2);
+}
 }
 
 #main_title{
-  background:transparent;
-  width:100%;
-  text-align:center;
-  font-size:80px;
-  transform: rotate(-10deg);
-  display: inline-block;
-  border:none;
+background:transparent;
+width:100%;
+text-align:center;
+font-size:80px;
+transform: rotate(-10deg);
+display: inline-block;
+border:none;
 }
 
 .booking_button {
-  width: 30%;
-  background: rgba(0, 0, 0, 0.1215686275);
-  color: white;
-  font-size: 30px;
-  border: 3px solid whitesmoke;
+width: 30%;
+background: rgba(0, 0, 0, 0.1215686275);
+color: white;
+font-size: 30px;
+border: 3px solid whitesmoke;
 
 &:hover {
-  background: rgba(0, 0, 0, 0.37);
-  border: 3px solid white;
-  }
+background: rgba(0, 0, 0, 0.37);
+border: 3px solid white;
+}
 }
 
 #infos-home-aside{
   background-color: #f8a733;
   color: #383f4e;
-  line-height: 30px;
   text-align:left;
-  width:60%;
+  width:100%;
+
   p{
     margin:20px;
+    line-height: 30px;
+    font-size: 20px;
+    text-align:left;
   }
 }
 
 #home_contact_datas{
-  padding:20px;
-  width:100%;
-  text-align:center;
-  margin:0 auto;
-  margin-bottom:20px;
-  h2{
-    background:transparent;
-    border:1px solid white;
-    margin-bottom:20px;
-  }
+padding:20px;
+width:100%;
+text-align:center;
+margin:0 auto;
+margin-bottom:20px;
+h2{
+background:transparent;
+border:1px solid white;
+margin-bottom:20px;
+}
 }
 .call_to_register_home_bottom_container{
-  background: #292c32;
-  padding: 20px 20%;
-  color: white;
+background: #292c32;
+padding: 20px 20%;
+color: white;
 
 
 
-  button{
-    color:white;
-  }
+button{
+color:white;
+}
 }
 
 .call_to_register_home_bottom_container_button{
-  display:flex;
-  justify-content: center;
+display:flex;
+justify-content: center;
 }

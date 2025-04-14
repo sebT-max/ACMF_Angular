@@ -10,41 +10,39 @@
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   &:hover{
-    border:2px solid white;
+    border-left:1px solid white;
   }
 }
 .inscription_button{
-  background-color: #f8a633;
-  width: 200px;
-  font-size: 23px;
+  width: 140px;
+  font-size: 20px;
   align-items: center;
-  background-color: #f8a633;
   border: 1px solid white;
   color: #2d333b;
-  padding: 10px;
+  padding: 8px;
   border-radius: 3px;
+  background-color: #f8a633;
+
 }
 .details_button{
-  width: 200px;
-  font-size: 23px;
+  width: 140px;
+  font-size: 20px;
   align-items: center;
   background-color: #e0e4e9;
   border: 1px solid white;
   color: #2d333b;
-  padding: 10px;
+  padding: 8px;
   border-radius: 3px;
 }
 .close_button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 16px;
-  cursor: pointer;
-  height: 100px;
+  width: 140px;
+  font-size: 20px;
   align-items: center;
-  font-size: 24px;
-  margin-top: 24px;
-  border-radius: 4px;
+  background-color: #e0e4e9;
+  border: 1px solid white;
+  color: #2d333b;
+  padding: 8px;
+  border-radius: 3px;
 }
 
 .close_button:hover {
@@ -56,10 +54,9 @@
 }
 
 .card_stages {
-  border: 1px solid #ccc;
-  padding: 20px;
-  font-size:20px;
-  margin:0 auto;
+  padding: 12px;
+  font-size: 16px;
+  margin: 0 auto;
 }
 
 h1{
@@ -77,14 +74,24 @@ h1{
   padding: 10px;
 }
 .card_stages_all_datas{
-  width:80%;
-  padding:20px;
+  width: 80%;
+  padding: 10px 20px;
 }
 
-#city_filter{
+#stage_filters{
   padding: 10px;
   border-radius: 10px;
-  width:100%;
+  width:18%;
+  margin:0 auto;
+  float:right;
+  margin-right:40px;
+  input{
+    padding: 10px;
+    border-radius: 10px;
+    width:100%;
+    margin:0 auto;
+    margin-bottom: 10px;
+  }
 }
 
 

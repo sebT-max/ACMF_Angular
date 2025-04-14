@@ -1,47 +1,56 @@
-<h1>Inscription en tant que particulier</h1>
-<form [formGroup]="registerForm"  id="register_form" (ngSubmit)="handleRegisterFormSubmit()">
+<div class="flexCenter" id="user_register_form_container">
+  <div class="aside_form">
+    <h1>Inscription en tant que particulier</h1>
+    <p>Vous devez vous enregistrer afin de vous inscrire à l'un de nos stages </p>
 
-  <div>
-    <label for="lastname">Nom : </label>
-    <input id="lastname" name="lastname" type="text" placeholder="Nom" formControlName="lastname" />
   </div>
   <div>
-    <label for="firstname">Prénom</label>
-    <input id="firstname" name="firstname" type="text" placeholder="Prénom" formControlName="firstname" required />
-  </div>
-  <div>
-    <label for="email">email</label>
-    <input id="email" name="email" type="email" placeholder="email" formControlName="email" required />
-  </div>
+    <form [formGroup]="registerForm"  id="user_register_form" (ngSubmit)="handleRegisterFormSubmit()">
 
-  <div>
-    <label for="password">Mot de passe</label>
-    <input id="password" name="password" type="password" placeholder="Mot de passe" formControlName="password" required />
-    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
-      <span *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
-      <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
-    </div>
+      <div>
+        <label for="lastname">Nom : </label>
+        <input id="lastname" name="lastname" type="text" placeholder="Nom" formControlName="lastname" />
+      </div>
+      <div>
+        <label for="firstname">Prénom</label>
+        <input id="firstname" name="firstname" type="text" placeholder="Prénom" formControlName="firstname" required />
+      </div>
+      <div>
+        <label for="email">email</label>
+        <input id="email" name="email" type="email" placeholder="email" formControlName="email" required />
+      </div>
+
+
+      <div>
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" placeholder="Mot de passe" formControlName="password" required />
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+          <span *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
+          <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
+        </div>
+      </div>
+      <div>
+        <label for="birthDate">Date de naissance</label>
+       <input id="birthDate" name="birthDate" type="date" placeholder="Date de naissance" formControlName="birthDate" required />
+      </div>
+      <div>
+        <label for="telephone">Contact</label>
+        <input id="telephone" name="telephone" type="string" placeholder="Téléphone" formControlName="telephone" required />
+      </div>
+      <div class="flexCenter" style="margin-top:20px;">
+        <input
+          id="acceptTerms"
+          name="acceptTerms"
+          type="checkbox"
+          formControlName="acceptTerms"
+          required
+        />
+        <span> <br/>Je suis d'accord avec les conditions RGPD</span>
+      </div>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      <button type="submit">S'enregistrer</button>
+    </form>
   </div>
-  <div>
-    <label for="birthDate">Date de naissance</label>
-   <input id="birthDate" name="birthDate" type="date" placeholder="Date de naissance" formControlName="birthDate" required />
-  </div>
-  <div>
-    <label for="telephone">Contact</label>
-    <input id="telephone" name="telephone" type="string" placeholder="Téléphone" formControlName="telephone" required />
-  </div>
-  <div class="flexCenter" style="margin-top:20px;">
-    <input
-      id="acceptTerms"
-      name="acceptTerms"
-      type="checkbox"
-      formControlName="acceptTerms"
-      required
-    />
-    <span> <br/>Je suis d'accord avec les conditions RGPD</span>
-  </div>
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
-  </div>
-  <button type="submit">S'enregistrer</button>
-</form>
+</div>

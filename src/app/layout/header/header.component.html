@@ -1,7 +1,7 @@
 <header [class.scrolled]="isScrolled">
   <div class="logo_header">
     <div routerLink="/" id="logo_acf">
-      <div>ACF</div>
+      <div class="yesteryear-regular">Actions Conduite France</div>
     </div>
   </div>
   <div class="header_nav_links_container">
@@ -41,7 +41,7 @@
     @if(userConnected()?.role?.name === 'ADMIN'){
       <button routerLink="dashboard-admin">Mon espace admin</button>
     }
-    @if(companyConnected()){
+    @if(userConnected()?.role?.name === 'ENTREPRISE' || companyConnected()){
       <button routerLink="dashboard-company">Mon espace professionnel</button>
     }
     @if(userConnected()?.role?.name === 'PARTICULIER'){

@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { UserFormModel } from '../../models/user-form.model';
 import {RegisterFormModel} from '../../models/register-form.model';
 import {NgIf} from '@angular/common';
@@ -17,7 +17,7 @@ import {catchError} from 'rxjs';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })

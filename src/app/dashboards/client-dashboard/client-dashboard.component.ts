@@ -7,25 +7,27 @@ import {InscriptionFormModel} from '../../features/inscription/models/inscriptio
 import {CommonModule, DatePipe, NgClass} from '@angular/common';
 import {TokenModel} from '../../features/auth/models/token.model';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
+import {CodePromoCreateComponent} from '../../features/code-promo/pages/code-promo-create/code-promo-create.component';
+import {DocumentMeComponent} from '../../features/document/pages/document-me/document-me.component';
 
 @Component({
   selector: 'app-client-dashboard',
   imports: [
     DatePipe,
     CommonModule,
-    InscriptionStatutPipe
+    InscriptionStatutPipe,
+    CodePromoCreateComponent,
+    DocumentMeComponent
   ],
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.scss'
 })
 export class ClientDashboardComponent implements OnInit {
-  private readonly _inscriptionService = inject(InscriptionService);
-  private readonly _stageService = inject(StageService);
-  private readonly _router: Router = inject(Router);
-
-
   inscriptions: InscriptionFormModel[] = [];
-  stagesDetails: { [key: number]: StageDetailsModel } = {}; // Stocke les détails des stages
+  activeTab: 'inscription' | 'documents' = 'inscription';
+
+
+  constructor(private _inscriptionService: InscriptionService) {}
 
   ngOnInit(): void {
     this.loadInscriptions();
@@ -33,52 +35,31 @@ export class ClientDashboardComponent implements OnInit {
 
   loadInscriptions(): void {
     this._inscriptionService.getMyInscriptions().subscribe({
-      next: (inscriptions) => {
-        console.log("Inscriptions récupérées :", inscriptions);
-        this.inscriptions = inscriptions;
-        this.loadStagesDetails(); // Charger les détails des stages après avoir récupéré les inscriptions
+      next: (data) => {
+        console.log('Inscriptions récupérées :', data); // <-- Ajoute ceci
+        this.inscriptions = data;
       },
-      error: (err) => {
-        console.error('Erreur lors du chargement des inscriptions', err);
-      }
+      error: (err) => console.error('Erreur lors du chargement des inscriptions', err)
     });
   }
 
-  loadStagesDetails(): void {
-    this.inscriptions.forEach(inscription => {
-      if (inscription.stageId != null && !this.stagesDetails[inscription.stageId]) {
-        console.log(`Chargement des détails du stage ${inscription.stageId}`);
-        this._stageService.getStageById(inscription.stageId).subscribe({
-          next: (stage) => {
-            console.log(`Détails du stage ${inscription.stageId} récupérés:`, stage);
-            this.stagesDetails[inscription.stageId!] = stage; // "!" pour TypeScript
-          },
-          error: (err) => {
-            console.error(`Erreur lors du chargement du stage ${inscription.stageId}`, err);
-          }
-        });
-      }
-    });
-  }
 
-  onDeleteInscription(id: number | undefined): void {
+  /*deleteInscription(inscription: InscriptionFormModel): void {
+    if (inscription.id === undefined) {
+      console.error('ID d\'inscription manquant');
+      return;
+    }
 
-    if (confirm('Es-tu sûr de vouloir supprimer cet élément ?')) {
-      console.log('Suppression en cours...');
-
-      this._inscriptionService.deleteInscription(id).subscribe({
+    if (confirm('Confirmer la suppression de cette inscription ?')) {
+      this._inscriptionService.deleteInscription(inscription.id).subscribe({
         next: () => {
-          alert('Élément supprimé avec succès.');
-          // Rediriger si besoin :
-          this.inscriptions = this.inscriptions.filter(i => i.id !== id);
-
-          this._router.navigate(['/dashboard-client']);
+          // Mise à jour de la liste après suppression
+          this.inscriptions = this.inscriptions.filter(i => i.id !== inscription.id);
         },
         error: (err) => {
-          console.error('Erreur lors de la suppression :', err);
-          alert("Une erreur est survenue lors de la suppression.");
+          console.error('Erreur lors de la suppression', err);
         }
       });
     }
-  }
+  }*/
 }

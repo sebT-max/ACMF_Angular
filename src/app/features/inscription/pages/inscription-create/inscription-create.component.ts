@@ -95,20 +95,23 @@ export class InscriptionCreateComponent implements OnInit {
       error: (err: any) => console.error('Erreur d’envoi de fichiers :', err)
     });
   }
-
   handleInscription(): void {
-    if (this.inscriptionCreationForm.invalid) return;
-
     const user = this.currentUser();
     if (!user) {
       console.error('Utilisateur non trouvé');
       return;
     }
 
+    // Patch avant la validation
     this.inscriptionCreationForm.patchValue({
       userId: user.id,
       stageId: this.stageId
     });
+
+    if (this.inscriptionCreationForm.invalid) {
+      console.warn('Formulaire invalide');
+      return;
+    }
 
     const stageType = this.inscriptionCreationForm.value.stageType;
 
@@ -117,12 +120,12 @@ export class InscriptionCreateComponent implements OnInit {
       stageId: this.inscriptionCreationForm.value.stageId,
       stageType: stageType,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
+      documents: [] // même vide
     };
 
     const formData = new FormData();
     formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
 
-    // Cas spécifiques : on n’ajoute les fichiers que s’il y en a ET si c’est pertinent
     const shouldSendFiles =
       this.uploadedFiles.length > 0 &&
       (stageType === 'TRIBUNAL' || stageType === 'PROBATOIRE');
@@ -135,10 +138,13 @@ export class InscriptionCreateComponent implements OnInit {
 
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
-        console.log('Inscription avec ou sans fichiers réussie', resp);
+        console.log('Inscription réussie', resp);
         this._router.navigate(['/stages/all']);
       },
-      error: (err) => console.error('Erreur lors de l’inscription', err)
+      error: (err) => {
+        console.error('Erreur lors de l’inscription', err);
+      }
     });
   }
+
 }

@@ -106,7 +106,7 @@
             <td>
             <ng-container >
               <div *ngFor="let doc of inscription.documents">
-                <button class="text-primary" (click)="viewFile(doc.url)">
+                <button class="text-primary" (click)="viewFile(doc.fileUrl)">
                   {{ doc.type }}
                 </button>
               </div>

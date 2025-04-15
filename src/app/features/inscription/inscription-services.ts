@@ -13,65 +13,57 @@ export class InscriptionService {
   private _httpClient: HttpClient = inject(HttpClient);
   private _authService: AuthService = inject(AuthService);
 
-  /**
-   * Crée une inscription avec envoi de données et fichiers (multipart/form-data)
-   */
-  createInscription(formData: FormData): Observable<CreateInscriptionResponseBody> {
-    const headers = this._authService.getAuthOptions().headers;
-    const authOptions = { headers };
+  private getAuthHeaders(): { headers: HttpHeaders } {
+    return this._authService.getAuthOptions();
+  }
 
+  createInscription(formData: FormData): Observable<CreateInscriptionResponseBody> {
     return this._httpClient.post<CreateInscriptionResponseBody>(
       `${API_URL}inscriptions/create`,
       formData,
-      authOptions
+      this.getAuthHeaders()
     );
   }
 
-  /**
-   * Récupère les inscriptions du client connecté
-   */
   getMyInscriptions(): Observable<InscriptionFormModel[]> {
     return this._httpClient.get<InscriptionFormModel[]>(
       `${API_URL}inscriptions/me`,
-      this._authService.getAuthOptions()
+      this.getAuthHeaders()
     );
   }
 
-  /**
-   * Récupère toutes les inscriptions (admin)
-   */
   getAllInscriptions(): Observable<InscriptionFormModel[]> {
     return this._httpClient.get<InscriptionFormModel[]>(
       `${API_URL}inscriptions/all`,
-      this._authService.getAuthOptions()
+      this.getAuthHeaders()
     );
   }
 
-  /**
-   * Supprime une inscription
-   */
-  deleteInscription(id: number | undefined): Observable<void> {
+  getInscriptionById(id: number): Observable<InscriptionFormModel> {
+    return this._httpClient.get<InscriptionFormModel>(
+      `${API_URL}inscriptions/${id}`,
+      this.getAuthHeaders()
+    );
+  }
+
+  deleteInscription(id: number): Observable<void> {
+    if (!id) throw new Error("ID requis pour supprimer une inscription");
     return this._httpClient.delete<void>(
       `${API_URL}inscriptions/delete/${id}`,
-      this._authService.getAuthOptions()
+      this.getAuthHeaders()
     );
   }
 
-  /**
-   * Valide une inscription
-   */
   validateInscription(id: number): Observable<InscriptionFormModel> {
     return this._httpClient.patch<InscriptionFormModel>(
       `${API_URL}inscriptions/${id}/validate`,
       {},
-      this._authService.getAuthOptions()
+      this.getAuthHeaders()
     );
   }
 
-  /**
-   * Récupère l'URL d'un fichier lié à une inscription
-   */
   getInscriptionPdfUrl(fileName: string): string {
     return `${API_URL}inscriptions/file/${fileName}`;
   }
 }
+

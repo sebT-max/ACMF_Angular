@@ -17,6 +17,7 @@ import {PrivateLinkCreateComponent} from '../../features/private-link/pages/priv
 import {
   ConvocationCreateComponent
 } from '../../features/convocation/pages/convocation-create/convocation-create.component';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -53,6 +54,11 @@ export class AdminDashboardComponent implements OnInit  {
   ngOnInit(): void {
     this.loadInscriptions();
     this.loadStages();
+  }
+  constructor(private sanitizer: DomSanitizer) {}
+
+  getSafeUrl(url: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   loadInscriptions(): void {

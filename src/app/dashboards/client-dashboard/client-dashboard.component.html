@@ -1,53 +1,79 @@
 <div class="dashboard_client">
   <h1>Bienvenue sur votre espace client</h1>
 
-  <h2>Mes inscriptions</h2>
+  <div class="tabs">
+    <button
+      (click)="activeTab = 'inscription'"
+      [class.active]="activeTab === 'inscription'"
+    >
+      Inscriptions
+    </button>
 
-  <table *ngIf="inscriptions.length > 0; else noInscriptions">
-    <thead>
-    <tr>
-      <th style="width:auto;">Détails</th>
-      <th>Type</th>
-      <th>Statut</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let inscription of inscriptions">
-      <td style="width:50%;">
-        <div id="agencement_details" *ngIf="inscription.stage; else loading">
-          <div style="margin-right:40px;">
-            <strong>Ville :</strong> {{ inscription.stage.city }} <br>
-            <strong>Arrondissement :</strong> {{ inscription.stage.arrondissement }} <br>
-            <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} &  & {{ inscription.stage.dateFin | date:'d MMMM yyyy':'fr' }}<br>
-          </div>
+    <button
+      (click)="activeTab = 'documents'"
+      [class.active]="activeTab === 'documents'"
+    >
+      Documents
+    </button>
+  </div>
+
+    <div *ngIf="activeTab === 'inscription'" class="tab-content">
+      <h2>Inscriptions</h2>
+      @if (inscriptions.length > 0) {
+      <table>
+        <thead>
+        <tr>
+          <th style="width:auto;">Détails</th>
+          <th>Type</th>
+          <th>Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let inscription of inscriptions">
+          <td style="width:50%;">
+            <div id="agencement_details" *ngIf="inscription.stage; else loading">
+              <div style="margin-right:40px;">
+                <strong>Ville :</strong> {{ inscription.stage.city }} <br>
+                <strong>Arrondissement :</strong> {{ inscription.stage.arrondissement }} <br>
+                <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} &  & {{ inscription.stage.dateFin | date:'d MMMM yyyy':'fr' }}<br>
+              </div>
 
 
-          <div>
-            <strong>Rue :</strong> {{ inscription.stage.street }} <br>
-            <strong>Organisation :</strong> {{ inscription.stage.organisation }}<br>
-            <strong>Prix :</strong> {{ inscription.stage.price | currency:'EUR' }}
-          </div>
-        </div>
-        <ng-template #loading>
-          <span>Chargement...</span>
+              <div>
+                <strong>Rue :</strong> {{ inscription.stage.street }} <br>
+                <strong>Organisation :</strong> {{ inscription.stage.organisation }}<br>
+                <strong>Prix :</strong> {{ inscription.stage.price | currency:'EUR' }}
+              </div>
+            </div>
+            <ng-template #loading>
+              <span>Chargement...</span>
+            </ng-template>
+          </td>
+          <td>{{ inscription.stageType }}</td>
+          <td>{{ inscription.inscriptionStatut | inscriptionStatut}}</td>
+          <!--<td>
+            <button
+              (click)="onDeleteInscription(inscription.id)"
+              class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+            >
+              <i style="font-size:30px;" class="fa fa-trash"></i>
+              Supprimer
+            </button>
+          </td>-->
+        </tr>
+        </tbody>
+      </table>
+      }
+      @else{
+        <ng-template #noInscriptions>
+          <p>Aucune inscription trouvée.</p>
         </ng-template>
-      </td>
-      <td>{{ inscription.stageType }}</td>
-      <td>{{ inscription.inscriptionStatut | inscriptionStatut}}</td>
-      <!--<td>
-        <button
-          (click)="onDeleteInscription(inscription.id)"
-          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
-        >
-          <i style="font-size:30px;" class="fa fa-trash"></i>
-          Supprimer
-        </button>
-      </td>-->
-    </tr>
-    </tbody>
-  </table>
+      }
+      </div>
+      <div *ngIf="activeTab === 'documents'" class="tab-content">
+        <h2>Mes documents</h2>
+        <app-document-me></app-document-me>
+      </div>
+    </div>
 
-  <ng-template #noInscriptions>
-    <p>Aucune inscription trouvée.</p>
-  </ng-template>
-</div>
+

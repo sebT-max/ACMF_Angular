@@ -65,6 +65,11 @@ export class CompanyDashboardComponent implements OnInit {
     });
   }
   onDeleteInscription(id: number | undefined): void {
+    if (id === undefined) {
+      console.error('ID manquant pour la suppression');
+      alert("Impossible de supprimer l'inscription : ID non défini.");
+      return;
+    }
 
     if (confirm('Es-tu sûr de vouloir supprimer cet élément ?')) {
       console.log('Suppression en cours...');
@@ -72,9 +77,7 @@ export class CompanyDashboardComponent implements OnInit {
       this._inscriptionService.deleteInscription(id).subscribe({
         next: () => {
           alert('Élément supprimé avec succès.');
-          // Rediriger si besoin :
           this.inscriptions = this.inscriptions.filter(i => i.id !== id);
-
           this._router.navigate(['/dashboard-admin']);
         },
         error: (err) => {

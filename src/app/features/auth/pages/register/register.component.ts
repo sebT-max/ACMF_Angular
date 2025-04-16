@@ -14,6 +14,7 @@ import {RegisterFormModel} from '../../models/register-form.model';
 import {NgIf} from '@angular/common';
 import {TokenModel} from '../../models/token.model';
 import {catchError} from 'rxjs';
+import {LoginFormModel} from '../../models/login-form.model';
 
 @Component({
   selector: 'app-register',
@@ -42,12 +43,13 @@ export class RegisterComponent {
       roleId:[1, [Validators.required]]
     });
   }
-
+  isLoading = false;
 
   handleRegisterFormSubmit(): void {
   console.log(this.registerForm.value);
     if(this.registerForm.invalid){
       console.log("formulaire invalide");
+      this.isLoading = true;
       return;
     }
 
@@ -62,28 +64,44 @@ export class RegisterComponent {
       roleId: 1
     };
     console.log('registerFormModel', this.registerFormModel);
-
     this.$_authService.register(this.registerFormModel).pipe(
       catchError((error) => {
         this.errorMessage = error.message;
         return [];
       })
     ).subscribe({
-      next: (datas:TokenModel | null) => {
-        console.log('Création du user réussie, voici son Id :', datas);
-        this.errorMessage = null;
-        this._router.navigate(['']);
+      next: () => {
+        console.log('Utilisateur créé avec succès ! Connexion en cours...');
+        this.isLoading = false;
+        const loginPayload: LoginFormModel = {
+          email: this.registerFormModel.email,
+          password: this.registerFormModel.password,
+        };
+
+        this.$_authService.login(loginPayload).subscribe({
+          next: (loginResponse: TokenModel | null) => {
+            if (loginResponse) {
+              console.log('Connexion réussie !');
+              this.errorMessage = null;
+              this._router.navigate(['/']); // Ou ta route d'accueil
+            } else {
+              console.error('Réponse login vide');
+              this.errorMessage = "La connexion a échoué.";
+            }
+          },
+          error: (loginError: any) => {
+            console.error('Erreur lors de la connexion automatique', loginError);
+            this.errorMessage = 'Inscription réussie, mais connexion impossible.';
+          }
+        });
       },
       error: (error: any) => {
         console.error("Erreur d'enregistrement", error);
-
-        // Gestion des erreurs spécifiques
+        this.isLoading = false;
         if (error.status === 400 && error.error.message === "Email already in use.") {
           this.errorMessage = "Cet email est déjà utilisé.";
-        } else if (error.status === 500 && error.error.message === "Email already in use.") {
-          this.errorMessage = "Cet email est déjà utilisé.";
         }
-      },
+      }
     });
   }
 }

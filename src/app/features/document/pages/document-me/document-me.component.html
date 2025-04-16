@@ -1,35 +1,23 @@
-<div>
+<div class="client_doc_container">
   @for (document of documents; track document.id) {
-    <button class="see_all_button">
-      <h1>{{document.fileName}}</h1>
+    <div id="client_doc_container" class="document-card">
+      <h1>{{ document.fileName }}</h1>
+
       <img
         [ngSrc]="document.fileUrl"
-        width="250"
-        height="400"
-        alt="{{document.fileName}}"
+        width="300"
+        height="200"
+        alt="{{ document.fileName }}"
         class="image"
-        id="image-{{document.id}}"
+        id="image-{{ document.id }}"
       >
-      <<!--input
-        type="file"
-        accept="image/*"
-        (change)="onFileChange($event, document.id)"
-        class="file-input"
-      >-->
-      <button class="rotate-button" (click)="rotateImage(document.id)">Pivoter</button>
-    </button>
 
-
-<!--<div *ngIf="modalOpen" class="modal">
-  <div class="modal-content">
-    <span (click)="closeModal()" class="close">&times;</span>
-    <img *ngIf="selectedImageUrl" [ngSrc]="selectedImageUrl" class="modal-image">
-
-  </div>
-</div>-->
-
-<!--<a [href]="getSafeUrl(document.fileUrl)" download="{{document.fileName}}">
-  <button>Télécharger</button>
-</a>-->
+      <button
+        class="rotate-button"
+        (click)="rotateImage(document.id)"
+      >
+        🔄 Pivoter
+      </button>
+    </div>
   }
 </div>

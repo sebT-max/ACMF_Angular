@@ -33,3 +33,41 @@ form div{
 form input:hover{
   background: rgba(0, 0, 0, 0.37);
 }
+
+.submit-button {
+  position: relative;
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #292c32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* espace entre spinner et texte */
+  min-width: 160px; /* pour éviter que le bouton soit trop petit */
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner-inline {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+

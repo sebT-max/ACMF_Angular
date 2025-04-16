@@ -3,10 +3,12 @@ import {InscriptionService} from '../../features/inscription/inscription-service
 import {StageService} from '../../features/stage/services/stage.service';
 import {InscriptionFormModel} from '../../features/inscription/models/inscription-form.model';
 import {StageDetailsModel} from '../../features/stage/models/stage-details-model';
-import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
+import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {DemandeDevisComponent} from '../../features/demande-devis/pages/demande-devis-create/demande-devis.component';
 import {Router} from '@angular/router';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
+import {PrivateLinkService} from '../../features/private-link/services/private-link.services';
+import {PrivateLinkModel} from '../../features/private-link/Model/PrivateLinkModel';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -16,7 +18,8 @@ import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
     NgForOf,
     NgIf,
     DemandeDevisComponent,
-    InscriptionStatutPipe
+    InscriptionStatutPipe,
+    NgClass
   ],
   templateUrl: './company-dashboard.component.html',
   styleUrl: './company-dashboard.component.scss'
@@ -25,14 +28,17 @@ export class CompanyDashboardComponent implements OnInit {
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _stageService = inject(StageService);
   private readonly _router: Router = inject(Router);
+  private readonly _privateLinkService: PrivateLinkService= inject(PrivateLinkService);
 
   inscriptions: InscriptionFormModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {}; // Stocke les détails des stages
-  activeTab: 'inscriptions' | 'demandeDevis' = 'inscriptions';
-
+  privateLinks:PrivateLinkModel[]=[];
+  activeTab: 'inscriptions' |'Liens privés'| 'demandeDevis' = 'inscriptions';
+  isTokenVisible = false;
 
   ngOnInit(): void {
     this.loadInscriptions();
+    this.loadPrivateLinks();
   }
 
   loadInscriptions(): void {
@@ -46,6 +52,18 @@ export class CompanyDashboardComponent implements OnInit {
         console.error('Erreur lors du chargement des inscriptions', err);
       }
     });
+  }
+
+  loadPrivateLinks(): void {
+    this._privateLinkService.getCompanyPrivateLinks().subscribe({
+      next: (privateLinks:PrivateLinkModel[]) => {
+        console.log(`Détails des privateLinks  récupérés:`, privateLinks);
+        this.privateLinks = privateLinks;
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement du lien privé", err);
+      }
+    })
   }
 
   loadStagesDetails(): void {
@@ -64,6 +82,11 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
   }
+
+  toggleTokenVisibility() {
+    this.isTokenVisible = !this.isTokenVisible;
+  }
+
   onDeleteInscription(id: number | undefined): void {
     if (id === undefined) {
       console.error('ID manquant pour la suppression');

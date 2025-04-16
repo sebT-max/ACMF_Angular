@@ -36,6 +36,8 @@ export class InscriptionCreateComponent implements OnInit {
   stageDetails: StageDetailsModel | null = null;
 
   uploadedFiles: File[] = [];
+  isLoading: boolean = false;
+
 
   stageTypes = [
     { value: 'VOLONTAIRE', label: 'Volontaire' },
@@ -96,6 +98,7 @@ export class InscriptionCreateComponent implements OnInit {
     });
   }
   handleInscription(): void {
+    this.isLoading = true;
     const user = this.currentUser();
     if (!user) {
       console.error('Utilisateur non trouvé');
@@ -139,10 +142,12 @@ export class InscriptionCreateComponent implements OnInit {
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
         console.log('Inscription réussie', resp);
-        this._router.navigate(['/stages/all']);
+        this._router.navigate(['/dashboard-client']);
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Erreur lors de l’inscription', err);
+        this.isLoading = false;
       }
     });
   }

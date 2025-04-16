@@ -7,6 +7,12 @@
     >
       Inscriptions
     </button>
+    <button
+      (click)="activeTab = 'Liens privés'"
+      [class.active]="activeTab === 'Liens privés'"
+    >
+      Liens privés
+    </button>
 
     <button
       (click)="activeTab = 'demandeDevis'"
@@ -16,6 +22,7 @@
     </button>
 
   </div>
+
   <div *ngIf="activeTab === 'inscriptions'" class="tab-content">
     <h2>Mes inscriptions</h2>
     @if (inscriptions.length > 0) {
@@ -25,7 +32,7 @@
         <th>Détails</th>
         <th>Type</th>
         <th>Statut</th>
-        <th>Actions</th>
+        <th>Liens privés pour s'inscrire</th>
       </tr>
       </thead>
       <tbody>
@@ -46,11 +53,12 @@
         <td>{{ inscription.stageType }}</td>
         <td>{{ inscription.inscriptionStatut | inscriptionStatut}}</td>
         <td>
-          <button
+
+          <!--<button
             (click)="onDeleteInscription(inscription.id)"
             class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
           >
-            <!-- <svg
+            &lt;!&ndash; <svg
                xmlns="http://www.w3.org/2000/svg"
                class="h-1 w-1"
                fill="none"
@@ -59,10 +67,10 @@
                stroke-width="2"
              >
                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-             </svg>-->
+             </svg>&ndash;&gt;
             <i class="fas fa-trash-alt"></i>
             Supprimer
-          </button>
+          </button>-->
         </td>
       </tr>
       </tbody>
@@ -74,6 +82,49 @@
       </ng-template>
     }
   </div>
+</div>
+
+<div *ngIf="activeTab === 'Liens privés'" class="tab-content">
+  @if (privateLinks.length > 0) {
+
+    <table id="private_links_table">
+      <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Token</th>
+        <th>Date d'expiration</th>
+      </tr>
+      </thead>
+
+      @for(privateLink of privateLinks; track privateLink.id){
+        <tr>
+          <td>{{privateLink.stageId}}</td>
+          <td>
+        <div class="token-container">
+          <input
+            [type]="isTokenVisible ? 'text' : 'password'"
+            [value]="privateLink.token"
+            readonly
+            class="token-input"
+          />
+          <button (click)="toggleTokenVisibility()" class="eye-icon">
+            <i [ngClass]="isTokenVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+          </td>
+
+        <td>{{privateLink.expirationDate | date:'d MMMM yyyy':'fr'}}</td>
+        </tr>
+          }
+    </table>
+
+  }
+
+  @else{
+    <ng-template #loading>
+      <span>Pas de lien privé</span>
+    </ng-template>
+  }
 </div>
   <div *ngIf="activeTab === 'demandeDevis'" class="tab-content">
     <app-demande-devis></app-demande-devis>

@@ -159,7 +159,6 @@ export class AdminDashboardComponent implements OnInit  {
     });
   }
 
-
   validerInscription(id: number | undefined): void {
     if (id === undefined) {
       console.error("ID d'inscription invalide");

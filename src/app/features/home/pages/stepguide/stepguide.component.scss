@@ -1,0 +1,127 @@
+#steps_title{
+  color:white;
+  font-size:60px;
+  padding:40px;
+}
+.stepper-wrapper {
+  position: relative;
+  margin:0 auto;
+  margin-bottom: 30px;
+}
+.stepper{
+  border-radius:10px;
+}
+.btn-next{
+  padding: 16px;
+  margin-top: 60px;
+  border-radius: 10px;
+  font-size: 17px;
+  background: #fef1e0fc;
+  color: #292c32;
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 5px;
+  background-color: #ddd;
+  width: 100%;
+  position: absolute;
+  top: 17px;
+  z-index: 0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #4caf50;
+  width: 0;
+  transition: width 0.4s ease-in-out;
+}
+
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+  position: relative;
+  border-radius:10px;
+}
+
+.step {
+  width: 40px;
+  height: 40px;
+  background-color: #007e5e;
+  color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.step.active {
+  background-color: #222730;
+  color: white;
+  transform: scale(1.1);
+  font-size: 28px;
+}
+
+.step.completed {
+  background-color: #dbe0e5;
+  color: white;
+}
+
+.step-content {
+  border-top: 1px solid #ccc;
+  padding: 40px;
+  animation: _ngcontent-ng-c556683372_fadeIn 0.4s ease-in-out;
+  background-color: #f8a833;
+  border-radius: 10px;
+  h2{
+    font-size: 54px;
+    color: #ffffffd6;
+  }
+  p{
+    font-size: 36px;
+    height: 108px;
+    color: #242b34;
+    font-weight: 600;
+  }
+  hr{
+    height:3px;
+    margin:10px 0px 40px 0px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .stepper {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .step {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .progress-bar {
+    display: none; /* ou adapte-la verticalement si tu veux */
+  }
+}
+

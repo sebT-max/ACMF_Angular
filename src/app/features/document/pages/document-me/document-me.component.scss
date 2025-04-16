@@ -1,7 +1,35 @@
-.image {
-  transition: transform 0.2s ease;
+.document-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px;
+  width: 350px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  text-align: center;
 }
 
-.rotated {
-  transform: rotate(90deg);
+.document-card:hover {
+  transform: translateY(-5px);
+}
+
+.rotate-button {
+  background-color: #292c32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 12px 20px;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.rotate-button:hover {
+  background-color: #444851;
+}
+.client_doc_container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }

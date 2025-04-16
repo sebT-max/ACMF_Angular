@@ -1,8 +1,10 @@
 <div class="client_doc_container">
-  @for (document of documents; track document.id) {
-    <div id="client_doc_container" class="document-card">
-      <h1>{{ document.fileName }}</h1>
+  <div *ngFor="let document of documents; trackBy: trackDocument" class="document-card">
 
+    <h1>{{ document.fileName }}</h1>
+
+    <!-- Affichage de l'image si c'est une image -->
+    <div *ngIf="isImage(document.fileUrl)">
       <img
         [ngSrc]="document.fileUrl"
         width="300"
@@ -11,7 +13,6 @@
         class="image"
         id="image-{{ document.id }}"
       >
-
       <button
         class="rotate-button"
         (click)="rotateImage(document.id)"
@@ -19,5 +20,15 @@
         🔄 Pivoter
       </button>
     </div>
-  }
+
+    <!-- Lien cliquable pour les fichiers PDF ou autres types -->
+    <div *ngIf="!isImage(document.fileUrl)">
+      <img alt ="" src="icon.png" style="height:100px;margin-bottom:20px;"/>
+      <a [href]="document.fileUrl" target="_blank" rel="noopener noreferrer">
+        <p>Voir le fichier {{ document.fileName }} (PDF)</p>
+      </a>
+    </div>
+
+  </div>
 </div>
+

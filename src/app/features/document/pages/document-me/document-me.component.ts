@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import {DocumentDTO} from '../../../inscription/models/DocumentDTO';
 import {DocumentService} from '../services/document.services';
-import {NgIf, NgOptimizedImage} from '@angular/common';
+import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-document-me',
   imports: [
     NgOptimizedImage,
-    NgIf
+    NgIf,
+    NgForOf
   ],
   templateUrl: './document-me.component.html',
   styleUrl: './document-me.component.scss'
@@ -41,6 +42,15 @@ constructor(
       imageElement.classList.toggle('rotated');
     }
   }
+  isImage(url: string): boolean {
+    // Vérifie si l'URL correspond à une image (jpg, jpeg, png, gif, etc.)
+    return /\.(jpg|jpeg|png|gif)$/i.test(url);
+  }
+
+  trackDocument(index: number, document: any): number {
+    return document.id; // Utilisation de l'id pour le tracking de l'itération
+  }
+
   onFileChange(event: any, documentId: number) {
     const file = event.target.files[0];
     if (file) {

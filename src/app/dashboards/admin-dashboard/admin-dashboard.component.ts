@@ -18,6 +18,7 @@ import {
   ConvocationCreateComponent
 } from '../../features/convocation/pages/convocation-create/convocation-create.component';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -45,7 +46,7 @@ export class AdminDashboardComponent implements OnInit  {
   private readonly _router: Router = inject(Router);
   faEdit = faEdit;
 
-  inscriptions: InscriptionFormModel[] = [];
+  inscriptions: InscriptionListResponse[] = [];
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
   activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinksCreate'| 'privateLinksList'|'convocations' = 'inscriptions';
@@ -77,12 +78,13 @@ export class AdminDashboardComponent implements OnInit  {
   }
 
 
-  viewFile(url: string) {
-    window.open(`${API_URL}inscriptions/file/${url}`, '_blank');
-  }
-  /*viewFile(url: string) {
-    window.open(url, '_blank');
+ /* viewFile(fileId: string) {
+    window.open(`${API_URL}/inscriptions/file/${fileId}`, '_blank');
   }*/
+
+  viewFile(url: string) {
+    window.open(url, '_blank'); // ← c’est tout, plus besoin de `${API_URL}...`
+  }
 
   loadStages(): void {
     this._stageService.getAllStage().subscribe({

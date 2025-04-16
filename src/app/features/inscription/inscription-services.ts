@@ -5,6 +5,7 @@ import { API_URL } from '../../core/constants/api-constant';
 import { InscriptionFormModel } from './models/inscription-form.model';
 import { CreateInscriptionResponseBody } from './models/CreateInscriptionResponseBody';
 import { AuthService } from '../auth/services/auth.service';
+import {InscriptionListResponse} from './models/InscriptionListResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,8 @@ export class InscriptionService {
     );
   }
 
-  getAllInscriptions(): Observable<InscriptionFormModel[]> {
-    return this._httpClient.get<InscriptionFormModel[]>(
+  getAllInscriptions(): Observable<InscriptionListResponse[]> {
+    return this._httpClient.get<InscriptionListResponse[]>(
       `${API_URL}inscriptions/all`,
       this.getAuthHeaders()
     );

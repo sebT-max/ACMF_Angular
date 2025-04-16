@@ -10,6 +10,6 @@ export interface InscriptionFormModel {
   inscriptionStatut: string;
   stage?: StageDetailsModel;
   user?: UserFormModel;
-  documents?: DocumentDTO[]; // <-- à ajouter
-
+  documents?: DocumentDTO[];
+  codePromo?:string// <-- à ajouter
 }

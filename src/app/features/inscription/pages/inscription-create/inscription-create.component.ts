@@ -9,6 +9,7 @@ import { TokenModel } from '../../../auth/models/token.model';
 import { StageDetailsModel } from '../../../stage/models/stage-details-model';
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import { FileUpload } from 'primeng/fileupload';
+import {StripeService} from '../../../../services/stripe.service';
 
 @Component({
   selector: 'app-inscription-create',
@@ -29,16 +30,15 @@ export class InscriptionCreateComponent implements OnInit {
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _fb = inject(FormBuilder);
   private readonly _router = inject(Router);
+  private readonly _stripeService = inject(StripeService);
 
   inscriptionCreationForm!: FormGroup;
   currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
 
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
-
   uploadedFiles: File[] = [];
   isLoading: boolean = false;
-
 
   stageTypes = [
     { value: 'VOLONTAIRE', label: 'Volontaire' },
@@ -70,7 +70,8 @@ export class InscriptionCreateComponent implements OnInit {
       userId: [this.currentUser()?.id || '', Validators.required],
       stageId: [this.stageId || '', Validators.required],
       stageType: ['', Validators.required],
-      inscriptionStatut: ['EN_ATTENTE', Validators.required]
+      inscriptionStatut: ['EN_ATTENTE', Validators.required],
+      codePromo: ['']
     });
   }
 
@@ -109,6 +110,14 @@ export class InscriptionCreateComponent implements OnInit {
     const user = this.currentUser();
     if (!user) {
       console.error('Utilisateur non trouvé');
+      this.isLoading = false;
+      return;
+    }
+
+    // Vérifie que `stageDetails.price` est défini
+    if (!this.stageDetails || !this.stageDetails.price) {
+      console.error('Prix du stage non défini');
+      this.isLoading = false;
       return;
     }
 
@@ -120,6 +129,7 @@ export class InscriptionCreateComponent implements OnInit {
 
     if (this.inscriptionCreationForm.invalid) {
       console.warn('Formulaire invalide');
+      this.isLoading = false; // Arrête de charger si le formulaire est invalide
       return;
     }
 
@@ -130,7 +140,8 @@ export class InscriptionCreateComponent implements OnInit {
       stageId: this.inscriptionCreationForm.value.stageId,
       stageType: stageType,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
-      documents: [] // même vide
+      documents: [],
+      codePromo: this.inscriptionCreationForm.value.codePromo || null
     };
 
     const formData = new FormData();
@@ -148,15 +159,32 @@ export class InscriptionCreateComponent implements OnInit {
 
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
-        console.log('Inscription réussie', resp);
-        this._router.navigate(['/dashboard-client']);
-        this.isLoading = false;
+        const inscriptionId = resp.id; // Ou resp.body?.id selon ta config
+        console.log('Inscription réussie', inscriptionId);
+
+        // Vérifie si `stageDetails` est défini avant d'accéder à son prix
+        if (this.stageDetails && this.stageDetails.price) {
+          const amountInCents = this.stageDetails.price * 100; // Assure-toi que `price` est un nombre
+
+          // 🚀 Redirection vers Stripe
+          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents,this.stageDetails).subscribe({
+            next: (stripeRedirectUrl: string) => {
+              window.location.href = stripeRedirectUrl;
+            },
+            error: (err) => {
+              console.error('Erreur Stripe :', err);
+              this.isLoading = false; // Arrête de charger en cas d'erreur Stripe
+            }
+          });
+        } else {
+          console.error("Les détails du stage ne sont pas disponibles ou le prix est invalide.");
+          this.isLoading = false; // Arrête de charger si les détails sont invalides
+        }
       },
       error: (err) => {
         console.error('Erreur lors de l’inscription', err);
-        this.isLoading = false;
+        this.isLoading = false; // Arrête de charger en cas d'erreur d'inscription
       }
     });
   }
-
 }

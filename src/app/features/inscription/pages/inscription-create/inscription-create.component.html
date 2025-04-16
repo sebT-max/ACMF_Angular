@@ -1,4 +1,4 @@
-<div class="inscription-continer">
+<div class="inscription-container">
   <!-- Formulaire d'inscription -->
   <div>
 
@@ -24,10 +24,12 @@
       [multiple]="true"
       accept=".pdf,image/*"
       [auto]="false"
+      (onRemove)="onRemoveFile($event)"
       [showUploadButton]="false"
       [showCancelButton]="false"
       Width= "100"
       mode="advanced"
+      chooseLabel="Choisir un fichier"
       [maxFileSize]="5000000"
     >
       <div>
@@ -36,9 +38,11 @@
       </ng-template>
       </div>
     <ng-template #content>
-      <ul *ngIf="uploadedFiles?.length">
-        <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} octets</li>
-      </ul>
+      <!--<div *ngIf="uploadedFiles?.length">
+        <div *ngFor="let file of uploadedFiles" class="file-item">
+          📄 {{ file.name }} ({{ file.size / 1024 | number:'1.0-0' }} Ko)
+        </div>
+      </div>-->
     </ng-template>
     </p-fileUpload>
     <!--<button (click)="uploadFiles()" class="btn btn-primary">Envoyer les fichiers</button>-->

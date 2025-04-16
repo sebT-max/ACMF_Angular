@@ -7,7 +7,7 @@ import { InscriptionService } from '../../inscription-services';
 import { InscriptionFormModel } from '../../models/inscription-form.model';
 import { TokenModel } from '../../../auth/models/token.model';
 import { StageDetailsModel } from '../../../stage/models/stage-details-model';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import {DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import { FileUpload } from 'primeng/fileupload';
 
 @Component({
@@ -17,7 +17,8 @@ import { FileUpload } from 'primeng/fileupload';
     NgIf,
     NgForOf,
     DatePipe,
-    FileUpload
+    FileUpload,
+    DecimalPipe
   ],
   templateUrl: './inscription-create.component.html',
   styleUrls: ['./inscription-create.component.scss']
@@ -97,6 +98,12 @@ export class InscriptionCreateComponent implements OnInit {
       error: (err: any) => console.error('Erreur d’envoi de fichiers :', err)
     });
   }
+
+  onRemoveFile(event: any) {
+    const removedFile = event.file;
+    this.uploadedFiles = this.uploadedFiles.filter(f => f.name !== removedFile.name || f.size !== removedFile.size);
+  }
+
   handleInscription(): void {
     this.isLoading = true;
     const user = this.currentUser();

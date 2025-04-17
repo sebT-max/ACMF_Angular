@@ -1,12 +1,23 @@
 .document-card {
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.37);
   border-radius: 12px;
-  padding: 20px;
-  margin: 20px;
-  width: 350px;
+  padding: 12px;
+  margin: 6px;
+  width: 24%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
   text-align: center;
+  h1{
+    border:none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-size:16px;
+  }
+  p{
+    color:white !important;
+  }
+  a{
+    text-decoration: none !important;
+  }
 }
 
 .document-card:hover {

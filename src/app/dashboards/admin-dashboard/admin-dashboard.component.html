@@ -185,6 +185,7 @@
         @for(stage of stages;track stage.id){
           <tr>
           <td>
+            <p>Capacité restante : {{ stageCapacity }}</p>
             {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
           </td>
           <td>

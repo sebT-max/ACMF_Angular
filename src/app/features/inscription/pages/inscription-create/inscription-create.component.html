@@ -49,7 +49,6 @@
       </div>-->
     </ng-template>
     </p-fileUpload>
-    <!--<button (click)="uploadFiles()" class="btn btn-primary">Envoyer les fichiers</button>-->
     <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
       <ng-container *ngIf="!isLoading">S’inscrire</ng-container>
       <ng-container *ngIf="isLoading">

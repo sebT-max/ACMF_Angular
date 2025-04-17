@@ -32,8 +32,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "mapbox-gl/dist/mapbox-gl.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "mapbox-gl/dist/mapbox-gl.css",
+              "src/styles.scss"
             ]
           ,
             "scripts": []

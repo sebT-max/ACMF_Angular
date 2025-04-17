@@ -10,6 +10,7 @@ import { StageDetailsModel } from '../../../stage/models/stage-details-model';
 import {DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import { FileUpload } from 'primeng/fileupload';
 import {StripeService} from '../../../../services/stripe.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-inscription-create',
@@ -18,8 +19,7 @@ import {StripeService} from '../../../../services/stripe.service';
     NgIf,
     NgForOf,
     DatePipe,
-    FileUpload,
-    DecimalPipe
+    FileUpload
   ],
   templateUrl: './inscription-create.component.html',
   styleUrls: ['./inscription-create.component.scss']
@@ -31,6 +31,8 @@ export class InscriptionCreateComponent implements OnInit {
   private readonly _fb = inject(FormBuilder);
   private readonly _router = inject(Router);
   private readonly _stripeService = inject(StripeService);
+
+  constructor(private toastr: ToastrService) {}
 
   inscriptionCreationForm!: FormGroup;
   currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
@@ -147,16 +149,14 @@ export class InscriptionCreateComponent implements OnInit {
     const formData = new FormData();
     formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
 
-    const shouldSendFiles =
+    /*const shouldSendFiles =
       this.uploadedFiles.length > 0 &&
-      (stageType === 'TRIBUNAL' || stageType === 'PROBATOIRE');
+      (stageType === 'TRIBUNAL' || stageType === 'PROBATOIRE');*/
 
-    if (shouldSendFiles) {
+    /*if (shouldSendFiles) {*/
       this.uploadedFiles.forEach(file => {
         formData.append('files', file);
       });
-    }
-
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
         const inscriptionId = resp.id; // Ou resp.body?.id selon ta config
@@ -166,7 +166,6 @@ export class InscriptionCreateComponent implements OnInit {
         if (this.stageDetails && this.stageDetails.price) {
           const amountInCents = this.stageDetails.price * 100; // Assure-toi que `price` est un nombre
 
-          // 🚀 Redirection vers Stripe
           this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents,this.stageDetails).subscribe({
             next: (stripeRedirectUrl: string) => {
               window.location.href = stripeRedirectUrl;
@@ -188,3 +187,43 @@ export class InscriptionCreateComponent implements OnInit {
     });
   }
 }
+
+   /* this._inscriptionService.createInscription(formData).subscribe({
+      next: (resp) => {
+        const inscriptionId = resp.id; // Ou resp.body?.id selon ta config
+        console.log('Inscription réussie', inscriptionId);
+
+        // Vérifie si `stageDetails` est défini avant d'accéder à son prix
+        if (this.stageDetails && this.stageDetails.price) {
+          const amountInCents = this.stageDetails.price * 100; // Assure-toi que `price` est un nombre
+
+
+          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents,this.stageDetails).subscribe({
+            next: (stripeRedirectUrl: string) => {
+              window.location.href = stripeRedirectUrl;
+            },
+            error: (err) => {
+              console.error('Erreur Stripe :', err);
+              this.isLoading = false; // Arrête de charger en cas d'erreur Stripe
+            }
+          });
+        } else {
+          console.error("Les détails du stage ne sont pas disponibles ou le prix est invalide.");
+          this.isLoading = false; // Arrête de charger si les détails sont invalides
+        }
+      },
+      error: (err) => {
+        console.error('Erreur lors de l’inscription', err);
+        if (err.status === 401) {
+          this.toastr.warning("Vous devez être connecté pour vous inscrire.");
+        } else if (err.status === 400 && err.error?.message?.includes("complet")) {
+          this.toastr.error("Ce stage est complet.");
+        } else {
+          this.toastr.error("Une erreur s'est produite lors de l'inscription.");
+        }
+        this.isLoading = false;// Arrête de charger en cas d'erreur d'inscription
+      }
+    });
+  }
+}
+*/

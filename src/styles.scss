@@ -67,12 +67,18 @@ form textarea{
 
 
 form button{
-  padding: 20px;
-  margin: 20px;
-  background: #e61616;
+  background-color: #3f51b5;
   color: white;
+  padding: 0.8rem 1.5rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top:40px;
+}
+form button:hover {
+  background-color: #303f9f;
 }
 
 button a{
@@ -314,12 +320,13 @@ h1{
 .p-fileupload-header{
   width:100px;
   margin:0 auto;
-  margin-top:20px;
-  margin-bottom:20px;
+  border:none;
 
   p-button{
-    color:white;
-    background:rgba(0, 0, 0, 0.1215686275);
+    color: white;
+    /* background: rgba(0, 0, 0, 0.1215686275); */
+    margin-top: -37px;
+    padding: 10px;
   }
 }
 

@@ -19,6 +19,8 @@ import {
 } from '../../features/convocation/pages/convocation-create/convocation-create.component';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
+import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -45,10 +47,10 @@ export class AdminDashboardComponent implements OnInit  {
   private readonly _stageService = inject(StageService);
   private readonly _router: Router = inject(Router);
   faEdit = faEdit;
-
-  inscriptions: InscriptionListResponse[] = [];
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
+  stageCapacity: number = 0;
+  inscriptions: InscriptionListResponse[] = [];
   activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinksCreate'| 'privateLinksList'|'convocations' = 'inscriptions';
 
 
@@ -56,7 +58,7 @@ export class AdminDashboardComponent implements OnInit  {
     this.loadInscriptions();
     this.loadStages();
   }
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer,private toastr: ToastrService) {}
 
   getSafeUrl(url: string): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(url);
@@ -166,6 +168,7 @@ export class AdminDashboardComponent implements OnInit  {
       console.error("ID d'inscription invalide");
       return;
     }
+
     this._inscriptionService.validateInscription(id!).subscribe({
       next: (updatedInscription) => {
         alert('Inscription validée avec succès.');
@@ -176,15 +179,22 @@ export class AdminDashboardComponent implements OnInit  {
           this.inscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
         }
 
+        // Met à jour la capacité du stage dans l'UI
+        if (updatedInscription.stage) {
+          this.stageCapacity = updatedInscription.stage.capacity;
+        }
+
         // Redirection optionnelle
         // this._router.navigate(['/dashboard-admin']);
       },
       error: (err) => {
         console.error('Erreur lors de la validation :', err);
-        alert("Une erreur est survenue lors de la validation.");
+        this.toastr.error("Une erreur s'est produite lors de la validation.");
+
       }
     });
   }
+
 }
 
 /*editInscription(id: number | undefined): void {}*/

@@ -84,13 +84,22 @@ h1{
   width:18%;
   margin:0 auto;
   float:right;
-  margin-right:40px;
+  margin-right:140px;
+  box-shadow: 0px 0px 1px white;
+  background:linear-gradient(219deg, rgba(41, 44, 50, 0.7294117647), rgba(36, 43, 52, 0.9019607843), #292c32);
   input{
     padding: 10px;
     border-radius: 10px;
     width:100%;
     margin:0 auto;
     margin-bottom: 10px;
+    border:none;
+    box-shadow: 0px 0px 1px grey;
+  }
+  h1{
+    color:white;
+    box-shadow: 0px 0px 1px white;
+    border:none;
   }
 }
 

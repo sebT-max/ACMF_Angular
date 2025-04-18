@@ -11,6 +11,8 @@ import {DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import { FileUpload } from 'primeng/fileupload';
 import {StripeService} from '../../../../services/stripe.service';
 import {ToastrService} from 'ngx-toastr';
+import { FileRemoveEvent } from 'primeng/fileupload';
+
 
 @Component({
   selector: 'app-inscription-create',
@@ -39,7 +41,16 @@ export class InscriptionCreateComponent implements OnInit {
 
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
-  uploadedFiles: File[] = [];
+  uploadedFiles: {
+    permis: File[];             // max 2
+    carteId: File[];            // max 2
+    lettre48n: File[];          // max 1
+  } = {
+    permis: [],
+    carteId: [],
+    lettre48n: []
+  };
+
   isLoading: boolean = false;
 
   stageTypes = [
@@ -77,14 +88,23 @@ export class InscriptionCreateComponent implements OnInit {
     });
   }
 
-  onFilesChange(event: any) {
+  onFilesChange(event: any, type: 'permis' | 'carteId' | 'lettre48n') {
     const files: File[] = event.files || event.target?.files || [];
     for (let file of files) {
-      if (this.isValidFileType(file)) {
-        this.uploadedFiles.push(file);
-      } else {
+      if (!this.isValidFileType(file)) {
         this.toastr.warning(`Le fichier ${file.name} n'est pas un type autorisé.`);
+        continue;
       }
+
+      const currentFiles = this.uploadedFiles[type];
+
+      const max = type === 'lettre48n' ? 1 : 2;
+      if (currentFiles.length >= max) {
+        this.toastr.warning(`Vous pouvez ajouter maximum ${max} fichier(s) pour ${type}.`);
+        continue;
+      }
+
+      currentFiles.push(file);
     }
   }
 
@@ -93,24 +113,44 @@ export class InscriptionCreateComponent implements OnInit {
   }
 
   uploadFiles(event?: any): void {
-    if (!this.uploadedFiles.length) {
+    if (
+      this.uploadedFiles.permis.length === 0 &&
+      this.uploadedFiles.carteId.length === 0 &&
+      this.uploadedFiles.lettre48n.length === 0
+    ) {
       console.warn('Aucun fichier à envoyer.');
       return;
     }
 
     const formData = new FormData();
-    this.uploadedFiles.forEach(file => formData.append('documents', file));
+    Object.entries(this.uploadedFiles).forEach(([key, files]) => {
+      files.forEach(file => {
+        formData.append('files', file);
+      });
+    });
 
     this._inscriptionService.createInscription(formData).subscribe({
       next: () => console.log('Fichiers envoyés avec succès'),
       error: (err: any) => console.error('Erreur d’envoi de fichiers :', err)
     });
   }
+ /* removeManualFile(type: DocumentType, index: number): void {
+    this.uploadedFiles[type].splice(index, 1);
+  }*/
 
-  onRemoveFile(event: any) {
-    const removedFile = event.file;
-    this.uploadedFiles = this.uploadedFiles.filter(f => f.name !== removedFile.name || f.size !== removedFile.size);
+
+  onRemoveFile(event: FileRemoveEvent, field: string): void {
+    // Vérification pour s'assurer que `files` contient des fichiers
+    if (event.file) {
+      const file = event.file; // Accès au fichier supprimé
+      console.log(`Fichier supprimé :`, file);
+    } else {
+      console.log('Aucun fichier à supprimer.');
+    }
+
+    // Autres opérations que tu souhaites faire avec le fichier supprimé
   }
+
 
 
   handleInscription(): void {
@@ -154,9 +194,11 @@ export class InscriptionCreateComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
-      this.uploadedFiles.forEach(file => {
+    Object.entries(this.uploadedFiles).forEach(([key, files]) => {
+      files.forEach(file => {
         formData.append('files', file);
       });
+    });
 
     this._stageService.decrementStageCapacity(this.stageId).subscribe({
       next: (updatedStage) => {

@@ -2,7 +2,7 @@
   <!-- Formulaire d'inscription -->
   <div>
 
-  <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
+    <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
       <label for="stageType">Type de Stage</label>
       <select id="stageType" formControlName="stageType">
         <option value="" disabled selected>Sélectionner un type de stage</option>
@@ -11,54 +11,84 @@
         </option>
       </select>
 
-    <label for="codePromo">Code promo (optionnel)</label>
-    <input id="codePromo" formControlName="codePromo" placeholder="EXEMPLE10" />
+      <label for="codePromo">Code promo (optionnel)</label>
+      <input id="codePromo" formControlName="codePromo" placeholder="EXEMPLE10" />
 
+      <label for="documents">Chargez vos documents<br/>(lettres officielles, carte d'identité, permis de conduire)</label>
+      <small class="form-text text-muted">
+        Formats acceptés : PDF, JPEG, PNG.
+      </small>
 
+      <!-- Permis -->
+      <label for="permis"><strong>Permis :</strong></label>
+      <p-fileUpload
+        name="permis"
+        [customUpload]="true"
+        (uploadHandler)="uploadFiles($event)"
+        (onSelect)="onFilesChange($event, 'permis')"
+        (onRemove)="onRemoveFile($event, 'permis')"
+        [multiple]="true"
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        accept=".pdf,image/*"
+        chooseLabel="Choisir le fichier"
+        mode="advanced"
+        [maxFileSize]="5000000"
+      ></p-fileUpload>
 
-    <label for="documents">Chargez vos documents<br/>(lettres officielles, carte d'identité, permis de conduire)</label>
-    <small class="form-text text-muted">
-      Formats acceptés : PDF, JPEG, PNG.
-    </small>
-    <p-fileUpload
-      name="documents"
-      [customUpload]="true"
-      (uploadHandler)="uploadFiles($event)"
-      (onSelect)="onFilesChange($event)"
-      [multiple]="true"
-      accept=".pdf,image/*"
-      [auto]="false"
-      (onRemove)="onRemoveFile($event)"
-      [showUploadButton]="false"
-      [showCancelButton]="false"
-      Width= "100"
-      mode="advanced"
-      chooseLabel="Choisir un fichier"
-      [maxFileSize]="5000000"
-    >
-      <div>
-      <ng-template #empty>
-        <div>Glissez-déposez vos fichiers PDF ou images ici (PDF, JPG, PNG).</div>
-      </ng-template>
-      </div>
-    <ng-template #content>
-      <!--<div *ngIf="uploadedFiles?.length">
-        <div *ngFor="let file of uploadedFiles" class="file-item">
-          📄 {{ file.name }} ({{ file.size / 1024 | number:'1.0-0' }} Ko)
-        </div>
+      <!-- Carte d'identité -->
+      <label for="carteId"><strong>Carte d'identité :</strong></label>
+      <p-fileUpload
+        name="carteId"
+        [customUpload]="true"
+        (uploadHandler)="uploadFiles($event)"
+        (onSelect)="onFilesChange($event, 'carteId')"
+        (onRemove)="onRemoveFile($event, 'carteId')"
+        [multiple]="true"
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        accept=".pdf,image/*"
+        chooseLabel="Choisir le fichier"
+        mode="advanced"
+        [maxFileSize]="5000000"
+      ></p-fileUpload>
+      <!--<div *ngIf="uploadedFiles.permis.length > 0">
+        <ul>
+          <li *ngFor="let file of uploadedFiles.permis; let i = index">
+            {{ file.name }}
+            <button type="button" (click)="removeManualFile('permis', i)">❌</button>
+          </li>
+        </ul>
       </div>-->
-    </ng-template>
-    </p-fileUpload>
-    <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
-      <ng-container *ngIf="isLoading">
-        <span class="spinner-inline"></span>
-        <span>Chargement...</span>
-      </ng-container>
-      <ng-container *ngIf="!isLoading">
-        Valider l'inscription
-      </ng-container>
-    </button>
-  </form>
+
+      <!-- Lettre 48N -->
+      <label for="lettre48n"><strong>Lettre 48N :</strong></label>
+      <p-fileUpload
+        name="lettre48n"
+        [customUpload]="true"
+        (uploadHandler)="uploadFiles($event)"
+        (onSelect)="onFilesChange($event, 'lettre48n')"
+        (onRemove)="onRemoveFile($event, 'lettre48n')"
+        [multiple]="true"
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        accept=".pdf,image/*"
+        chooseLabel="Choisir le fichier"
+        mode="advanced"
+        [maxFileSize]="5000000"
+      ></p-fileUpload>
+
+      <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
+        <ng-container *ngIf="isLoading">
+          <span class="spinner-inline"></span>
+          <span>Chargement...</span>
+        </ng-container>
+        <ng-container *ngIf="!isLoading">
+          Valider l'inscription
+        </ng-container>
+      </button>
+    </form>
+
   </div>
 
 

@@ -12,6 +12,7 @@
 .table th {
   background-color: #f2f2f2;
   color: #333;
+  text-align:center;
 }
 
 .table-striped tr:nth-child(even) {
@@ -20,4 +21,11 @@
 
 .table-bordered {
   border: 2px solid #ddd;
+}
+td a{
+  color:grey;
+  line-height:32px;
+}
+td{
+  text-align:center;
 }

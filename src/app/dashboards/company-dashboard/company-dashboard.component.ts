@@ -9,6 +9,9 @@ import {Router} from '@angular/router';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 import {PrivateLinkService} from '../../features/private-link/services/private-link.services';
 import {PrivateLinkModel} from '../../features/private-link/Model/PrivateLinkModel';
+import {
+  PrivateLinkFormComponent
+} from '../../features/private-link/pages/private-link-form/private-link-form.component';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -19,7 +22,8 @@ import {PrivateLinkModel} from '../../features/private-link/Model/PrivateLinkMod
     NgIf,
     DemandeDevisComponent,
     InscriptionStatutPipe,
-    NgClass
+    NgClass,
+    PrivateLinkFormComponent
   ],
   templateUrl: './company-dashboard.component.html',
   styleUrl: './company-dashboard.component.scss'
@@ -37,6 +41,7 @@ export class CompanyDashboardComponent implements OnInit {
   isTokenVisible = false;
 
   ngOnInit(): void {
+    this.activeTab = 'inscriptions';
     this.loadInscriptions();
     this.loadPrivateLinks();
   }

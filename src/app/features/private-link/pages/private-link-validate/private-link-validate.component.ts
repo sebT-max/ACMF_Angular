@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PrivateLinkService} from '../../services/private-link.services';
 import {NgIf} from '@angular/common';
 
@@ -21,17 +21,22 @@ export class PrivateLinkValidateComponent implements OnInit {
   constructor(
     private privateLinkService: PrivateLinkService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute // Ajout de ActivatedRoute pour récupérer le token
   ) { }
 
   ngOnInit(): void {
+    // Récupérer le token de l'URL via ActivatedRoute
+    this.token = this.activatedRoute.snapshot.paramMap.get('token') || ''; // Capture le token dans l'URL
+
+    // Initialisation du formulaire avec le token (prénom, email...)
     this.linkForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      token: ['', [Validators.required]]
+      token: [this.token, [Validators.required]] // Pré-remplir le champ token avec celui récupéré
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.linkForm.invalid) {
       return;
     }
@@ -62,6 +67,5 @@ export class PrivateLinkValidateComponent implements OnInit {
         }
       }
     });
-
   }
 }

@@ -149,7 +149,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'private-links/validate',
+    path: 'private-links/validate/:token',
     canActivate: [isConnectedGuard], // Peut être protégé par le rôle admin si nécessaire
     loadComponent: () =>
       import('./features/private-link/pages/private-link-validate/private-link-validate.component').then(
@@ -164,6 +164,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/private-link/pages/private-link-list/private-link-list.component').then(
         (c) => c.PrivateLinkListComponent
+      ),
+  },
+  {
+    path: 'inscription/:token',
+    loadComponent: () =>
+      import('./features/private-link/pages/private-link-form/private-link-form.component').then(
+        (c) => c.PrivateLinkFormComponent
       ),
   },
 

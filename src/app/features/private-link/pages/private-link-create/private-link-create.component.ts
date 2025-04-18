@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import {PrivateLinkService} from '../../services/private-link.services';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {StageService} from '../../../stage/services/stage.service';
-import {NgForOf, NgIf} from '@angular/common';
-import {AuthService} from '../../../auth/services/auth.service';
+import { PrivateLinkService } from '../../services/private-link.services';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { StageService } from '../../../stage/services/stage.service';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-private-link-create',
   imports: [
     ReactiveFormsModule,
     NgForOf,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './private-link-create.component.html',
   styleUrl: './private-link-create.component.scss'
@@ -18,7 +19,14 @@ import {AuthService} from '../../../auth/services/auth.service';
 export class PrivateLinkCreateComponent {
   createLinkForm!: FormGroup;
   message: string = '';
+  messageType: 'success' | 'error' | null = null;
   stages: any[] = [];
+  linkUrl: string | null = null;
+  copied: boolean = false; // Indicateur si l'URL a été copiée
+  toastVisible: boolean = false; // Contrôle de la visibilité du toast
+  toastMessage: string = ''; // Le message à afficher dans le toast
+  toastType: 'success' | 'error' = 'success'; // Type de toast (success ou error)
+  toastTimeout: any;
 
   constructor(
     private fb: FormBuilder,
@@ -39,19 +47,67 @@ export class PrivateLinkCreateComponent {
     });
   }
 
+  copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      this.copied = true;
+      setTimeout(() => this.copied = false, 3000); // Réinitialise après 3 secondes
+    });
+  }
+
+  showToast(message: string, type: 'success' | 'error') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.toastVisible = true;
+
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+    }
+
+    /*// Cacher après 5 secondes
+    this.toastTimeout = setTimeout(() => {
+      this.hideToast();
+    }, 5000);*/
+  }
+
+  hideToast() {
+    this.toastVisible = false;
+  }
+
+  onToastHidden() {
+    this.toastMessage = '';
+  }
+
   onSubmit() {
     const { email, stageId } = this.createLinkForm.value;
-    console.log(stageId);
+
     this.authService.getCompanyByEmail(email).subscribe({
       next: (entreprise) => {
         const entrepriseId = entreprise.id;
-        console.log(entrepriseId);
+
         this.privateLinkService.createPrivateLink(entrepriseId, stageId).subscribe({
           next: (res) => {
-            this.message = `Lien créé : ${res.url ?? 'Token : ' + res.token}`;
+            const token = res.token;
+            this.linkUrl = `${window.location.origin}/inscription/${token}`;
+            const expiration = res.expirationDate
+              ? ` (expire le ${new Date(res.expirationDate).toLocaleString()})`
+              : '';
+
+            this.showToast(
+              `Lien créé pour <strong>${entreprise.name}</strong>.<br>
+                <a href="${this.linkUrl}" target="_blank">${this.linkUrl}</a>${expiration}`,
+              'success'
+            );
           },
-          error: () => {
-            this.message = 'Erreur lors de la création du lien.';
+          error: (err) => {
+            this.linkUrl = null;
+
+            if (err.status === 0) {
+              this.showToast(`Erreur de connexion : veuillez vérifier votre réseau.`, 'error');
+            } else if (err.status >= 500) {
+              this.showToast(`Une erreur interne s'est produite. Veuillez réessayer plus tard.`, 'error');
+            } else {
+              this.showToast(`Une erreur est survenue : ${err.error?.message || 'Veuillez réessayer.'}`, 'error');
+            }
           }
         });
       },

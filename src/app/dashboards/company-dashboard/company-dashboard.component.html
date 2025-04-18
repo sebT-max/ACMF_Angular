@@ -81,6 +81,7 @@
         <p>Aucune inscription trouvée.</p>
       </ng-template>
     }
+    <app-private-link-form></app-private-link-form>
   </div>
 </div>
 
@@ -118,15 +119,16 @@
           }
     </table>
 
-  }
+    }
 
-  @else{
-    <ng-template #loading>
-      <span>Pas de lien privé</span>
-    </ng-template>
-  }
-</div>
-  <div *ngIf="activeTab === 'demandeDevis'" class="tab-content">
-    <app-demande-devis></app-demande-devis>
-  <div>
+    @else{
+      <ng-template #loading>
+        <span>Pas de lien privé</span>
+      </ng-template>
+    }
+    </div>
+    <div *ngIf="activeTab === 'demandeDevis'" class="tab-content">
+      <app-demande-devis></app-demande-devis>
+    <div>
+  </div>
 </div>

@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {AuthService} from '../../auth/services/auth.service';
 import {API_URL} from '../../../core/constants/api-constant';
+import {InscriptionFormModel} from '../../inscription/models/inscription-form.model';
+import {CreateInscriptionResponseBody} from '../../inscription/models/CreateInscriptionResponseBody';
+import {PrivateLinkFormData} from '../Model/PrivateLinkFormData';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +38,12 @@ export class PrivateLinkService {
   getCompanyPrivateLinks(): Observable<any[]> {
     return this._httpClient.get<any[]>(`${API_URL}company/privateLinks`);
   }
+  getLinkDetails(token: string): Observable<any> {
+    return this._httpClient.get<any>(`${API_URL}company/privateLinks/${token}`);
+  }
 
+  submitInscription(formData: FormData): Observable<PrivateLinkFormData> {
+    return this._httpClient.post(`${API_URL}company/privateLinks/inscriptions/create`, formData);
+
+  }
 }

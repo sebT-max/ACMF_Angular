@@ -52,4 +52,7 @@ export class StageService{
   updateStage(id: number | undefined, updatedStage: StageDetailsModel): Observable<StageDetailsModel> {
     return this._httpClient.put<StageDetailsModel>(`${API_URL}stages/update/${id}`, updatedStage);
   }
+  decrementStageCapacity(stageId: number) {
+    return this._httpClient.put<StageDetailsModel>(`${API_URL}stages/${stageId}/decrement-capacity`, {});
+  }
 }

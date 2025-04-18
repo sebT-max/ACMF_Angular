@@ -179,11 +179,6 @@ export class AdminDashboardComponent implements OnInit  {
           this.inscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
         }
 
-        // Met à jour la capacité du stage dans l'UI
-        if (updatedInscription.stage) {
-          this.stageCapacity = updatedInscription.stage.capacity;
-        }
-
         // Redirection optionnelle
         // this._router.navigate(['/dashboard-admin']);
       },

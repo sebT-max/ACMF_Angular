@@ -6,6 +6,7 @@ import { InscriptionFormModel } from './models/inscription-form.model';
 import { CreateInscriptionResponseBody } from './models/CreateInscriptionResponseBody';
 import { AuthService } from '../auth/services/auth.service';
 import {InscriptionListResponse} from './models/InscriptionListResponse';
+import {StageDetailsModel} from '../stage/models/stage-details-model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +67,6 @@ export class InscriptionService {
   getInscriptionPdfUrl(fileName: string): string {
     return `${API_URL}inscriptions/file/${fileName}`;
   }
+
 }
 

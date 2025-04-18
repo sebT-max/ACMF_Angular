@@ -11,6 +11,12 @@
       <div class="card_stages_date">
         {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
       </div>
+      <div class="card_stages_date">
+        <h3>Places disponibles<br><br>
+          {{ stage?.capacity === 0 ? "Complet" : stage?.capacity }}
+        </h3>
+      </div>
+
 
       <div class="card_stages_all_datas">
         <h2>{{ stage.city }}</h2>

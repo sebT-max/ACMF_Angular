@@ -107,6 +107,7 @@ export class InscriptionCreateComponent implements OnInit {
     this.uploadedFiles = this.uploadedFiles.filter(f => f.name !== removedFile.name || f.size !== removedFile.size);
   }
 
+
   handleInscription(): void {
     this.isLoading = true;
     const user = this.currentUser();
@@ -157,15 +158,25 @@ export class InscriptionCreateComponent implements OnInit {
       this.uploadedFiles.forEach(file => {
         formData.append('files', file);
       });
+
+    this._stageService.decrementStageCapacity(this.stageId).subscribe({
+      next: (updatedStage) => {
+        console.log(updatedStage)
+        this.stageDetails = updatedStage;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la mise à jour de la capacité :', err);
+        this.toastr.error("Une erreur est survenue lors de la mise à jour de la capacité.");
+        this.isLoading = false;
+      }
+    });
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
         const inscriptionId = resp.id; // Ou resp.body?.id selon ta config
         console.log('Inscription réussie', inscriptionId);
-
         // Vérifie si `stageDetails` est défini avant d'accéder à son prix
         if (this.stageDetails && this.stageDetails.price) {
           const amountInCents = this.stageDetails.price * 100; // Assure-toi que `price` est un nombre
-
           this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents,this.stageDetails).subscribe({
             next: (stripeRedirectUrl: string) => {
               window.location.href = stripeRedirectUrl;

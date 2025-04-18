@@ -18,13 +18,16 @@
     </div>
   </div>
 </div>
-
 <div class="step-content animate">
   <h2>{{ steps[currentStep].title }}</h2>
   <hr>
-  <p>{{ steps[currentStep].content }}</p>
-
-  <button class="btn-next" (click)="nextStep(true)">Valider cette étape</button>
+  <p>{{ steps[currentStep].content }}</p><br/>
+  <div style="display:flex">
+  <button class="btn-next" (click)="nextStep(true)">
+    {{ currentStep === steps.length - 1 ? 'Recommencer' : 'Valider cette étape' }}
+  </button>
+  <p style="font-size:24px;"*ngIf="currentStep === steps.length - 1">🎉 Félicitations ! Vous avez terminé toutes les étapes.</p>
+  </div>
 </div>
 <div class="margin_top_130"></div>
 <hr>

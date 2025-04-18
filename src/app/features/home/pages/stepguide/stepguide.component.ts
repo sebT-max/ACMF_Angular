@@ -37,9 +37,14 @@ export class StepGuideComponent implements OnInit {
   }
   nextStep(formValid: boolean) {
     if (!formValid) return;
+
     if (this.currentStep < this.steps.length - 1) {
       this.currentStep++;
-      localStorage.setItem('currentStep', this.currentStep.toString());
+    } else {
+      this.currentStep = 0; // Reset à la première étape
     }
+
+    localStorage.setItem('currentStep', this.currentStep.toString());
   }
+
 }

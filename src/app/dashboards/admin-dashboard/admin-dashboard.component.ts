@@ -145,23 +145,34 @@ export class AdminDashboardComponent implements OnInit  {
     this._router.navigate([`/stages/update/${id}`]);
   }
 
-  onDeleteStage(id: number | undefined): void {
-    if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
-    console.log('Suppression en cours...');
+  onDeleteStage(id?: number): void {
+
+    alert("Avant de supprimer, assurez-vous qu'il n'y ait aucune inscription pour ce stage")
+    if (!id) return;
+
+    if (!confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
 
     this._stageService.deleteStage(id).subscribe({
       next: () => {
-        alert('Élément supprimé avec succès.');
-        // Rediriger si besoin :
-        this.stages = this.stages.filter(s => s.id !== id);
-        this._router.navigate(['/dashboard-admin']);
+        this.toastr.success('Stage supprimé avec succès.');
+        this.stages = this.stages.filter(stage => stage.id !== id);
+
+        // Redirection facultative : uniquement si l'élément supprimé est affiché en détail
+        if (this._router.url.includes(`/stages/${id}`)) {
+          this._router.navigate(['/dashboard-admin']);
+        }
       },
       error: (err) => {
+        if (err.status === 409 || (err.error?.message?.includes('foreign key'))) {
+          this.toastr.error("Ce stage ne peut pas être supprimé car des inscriptions y sont liées.");
+        } else {
+          this.toastr.error("Une erreur est survenue lors de la suppression.");
+        }
         console.error('Erreur lors de la suppression :', err);
-        alert("Une erreur est survenue lors de la suppression.");
       }
     });
   }
+
 
   validerInscription(id: number | undefined): void {
     if (id === undefined) {

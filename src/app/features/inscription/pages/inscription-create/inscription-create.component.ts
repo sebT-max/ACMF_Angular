@@ -69,8 +69,8 @@ export class InscriptionCreateComponent implements OnInit {
     }
 
     this.inscriptionCreationForm = this._fb.group({
-      userId: [this.currentUser()?.id || '', Validators.required],
-      stageId: [this.stageId || '', Validators.required],
+      userId: [this.currentUser()?.id ?? null, Validators.required],
+      stageId: [this.stageId, Validators.required],
       stageType: ['', Validators.required],
       inscriptionStatut: ['EN_ATTENTE', Validators.required],
       codePromo: ['']
@@ -80,11 +80,16 @@ export class InscriptionCreateComponent implements OnInit {
   onFilesChange(event: any) {
     const files: File[] = event.files || event.target?.files || [];
     for (let file of files) {
-      const isValid = file.type === 'application/pdf' || file.type.startsWith('image/');
-      if (isValid) {
+      if (this.isValidFileType(file)) {
         this.uploadedFiles.push(file);
+      } else {
+        this.toastr.warning(`Le fichier ${file.name} n'est pas un type autorisé.`);
       }
     }
+  }
+
+  isValidFileType(file: File): boolean {
+    return ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg'].includes(file.type);
   }
 
   uploadFiles(event?: any): void {
@@ -126,8 +131,8 @@ export class InscriptionCreateComponent implements OnInit {
 
     // Patch avant la validation
     this.inscriptionCreationForm.patchValue({
-      userId: user.id,
-      stageId: this.stageId
+      stageId: this.stageId,
+      userId: this.currentUser()?.id
     });
 
     if (this.inscriptionCreationForm.invalid) {
@@ -149,12 +154,6 @@ export class InscriptionCreateComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
-
-    /*const shouldSendFiles =
-      this.uploadedFiles.length > 0 &&
-      (stageType === 'TRIBUNAL' || stageType === 'PROBATOIRE');*/
-
-    /*if (shouldSendFiles) {*/
       this.uploadedFiles.forEach(file => {
         formData.append('files', file);
       });
@@ -198,43 +197,3 @@ export class InscriptionCreateComponent implements OnInit {
     });
   }
 }
-
-   /* this._inscriptionService.createInscription(formData).subscribe({
-      next: (resp) => {
-        const inscriptionId = resp.id; // Ou resp.body?.id selon ta config
-        console.log('Inscription réussie', inscriptionId);
-
-        // Vérifie si `stageDetails` est défini avant d'accéder à son prix
-        if (this.stageDetails && this.stageDetails.price) {
-          const amountInCents = this.stageDetails.price * 100; // Assure-toi que `price` est un nombre
-
-
-          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents,this.stageDetails).subscribe({
-            next: (stripeRedirectUrl: string) => {
-              window.location.href = stripeRedirectUrl;
-            },
-            error: (err) => {
-              console.error('Erreur Stripe :', err);
-              this.isLoading = false; // Arrête de charger en cas d'erreur Stripe
-            }
-          });
-        } else {
-          console.error("Les détails du stage ne sont pas disponibles ou le prix est invalide.");
-          this.isLoading = false; // Arrête de charger si les détails sont invalides
-        }
-      },
-      error: (err) => {
-        console.error('Erreur lors de l’inscription', err);
-        if (err.status === 401) {
-          this.toastr.warning("Vous devez être connecté pour vous inscrire.");
-        } else if (err.status === 400 && err.error?.message?.includes("complet")) {
-          this.toastr.error("Ce stage est complet.");
-        } else {
-          this.toastr.error("Une erreur s'est produite lors de l'inscription.");
-        }
-        this.isLoading = false;// Arrête de charger en cas d'erreur d'inscription
-      }
-    });
-  }
-}
-*/

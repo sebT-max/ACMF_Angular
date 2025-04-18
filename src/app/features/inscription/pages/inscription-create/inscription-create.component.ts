@@ -52,6 +52,8 @@ export class InscriptionCreateComponent implements OnInit {
   };
 
   isLoading: boolean = false;
+  lettre48nError: string | null = null;
+
 
   stageTypes = [
     { value: 'VOLONTAIRE', label: 'Volontaire' },
@@ -86,6 +88,12 @@ export class InscriptionCreateComponent implements OnInit {
       inscriptionStatut: ['EN_ATTENTE', Validators.required],
       codePromo: ['']
     });
+  }
+
+  get selectedStageLabel(): string | null {
+    const selectedValue = this.inscriptionCreationForm.get('stageType')?.value;
+    const selected = this.stageTypes.find(type => type.value === selectedValue);
+    return selected ? selected.label : null;
   }
 
   onFilesChange(event: any, type: 'permis' | 'carteId' | 'lettre48n') {
@@ -151,10 +159,9 @@ export class InscriptionCreateComponent implements OnInit {
     // Autres opérations que tu souhaites faire avec le fichier supprimé
   }
 
-
-
   handleInscription(): void {
     this.isLoading = true;
+
     const user = this.currentUser();
     if (!user) {
       console.error('Utilisateur non trouvé');
@@ -162,31 +169,40 @@ export class InscriptionCreateComponent implements OnInit {
       return;
     }
 
-    // Vérifie que `stageDetails.price` est défini
     if (!this.stageDetails || !this.stageDetails.price) {
       console.error('Prix du stage non défini');
       this.isLoading = false;
       return;
     }
 
-    // Patch avant la validation
     this.inscriptionCreationForm.patchValue({
       stageId: this.stageId,
-      userId: this.currentUser()?.id
+      userId: user.id
     });
+
+    const selectedValue = this.inscriptionCreationForm.get('stageType')?.value;
+    const selected = this.stageTypes.find(type => type.value === selectedValue);
+    const selectedLabel = selected ? selected.label : null;
+
+    // Validation conditionnelle pour la lettre 48N
+    if (selectedLabel === 'Tribunal' && this.uploadedFiles.lettre48n.length === 0) {
+      this.lettre48nError = 'Vous devez nous fournir la lettre 48_N du tribunal.';
+      this.isLoading = false;
+      return;
+    } else {
+      this.lettre48nError = null;
+    }
 
     if (this.inscriptionCreationForm.invalid) {
       console.warn('Formulaire invalide');
-      this.isLoading = false; // Arrête de charger si le formulaire est invalide
+      this.isLoading = false;
       return;
     }
 
-    const stageType = this.inscriptionCreationForm.value.stageType;
-
     const inscriptionData: InscriptionFormModel = {
-      userId: this.inscriptionCreationForm.value.userId,
-      stageId: this.inscriptionCreationForm.value.stageId,
-      stageType: stageType,
+      userId: user.id,
+      stageId: this.stageId,
+      stageType: selectedValue,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
       documents: [],
       codePromo: this.inscriptionCreationForm.value.codePromo || null
@@ -202,7 +218,6 @@ export class InscriptionCreateComponent implements OnInit {
 
     this._stageService.decrementStageCapacity(this.stageId).subscribe({
       next: (updatedStage) => {
-        console.log(updatedStage)
         this.stageDetails = updatedStage;
       },
       error: (err) => {
@@ -211,31 +226,31 @@ export class InscriptionCreateComponent implements OnInit {
         this.isLoading = false;
       }
     });
+
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
-        const inscriptionId = resp.id; // Ou resp.body?.id selon ta config
-        console.log('Inscription réussie', inscriptionId);
-        // Vérifie si `stageDetails` est défini avant d'accéder à son prix
+        const inscriptionId = resp.id;
         if (this.stageDetails && this.stageDetails.price) {
-          const amountInCents = this.stageDetails.price * 100; // Assure-toi que `price` est un nombre
-          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents,this.stageDetails).subscribe({
+          const amountInCents = this.stageDetails.price * 100;
+          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents, this.stageDetails).subscribe({
             next: (stripeRedirectUrl: string) => {
               window.location.href = stripeRedirectUrl;
             },
             error: (err) => {
               console.error('Erreur Stripe :', err);
-              this.isLoading = false; // Arrête de charger en cas d'erreur Stripe
+              this.isLoading = false;
             }
           });
         } else {
           console.error("Les détails du stage ne sont pas disponibles ou le prix est invalide.");
-          this.isLoading = false; // Arrête de charger si les détails sont invalides
+          this.isLoading = false;
         }
       },
       error: (err) => {
         console.error('Erreur lors de l’inscription', err);
-        this.isLoading = false; // Arrête de charger en cas d'erreur d'inscription
+        this.isLoading = false;
       }
     });
   }
+
 }

@@ -14,10 +14,6 @@
       <label for="codePromo">Code promo (optionnel)</label>
       <input id="codePromo" formControlName="codePromo" placeholder="EXEMPLE10" />
 
-      <label for="documents">Chargez vos documents<br/>(lettres officielles, carte d'identité, permis de conduire)</label>
-      <small class="form-text text-muted">
-        Formats acceptés : PDF, JPEG, PNG.
-      </small>
 
       <!-- Permis -->
       <label for="permis"><strong>Permis :</strong></label>
@@ -62,21 +58,28 @@
       </div>-->
 
       <!-- Lettre 48N -->
-      <label for="lettre48n"><strong>Lettre 48N :</strong></label>
-      <p-fileUpload
-        name="lettre48n"
-        [customUpload]="true"
-        (uploadHandler)="uploadFiles($event)"
-        (onSelect)="onFilesChange($event, 'lettre48n')"
-        (onRemove)="onRemoveFile($event, 'lettre48n')"
-        [multiple]="true"
-        [showUploadButton]="false"
-        [showCancelButton]="false"
-        accept=".pdf,image/*"
-        chooseLabel="Choisir le fichier"
-        mode="advanced"
-        [maxFileSize]="5000000"
-      ></p-fileUpload>
+      <div *ngIf="selectedStageLabel === 'Tribunal'">
+        <label for="lettre48n"><strong>Lettre 48N :</strong></label>
+        <p-fileUpload
+          name="lettre48n"
+          [customUpload]="true"
+          (uploadHandler)="uploadFiles($event)"
+          (onSelect)="onFilesChange($event, 'lettre48n')"
+          (onRemove)="onRemoveFile($event, 'lettre48n')"
+          [multiple]="true"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          accept=".pdf,image/*"
+          chooseLabel="Choisir le fichier"
+          mode="advanced"
+          [maxFileSize]="5000000"
+        ></p-fileUpload>
+
+      </div>
+      <br>
+      <div *ngIf="lettre48nError" class="error-message">
+        {{ lettre48nError }}
+      </div>
 
       <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
         <ng-container *ngIf="isLoading">
@@ -101,5 +104,34 @@
     <p>📆 {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
     <p>Organisation: {{ stageDetails.organisation }}</p>
     <p>💰Prix: {{ stageDetails.price }}€/personne</p>
+
+    <div class="consignes_container">
+      <h3><span style="font-size: 2em;">⚠️</span> Consignes à respecter !</h3>
+      <p>Veuillez appeler vos fichiers de la manière suivante:</p>
+        <ul>
+          <h4>Permis de permis conduire:</h4>
+          <li>
+            recto: "(nom_prénom)_permis_recto"
+          </li>
+          <li>
+            verso: "(nom_prénom)_permis_verso"
+          </li>
+      </ul>
+      <ul>
+        <h4>Pareil pour vos papiers d'identité:</h4>
+       <li> recto: "(nom_prénom)_identité_recto"
+       </li>
+        <li>verso: "(nom_prénom)_identité_verso"</li>
+      </ul>
+      <hr>
+      <br>
+      <div class="form-text text-muted">
+        <ul>
+          <li>Formats acceptés pour les images : JPEG, PNG.</li>
+          <li>La lettre 48N doit être en PDF.</li>
+        </ul>
+      </div>
+    </div>
+    <br/>
   </div>
 </div>

@@ -32,3 +32,14 @@
   </div>
 </div>
 
+<div class="documents-container">
+  <div *ngFor="let type of objectKeys(groupedDocuments)">
+    <h3>{{ getDocumentTypeLabel(type) }}</h3>
+    <ul>
+      <li *ngFor="let doc of groupedDocuments[type]">
+        <a [href]="doc.fileUrl" target="_blank">{{ doc.fileName }}</a> - Téléchargé le {{ doc.uploadedAt | date:'dd/MM/yyyy' }}
+      </li>
+    </ul>
+  </div>
+</div>
+

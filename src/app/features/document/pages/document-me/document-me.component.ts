@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {DocumentDTO} from '../../../inscription/models/DocumentDTO';
 import {DocumentService} from '../services/document.services';
-import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {DatePipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
@@ -9,13 +9,15 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
   imports: [
     NgOptimizedImage,
     NgIf,
-    NgForOf
+    NgForOf,
+    DatePipe
   ],
   templateUrl: './document-me.component.html',
   styleUrl: './document-me.component.scss'
 })
 export class DocumentMeComponent {
 documents: DocumentDTO[] = [];
+groupedDocuments: { [key: string]: DocumentDTO[] } = {};
 
 constructor(
   private _documentService:DocumentService,
@@ -24,17 +26,45 @@ constructor(
   ngOnInit(): void {
     this.loadDocuments();
   }
-  getSafeUrl(url: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(url);
-  }
+
   loadDocuments(): void {
     this._documentService.getMyDocuments().subscribe({
-      next: (data) => {
-        console.log('Documents récupérées :', data); // <-- Ajoute ceci
-        this.documents = data;
+      next: (documents) => {
+        // Trier les documents par date de téléchargement décroissante
+        documents.sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime());
+
+        // Regrouper les documents par type
+        this.groupedDocuments = documents.reduce((groups, doc) => {
+          const type = doc.type;
+          if (!groups[type]) {
+            groups[type] = [];
+          }
+          groups[type].push(doc);
+          return groups;
+        }, {} as { [key: string]: DocumentDTO[] });
       },
-      error: (err) => console.error('Erreur lors du chargement des inscriptions', err)
+      error: (err) => console.error('Erreur lors du chargement des documents', err)
     });
+  }
+  // Ajoute cette méthode pour obtenir les clés d'un objet
+  objectKeys = Object.keys;
+
+// Méthode pour obtenir un label lisible pour chaque type de document
+  getDocumentTypeLabel(type: string): string {
+    switch (type) {
+      case 'id':
+        return 'Carte d\'identité';
+      case 'permis':
+        return 'Permis de conduire';
+      case 'lettre48n':
+        return 'Lettre 48N';
+      default:
+        return type;
+    }
+  }
+
+  getSafeUrl(url: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
   rotateImage(documentId: number) {
     const imageElement = document.getElementById(`image-${documentId}`) as HTMLImageElement;

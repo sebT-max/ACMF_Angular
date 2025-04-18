@@ -32,7 +32,6 @@ export class ClientDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.loadInscriptions();
   }
-
   loadInscriptions(): void {
     this._inscriptionService.getMyInscriptions().subscribe({
       next: (data) => {
@@ -42,24 +41,4 @@ export class ClientDashboardComponent implements OnInit {
       error: (err) => console.error('Erreur lors du chargement des inscriptions', err)
     });
   }
-
-
-  /*deleteInscription(inscription: InscriptionFormModel): void {
-    if (inscription.id === undefined) {
-      console.error('ID d\'inscription manquant');
-      return;
-    }
-
-    if (confirm('Confirmer la suppression de cette inscription ?')) {
-      this._inscriptionService.deleteInscription(inscription.id).subscribe({
-        next: () => {
-          // Mise à jour de la liste après suppression
-          this.inscriptions = this.inscriptions.filter(i => i.id !== inscription.id);
-        },
-        error: (err) => {
-          console.error('Erreur lors de la suppression', err);
-        }
-      });
-    }
-  }*/
 }

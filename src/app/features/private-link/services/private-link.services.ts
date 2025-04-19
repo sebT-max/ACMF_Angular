@@ -1,11 +1,12 @@
 import {inject, Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {AuthService} from '../../auth/services/auth.service';
 import {API_URL} from '../../../core/constants/api-constant';
 import {InscriptionFormModel} from '../../inscription/models/inscription-form.model';
 import {CreateInscriptionResponseBody} from '../../inscription/models/CreateInscriptionResponseBody';
 import {PrivateLinkFormData} from '../Model/PrivateLinkFormData';
+import {LinkDetails} from '../Model/LinkDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -39,11 +40,19 @@ export class PrivateLinkService {
     return this._httpClient.get<any[]>(`${API_URL}company/privateLinks`);
   }
   getLinkDetails(token: string): Observable<any> {
-    return this._httpClient.get<any>(`${API_URL}company/privateLinks/${token}`);
+    console.log('Appel à l\'API pour le token:', token);  // Log du token envoyé
+
+    return this._httpClient.get<any>(`${API_URL}privateLinks/${token}`).pipe(
+      tap(response => {
+        console.log('Détails du lien privé:', response); // Log pour déboguer
+      })
+    );
   }
 
-  submitInscription(formData: FormData): Observable<PrivateLinkFormData> {
-    return this._httpClient.post(`${API_URL}company/privateLinks/inscriptions/create`, formData);
-
+  submitInscription(token: string, formData: FormData): Observable<PrivateLinkFormData> {
+    return this._httpClient.post<PrivateLinkFormData>(`${API_URL}inscriptions/${token}`, formData);
   }
 }
+/*formData: FormData
+Lien créé pour Jupiler.
+  http://localhost:4200/inscription/556064f3-c551-4a8c-b824-86e037468b40 (expire le 26/04/2025 03:29:31)*/

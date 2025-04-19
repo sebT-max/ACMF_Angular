@@ -18,9 +18,6 @@
     <label>Téléphone</label>
     <input type="tel" formControlName="phone" required class="form-control" />
   </div>
-  <br>
-  <label for="codePromo">Code promo (optionnel)</label>
-  <input id="codePromo" formControlName="codePromo" placeholder="EXEMPLE10" />
 
 <br>
   <!-- Permis -->
@@ -59,3 +56,12 @@
 
   <button type="submit" [disabled]="privateLinkForm.invalid">Envoyer</button>
 </form>
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<!--lien
+Lien créé pour Jupiler.
+http://localhost:4200/inscription/94084669-0cf4-43e9-929f-f542d9bf1496 (expire le 26/04/2025 10:23:08)-->
+
+

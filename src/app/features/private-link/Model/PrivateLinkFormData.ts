@@ -11,4 +11,5 @@ export interface PrivateLinkFormData {
   userEmail: string;
   telephone: string;
   documents: DocumentDTO[];
+  isExpired: boolean;
 }

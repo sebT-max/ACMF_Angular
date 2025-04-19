@@ -1,24 +1,80 @@
 <form [formGroup]="privateLinkForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="space-y-4">
   <div>
-    <label>Nom</label>
-    <input type="text" formControlName="lastName" required class="form-control" />
+    <label for="lastname">Nom :</label>
+    <input id="lastname" type="text" placeholder="Nom" formControlName="lastname" />
+    <div *ngIf="privateLinkForm.get('lastname')?.invalid && privateLinkForm.get('lastname')?.touched" class="error-message">
+      Le nom est requis.
+    </div>
   </div>
 
+  <!-- Prénom -->
   <div>
-    <label>Prénom</label>
-    <input type="text" formControlName="firstName" required class="form-control" />
+    <label for="firstname">Prénom :</label>
+    <input id="firstname" type="text" placeholder="Prénom" formControlName="firstname" />
+    <div *ngIf="privateLinkForm.get('firstname')?.invalid && privateLinkForm.get('firstname')?.touched" class="error-message">
+      Le prénom est requis.
+    </div>
   </div>
 
+  <!-- Email -->
   <div>
-    <label>Email</label>
-    <input type="email" formControlName="email" required class="form-control" />
+    <label for="email">Email :</label>
+    <input id="email" type="email" placeholder="Email" formControlName="email" />
+    <div *ngIf="privateLinkForm.get('email')?.invalid && privateLinkForm.get('email')?.touched" class="error-message">
+      <span *ngIf="privateLinkForm.get('email')?.errors?.['required']">L'email est requis.</span>
+      <span *ngIf="privateLinkForm.get('email')?.errors?.['email']">Format d'email invalide.</span>
+    </div>
   </div>
 
+  <!-- Mot de passe -->
   <div>
-    <label>Téléphone</label>
-    <input type="tel" formControlName="phone" required class="form-control" />
+    <label for="password">Mot de passe :</label>
+    <input id="password" type="password" placeholder="Mot de passe" formControlName="password" />
+    <div *ngIf="privateLinkForm.get('password')?.invalid && privateLinkForm.get('password')?.touched" class="error-message">
+      <span *ngIf="privateLinkForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
+      <span *ngIf="privateLinkForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>
+    </div>
   </div>
 
+  <!-- Date de naissance -->
+  <div>
+    <label for="birthDate">Date de naissance :</label>
+    <input id="birthDate" type="date" formControlName="birthDate" />
+    <div *ngIf="privateLinkForm.get('birthDate')?.invalid && privateLinkForm.get('birthDate')?.touched" class="error-message">
+      La date de naissance est requise.
+    </div>
+  </div>
+
+  <!-- Téléphone -->
+  <div>
+    <label for="telephone">Téléphone :</label>
+    <input id="telephone" type="text" placeholder="Téléphone" formControlName="telephone" />
+    <div *ngIf="privateLinkForm.get('telephone')?.invalid && privateLinkForm.get('telephone')?.touched" class="error-message">
+      Le téléphone est requis.
+    </div>
+  </div>
+
+  <!-- RGPD -->
+  <div class="flexCenter" style="margin-top:20px;">
+    <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
+    <label for="acceptTerms" style="margin-left: 8px;">
+      J'accepte les conditions RGPD
+    </label>
+  </div>
+  <div *ngIf="privateLinkForm.get('acceptTerms')?.invalid && privateLinkForm.get('acceptTerms')?.touched" class="error-message">
+    Vous devez accepter les conditions pour continuer.
+  </div>
+
+  <!-- Erreur serveur -->
+  <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">
+    {{ errorMessage }}
+  </div>
+
+<!--   Bouton -->
+ <!-- <button [disabled]="isLoading || privateLinkForm.invalid" style="margin-top: 1rem;">
+    {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
+  </button>-->
+<!---->
 <br>
   <!-- Permis -->
   <label for="permis"><strong>Permis :</strong></label>

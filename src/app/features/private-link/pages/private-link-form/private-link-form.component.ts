@@ -42,11 +42,14 @@ export class PrivateLinkFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.privateLinkForm = this._fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      codePromo: ['']
+      lastname: [null, [Validators.required]],
+      firstname: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required]],
+      birthDate: [null, [Validators.required]],
+      telephone: [null, [Validators.required]],
+      acceptTerms: [null, [Validators.required]],
+      roleId:[4, [Validators.required]]
     });
 
     const token = this._route.snapshot.paramMap.get('token');
@@ -151,9 +154,14 @@ export class PrivateLinkFormComponent implements OnInit {
 
     const formData = new FormData();
 
-    Object.entries(this.privateLinkForm.value).forEach(([key, value]) => {
-      formData.append(key, value as string);
-    });
+    formData.append('lastname', this.privateLinkForm.value.lastname);
+    formData.append('firstname', this.privateLinkForm.value.firstname);
+    formData.append('email', this.privateLinkForm.value.email);
+    formData.append('password', this.privateLinkForm.value.password);
+    formData.append('birthdate', this.privateLinkForm.value.birthDate); // ici : bien adapté
+    formData.append('telephone', this.privateLinkForm.value.telephone);
+    formData.append('acceptTerms', this.privateLinkForm.value.acceptTerms);
+    formData.append('roleId', this.privateLinkForm.value.roleId);
 
     Object.entries(this.uploadedFiles).forEach(([key, files]) => {
       files.forEach(file => {
@@ -166,6 +174,10 @@ export class PrivateLinkFormComponent implements OnInit {
     if (this.entrepriseId) {
       formData.append('entrepriseId', String(this.entrepriseId));
     }
+    console.log('--- Contenu de FormData ---');
+    formData.forEach((value, key) => {
+      console.log(`${key}:`, value);
+    });
 
     this.isLoading = true;
     const token = this._route.snapshot.paramMap.get('token');
@@ -175,9 +187,10 @@ export class PrivateLinkFormComponent implements OnInit {
       return;
     }
     this._privateLinkService.submitInscription(token,formData).subscribe({
-      next: () => {
-        this._toastr.success('Inscription envoyée avec succès !');
-        this._router.navigate(['/merci']);
+      next: (res: any) => {
+        const message = res?.message || 'Inscription envoyée avec succès !';
+        this._toastr.success(message);
+        this._router.navigate(['/']);
       },
       error: (err) => {
         this._toastr.error('Erreur lors de l’envoi du formulaire.');

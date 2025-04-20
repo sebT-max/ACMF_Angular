@@ -64,6 +64,9 @@ export class AuthService {
       })
     );
   }
+  getCompanyByEmailPublic(email: string): Observable<CompanyTokenModel> {
+    return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`);
+  }
 
   // Vérifier si un utilisateur ou une entreprise est authentifié
   isAuthenticated(): boolean {
@@ -94,27 +97,33 @@ export class AuthService {
   getToken(): string | null {
     const currentUserValue = this.currentUser();
     const currentCompanyValue = this.currentCompany();
+    // Si aucun token n'est trouvé, renvoie null
     return currentUserValue?.token ?? currentCompanyValue?.token ?? null;
   }
 
-  // Récupérer le header d'autorisation avec le token
+// Récupérer l'en-tête d'autorisation avec le token
   getAuthorizationHeader(): string {
     const token = this.getToken();
+    // Renvoie un en-tête Authorization ou une chaîne vide si pas de token
     return token ? `Bearer ${token}` : '';
   }
 
+// Récupérer les en-têtes d'autorisation
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
+    // Si un token existe, on ajoute l'en-tête Authorization
     return token
       ? new HttpHeaders().set('Authorization', `Bearer ${token}`)
       : new HttpHeaders();
   }
 
+// Options avec les en-têtes d'authentification
   getAuthOptions() {
     return {
       headers: this.getAuthHeaders(),
     };
   }
+
 
   // PART Particulier
   register(user: RegisterFormModel) {
@@ -215,12 +224,6 @@ export class AuthService {
     );
   }
 
-  getInscriptions(): Observable<InscriptionFormModel[]> {
-    return this._httpClient.get<InscriptionFormModel[]>(
-      `${API_URL}inscriptions/me`,
-      this.getAuthOptions(),
-    );
-  }
   private loadUserRoles(resp: TokenModel): void {
     const storedRoles = localStorage.getItem('roles');
     this.userRoles = storedRoles ? JSON.parse(storedRoles) : [];

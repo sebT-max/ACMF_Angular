@@ -1,9 +1,7 @@
 <div class="container">
-  <h2>Liste des liens privés</h2>
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">ID</th>
       <th scope="col">Entreprise</th>
       <th scope="col">Stage</th>
       <th scope="col">Token</th>
@@ -13,13 +11,19 @@
     </thead>
     <tbody>
     <tr *ngFor="let link of privateLinks">
-      <td>{{ link.id }}</td>
-      <td>{{ link.entreprise.name }}</td>
-      <td>{{ link.stage.name }}</td>
-      <td>{{ link.token }}</td>
+      <td><h3>{{ link.entrepriseNom}}</h3></td>
+      <td>
+        <strong>Ville: </strong>{{ link.stageInfo.city }}<br>
+        <strong> Rue: </strong>{{ link.stageInfo.street }}<br/>
+        <strong>Dates :</strong> {{ link.stageInfo.startDate | date:'d':'fr' }} & {{ link.stageInfo.endDate | date:'d MMMM yyyy':'fr' }}<br>
+
+      </td>
+      <td>{{link.token}}</td>
       <td>{{ link.expirationDate | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td>
-        <button (click)="deactivateLink(link.id)" class="btn btn-danger">Désactiver</button>
+<!--
+        <button class="disabled" (click)="deactivateLink(link.id)" class="btn btn-danger">Désactiver</button>
+-->
       </td>
     </tr>
     </tbody>

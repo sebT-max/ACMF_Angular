@@ -1,11 +1,12 @@
 <form [formGroup]="codePromoCreationForm" id="stage_creation_form" (ngSubmit)="handleCodePromoCreation()">
 
   <div>
-    <label for="code">Code</label>
+    <!--<label for="code">Code</label>-->
     <input id="code" type="text" placeholder="Code" formControlName="code" required>
   </div>
+  <br/>
   <div>
-    <label for="reduction">Réduction</label>
+ <!--   <label for="reduction">Réduction</label>-->
     <input id="reduction" type="number" placeholder="Réduction" formControlName="reduction" required>
   </div>
 

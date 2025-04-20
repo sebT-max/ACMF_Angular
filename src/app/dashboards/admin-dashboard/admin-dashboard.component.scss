@@ -16,10 +16,19 @@ td{
   }
   td{
     text-align: center;
-    margin-top:20px;
-    height:20px;
+    height:auto;
+    font-size:16px;
     padding:20px;
-  }
+    line-height:30px;
+    div{
+        margin:0px 20px;
+        line-height: 30px;
+      }
+    button{
+      margin:0 auto;
+      padding:5px;
+    }
+    }
   th{
     padding:20px;
   }
@@ -44,8 +53,6 @@ td{
 }
 .tabs {
   display: flex;
-  border-bottom: 2px solid #ccc;
-  margin-bottom: 1rem;
   background: white;
 }
 

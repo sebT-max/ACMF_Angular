@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import { API_URL } from '../../core/constants/api-constant';
 import { InscriptionFormModel } from './models/inscription-form.model';
 import { CreateInscriptionResponseBody } from './models/CreateInscriptionResponseBody';
@@ -27,10 +27,16 @@ export class InscriptionService {
     );
   }
 
-  getMyInscriptions(): Observable<InscriptionFormModel[]> {
-    return this._httpClient.get<InscriptionFormModel[]>(
+  getMyInscriptions(): Observable<InscriptionListResponse[]> {
+    return this._httpClient.get<InscriptionListResponse[]>(
       `${API_URL}inscriptions/me`,
       this.getAuthHeaders()
+    ).pipe(
+      catchError(error => {
+        // Logique pour gérer l'erreur ici
+        console.error('Erreur lors de la récupération des inscriptions:', error);
+        return throwError(() => new Error('Impossible de récupérer les inscriptions'));
+      })
     );
   }
 

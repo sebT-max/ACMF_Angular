@@ -3,6 +3,7 @@ import {DocumentDTO} from '../../../inscription/models/DocumentDTO';
 import {DocumentService} from '../services/document.services';
 import {DatePipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {DocumentUpdateComponent} from '../document-update/document-update.component';
 
 @Component({
   selector: 'app-document-me',
@@ -10,7 +11,8 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
     NgOptimizedImage,
     NgIf,
     NgForOf,
-    DatePipe
+    DatePipe,
+    DocumentUpdateComponent
   ],
   templateUrl: './document-me.component.html',
   styleUrl: './document-me.component.scss'
@@ -18,6 +20,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 export class DocumentMeComponent {
 documents: DocumentDTO[] = [];
 groupedDocuments: { [key: string]: DocumentDTO[] } = {};
+showUpdateForm = false;
 
 constructor(
   private _documentService:DocumentService,
@@ -118,4 +121,9 @@ constructor(
     this.modalOpen = false;
     this.selectedImageUrl = null;
   }
+
+  toggleUpdateForm() {
+    this.showUpdateForm = !this.showUpdateForm;
+  }
+
 }

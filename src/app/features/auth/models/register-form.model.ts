@@ -1,3 +1,5 @@
+import {DocumentDTO} from '../../inscription/models/DocumentDTO';
+
 export interface RegisterFormModel {
   lastname: string;
   firstname: string;
@@ -7,4 +9,5 @@ export interface RegisterFormModel {
   birthdate: string;
   acceptTerms:boolean;
   roleId: number;
+  documents?: any;
 }

@@ -8,6 +8,4 @@ export interface StageDetailsModel {
   arrondissement: string;
   capacity: number;
   organisation: string;
-
-
 }

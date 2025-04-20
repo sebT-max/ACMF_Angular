@@ -68,3 +68,24 @@
   margin-bottom: 10px;
   color:white;
 }
+.document-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.rotate-button {
+  margin-top: 10px;
+  padding: 6px 10px;
+  background-color: #005aa7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.rotate-button:hover {
+  background-color: #003f74;
+}

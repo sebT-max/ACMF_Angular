@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {DatePipe, NgForOf} from '@angular/common';
 import {PrivateLinkService} from '../../services/private-link.services';
+import {PrivateLinkModel} from '../../Model/PrivateLinkModel';
+import {StageInfoResponse} from '../../../stage/models/stageInfoResponse';
 
 @Component({
   selector: 'app-private-link-list',
@@ -12,7 +14,7 @@ import {PrivateLinkService} from '../../services/private-link.services';
   styleUrl: './private-link-list.component.scss'
 })
 export class PrivateLinkListComponent implements OnInit {
-  privateLinks: any[] = [];
+  privateLinks: PrivateLinkModel[] = [];
 
   constructor(private privateLinkService: PrivateLinkService) {}
 
@@ -22,7 +24,8 @@ export class PrivateLinkListComponent implements OnInit {
 
   loadPrivateLinks(): void {
     this.privateLinkService.getPrivateLinks().subscribe({
-      next: (data) => {
+      next: (data:PrivateLinkModel[]) => {
+        console.log(data);
         this.privateLinks = data;
       },
       error: (err) => {
@@ -31,9 +34,18 @@ export class PrivateLinkListComponent implements OnInit {
     });
   }
 
-  // Optionnel : fonction pour désactiver un lien
+  /*// Optionnel : fonction pour désactiver un lien
   deactivateLink(linkId: number): void {
+    this.privateLinkService.desactivateLinks().subscribe({
+      next: (data:PrivateLinkModel[]) => {
+        console.log(data);
+        this.privateLinks = data;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la désactivation du lien privés', err);
+      }
+    });
     // Implémentation pour désactiver un lien (si nécessaire)
     console.log(`Désactivation du lien avec l'ID : ${linkId}`);
-  }
+  }*/
 }

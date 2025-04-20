@@ -9,6 +9,7 @@ import {TokenModel} from '../../features/auth/models/token.model';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 import {CodePromoCreateComponent} from '../../features/code-promo/pages/code-promo-create/code-promo-create.component';
 import {DocumentMeComponent} from '../../features/document/pages/document-me/document-me.component';
+import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -23,7 +24,7 @@ import {DocumentMeComponent} from '../../features/document/pages/document-me/doc
   styleUrl: './client-dashboard.component.scss'
 })
 export class ClientDashboardComponent implements OnInit {
-  inscriptions: InscriptionFormModel[] = [];
+  inscriptions: InscriptionListResponse[] = [];
   activeTab: 'inscription' | 'documents' = 'inscription';
 
 
@@ -34,7 +35,7 @@ export class ClientDashboardComponent implements OnInit {
   }
   loadInscriptions(): void {
     this._inscriptionService.getMyInscriptions().subscribe({
-      next: (data) => {
+      next: (data:InscriptionListResponse[]) => {
         console.log('Inscriptions récupérées :', data); // <-- Ajoute ceci
         this.inscriptions = data;
       },

@@ -17,9 +17,9 @@
     </button>
   </div>
 
-    <div *ngIf="activeTab === 'inscription'" class="tab-content">
-      <h2>Mes inscriptions</h2>
-      @if (inscriptions.length > 0) {
+  <div *ngIf="activeTab === 'inscription'" class="tab-content">
+    <h2>Mes inscriptions</h2>
+    @if (inscriptions.length > 0) {
       <table>
         <thead>
         <tr>
@@ -31,18 +31,18 @@
         <tbody>
         <tr *ngFor="let inscription of inscriptions">
           <td style="width:50%;">
-            <div id="agencement_details" *ngIf="inscription.stage; else loading">
+            <div id="agencement_details" *ngIf="inscription.id; else loading">
               <div style="margin-right:40px;">
-                <strong>Ville :</strong> {{ inscription.stage.city }} <br>
-                <strong>Arrondissement :</strong> {{ inscription.stage.arrondissement }} <br>
-                <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} &  & {{ inscription.stage.dateFin | date:'d MMMM yyyy':'fr' }}<br>
+                <strong>Ville :</strong> {{ inscription.stageCity }} <br>
+                <strong>Rue :</strong> {{ inscription.stageStreet }} <br>
+                <strong>Date :</strong> {{ inscription.stageDateDebut | date:'d':'fr' }} &  & {{ inscription.stageDateFin | date:'d MMMM yyyy':'fr' }}<br>
               </div>
 
 
               <div>
-                <strong>Rue :</strong> {{ inscription.stage.street }} <br>
-                <strong>Organisation :</strong> {{ inscription.stage.organisation }}<br>
-                <strong>Prix :</strong> {{ inscription.stage.price | currency:'EUR' }}
+                <strong>Rue :</strong> {{ inscription.stageStreet }} <br>
+                <strong>Organisation :</strong> {{ inscription.stageOrganisation }}<br>
+                <strong>Prix :</strong> {{ inscription.stagePrice | currency:'EUR' }}
               </div>
             </div>
             <ng-template #loading>
@@ -63,17 +63,15 @@
         </tr>
         </tbody>
       </table>
-      }
-      @else{
-        <ng-template #noInscriptions>
-          <p>Aucune inscription trouvée.</p>
-        </ng-template>
-      }
-      </div>
-      <div *ngIf="activeTab === 'documents'" class="tab-content">
-        <h2>Mes documents</h2>
-        <app-document-me></app-document-me>
-      </div>
-    </div>
-
-
+    }
+    @else{
+      <ng-template #noInscriptions>
+        <p>Aucune inscription trouvée.</p>
+      </ng-template>
+    }
+  </div>
+  <div *ngIf="activeTab === 'documents'" class="tab-content">
+    <h2>Mes documents</h2>
+    <app-document-me></app-document-me>
+  </div>
+</div>

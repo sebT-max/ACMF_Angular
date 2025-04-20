@@ -1,0 +1,62 @@
+<h2>Mise à jour de mes documents</h2>
+
+<form (ngSubmit)="onSubmit()" #updateForm="ngForm">
+
+  <div class="form-group">
+    <label for="permis">Permis de conduire (recto/verso)</label>
+    <p-fileUpload
+      name="permis"
+      url="TON_ENDPOINT_CLOUDINARY"
+      (onUpload)="handleUpload($event, 'permis')"
+      [multiple]="true"
+      [auto]="true"
+      accept="image/*,application/pdf"
+    ></p-fileUpload>
+  </div>
+
+  <div class="form-group">
+    <label for="carteId">Carte d'identité (recto/verso)</label>
+    <p-fileUpload
+      name="carte"
+      url="TON_ENDPOINT_CLOUDINARY"
+      [multiple]="true"
+      (onUpload)="handleUpload($event, 'carte')"
+      [auto]="true"
+      accept="image/*,application/pdf"
+    ></p-fileUpload>
+  </div>
+
+  <div *ngIf="hasTribunalStage">
+    <label for="convocation">Lettre de convocation</label>
+    <p-fileUpload
+      name="convocation"
+      url="TON_ENDPOINT_CLOUDINARY"
+      (onUpload)="handleUpload($event, 'convocation')"
+      [auto]="true"
+      accept="image/*,application/pdf"
+    ></p-fileUpload>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>
+
+<!--
+<div *ngFor="let type of objectKeys(groupedDocuments)" class="mb-4">
+  <h4>{{ getDocumentTypeLabel(type) }}</h4>
+
+  <ul>
+    <li *ngFor="let file of groupedDocuments[type]">
+      <a [href]="file.fileUrl" target="_blank">{{ file.fileName }}</a>
+      <span> – Téléchargé le {{ file.uploadedAt | date:'dd/MM/yyyy' }}</span>
+      <button class="btn btn-sm btn-outline-danger ms-2" (click)="markForDeletion(type, file)">
+        Supprimer
+      </button>
+    </li>
+  </ul>
+
+  <label class="form-label mt-2">Ajouter de nouveaux fichiers pour ce type :</label>
+  <input type="file" class="form-control" (change)="handleNewFileUpload($event, type)" multiple />
+</div>
+
+<button class="btn btn-success mt-4" (click)="submitChanges()">Valider les modifications</button>
+-->

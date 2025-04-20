@@ -80,7 +80,7 @@ export class PrivateLinkCreateComponent {
   onSubmit() {
     const { email, stageId } = this.createLinkForm.value;
 
-    this.authService.getCompanyByEmail(email).subscribe({
+    this.authService.getCompanyByEmailPublic(email).subscribe({
       next: (entreprise) => {
         const entrepriseId = entreprise.id;
 

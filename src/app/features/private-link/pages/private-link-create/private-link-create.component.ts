@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { StageService } from '../../../stage/services/stage.service';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { AuthService } from '../../../auth/services/auth.service';
+import {StageDetailsModel} from '../../../stage/models/stage-details-model';
 
 @Component({
   selector: 'app-private-link-create',
@@ -20,7 +21,7 @@ export class PrivateLinkCreateComponent {
   createLinkForm!: FormGroup;
   message: string = '';
   messageType: 'success' | 'error' | null = null;
-  stages: any[] = [];
+  stages: StageDetailsModel[] = [];
   linkUrl: string | null = null;
   copied: boolean = false; // Indicateur si l'URL a été copiée
   toastVisible: boolean = false; // Contrôle de la visibilité du toast

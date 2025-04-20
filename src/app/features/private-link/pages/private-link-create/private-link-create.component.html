@@ -10,7 +10,7 @@
       <select id="stageId" class="form-control" formControlName="stageId" required>
         <option value="">-- Sélectionner un stage --</option>
         <option *ngFor="let stage of stages" [value]="stage.id">
-          {{ stage.nom || stage.title || 'Stage ' + stage.id }}
+          'Stage:' + {{ stage.city}} - {{stage.street}} {{stage.dateDebut }} {{stage.dateFin}}
         </option>
       </select>
     </div>
@@ -47,7 +47,6 @@
     }"
     role="alert"
     *ngIf="toastVisible"
-    (hidden.bs.toast)="onToastHidden()"
   >
     <div class="d-flex">
       <div class="toast-body" [innerHTML]="toastMessage"></div>

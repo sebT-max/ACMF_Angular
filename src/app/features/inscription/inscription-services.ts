@@ -46,8 +46,21 @@ export class InscriptionService {
       this.getAuthHeaders()
     );
   }
+  getMyEmployeeInscriptions(): Observable<InscriptionListResponse[]> {
+    return this._httpClient.get<InscriptionListResponse[]>(
 
-  getInscriptionById(id: number): Observable<InscriptionFormModel> {
+      `${API_URL}inscriptions/myEmployees`,
+      this.getAuthHeaders()
+    ).pipe(
+      catchError(error => {
+        // Logique pour gérer l'erreur ici
+        console.error('Erreur lors de la récupération des inscriptions:', error);
+        return throwError(() => new Error('Impossible de récupérer les inscriptions'));
+      })
+    );
+  }
+
+getInscriptionById(id: number): Observable<InscriptionFormModel> {
     return this._httpClient.get<InscriptionFormModel>(
       `${API_URL}inscriptions/${id}`,
       this.getAuthHeaders()
@@ -73,6 +86,5 @@ export class InscriptionService {
   getInscriptionPdfUrl(fileName: string): string {
     return `${API_URL}inscriptions/file/${fileName}`;
   }
-
 }
 

@@ -47,7 +47,7 @@ export class CompanyDashboardComponent implements OnInit {
   }
 
   loadInscriptions(): void {
-    this._inscriptionService.getMyInscriptions().subscribe({
+    this._inscriptionService.getMyEmployeeInscriptions().subscribe({
       next: (inscriptions) => {
         console.log("Inscriptions récupérées :", inscriptions);
         this.inscriptions = inscriptions;

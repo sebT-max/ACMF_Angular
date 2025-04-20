@@ -37,7 +37,7 @@ export class PrivateLinkService {
     return this._httpClient.put<any[]>(`${API_URL}company/deactivate/${linkId}`, {});
   }
   getCompanyPrivateLinks(): Observable<any[]> {
-    return this._httpClient.get<any[]>(`${API_URL}company/privateLinks`);
+    return this._httpClient.get<any[]>(`${API_URL}privateLinks/me`);
   }
   getLinkDetails(token: string): Observable<any> {
     console.log('Appel à l\'API pour le token:', token);  // Log du token envoyé

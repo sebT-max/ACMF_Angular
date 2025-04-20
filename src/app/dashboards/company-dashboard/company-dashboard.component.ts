@@ -12,6 +12,7 @@ import {PrivateLinkModel} from '../../features/private-link/Model/PrivateLinkMod
 import {
   PrivateLinkFormComponent
 } from '../../features/private-link/pages/private-link-form/private-link-form.component';
+import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -34,7 +35,7 @@ export class CompanyDashboardComponent implements OnInit {
   private readonly _router: Router = inject(Router);
   private readonly _privateLinkService: PrivateLinkService= inject(PrivateLinkService);
 
-  inscriptions: InscriptionFormModel[] = [];
+  inscriptions: InscriptionListResponse[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {}; // Stocke les détails des stages
   privateLinks:PrivateLinkModel[]=[];
   activeTab: 'inscriptions' |'Liens privés'| 'demandeDevis' = 'inscriptions';
@@ -42,12 +43,17 @@ export class CompanyDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeTab = 'inscriptions';
-    this.loadInscriptions();
+    const currentCompany = JSON.parse(localStorage.getItem('currentUser')!);
+    const userId = currentCompany?.id;
+
+    if (userId) {
+      this.loadInscriptions(userId); // ✅ on passe bien l'ID ici
+    }
     this.loadPrivateLinks();
   }
 
-  loadInscriptions(): void {
-    this._inscriptionService.getMyEmployeeInscriptions().subscribe({
+  loadInscriptions(id:number): void {
+    this._inscriptionService.getMyEmployeeInscriptions(id).subscribe({
       next: (inscriptions) => {
         console.log("Inscriptions récupérées :", inscriptions);
         this.inscriptions = inscriptions;
@@ -86,6 +92,9 @@ export class CompanyDashboardComponent implements OnInit {
         });
       }
     });
+  }
+  viewFile(url: string) {
+    window.open(url, '_blank'); // ← c’est tout, plus besoin de `${API_URL}...`
   }
 
   toggleTokenVisibility() {

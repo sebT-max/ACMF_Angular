@@ -46,10 +46,9 @@ export class InscriptionService {
       this.getAuthHeaders()
     );
   }
-  getMyEmployeeInscriptions(): Observable<InscriptionListResponse[]> {
+  getMyEmployeeInscriptions(entrepriseId:number): Observable<InscriptionListResponse[]> {
     return this._httpClient.get<InscriptionListResponse[]>(
-
-      `${API_URL}inscriptions/myEmployees`,
+      `${API_URL}inscriptions/myEmployees/${entrepriseId}`,
       this.getAuthHeaders()
     ).pipe(
       catchError(error => {

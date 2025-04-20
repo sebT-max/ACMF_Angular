@@ -24,47 +24,77 @@
   </div>
 
   <div *ngIf="activeTab === 'inscriptions'" class="tab-content">
-    <h2>Mes inscriptions</h2>
-    @if (inscriptions.length > 0) {
-    <table>
-      <thead>
-      <tr>
-        <th>Détails</th>
-        <th>Type</th>
-        <th>Statut</th>
-        <th>Liens privés pour s'inscrire</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let inscription of inscriptions">
-        <td>
-          <div style="text-align:left;" *ngIf="inscription.stage; else loading">
-            <strong>Ville :</strong> {{ inscription.stage.city }} <br>
-            <strong>Arrondissement :</strong> {{ inscription.stage.arrondissement }} <br>
-            <strong>Date :</strong> {{ inscription.stage.dateDebut | date:'d':'fr' }} & {{ inscription.stage.dateFin | date:'d MMMM yyyy':'fr' }}
-            <strong>Rue :</strong> {{ inscription.stage.street }} <br>
-            <strong>Organisation :</strong> {{ inscription.stage.organisation }}<br>
-            <strong>Prix :</strong> {{ inscription.stage.price | currency:'EUR' }}
-          </div>
-          <ng-template #loading>
-            <span>Chargement...</span>
-          </ng-template>
-        </td>
-        <td>{{ inscription.stageType }}</td>
-        <td>{{ inscription.inscriptionStatut | inscriptionStatut}}</td>
-        <td>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    }
-    @else{
-      <ng-template #noInscriptions>
-        <p>Aucune inscription trouvée.</p>
-      </ng-template>
-    }
+    <h2>Inscriptions</h2>
+
+    <ng-container *ngIf="inscriptions.length > 0; else noInscriptions">
+      <table>
+        <thead>
+        <tr>
+          <th>Données du stage</th>
+          <th>Documents</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let inscription of inscriptions">
+          <td style="text-align:left;display:flex;flex-wrap:wrap;">
+            <div>
+              <strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}<br />
+              <strong>Email:</strong>
+              <a [href]="'mailto:' + inscription?.userEmail">
+                {{ inscription.userEmail }}
+              </a><br />
+              <strong>Téléphone:</strong> {{ inscription.userPhone}}<br />
+            </div>
+            <br>
+
+            <ng-container *ngIf="inscription.stageId; else loading">
+              <div>
+                <strong>Adresse du stage:</strong> {{ inscription.stageCity }},
+                {{ inscription.stageStreet }}<br />
+                <strong>Organisation:</strong> {{ inscription.stageOrganisation }}<br />
+                <strong>Date:</strong>
+                {{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
+                {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}<br />
+              </div>
+              <div>
+                <strong>Type de stage:</strong> {{ inscription.stageType }}<br />
+                <strong>Statut:</strong>
+                {{ inscription.inscriptionStatut | inscriptionStatut }}
+              </div>
+            </ng-container>
+
+            <ng-template #loading>
+              <span>Chargement...</span>
+            </ng-template>
+          </td>
+
+          <td style="text-align:center;">
+            <ng-container *ngIf="(inscription.documents?.length || 0) > 0; else noDocuments">
+              <div *ngFor="let doc of inscription.documents">
+                <button class="text-primary" (click)="viewFile(doc.fileUrl)">
+                  {{ doc.fileName }}
+                </button>
+              </div>
+            </ng-container>
+            <ng-template #noDocuments>
+              <p style="font-size: 16px;">Pas de documents chargés</p>
+            </ng-template>
+          </td>
+
+          <td>
+
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #noInscriptions>
+      <p>Aucune inscription trouvée.</p>
+    </ng-template>
   </div>
-</div>
 
 <div *ngIf="activeTab === 'Liens privés'" class="tab-content">
   @if (privateLinks.length > 0) {

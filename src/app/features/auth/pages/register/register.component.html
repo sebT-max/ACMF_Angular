@@ -73,38 +73,6 @@
                       </div>
                     </div>
 
-      <!-- Permis -->
-
-
-
-      <hr>
-      <div><p>Bien qu'optionnel ici,le permis et papiers d'identité sont requis pour s'inscrire à un stage</p>
-        <p>Vous pouvez également les soumettre dans votre espace client </p>
-        <br/>
-        <hr>
-        <!-- Bouton pour ouvrir le modal -->
-      </div>
-
-
-      <!-- Modal -->
-      <!-- Bouton pour ouvrir le modal -->
-      <!-- Bouton pour afficher la section de téléchargement -->
-
-
-    <!--   Bouton d'inscription toujours visible-->
-      <!--<button (click)="handleRegisterFormSubmit()">M'inscrire</button>
-
--->
-
-
-      <!--<div *ngIf="uploadedFiles.permis.length > 0">
-        <ul>
-          <li *ngFor="let file of uploadedFiles.permis; let i = index">
-            {{ file.name }}
-            <button type="button" (click)="removeManualFile('permis', i)">❌</button>
-          </li>
-        </ul>
-      </div>-->
 
 
       <div *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="error-message">

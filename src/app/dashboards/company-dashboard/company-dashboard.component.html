@@ -103,14 +103,16 @@
       <thead>
       <tr>
         <th>Stage</th>
-        <th>Token</th>
+        <th>Lien</th>
         <th>Date d'expiration</th>
       </tr>
       </thead>
 
       @for(privateLink of privateLinks; track privateLink.id){
         <tr>
-          <td>{{privateLink.stageInfo.id}}</td>
+          <td>{{privateLink.stageInfo.city}} {{privateLink.stageInfo.street}} <br>{{privateLink.stageInfo.startDate | date:'d':'fr'}}-{{privateLink.stageInfo.endDate | date:'d/MM/yyyy':'fr'}}
+
+          </td>
           <td>
         <div class="token-container">
           <input
@@ -119,6 +121,7 @@
             readonly
             class="token-input"
           />
+          <a [href]="'http://localhost:4200/inscription/' + privateLink.token">Lien</a>
           <button (click)="toggleTokenVisibility()" class="eye-icon">
             <i [ngClass]="isTokenVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
           </button>

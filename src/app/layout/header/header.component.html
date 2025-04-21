@@ -45,7 +45,7 @@
       <button routerLink="dashboard-company">Mon espace professionnel</button>
     }
     @if(userConnected()?.role?.name === 'PARTICULIER'){
-      <button routerLink="dashboard-client">Mon espace client</button>
+      <button routerLink="dashboard-client">Mes inscriptions</button>
     }
       <button (click)="logout()">DÉCONNEXION</button>
   }

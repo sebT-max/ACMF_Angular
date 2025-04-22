@@ -4,6 +4,8 @@
   <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" id="city_filter" placeholder="Rechercher par ville">
   <input type="date" [(ngModel)]="selectedDate" (change)="onDateFilter()" placeholder="Filtrer par date" />
 </div>
+
+
 <div class="card-container">
   @for (stage of stages; track stage.id) {
     <div class="card_stages">
@@ -14,6 +16,10 @@
       <div class="card_stages_date">
         <h3>Places disponibles<br><br>
           {{ stage?.capacity === 0 ? "Complet" : stage?.capacity }}
+        </h3>
+      </div>
+      <div class="card_stages_date">
+        <h3> Distance par rapport à votre emplacement : {{ stage.distance | number:'1.1-1' }} km
         </h3>
       </div>
 

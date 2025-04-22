@@ -13,13 +13,11 @@
       <div class="card_stages_date">
         {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
       </div>
-      <div class="card_stages_date">
-        <h3>Places disponibles<br><br>
-          {{ stage?.capacity === 0 ? "Complet" : stage?.capacity }}
+      <div class="card_stages_remaining_places_and_distance">
+        <h3>Places restantes:
+          <strong>{{ stage?.capacity === 0 ? "Complet" : stage?.capacity }}</strong>
         </h3>
-      </div>
-      <div class="card_stages_date">
-        <h3> Distance par rapport à votre emplacement : {{ stage.distance | number:'1.1-1' }} km
+        <h3> Distance: {{ stage.distance | number:'1.1-1' }} km
         </h3>
       </div>
 

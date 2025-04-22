@@ -35,12 +35,12 @@
               <div style="margin-right:40px;">
                 <strong>Ville :</strong> {{ inscription.stageCity }} <br>
                 <strong>Rue :</strong> {{ inscription.stageStreet }} <br>
-                <strong>Date :</strong> {{ inscription.stageDateDebut | date:'d':'fr' }} &  & {{ inscription.stageDateFin | date:'d MMMM yyyy':'fr' }}<br>
+                <strong>Arrondissement :</strong> {{ inscription.stageArrondissement }} <br>
               </div>
 
 
               <div>
-                <strong>Rue :</strong> {{ inscription.stageStreet }} <br>
+                <strong>Date :</strong> {{ inscription.stageDateDebut | date:'d':'fr' }} & {{ inscription.stageDateFin | date:'d MMMM yyyy':'fr' }}<br>
                 <strong>Organisation :</strong> {{ inscription.stageOrganisation }}<br>
                 <strong>Prix :</strong> {{ inscription.stagePrice | currency:'EUR' }}
               </div>

@@ -12,6 +12,7 @@ import { FileUpload } from 'primeng/fileupload';
 import {StripeService} from '../../../../services/stripe.service';
 import {ToastrService} from 'ngx-toastr';
 import { FileRemoveEvent } from 'primeng/fileupload';
+import {CodePromoService} from '../../../code-promo/services/code-promo.services';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class InscriptionCreateComponent implements OnInit {
   private readonly _fb = inject(FormBuilder);
   private readonly _router = inject(Router);
   private readonly _stripeService = inject(StripeService);
+  private readonly _codePromoService = inject(CodePromoService);
 
   constructor(private toastr: ToastrService) {}
 
@@ -174,7 +176,6 @@ export class InscriptionCreateComponent implements OnInit {
       this.isLoading = false;
       return;
     }
-
     this.inscriptionCreationForm.patchValue({
       stageId: this.stageId,
       userId: user.id
@@ -192,6 +193,123 @@ export class InscriptionCreateComponent implements OnInit {
     } else {
       this.lettre48nError = null;
     }
+
+    const codePromoInput = this.inscriptionCreationForm.value.codePromo?.trim();
+    let finalPrice = this.stageDetails.price;
+
+    if (codePromoInput) {
+      this._codePromoService.validateCode(codePromoInput).subscribe({
+        next: (codePromo) => {
+          if (codePromo.codePromoStatut !== 'ACTIVABLE' || new Date(codePromo.expiry_date) <= new Date()) {
+            this.toastr.error('Code promo invalide ou expiré.');
+            this.isLoading = false; // Assurez-vous d'arrêter le chargement en cas d'erreur
+            return;
+          }
+          if (this.stageDetails && this.stageDetails.price) {
+            finalPrice = this.stageDetails.price * (1 - codePromo.reduction / 100);
+          } else {
+            console.error('Détails du stage ou prix non disponibles');
+            this.isLoading = false;
+            return;
+          }
+
+          this.proceedWithInscription(finalPrice);
+        },
+        error: () => {
+          this.toastr.error('Erreur lors de la validation du code promo.');
+          this.proceedWithInscription(finalPrice);
+          this.isLoading = false;
+        }
+      });
+    } else {
+      this.proceedWithInscription(finalPrice);
+    }
+  }
+
+  private proceedWithInscription(finalPrice: number): void {
+    // Logique pour traiter l'inscription avec le prix final
+    const inscriptionData: InscriptionFormModel = {
+      userId: this.currentUser()?.id?? null,
+      stageId: this.stageId,
+      stageType: this.inscriptionCreationForm.value.stageType,
+      inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
+      documents: [],
+      codePromo: this.inscriptionCreationForm.value.codePromo || null
+    };
+
+    // Créer un objet FormData
+    const formData = new FormData();
+    formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
+
+    // Ajouter les fichiers
+    const files = this.uploadedFiles.permis.concat(
+      this.uploadedFiles.carteId,
+      this.uploadedFiles.lettre48n
+    );
+
+    files.forEach(file => {
+      formData.append('files', file, file.name);
+    });
+    this._inscriptionService.createInscription(formData).subscribe({
+      next: (resp) => {
+        const inscriptionId = resp.id;
+        if (this.stageDetails && this.stageDetails.price) {
+          const amountInCents = Math.round(finalPrice * 100);
+          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents, this.stageDetails).subscribe({
+            next: (stripeRedirectUrl: string) => {
+              window.location.href = stripeRedirectUrl;
+            },
+            error: (err) => {
+              console.error('Erreur Stripe :', err);
+              this.isLoading = false;
+            }
+          });
+        } else {
+          console.error("Les détails du stage ne sont pas disponibles ou le prix est invalide.");
+          this.isLoading = false;
+        }
+      },
+      error: (err) => {
+        console.error('Erreur lors de l’inscription', err);
+        this.isLoading = false;
+      }
+    });
+  }
+    // Envoyer les données via HTTP
+    /*this.http.post('/api/inscriptions', formData).subscribe({
+      next: (response: any) => {
+        if (response.stripeCheckoutUrl) {
+          // Rediriger vers Stripe Checkout
+          window.location.href = response.stripeCheckoutUrl;
+        } else {
+          console.error('URL de redirection Stripe manquante');
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'inscription', error);
+        this.isLoading = false;
+      }
+    });*/
+  }
+
+  /*handleInscription(): void {
+    this.isLoading = true;
+
+    const user = this.currentUser();
+    if (!user) {
+      console.error('Utilisateur non trouvé');
+      this.isLoading = false;
+      return;
+    }
+
+    if (!this.stageDetails || !this.stageDetails.price) {
+      console.error('Prix du stage non défini');
+      this.isLoading = false;
+      return;
+    }
+
+
 
     if (this.inscriptionCreationForm.invalid) {
       console.warn('Formulaire invalide');
@@ -251,6 +369,6 @@ export class InscriptionCreateComponent implements OnInit {
         this.isLoading = false;
       }
     });
-  }
+  }*/
 
-}
+

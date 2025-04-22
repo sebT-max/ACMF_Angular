@@ -1,7 +1,6 @@
 <div class="inscription-container">
   <!-- Formulaire d'inscription -->
   <div>
-
     <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
       <label for="stageType">Type de Stage</label>
       <select id="stageType" formControlName="stageType">
@@ -97,19 +96,17 @@
 
   <!-- Détails du stage -->
   <div class="stage-details" *ngIf="stageDetails">
-    <h2>Stage à {{ stageDetails.city }}</h2>
-    <hr>
-    <p>📍Adresse: {{ stageDetails.street }}</p>
-    <p>{{ stageDetails.arrondissement }} arrondissement</p>
-    <p>📆 {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
-    <p>Organisation: {{ stageDetails.organisation }}</p>
-    <p>💰Prix: {{ stageDetails.price }}€/personne</p>
-
+    <div>
+      <h2>Stage à {{ stageDetails.city }}</h2>
+      <p>🧭   {{ stageDetails.street }} - {{ stageDetails.arrondissement }} arrondissement</p>
+      <p>📆   {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
+      <p>Prix: {{ stageDetails.price }}€</p>
+    </div>
     <div class="consignes_container">
       <h3><span style="font-size: 2em;">⚠️</span> Consignes à respecter !</h3>
       <p>Veuillez appeler vos fichiers de la manière suivante:</p>
         <ul>
-          <h4>Permis de permis conduire:</h4>
+          <h4>-> Permis de permis conduire:</h4>
           <li>
             recto: "(nom_prénom)_permis_recto"
           </li>
@@ -118,12 +115,12 @@
           </li>
       </ul>
       <ul>
-        <h4>Pareil pour vos papiers d'identité:</h4>
+        <br/>
+        <h4>-> Papiers d'identité:</h4>
        <li> recto: "(nom_prénom)_identité_recto"
        </li>
         <li>verso: "(nom_prénom)_identité_verso"</li>
       </ul>
-      <hr>
       <br>
       <div class="form-text text-muted">
         <ul>

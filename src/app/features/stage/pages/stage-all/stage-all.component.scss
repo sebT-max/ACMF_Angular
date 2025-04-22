@@ -74,6 +74,23 @@ h1{
   justify-content: center;
   padding: 10px;
 }
+
+.card_stages_remaining_places_and_distance{
+  height: 100px;
+  border: 1px solid #ccc;
+  align-items: baseline;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  width:300px;
+  font-size: 14px;
+  gap:10px;
+  background: white;
+  color:dimgrey;
+  font-weight:900;
+}
 .card_stages_all_datas{
   width: 80%;
   padding: 10px 20px;

@@ -6,78 +6,39 @@ header {
   width: 100%;
   z-index: 1000;
   transition: background-color 0.3s ease;
-  height: 130px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #222730;
+  background-color: #041a3a;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  img{
+    width: 100px;
+    padding:20px 0px 0px 20px;
+  }
 
   button{
     width: 120px;
     padding: 2px;
     height: 55px;
-    background: rgba(3, 113, 113, 0.1);
+    background: transparent;
     text-decoration: none;
     font-size: 12px;
     text-transform: uppercase;
     color: white;
-    border: 1px solid white;
+    border: none;
     margin: 0px 10px;
-    border-radius: 10px;
   }
   button:hover{
     background-color: rgba(0, 0, 0, 0.1215686275);
-    border:1px solid rgb(248, 166, 51);;
   }
 }
 .header_nav_links_container{
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-#logo_acf{
-  width: auto;
-  font-size: 56px;
-  border: 1px solid white;
-  color: #383f4e;
-  padding: 55px;
-  border-radius: 100px;
-  display: flex;
-  align-items: center;
-  background: rgb(248, 166, 51);
-}
-
-header:not(.scrolled) {
-  .logo_header{
-    width:200px;
-    border:none;
-    margin-right:300px;
-  }
-  #logo_acf{
-    transform: scale(1);
-    position: relative;
-    bottom: -60px;
-    left: 10px;
-    height: 200px;
-    font-size:78px;
-  }
-}
-
-
-header.scrolled {
-  .logo_header{
-    width:160px;
-    margin-right:300px;
-  }
-  #logo_acf{
-    transform:scale(0.75);
-    position: relative;
-    bottom:0px;
-    height:160px;
-    font-size:57px;
-    padding: 38px;
+  button{
+    font-family: Poppins-ExtraLight,serif;
   }
 }
 

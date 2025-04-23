@@ -1,15 +1,14 @@
-<div class="flexCenter" id="company_register_form_container">
+<div class="register_form_container">
   <div class="aside_form">
-    <h1>Inscription de votre entreprise</h1>
-    <p>
-      Vous devez vous enregistrer afin de vous inscrire à l'un de nos stages </p>
+    <img id="logo_register_form" ngSrc="/LOGO%20BLANC.png" alt="logo_acf" width="308" height="280">
   </div>
-<div>
-  <form [formGroup]="companyRegisterForm" id="company_register_form" (ngSubmit)="handleCompagnyRegisterFormSubmit()">
 
+  <form [formGroup]="companyRegisterForm" class="register_form" (ngSubmit)="handleCompagnyRegisterFormSubmit()">
+    <h1>S'inscrire</h1>
+    <p>Inscrivez-vous gratuitement pour accéder à nos produits</p>
     <!-- Nom de l'entreprise -->
     <div>
-      <label for="name">Nom de l'entreprise</label>
+    <!--  <label for="name">Nom de l'entreprise</label>-->
       <input id="name" name="companyName" type="text" placeholder="Nom de l'entreprise" formControlName="name" required />
       <div *ngIf="companyRegisterForm.get('name')?.invalid && companyRegisterForm.get('name')?.touched" class="error-message">
         Le nom de l'entreprise est requis.
@@ -18,7 +17,7 @@
 
     <!-- Email -->
     <div>
-      <label for="email">Email</label>
+      <!--<label for="email">Email</label>-->
       <input id="email" name="email" type="email" placeholder="email" formControlName="email" required />
       <div *ngIf="companyRegisterForm.get('email')?.invalid && companyRegisterForm.get('email')?.touched" class="error-message">
         <span *ngIf="companyRegisterForm.get('email')?.errors?.['required']">L'email est requis.</span>
@@ -28,36 +27,42 @@
 
     <!-- Mot de passe -->
     <div>
-      <label for="password">Mot de passe</label>
+      <!--<label for="password">Mot de passe</label>-->
       <input id="password" name="password" type="password" placeholder="Mot de passe" formControlName="password" required />
       <div *ngIf="companyRegisterForm.get('password')?.invalid && companyRegisterForm.get('password')?.touched" class="error-message">
         <span *ngIf="companyRegisterForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
         <span *ngIf="companyRegisterForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
       </div>
     </div>
-
-
-
     <!-- Téléphone -->
     <div>
-      <label for="telephone">Contact</label>
-      <input id="telephone" name="telephone" type="text" placeholder="n° téléphone" formControlName="telephone" required />
+      <!--<label for="telephone">Téléphone :</label>-->
+      <input id="telephone" type="text" placeholder="Téléphone*" formControlName="telephone" />
       <div *ngIf="companyRegisterForm.get('telephone')?.invalid && companyRegisterForm.get('telephone')?.touched" class="error-message">
-        Le contact est requis.
+        Le téléphone est requis.
       </div>
     </div>
-    <br>
-  <hr>
-    <div class="flexCenter" style="margin-top: 20px;">
-      <input id="acceptTerms" name="acceptTerms" type="checkbox" formControlName="acceptTerms" required />
-      <span><br />Je suis d'accord avec les conditions RGPD</span>
+    <!-- RGPD -->
+    <div class="checkbox_register">
+      <input style="color:black;" id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
+     <!-- <label for="acceptTerms" style=""></label>-->
+        <p style="color:black;font-weight:100;font-size:10px;">Acceptez nos Conditions d'utilisation et notre Politique de confidentialité</p>
     </div>
 
+    <div *ngIf="companyRegisterForm.get('acceptTerms')?.invalid && companyRegisterForm.get('acceptTerms')?.touched" class="error-message">
+      Acceptez nos Conditions d'utilisation et notre Politique de confidentialité
+    </div>
 
-    <!-- Affichage du message d'erreur (ex: email déjà utilisé) -->
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <!-- Erreur serveur -->
+    <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">
+      {{ errorMessage }}
+    </div>
 
-    <button type="submit" [disabled]="companyRegisterForm.invalid">S'enregistrer</button>
+    <!-- Bouton -->
+    <button [disabled]="isLoading || companyRegisterForm.invalid" style="margin-top: 1rem;">
+      {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
+    </button>
+    <p>Vous avez déjà un compte ? Connectez-vous</p>
   </form>
 </div>
-</div>
+

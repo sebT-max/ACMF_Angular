@@ -1,93 +1,92 @@
-<div class="flexCenter" id="user_register_form_container">
-            <div class="aside_form">
-              <h1>Inscription en tant que particulier</h1>
-              <p>Vous devez vous enregistrer afin de vous inscrire à l'un de nos stages</p>
-            </div>
+<div class="flexCenter register_form_container">
+  <div class="aside_form">
+  </div>
 
-    <form [formGroup]="registerForm" id="user_register_form" (ngSubmit)="handleRegisterFormSubmit()">
+  <form [formGroup]="registerForm" class="register_form" (ngSubmit)="handleRegisterFormSubmit()">
 
-      <!-- Nom -->
-                <div>
-                 <!-- <label for="lastname">Nom :</label>-->
-                  <input id="lastname" type="text" placeholder="Nom" formControlName="lastname" />
-                  <div *ngIf="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched" class="error-message">
-                    Le nom est requis.
-                  </div>
-                </div>
+    <!-- Nom -->
+    <div>
+      <h1>S'inscrire</h1>
+      <p>Vous devez vous enregistrer afin de vous inscrire à l'un de nos stages</p>
+     <!-- <label for="lastname">Nom :</label>-->
+      <input id="lastname" type="text" placeholder="Nom*" formControlName="lastname" />
+      <div *ngIf="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched" class="error-message">
+        Le nom est requis.
+      </div>
+    </div>
 
-                  <!-- Prénom -->
-                  <div>
-                   <!-- <label for="firstname">Prénom :</label>-->
-                    <input id="firstname" type="text" placeholder="Prénom" formControlName="firstname" />
-                    <div *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched" class="error-message">
-                      Le prénom est requis.
-                    </div>
-                  </div>
-
-      <!-- Email -->
-                  <div>
-                <!--    <label for="email">Email :</label>-->
-                    <input id="email" type="email" placeholder="Email" formControlName="email" />
-                    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
-                      <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis.</span>
-                      <span *ngIf="registerForm.get('email')?.errors?.['email']">Format d'email invalide.</span>
-                    </div>
-                  </div>
-
-      <!-- Mot de passe -->
-                  <div>
-                   <!-- <label for="password">Mot de passe :</label>-->
-                    <input id="password" type="password" placeholder="Mot de passe" formControlName="password" />
-                    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
-                      <span *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
-                      <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>
-                    </div>
-                  </div>
-
-                  <!-- Date de naissance -->
-                  <div>
-                   <!-- <label for="birthDate">Date de naissance :</label>-->
-                    <input id="birthDate" type="date" formControlName="birthDate" />
-                    <div *ngIf="registerForm.get('birthDate')?.invalid && registerForm.get('birthDate')?.touched" class="error-message">
-                      La date de naissance est requise.
-                    </div>
-                  </div>
-
-      <!-- Téléphone -->
-                    <div>
-                      <!--<label for="telephone">Téléphone :</label>-->
-                      <input id="telephone" type="text" placeholder="Téléphone" formControlName="telephone" />
-                      <div *ngIf="registerForm.get('telephone')?.invalid && registerForm.get('telephone')?.touched" class="error-message">
-                        Le téléphone est requis.
-                      </div>
-                    </div>
-
-      <!-- RGPD -->
-                    <div class="flexCenter" style="margin-top:20px;">
-                      <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
-                      <label for="acceptTerms" style="margin-left: 8px;">
-                        *J'accepte les conditions RGPD
-                      </label>
-                      <div *ngIf="registerForm.get('accepTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="error-message">
-                        Vous devez accepter les termes
-                      </div>
-                    </div>
-
-
-
-      <div *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="error-message">
-        Vous devez accepter les conditions pour continuer.
+      <!-- Prénom -->
+      <div>
+       <!-- <label for="firstname">Prénom :</label>-->
+        <input id="firstname" type="text" placeholder="Prénom*" formControlName="firstname" />
+        <div *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched" class="error-message">
+          Le prénom est requis.
+        </div>
       </div>
 
-      <!-- Erreur serveur -->
-      <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">
-        {{ errorMessage }}
+    <!-- Email -->
+      <div>
+    <!--    <label for="email">Email :</label>-->
+        <input id="email" type="email" placeholder="Email*" formControlName="email" />
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+          <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis.</span>
+          <span *ngIf="registerForm.get('email')?.errors?.['email']">Format d'email invalide.</span>
+        </div>
       </div>
 
-      <!-- Bouton -->
-      <button [disabled]="isLoading || registerForm.invalid" style="margin-top: 1rem;">
-        {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
-      </button>
-    </form>
+    <!-- Mot de passe -->
+      <div>
+       <!-- <label for="password">Mot de passe :</label>-->
+        <input id="password" type="password" placeholder="Mot de passe*" formControlName="password" />
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+          <span *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
+          <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>
+        </div>
+      </div>
+
+      <!-- Date de naissance -->
+      <div>
+       <!-- <label for="birthDate">Date de naissance :</label>-->
+        <input id="birthDate" placeholder="Date de naissance*" type="date" formControlName="birthDate" />
+        <div *ngIf="registerForm.get('birthDate')?.invalid && registerForm.get('birthDate')?.touched" class="error-message">
+          La date de naissance est requise.
+        </div>
+      </div>
+
+    <!-- Téléphone -->
+      <div>
+        <!--<label for="telephone">Téléphone :</label>-->
+        <input id="telephone" type="text" placeholder="Téléphone*" formControlName="telephone" />
+        <div *ngIf="registerForm.get('telephone')?.invalid && registerForm.get('telephone')?.touched" class="error-message">
+          Le téléphone est requis.
+        </div>
+      </div>
+      <br>
+      <hr>
+    <!-- RGPD -->
+      <div style="margin-top:20px;width:100%;margin:0 auto;">
+        <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
+        <label for="acceptTerms" style="">
+          J'accepte les conditions RGPD*
+        </label>
+        <div *ngIf="registerForm.get('accepTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="error-message">
+          Vous devez accepter les termes
+        </div>
+      </div>
+
+    <div *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="error-message">
+      Vous devez accepter les conditions pour continuer.
+    </div>
+
+    <!-- Erreur serveur -->
+    <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Bouton -->
+    <button [disabled]="isLoading || registerForm.invalid" style="margin-top: 1rem;">
+      {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
+    </button>
+  </form>
 </div>
 

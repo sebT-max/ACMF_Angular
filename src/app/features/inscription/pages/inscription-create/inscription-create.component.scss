@@ -1,14 +1,11 @@
 .inscription-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top:70px;
+  background: rgba(0, 0, 0, 0.37);
 }
 
 .stage-details {
-  background: #222730;
   padding: 10px 30px;
-  border-radius: 8px;
   line-height: 36px;
   color: white;
   width:30%;
@@ -20,23 +17,16 @@ form {
   flex-direction: column;
   gap: 10px;
   width:100%;
-  border-radius: 10px;
+  border-radius: 0px;
   box-shadow: 0px 0px 1px white;
-  background: rgba(0, 0, 0, 0.37);
   color:white;
   label{
     font-weight:900;
-    font-size:20px;
+    font-size:16px;
     color: #ffd62c;
   }
 }
-form div{
-  width:100%;
-}
 
-#inscription_form{
-
-}
 .file-input {
   display: none;
 }
@@ -57,8 +47,8 @@ form input:hover{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px; /* espace entre spinner et texte */
-  min-width: 160px; /* pour éviter que le bouton soit trop petit */
+  gap: 10px;
+  min-width: 160px;
 }
 
 .submit-button:disabled {
@@ -91,104 +81,12 @@ p-button{
   margin-top: 5px;
 }
 .consignes_container{
-  margin-top:40px;
-  font-size:14px;
+  width:70%;
+  margin:0 auto;
+  font-size:12px;
   line-height: 32px;
   color:white;
+  box-shadow:0px 0px 1px white;
+  padding:25px;
+  border-radius: 10px;
 }
-
-/*handleInscription(): void {
-    this.isLoading = true;
-
-    const user = this.currentUser();
-    if (!user) {
-      console.error('Utilisateur non trouvé');
-      this.isLoading = false;
-      return;
-    }
-
-    if (!this.stageDetails || !this.stageDetails.price) {
-      console.error('Prix du stage non défini');
-      this.isLoading = false;
-      return;
-    }
-
-    this.inscriptionCreationForm.patchValue({
-      stageId: this.stageId,
-      userId: user.id
-    });
-
-    const selectedValue = this.inscriptionCreationForm.get('stageType')?.value;
-    const selected = this.stageTypes.find(type => type.value === selectedValue);
-    const selectedLabel = selected ? selected.label : null;
-
-    // Validation conditionnelle pour la lettre 48N
-    if (selectedLabel === 'Tribunal' && this.uploadedFiles.lettre48n.length === 0) {
-      this.lettre48nError = 'Vous devez nous fournir la lettre 48_N du tribunal.';
-      this.isLoading = false;
-      return;
-    } else {
-      this.lettre48nError = null;
-    }
-
-    if (this.inscriptionCreationForm.invalid) {
-      console.warn('Formulaire invalide');
-      this.isLoading = false;
-      return;
-    }
-
-    const inscriptionData: InscriptionFormModel = {
-      userId: user.id,
-      stageId: this.stageId,
-      stageType: selectedValue,
-      inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
-      documents: [],
-      codePromo: this.inscriptionCreationForm.value.codePromo || null
-    };
-
-    const formData = new FormData();
-    formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
-    Object.entries(this.uploadedFiles).forEach(([key, files]) => {
-      files.forEach(file => {
-        formData.append('files', file);
-      });
-    });
-
-    this._stageService.decrementStageCapacity(this.stageId).subscribe({
-      next: (updatedStage) => {
-        this.stageDetails = updatedStage;
-      },
-      error: (err) => {
-        console.error('Erreur lors de la mise à jour de la capacité :', err);
-        this.toastr.error("Une erreur est survenue lors de la mise à jour de la capacité.");
-        this.isLoading = false;
-      }
-    });
-
-    this._inscriptionService.createInscription(formData).subscribe({
-      next: (resp) => {
-        const inscriptionId = resp.id;
-        if (this.stageDetails && this.stageDetails.price) {
-          const amountInCents = this.stageDetails.price * 100;
-          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents, this.stageDetails).subscribe({
-            next: (stripeRedirectUrl: string) => {
-              window.location.href = stripeRedirectUrl;
-            },
-            error: (err) => {
-              console.error('Erreur Stripe :', err);
-              this.isLoading = false;
-            }
-          });
-        } else {
-          console.error("Les détails du stage ne sont pas disponibles ou le prix est invalide.");
-          this.isLoading = false;
-        }
-      },
-      error: (err) => {
-        console.error('Erreur lors de l’inscription', err);
-        this.isLoading = false;
-      }
-    });
-  }*/
-
-

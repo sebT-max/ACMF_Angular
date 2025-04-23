@@ -34,7 +34,8 @@
             "styles": [
               "node_modules/ngx-toastr/toastr.css",
               "mapbox-gl/dist/mapbox-gl.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/fonts/fonts.scss"
             ]
           ,
             "scripts": []

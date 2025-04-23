@@ -1,13 +1,31 @@
 .home_container{
-  padding: 80px;
-  width: 90%;
-  background: rgba(0, 0, 0, 0.37);
-  margin: 0 auto;
-  color: white;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  font-family: "Montserrat", sans-serif;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  flex-direction: column;
+  background-image: url('/transport-concept-with-car-bridge.jpg');
+  background-attachment: fixed;
+  background-size:cover;
+  background-repeat: no-repeat;
+  p{
+    font-family: CormorantGaramond-Light,serif;
+    font-size:60px;
+    color:white;
+  }
+  button{
+    margin-top:15%;
+    border:1px solid white;
+    border-radius:10px;
+    background:transparent;
+    padding:7px 60px
+  }
+  button a{
+    color:white;
+    font-family: Poppins-ExtraLight, sans-serif;
+  }
+
   div{
     padding: 0px 0px;
     font-size: 20px;
@@ -15,12 +33,13 @@
     background: rgba(0, 0, 0, 0.1);
   }
 
-  p,ul,li{
+  ul,li{
     padding: 10px 0px;
     font-size: 24px;
     line-height: 66px;
     text-align:center;
     margin:40px;
+    color:white;
     }
   h1{
     background: rgba(0, 0, 0, 0.16);
@@ -162,9 +181,9 @@ margin-bottom:20px;
   padding: 20px 25%;
   color: white;
 
-button{
-color:white;
-}
+  button{
+  color:white;
+  }
 }
 
 .call_to_register_home_bottom_container_button{

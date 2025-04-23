@@ -11,7 +11,7 @@
       </select>
 
       <label for="codePromo">Code promo (optionnel)</label>
-      <input id="codePromo" formControlName="codePromo" placeholder="EXEMPLE10" />
+      <input id="codePromo" formControlName="codePromo" placeholder="Code Promo (optionnel)" />
 
 
       <!-- Permis -->
@@ -96,15 +96,15 @@
 
   <!-- Détails du stage -->
   <div class="stage-details" *ngIf="stageDetails">
-    <div>
+    <div style="text-align: left; width:60%;margin:0 auto;padding:20px;">
       <h2>Stage à {{ stageDetails.city }}</h2>
-      <p>🧭   {{ stageDetails.street }} - {{ stageDetails.arrondissement }} arrondissement</p>
+      <br>
+      <p>🧭   {{ stageDetails.street }}</p> <p>{{ stageDetails.arrondissement }} arrondissement</p>
       <p>📆   {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
       <p>Prix: {{ stageDetails.price }}€</p>
     </div>
     <div class="consignes_container">
       <h3><span style="font-size: 2em;">⚠️</span> Consignes à respecter !</h3>
-      <p>Veuillez appeler vos fichiers de la manière suivante:</p>
         <ul>
           <h4>-> Permis de permis conduire:</h4>
           <li>

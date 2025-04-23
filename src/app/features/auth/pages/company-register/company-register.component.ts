@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {CompanyRegisterFormModel} from '../../models/company-register-form-model';
-import {NgIf} from '@angular/common';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 import {CheckboxModule} from 'primeng/checkbox';
 import {Password} from 'primeng/password';
 import {CompanyTokenModel} from '../../models/CompanyTokenModel';
@@ -18,7 +18,8 @@ import {TokenModel} from '../../models/token.model';
     ReactiveFormsModule,
     NgIf,
     CheckboxModule,
-    FormsModule
+    FormsModule,
+    NgOptimizedImage
   ],
   templateUrl: './company-register.component.html',
   styleUrl: './company-register.component.scss'

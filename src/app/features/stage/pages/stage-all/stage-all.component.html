@@ -1,6 +1,11 @@
-<div class="margin_top_130"></div>
+
+<div routerLink="/" id="logo_stage_all">
+  <img src="/LOGO%20BLEU.png" alt="logo_acf" width="208" height="160">
+</div>
+
+<h1>Choisissez votre stage</h1>
 <div id="stage_filters">
-  <h1>Filtrer la recherche</h1>
+  <p>Filtre de recherche</p>
   <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" id="city_filter" placeholder="Rechercher par ville">
   <input type="date" [(ngModel)]="selectedDate" (change)="onDateFilter()" placeholder="Filtrer par date" />
 </div>
@@ -11,7 +16,7 @@
     <div class="card_stages">
 
       <div class="card_stages_date">
-        {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
+        {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM':'fr' }}
       </div>
       <div class="card_stages_remaining_places_and_distance">
         <h3>Places restantes:
@@ -23,21 +28,22 @@
 
 
       <div class="card_stages_all_datas">
-        <h2>{{ stage.city }}</h2>
+        <h2> STAGE {{ stage.city }}</h2>
         <hr>
-        <p>{{ stage!.arrondissement }} arrondissement: </p>
-        <p>Accès: {{ stage.price }}€/personne</p>
+        <p>{{ stage!.street }}</p>
       </div>
-<div style="float:right;">
-      <!-- Bouton Détails pour afficher les informations -->
-      <button class="details_button" (click)="selectStage(stage)">
-        {{ selectedStage?.id === stage.id ? 'Fermer' : 'Détails' }}
-      </button>
-  <br/>
-  <br/>
+      <div id="stage_price">
+        <h4>{{ stage.price }}€
+        </h4>
+      </div>
 
-      <!-- Bouton "Je m'inscris" -->
-      <button class="inscription_button" [routerLink]="['/inscriptions/create',stage.id]" >Je m'inscris</button>
+<div style="display:flex;">
+  <!-- Bouton "Je m'inscris" -->
+  <button class="inscription_button" [routerLink]="['/inscriptions/create',stage.id]" >Je m'inscris</button>
+  <!-- Bouton Détails pour afficher les informations -->
+  <button class="details_button" (click)="selectStage(stage)">
+    {{ selectedStage?.id === stage.id ? 'Fermer' : 'Détails' }}
+  </button>
 </div>
 </div>
 

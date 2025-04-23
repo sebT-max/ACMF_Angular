@@ -1,15 +1,15 @@
 .card_stages{
   display: flex;
   justify-content: space-between;
-  background: linear-gradient(219deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.5));;
-  border-radius: 15px 15px 0px 0px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  background: #eceded;
+  border-radius: 10px;
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); */
   padding: 20px;
-  width: 80%;
-  color: #fff;
+  width: 95%;
+  color: #041a3a;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transform:translate(0px,-20x);
+  transform: translate(0px,-20x);
   &:hover{
     border-left:1px solid white;
   }
@@ -19,18 +19,18 @@
   font-size: 20px;
   align-items: center;
   border: 1px solid white;
-  color: #2d333b;
   padding: 8px;
-  border-radius: 3px;
-  background-color: #f8a633;
+  border-radius: 10px;
+  background-color: #b41c1b;
+  color:white;
+  height:70px;
 
 }
 .details_button{
   width: 140px;
   font-size: 20px;
   align-items: center;
-  background-color: #e0e4e9;
-  border: 1px solid white;
+  border: none;
   color: #2d333b;
   padding: 8px;
   border-radius: 3px;
@@ -61,11 +61,14 @@
 }
 
 h1{
-  background-color: rgba(0, 0, 0, 0.16);
+  font-family: Poppins-Medium, serif;
+  text-align: center;
+  font-size:40px;
+  color: #0a0a1e;
 }
 
 .card_stages_date{
-  height: 100px;
+  height: 70px;
   border: 1px solid #ccc;
   align-items: baseline;
   text-align: center;
@@ -73,46 +76,60 @@ h1{
   flex-direction: column;
   justify-content: center;
   padding: 10px;
+  font-family: Poppins-Medium, serif;
+  background: #041a3a;
+  color:white;
+  border-radius: 10px;
+  width: 160px;
 }
 
 .card_stages_remaining_places_and_distance{
-  height: 100px;
-  border: 1px solid #ccc;
+  height: 70px;
   align-items: baseline;
   text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 10px;
-  width:300px;
-  font-size: 14px;
+  width:60%;
+  font-size: 12px;
   gap:10px;
-  background: white;
   color:dimgrey;
-  font-weight:900;
+  font-family: Poppins-Medium, serif;
+  border-radius: 10px;
 }
 .card_stages_all_datas{
   width: 80%;
   padding: 10px 20px;
+  font-family: Poppins-Medium, serif;
+  font-size:12px;
+}
+#stage_price{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:20px;
+  font-family: Poppins-Medium, serif;
 }
 
 #stage_filters{
-  padding: 10px;
-  border-radius: 10px;
-  width:18%;
-  margin:0 auto;
-  float:right;
-  margin-right:140px;
-  box-shadow: 0px 0px 1px white;
-  background:linear-gradient(219deg, rgba(41, 44, 50, 0.7294117647), rgba(36, 43, 52, 0.9019607843), #292c32);
+  display:flex;
+  flex-wrap: wrap;
+  width:80%;
+  margin: 20px auto 0;
+  p{
+    font-family: Poppins-Medium, serif;
+    padding:20px;
+  }
   input{
     padding: 10px;
     border-radius: 10px;
-    width:100%;
-    margin:0 auto;
-    margin-bottom: 10px;
-    border:none;
+    width: 30%;
+    margin: 18px auto 0px;
+    border: none;
     box-shadow: 0px 0px 1px grey;
+    height: 28px;
   }
   h1{
     color:white;
@@ -125,6 +142,10 @@ h1{
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
+}
+#logo_stage_all{
+  display: flex;
+  justify-content: center;
 }
 
 

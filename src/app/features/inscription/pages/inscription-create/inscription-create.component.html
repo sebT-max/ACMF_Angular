@@ -1,8 +1,47 @@
 <div class="inscription-container">
+  <!-- Détails du stage -->
+  <div id="inscription_container_details" class="stage-details" *ngIf="stageDetails">
+    <div style="text-align: left; width:60%;margin:0 auto;padding:20px;">
+      <h2>Stage à {{ stageDetails.city }}</h2>
+      <br>
+      <p>{{ stageDetails.street }}</p> <p>{{ stageDetails.arrondissement }} arrondissement</p>
+      <p>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
+      <p>Prix: {{ stageDetails.price }}€</p>
+    </div>
+    <div class="consignes_container">
+      <h3><span style="font-size: 2em;">⚠️</span> Consignes à respecter !</h3><br>
+      <h4>Veuillez intituler vos fichiers de la manière suivante:</h4>
+      <br>
+      <ul>
+        <h4>-> Permis de permis conduire:</h4>
+        <li>
+          recto: "(nom_prénom)_permis_recto"
+        </li>
+        <li>
+          verso: "(nom_prénom)_permis_verso"
+        </li>
+      </ul>
+      <ul>
+        <br/>
+        <h4>-> Papiers d'identité:</h4>
+        <li> recto: "(nom_prénom)_identité_recto"
+        </li>
+        <li>verso: "(nom_prénom)_identité_verso"</li>
+      </ul>
+      <br>
+      <div class="form-text text-muted">
+        <ul>
+          <li>Formats acceptés pour les images : JPEG, PNG.</li>
+          <li>La lettre 48N doit être en PDF.</li>
+        </ul>
+      </div>
+    </div>
+    <br/>
+  </div>
   <!-- Formulaire d'inscription -->
-  <div>
+  <div id="inscription_container_form">
     <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
-      <label for="stageType">Type de Stage</label>
+      <label for="stageType">Type de Stage*</label>
       <select id="stageType" formControlName="stageType">
         <option value="" disabled selected>Sélectionner un type de stage</option>
         <option *ngFor="let type of stageTypes" [value]="type.value">
@@ -10,29 +49,31 @@
         </option>
       </select>
 
-      <label for="codePromo">Code promo (optionnel)</label>
-      <input id="codePromo" formControlName="codePromo" placeholder="Code Promo (optionnel)" />
-
-
+<div id="inscription_form_files">
       <!-- Permis -->
-      <label for="permis"><strong>Permis :</strong></label>
-      <p-fileUpload
-        name="permis"
-        [customUpload]="true"
-        (uploadHandler)="uploadFiles($event)"
-        (onSelect)="onFilesChange($event, 'permis')"
-        (onRemove)="onRemoveFile($event, 'permis')"
-        [multiple]="true"
-        [showUploadButton]="false"
-        [showCancelButton]="false"
-        accept=".pdf,image/*"
-        chooseLabel="Choisir le fichier"
-        mode="advanced"
-        [maxFileSize]="5000000"
-      ></p-fileUpload>
+      <div class="width_30">
+        <label for="permis"><strong>Permis<br>(recto+verso)</strong></label>
+        <p-fileUpload
+          name="permis"
+          [customUpload]="true"
+          (uploadHandler)="uploadFiles($event)"
+          (onSelect)="onFilesChange($event, 'permis')"
+          (onRemove)="onRemoveFile($event, 'permis')"
+          [multiple]="true"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          accept=".pdf,image/*"
+          chooseLabel="Choisir les fichiers"
+          mode="advanced"
+          [maxFileSize]="5000000"
+        ></p-fileUpload>
 
+      </div>
+
+
+<div class="width_30">
       <!-- Carte d'identité -->
-      <label for="carteId"><strong>Carte d'identité :</strong></label>
+      <label for="carteId"><strong>Carte Id<br>(recto+verso)</strong></label>
       <p-fileUpload
         name="carteId"
         [customUpload]="true"
@@ -43,10 +84,11 @@
         [showUploadButton]="false"
         [showCancelButton]="false"
         accept=".pdf,image/*"
-        chooseLabel="Choisir le fichier"
+        chooseLabel="Choisir les fichiers"
         mode="advanced"
         [maxFileSize]="5000000"
       ></p-fileUpload>
+</div>
       <!--<div *ngIf="uploadedFiles.permis.length > 0">
         <ul>
           <li *ngFor="let file of uploadedFiles.permis; let i = index">
@@ -57,8 +99,8 @@
       </div>-->
 
       <!-- Lettre 48N -->
-      <div *ngIf="selectedStageLabel === 'Tribunal'">
-        <label for="lettre48n"><strong>Lettre 48N :</strong></label>
+      <div *ngIf="selectedStageLabel === 'Tribunal'" class="width_30">
+        <label for="lettre48n"><strong>Lettre 48N<br>(pdf)</strong></label>
         <p-fileUpload
           name="lettre48n"
           [customUpload]="true"
@@ -69,16 +111,20 @@
           [showUploadButton]="false"
           [showCancelButton]="false"
           accept=".pdf,image/*"
-          chooseLabel="Choisir le fichier"
+          chooseLabel="Chargez lettre_48N"
           mode="advanced"
           [maxFileSize]="5000000"
         ></p-fileUpload>
 
       </div>
+</div>
       <br>
       <div *ngIf="lettre48nError" class="error-message">
         {{ lettre48nError }}
       </div>
+      <!--<label for="codePromo">Code promotionnel</label>-->
+      <input id="codePromo" formControlName="codePromo" placeholder="Code Promo (optionnel)" />
+
 
       <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
         <ng-container *ngIf="isLoading">
@@ -94,41 +140,5 @@
   </div>
 
 
-  <!-- Détails du stage -->
-  <div class="stage-details" *ngIf="stageDetails">
-    <div style="text-align: left; width:60%;margin:0 auto;padding:20px;">
-      <h2>Stage à {{ stageDetails.city }}</h2>
-      <br>
-      <p>🧭   {{ stageDetails.street }}</p> <p>{{ stageDetails.arrondissement }} arrondissement</p>
-      <p>📆   {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
-      <p>Prix: {{ stageDetails.price }}€</p>
-    </div>
-    <div class="consignes_container">
-      <h3><span style="font-size: 2em;">⚠️</span> Consignes à respecter !</h3>
-        <ul>
-          <h4>-> Permis de permis conduire:</h4>
-          <li>
-            recto: "(nom_prénom)_permis_recto"
-          </li>
-          <li>
-            verso: "(nom_prénom)_permis_verso"
-          </li>
-      </ul>
-      <ul>
-        <br/>
-        <h4>-> Papiers d'identité:</h4>
-       <li> recto: "(nom_prénom)_identité_recto"
-       </li>
-        <li>verso: "(nom_prénom)_identité_verso"</li>
-      </ul>
-      <br>
-      <div class="form-text text-muted">
-        <ul>
-          <li>Formats acceptés pour les images : JPEG, PNG.</li>
-          <li>La lettre 48N doit être en PDF.</li>
-        </ul>
-      </div>
-    </div>
-    <br/>
-  </div>
+
 </div>

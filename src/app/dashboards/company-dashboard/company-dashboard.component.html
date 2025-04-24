@@ -2,6 +2,12 @@
   <h1>Bienvenue sur votre espace professionel</h1>
   <div class="tabs">
     <button
+      (click)="activeTab = 'demandeDevis'"
+      [class.active]="activeTab === 'demandeDevis'"
+    >
+      Demande de devis
+    </button>
+    <button
       (click)="activeTab = 'inscriptions'"
       [class.active]="activeTab === 'inscriptions'"
     >
@@ -12,13 +18,6 @@
       [class.active]="activeTab === 'Liens privés'"
     >
       Liens privés
-    </button>
-
-    <button
-      (click)="activeTab = 'demandeDevis'"
-      [class.active]="activeTab === 'demandeDevis'"
-    >
-      Demande de devis
     </button>
 
   </div>
@@ -81,11 +80,6 @@
               <p style="font-size: 16px;">Pas de documents chargés</p>
             </ng-template>
           </td>
-
-          <td>
-
-
-          </td>
         </tr>
         </tbody>
       </table>
@@ -97,6 +91,7 @@
   </div>
 
 <div *ngIf="activeTab === 'Liens privés'" class="tab-content">
+  <h2>Liens privés</h2>
   @if (privateLinks.length > 0) {
 
     <table id="private_links_table">
@@ -132,7 +127,6 @@
         </tr>
           }
     </table>
-
     }
 
     @else{
@@ -142,7 +136,9 @@
     }
     </div>
     <div *ngIf="activeTab === 'demandeDevis'" class="tab-content">
+      <h2>Demande de devis</h2>
       <app-demande-devis></app-demande-devis>
     <div>
   </div>
+</div>
 </div>

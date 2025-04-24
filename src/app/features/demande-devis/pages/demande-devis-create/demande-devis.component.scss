@@ -1,0 +1,18 @@
+form{
+  #form_convocation{
+    width:600px;
+    margin:auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    flex-direction: row;
+  }
+  div {
+    width:40%;
+    margin: 0 auto 20px;
+  }
+  textarea{
+    width: 100%;
+    color:black;
+  }
+}

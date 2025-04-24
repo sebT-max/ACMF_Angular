@@ -3,6 +3,12 @@
 
   <div class="tabs">
     <button
+      (click)="activeTab = 'demandeDevisAll'"
+      [class.active]="activeTab === 'demandeDevisAll'"
+    >
+      Demandes de Devis
+    </button>
+    <button
       (click)="activeTab = 'inscriptions'"
       [class.active]="activeTab === 'inscriptions'"
     >
@@ -22,12 +28,6 @@
       Code Promo
     </button>
 
-    <button
-      (click)="activeTab = 'demandeDevisAll'"
-      [class.active]="activeTab === 'demandeDevisAll'"
-    >
-      Demandes de Devis
-    </button>
     <button
       (click)="activeTab = 'Factures'"
       [class.active]="activeTab === 'Factures'"
@@ -169,15 +169,19 @@
       <tbody>
         @for(stage of stages;track stage.id){
           <tr>
-          <td>
+          <td style="font-size:20px;">
             <p>Capacité restante : {{ stage?.capacity }}</p>
             {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
           </td>
-          <td>
-            <div style="text-align:left;">
+          <td style="display:flex;font-size:20px;align-items:center;">
+            <div style="text-align:left;align-items:center;">
               <strong>Ville :</strong> {{ stage.city }} <br>
               <strong>Arrondissement :</strong> {{ stage.arrondissement }} <br>
               <strong>Rue :</strong> {{ stage.street }} <br>
+            </div>
+            <div style="text-align:left;">
+              <strong>Organisation :</strong> {{ stage.organisation }} <br>
+              <strong>Prix :</strong> {{ stage.price }}€ <br>
             </div>
             <ng-template #loading>
               <span>Chargement...</span>

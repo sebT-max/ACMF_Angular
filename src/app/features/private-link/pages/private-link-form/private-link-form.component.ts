@@ -6,12 +6,12 @@ import { StageService } from '../../../stage/services/stage.service';
 import { InscriptionService } from '../../../inscription/inscription-services';
 import { PrivateLinkService } from '../../services/private-link.services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-private-link-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FileUpload],
+    imports: [CommonModule, ReactiveFormsModule, FileUpload, NgOptimizedImage],
   templateUrl: './private-link-form.component.html',
   styleUrl: './private-link-form.component.scss'
 })

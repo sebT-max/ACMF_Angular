@@ -21,8 +21,9 @@
 
 </table>
 <br/>
-<button (click)="addLigne()">+ Ajouter une ligne</button>
-<br/>
-<h1>Total : {{ total() | number:'1.2-2' }} €</h1>
+<div class="facture_line_adder_total_generate">
+  <button (click)="addLigne()">+ Ajouter une ligne</button>
+  <h1>Total : {{ total() | number:'1.2-2' }} €</h1>
 
-<button (click)="generatePDF()">Générer la facture PDF</button>
+  <button (click)="generatePDF()">Générer la facture PDF</button>
+</div>

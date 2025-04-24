@@ -59,7 +59,7 @@ export class AdminDashboardComponent implements OnInit  {
   stagesDetails: { [key: number]: StageDetailsModel } = {};
   stageCapacity: number = 0;
   inscriptions: InscriptionListResponse[] = [];
-  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinksCreate'| 'privateLinksList'|'convocations' = 'inscriptions';
+  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinksCreate'| 'privateLinksList'|'convocations' = 'demandeDevisAll';
   documentsPourModal: DocumentDTO[] = [];
   modalVisible: boolean = false;
 

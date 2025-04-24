@@ -4,7 +4,7 @@ td{
 .dashboard_client{
   width:100%;
   margin:0 auto;
-  padding:40px;
+  padding:0px;
   background-image:url("/pic5.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -20,10 +20,10 @@ td{
   h2{
     text-align: center;
     padding: 40px;
-    background: rgb(4 26 58);
+    background: transparent;
     color: white;
     font-size: 30px;
-    font-family:Poppins-Bold,serif;
+    font-family:Poppins-SemiBold,serif;
   }
   td{
     text-align: center;
@@ -67,7 +67,6 @@ td{
   }
 }
 #admin_inscriptions_tab{
-  background:white;
   padding:20px;
 
 }

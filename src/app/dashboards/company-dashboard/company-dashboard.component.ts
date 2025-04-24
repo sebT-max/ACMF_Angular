@@ -38,11 +38,11 @@ export class CompanyDashboardComponent implements OnInit {
   inscriptions: InscriptionListResponse[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {}; // Stocke les détails des stages
   privateLinks:PrivateLinkModel[]=[];
-  activeTab: 'inscriptions' |'Liens privés'| 'demandeDevis' = 'inscriptions';
+  activeTab: 'demandeDevis' |'Liens privés'|'inscriptions' = 'demandeDevis';
   isTokenVisible = false;
 
   ngOnInit(): void {
-    this.activeTab = 'inscriptions';
+    this.activeTab = 'demandeDevis';
     const currentCompany = JSON.parse(localStorage.getItem('currentUser')!);
     const userId = currentCompany?.id;
 

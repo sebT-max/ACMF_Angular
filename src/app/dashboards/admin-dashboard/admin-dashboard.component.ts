@@ -20,6 +20,12 @@ import {
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
 import {ToastrService} from 'ngx-toastr';
+import {AuthService} from '../../features/auth/services/auth.service';
+import {DocumentService} from '../../features/document/pages/services/document.services';
+import {DocumentDTO} from '../../features/inscription/models/DocumentDTO';
+import {
+  DocumentUtilisateurComponent
+} from '../../features/document/pages/document-utilisateur/document-utilisateur.component';
 
 
 @Component({
@@ -37,7 +43,8 @@ import {ToastrService} from 'ngx-toastr';
     PrivateLinkListComponent,
     FactureComponent,
     PrivateLinkCreateComponent,
-    ConvocationCreateComponent
+    ConvocationCreateComponent,
+    DocumentUtilisateurComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
@@ -45,6 +52,7 @@ import {ToastrService} from 'ngx-toastr';
 export class AdminDashboardComponent implements OnInit  {
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _stageService = inject(StageService);
+  private readonly _documentService = inject(DocumentService);
   private readonly _router: Router = inject(Router);
   faEdit = faEdit;
   stages: StageDetailsModel[] = [];
@@ -52,7 +60,12 @@ export class AdminDashboardComponent implements OnInit  {
   stageCapacity: number = 0;
   inscriptions: InscriptionListResponse[] = [];
   activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinksCreate'| 'privateLinksList'|'convocations' = 'inscriptions';
+  documentsPourModal: DocumentDTO[] = [];
+  modalVisible: boolean = false;
 
+  /*
+  groupedDocuments: { [key: string]: DocumentDTO[] } = {};
+*/
 
   ngOnInit(): void {
     this.loadInscriptions();
@@ -118,6 +131,25 @@ export class AdminDashboardComponent implements OnInit  {
       }
     });
   }
+
+
+  getUserDocuments(id: number): void {
+    this._documentService.getDocumentsForUser(id).subscribe({
+      next: (documents: DocumentDTO[]) => {
+        this.documentsPourModal = documents;
+        this.modalVisible = true;
+      },
+      error: (err) => {
+        console.error('Erreur lors requête :', err);
+        alert("Une erreur est survenue lors de la requête");
+      }
+    });
+  }
+
+  closeModal(): void {
+    this.modalVisible = false;
+  }
+
 
   onDeleteInscription(id: number | undefined): void {
     if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;

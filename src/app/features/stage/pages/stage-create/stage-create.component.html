@@ -1,11 +1,9 @@
-<div class="margin_top_130"></div>
-<h1>Créer un stage</h1>
-
-<form [formGroup]="stageCreationForm" id="stage_creation_form" (ngSubmit)="handleStageCreation()">
+<form [formGroup]="stageCreationForm" class="register_form" (ngSubmit)="handleStageCreation()">
   <!--<div>
     <label for="dateDeStage"></label>
     <input id="dateDeStage" type="date" selectionMode="range" placeholder="Date de stage" formControlName="dateDeStage" required>
   </div>-->
+  <h1>Créer un stage</h1>
   <div>
     <p-datepicker
       selectionMode="range"
@@ -45,6 +43,8 @@
   </div>
 
   <button type="submit">Créer stage</button>
+  <div class="margin_top_130"></div>
+  <button><a  routerLink="/stages/all"> > Voir tous les stages</a></button>
+  <div class="margin_top_130"></div>
 </form>
-<div class="see_all_button"><a  routerLink="/stages/all"> > Voir tous les stages</a></div>
 

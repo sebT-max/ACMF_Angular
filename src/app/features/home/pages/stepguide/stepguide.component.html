@@ -26,10 +26,11 @@
     <button class="btn-next" (click)="nextStep(true)">
       {{ currentStep === steps.length - 1 ? 'Recommencer' : 'Valider cette étape' }}
     </button>
-      <p style="font-size:24px;"*ngIf="currentStep === steps.length - 1"><span style="color:red">Vous avez terminé toutes les étapes.</span></p>
+<!--
+      <p style="font-size:36px;"*ngIf="currentStep === steps.length - 1"><span>Bon stage !</span></p>
+-->
     </div>
   </div>
 </div>
-
 
 

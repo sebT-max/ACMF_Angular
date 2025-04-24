@@ -183,5 +183,12 @@ export const routes: Routes = [
         (c) => c.PrivateLinkFormComponent
       ),
   },
+  {
+    path: 'documents/utilisateur/${userId}',
+    loadComponent: () =>
+      import('./features/document/pages/document-utilisateur/document-utilisateur.component').then(
+        (c) => c.DocumentUtilisateurComponent
+      ),
+  },
 
 ];

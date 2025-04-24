@@ -39,7 +39,7 @@ export class DocumentService {
   }
 
   getDocumentsForUser(userId: number) {
-    return this._httpClient.get<any[]>(`/api/users/${userId}/documents`);
+    return this._httpClient.get<any[]>(`${API_URL}documents/user/${userId}`);
   }
 }
 

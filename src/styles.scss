@@ -11,6 +11,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins-Regular',serif;
 }
 
 body{
@@ -334,6 +335,8 @@ padding-block: var(--p-inputtext-padding-y);
   border-end-end-radius: 0;
   color: #fff !important;
   font-size: 20px;
+  width:270px !important;
+  transform:translate(0px,20px);
   /* display: none; */
 }
 .p-datepicker-dropdown {
@@ -387,4 +390,14 @@ padding-block: var(--p-inputtext-padding-y);
   height: 2rem; !* ou + selon ton layout *!
 }
 */
+app-document-utilisateur {
+  position: fixed !important;
+  display:flex;
+  flex-direction: row !important;
+  background:white !important;
+  top: 0;
+  right: 0;
+  z-index: 99999;
+  height: 100vh;
+}
 

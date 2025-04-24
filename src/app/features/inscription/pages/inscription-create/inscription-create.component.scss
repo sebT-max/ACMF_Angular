@@ -1,222 +1,150 @@
 .inscription-container {
   display: flex;
   justify-content: center;
-  width:100%;
-  background-image:url("/pic6.jpg");
+  align-items: flex-start;
+  width: 100%;
+  background-image: url("/pic6.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   height: 100%;
 }
-#inscription_container_details{
-  font-family: Poppins-Medium,serif;
-  background:white;
-  width:50%;
+
+#inscription_container_details {
+  font-family: Poppins-Medium, serif;
+  background: white;
+  width: 40%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0px 0px 185px 0px;
+  padding: 50px;
 }
-#inscription_container_form{
-  font-family: Poppins-Medium,serif;
-  width:50%;
+
+#inscription_container_form {
+  font-family: Poppins-Medium, serif;
+  width: 100%;
+  height:100vh;
+  padding:100px;
 }
 
 .stage-details {
   padding: 10px 30px;
   line-height: 48px;
   color: grey;
-  width:30%;
-  font-family: Poppins-SemiBold,serif;
-  p{
-    color:#041a3a;
-    font-size:32px;
+  font-family: Poppins-SemiBold, serif;
+
+  p {
+    color: #041a3a;
+    font-size: 18px;
   }
-  h2{
-    color:#041a3a;
-    font-size:54px;
+
+  h2 {
+    color: #041a3a;
+    font-size: 32px;
   }
 }
 
 form {
   gap: 10px;
-  width:100%;
-  border-radius: 0px;
-  color:white;
-  padding:20px;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  label{
-    font-weight:900;
-    font-size:24px;
+  color: white;
+
+  label {
+    font-weight: 900;
+    font-size: 18px;
     color: white;
-    font-family: Poppins-Medium,serif;
+    font-family: Poppins-Medium, serif;
   }
-  input,select{
-    box-shadow: 0px 0px 1px grey;
-    border:none;
+
+  input, select {
+    box-shadow: 0 0 1px grey;
+    border: none;
     width: 75%;
     padding: 10px;
     font-size: 16px;
     border-radius: 7px;
-    border: none;
-    color: black;
     margin: 0 auto;
   }
-  button{
-    margin-top:0px;
+
+  button {
+    margin-top: 20px;
     margin-bottom: 10px;
+    width: 300px;
+    padding: 12px 24px;
+    font-size: 1.3rem;
+    background-color: #292c32;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .submit-button {
+    width: 80%;
+    border:1px solid white;
+    background-color:  #041a3a;;
+    margin: 50px auto 100px;
+    padding: 10px;
+  }
+
+  .submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+  }
+
+  #inscription_form_files {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .file-upload-section {
+    width: 30%;
   }
 }
 
-.file-input {
-  display: none;
-}
-form input:hover{
-  background: rgba(0, 0, 0, 0.37);
-}
-
-.submit-button {
-  position: relative;
-  padding: 12px 24px;
-  font-size: 1.3rem;
-  background-color: #292c32;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 300px;
-  margin:0 auto;
-  border:1px solid white;
-}
-
-.submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.spinner-inline {
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid white;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  animation: spin 0.8s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-p-button{
-  width:200px;
-  margin-top:0px;
-}
-.error-message {
-  color: red;
-  font-size: 0.9em;
-  margin-top: 5px;
-}
-.consignes_container{
-  width: 60%;
-  margin: 0 auto;
-  font-size: 14px;
-  background-color: #fff;
-  line-height: 24px;
-  color: #041a3a;
-  box-shadow: 0px 0px 1px white;
-  padding: 40px;
-  border-radius: 10px;
-}
-.p-fileupload{
+.p-fileupload {
   width: 250px !important;
   background-color: black !important;
 }
 
-.p-fileupload-file{
-  flex-direction: row !important;
-  display:flex;
-  flex-wrap:nowrap !important;
-  background:rgba(0, 0, 0, 0.1215686275);
-  color:black;
-  border-radius:10px;
-  padding:10px;
-  font-size:6px !important;
-  p-button{
-    color: black;
-    width: 80px;
-    font-size: 6px;
-    margin-bottom:35px !important;
-  }
-}
-
-.p-fileupload-file-name{
-  color:black;
-  padding:10px;
-  margin-bottom:30px !important;
-}
-.p-fileupload-header{
-  width:100px;
-  margin:0 auto;
-  border:none;
-
-  p-button{
-    color: black;
-    padding:0px;
-    position:fixed;
-    height:100px;
-  }
-}
-
-.p-fileupload-content{
-  width:300px;
-}
-.p-fileupload-file-size{
-  display:none ! important;
-}
-.p-fileupload-file-thumbnail{
-  flex-shrink: 0;
-  display:none ! important;
-  width:1px  ! important;
-}
-
-.p-fileupload-content {
-  background: black;
-  border: none;
-}
-.p-fileupload-choose {
-  border: none;
-}
-.file-item {
-  background: #f5f5f5;
-  padding: 0.5rem;
-  margin: 0.2rem 0;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  color: black;
-}
-#inscription_form_files{
+.p-fileupload-file {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width:100%;
-  label{
-    height:100px;
-    font-size: 20px;
-  }
-  .width_30 {
-    width: 30%;
-  }
+  background: rgba(0, 0, 0, 0.12);
+  color: black;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  margin: 5px 0;
 }
-form div {
-  display:flex;
-  flex-direction: column;
-  margin:0 auto;
-  align-items:top;
-  margin-top:0px;
+
+.p-fileupload-file-name {
+  color: black;
+  font-size: 12px !important;
 }
-#codePromo{
-  margin-bottom:20px;
-  width:30%;
+
+.p-fileupload-choose {
+  background-color: black !important;
+  color: white !important;
+}
+
+.p-fileupload-file-thumbnail {
+  display: none;
+}
+
+.p-fileupload-buttonbar {
+  margin-bottom: 0.5rem;
+}
+.consignes_container {
+ font-size:14px;
+  padding:20px 0;
 }

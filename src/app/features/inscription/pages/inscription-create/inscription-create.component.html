@@ -1,34 +1,26 @@
 <div class="inscription-container">
   <!-- Détails du stage -->
   <div id="inscription_container_details" class="stage-details" *ngIf="stageDetails">
-    <div style="text-align: left; width:60%;margin:0 auto;padding:20px;">
+    <div class="details-wrapper">
       <h2>Stage à {{ stageDetails.city }}</h2>
-      <br>
-      <p>{{ stageDetails.street }}</p> <p>{{ stageDetails.arrondissement }} arrondissement</p>
+      <p>{{ stageDetails.street }}</p>
+      <p>{{ stageDetails.arrondissement }} arrondissement</p>
       <p>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
       <p>Prix: {{ stageDetails.price }}€</p>
     </div>
     <div class="consignes_container">
-      <h3><span style="font-size: 2em;">⚠️</span> Consignes à respecter !</h3><br>
+      <h3><span class="icon">⚠️</span> Consignes à respecter !</h3>
       <h4>Veuillez intituler vos fichiers de la manière suivante:</h4>
-      <br>
       <ul>
-        <h4>-> Permis de permis conduire:</h4>
-        <li>
-          recto: "(nom_prénom)_permis_recto"
-        </li>
-        <li>
-          verso: "(nom_prénom)_permis_verso"
-        </li>
+        <h4>-> Permis de conduire:</h4>
+        <li>recto: "(nom_prénom)_permis_recto"</li>
+        <li>verso: "(nom_prénom)_permis_verso"</li>
       </ul>
       <ul>
-        <br/>
         <h4>-> Papiers d'identité:</h4>
-        <li> recto: "(nom_prénom)_identité_recto"
-        </li>
+        <li>recto: "(nom_prénom)_identité_recto"</li>
         <li>verso: "(nom_prénom)_identité_verso"</li>
       </ul>
-      <br>
       <div class="form-text text-muted">
         <ul>
           <li>Formats acceptés pour les images : JPEG, PNG.</li>
@@ -36,8 +28,8 @@
         </ul>
       </div>
     </div>
-    <br/>
   </div>
+
   <!-- Formulaire d'inscription -->
   <div id="inscription_container_form">
     <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
@@ -48,84 +40,79 @@
           {{ type.label }}
         </option>
       </select>
-
-<div id="inscription_form_files">
-      <!-- Permis -->
-      <div class="width_30">
-        <label for="permis"><strong>Permis<br>(recto+verso)</strong></label>
-        <p-fileUpload
-          name="permis"
-          [customUpload]="true"
-          (uploadHandler)="uploadFiles($event)"
-          (onSelect)="onFilesChange($event, 'permis')"
-          (onRemove)="onRemoveFile($event, 'permis')"
-          [multiple]="true"
-          [showUploadButton]="false"
-          [showCancelButton]="false"
-          accept=".pdf,image/*"
-          chooseLabel="Choisir les fichiers"
-          mode="advanced"
-          [maxFileSize]="5000000"
-        ></p-fileUpload>
-
-      </div>
-
-
-<div class="width_30">
-      <!-- Carte d'identité -->
-      <label for="carteId"><strong>Carte Id<br>(recto+verso)</strong></label>
-      <p-fileUpload
-        name="carteId"
-        [customUpload]="true"
-        (uploadHandler)="uploadFiles($event)"
-        (onSelect)="onFilesChange($event, 'carteId')"
-        (onRemove)="onRemoveFile($event, 'carteId')"
-        [multiple]="true"
-        [showUploadButton]="false"
-        [showCancelButton]="false"
-        accept=".pdf,image/*"
-        chooseLabel="Choisir les fichiers"
-        mode="advanced"
-        [maxFileSize]="5000000"
-      ></p-fileUpload>
-</div>
-      <!--<div *ngIf="uploadedFiles.permis.length > 0">
-        <ul>
-          <li *ngFor="let file of uploadedFiles.permis; let i = index">
-            {{ file.name }}
-            <button type="button" (click)="removeManualFile('permis', i)">❌</button>
-          </li>
-        </ul>
-      </div>-->
-
-      <!-- Lettre 48N -->
-      <div *ngIf="selectedStageLabel === 'Tribunal'" class="width_30">
-        <label for="lettre48n"><strong>Lettre 48N<br>(pdf)</strong></label>
-        <p-fileUpload
-          name="lettre48n"
-          [customUpload]="true"
-          (uploadHandler)="uploadFiles($event)"
-          (onSelect)="onFilesChange($event, 'lettre48n')"
-          (onRemove)="onRemoveFile($event, 'lettre48n')"
-          [multiple]="true"
-          [showUploadButton]="false"
-          [showCancelButton]="false"
-          accept=".pdf,image/*"
-          chooseLabel="Chargez lettre_48N"
-          mode="advanced"
-          [maxFileSize]="5000000"
-        ></p-fileUpload>
-
-      </div>
-</div>
       <br>
+
+      <div id="inscription_form_files">
+        <!-- Permis -->
+        <div class="file-upload-section">
+          <label for="permis"><strong>Permis (recto+verso)</strong></label>
+          <p-fileUpload
+            name="permis"
+            [customUpload]="true"
+            (uploadHandler)="uploadFiles($event)"
+            (onSelect)="onFilesChange($event, 'permis')"
+            (onRemove)="onRemoveFile($event, 'permis')"
+            [multiple]="true"
+            [showUploadButton]="false"
+            [showCancelButton]="false"
+            accept=".pdf,image/*"
+            chooseLabel="Choisir les fichiers"
+            mode="advanced"
+            [maxFileSize]="5000000"
+          ></p-fileUpload>
+        </div>
+
+        <!-- Carte d'identité -->
+        <div class="file-upload-section">
+          <label for="carteId"><strong>Carte Id (recto+verso)</strong></label>
+          <p-fileUpload
+            name="carteId"
+            [customUpload]="true"
+            (uploadHandler)="uploadFiles($event)"
+            (onSelect)="onFilesChange($event, 'carteId')"
+            (onRemove)="onRemoveFile($event, 'carteId')"
+            [multiple]="true"
+            [showUploadButton]="false"
+            [showCancelButton]="false"
+            accept=".pdf,image/*"
+            chooseLabel="Choisir les fichiers"
+            mode="advanced"
+            [maxFileSize]="5000000"
+          ></p-fileUpload>
+        </div>
+
+        <!-- Lettre 48N -->
+        <div *ngIf="selectedStageLabel === 'Tribunal'" class="file-upload-section">
+          <label for="lettre48n"><strong>Lettre 48N (pdf)</strong></label>
+          <p-fileUpload
+            name="lettre48n"
+            [customUpload]="true"
+            (uploadHandler)="uploadFiles($event)"
+            (onSelect)="onFilesChange($event, 'lettre48n')"
+            (onRemove)="onRemoveFile($event, 'lettre48n')"
+            [multiple]="true"
+            [showUploadButton]="false"
+            [showCancelButton]="false"
+            accept=".pdf,image/*"
+            chooseLabel="Chargez lettre_48N"
+            mode="advanced"
+            [maxFileSize]="5000000"
+          ></p-fileUpload>
+        </div>
+      </div>
+
+      <br>
+
+      <!-- Affichage des erreurs -->
       <div *ngIf="lettre48nError" class="error-message">
         {{ lettre48nError }}
       </div>
-      <!--<label for="codePromo">Code promotionnel</label>-->
+
+      <!-- Champ Code Promo -->
       <input id="codePromo" formControlName="codePromo" placeholder="Code Promo (optionnel)" />
+      <br>
 
-
+      <!-- Bouton de soumission -->
       <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
         <ng-container *ngIf="isLoading">
           <span class="spinner-inline"></span>
@@ -136,9 +123,5 @@
         </ng-container>
       </button>
     </form>
-
   </div>
-
-
-
 </div>

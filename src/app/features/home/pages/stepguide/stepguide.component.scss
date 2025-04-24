@@ -1,3 +1,7 @@
+.step_guide_main_container{
+  width: 100%;
+  padding:0 20%
+}
 #steps_title{
   color:white;
   font-size:44px;
@@ -13,13 +17,14 @@
   border-radius:10px;
 }
 .btn-next{
-  padding: 10px;
-  margin-top: 60px;
+  padding: 10px 5px;
+  margin-top: 80px;
   border-radius: 10px;
-  font-size: 13px;
-  background: rgba(254, 241, 224, 0.9882352941);
+  font-size: 16px;
+  background: white;
   color: #292c32;
   font-weight: 600;
+  border:none;
 }
 
 .progress-bar {
@@ -35,7 +40,7 @@
 
 .progress-fill {
   height: 100%;
-  background-color: #4caf50;
+  background-color: #fffff;
   width: 0;
   transition: width 0.4s ease-in-out;
 }
@@ -51,8 +56,8 @@
 .step {
   width: 40px;
   height: 40px;
-  background-color: #007e5e;
-  color: #333;
+  background-color: #fff;
+  color: #041a3a;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -77,9 +82,11 @@
 
 .step-content {
   padding: 40px;
-  animation: _ngcontent-ng-c556683372_fadeIn 0.4s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.37);
+  animation: fadeIn 0.4s ease-in-out;
   border-radius: 10px;
+  white-space: pre-line;
+  line-height:40px;
+
   h2{
     font-size: 44px;
     color: #ffffffd6;
@@ -95,7 +102,7 @@
     margin:10px 0px 40px 0px;
   }
   button{
-    width: 140px;
+    width: 180px;
   }
 }
 

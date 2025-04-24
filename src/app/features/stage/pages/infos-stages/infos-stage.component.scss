@@ -1,20 +1,26 @@
 .infos_stages_container{
-  padding: 5%;
+  padding: 2% 5%;
   line-height: 32px;
   font-family: Poppins-Medium,serif;
+  background:url("/pic18.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 
   ul{
-    margin:10px;
-    padding:20px;
+    padding: 40px;
+    background: white;
+    border-radius: 0px 0px 34px 0px;
+    margin-bottom: 50px;
 
   }
   ol{
-    padding: 40px;
+    padding: 36px;
     float: right;
     color: #222730;
     background: #f8a733;
     border-radius: 0px 0px 0px 80px;
-    text-underline: #33165b;
+    text-decoration: none;
+    margin-top: 174px;
   }
   li a{
     color:#222730;
@@ -23,7 +29,10 @@
     color:white;
   }
   h2{
-    padding:12px;
+    padding: 21px;
+    background: #041a3a;
+    color: white;
+    border-radius: 0px 100px 0px 0px;
   }
 }
 #info_stages_aside_navbar {

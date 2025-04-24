@@ -1,36 +1,35 @@
+<div class="step_guide_main_container">
+  <h1 id="steps_title">Étapes à suivre</h1>
 
-<h1 id="steps_title">Étapes à suivre</h1>
+  <div class="stepper-wrapper">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="(currentStep / (steps.length - 1)) * 100"></div>
+    </div>
 
-<div class="stepper-wrapper">
-  <div class="progress-bar">
-    <div class="progress-fill" [style.width.%]="(currentStep / (steps.length - 1)) * 100"></div>
+    <div class="stepper">
+      <div
+        class="step"
+        *ngFor="let step of steps; let i = index"
+        [class.active]="i === currentStep"
+        [class.completed]="isCompleted(i)"
+        (click)="goToStep(i)">
+        <span *ngIf="isCompleted(i)">✔️</span>
+        <span *ngIf="!isCompleted(i)">{{ i + 1 }}</span>
+      </div>
+    </div>
   </div>
-
-  <div class="stepper">
-    <div
-      class="step"
-      *ngFor="let step of steps; let i = index"
-      [class.active]="i === currentStep"
-      [class.completed]="isCompleted(i)"
-      (click)="goToStep(i)">
-      <span *ngIf="isCompleted(i)">✔️</span>
-      <span *ngIf="!isCompleted(i)">{{ i + 1 }}</span>
+  <div class="step-content animate">
+    <h2>{{ steps[currentStep].title }}</h2>
+    <hr>
+    <p>{{ steps[currentStep].content }}</p><br/>
+    <div style="display:flex">
+    <button class="btn-next" (click)="nextStep(true)">
+      {{ currentStep === steps.length - 1 ? 'Recommencer' : 'Valider cette étape' }}
+    </button>
+      <p style="font-size:24px;"*ngIf="currentStep === steps.length - 1"><span style="color:red">Vous avez terminé toutes les étapes.</span></p>
     </div>
   </div>
 </div>
-<div class="step-content animate">
-  <h2>{{ steps[currentStep].title }}</h2>
-  <hr>
-  <p>{{ steps[currentStep].content }}</p><br/>
-  <div style="display:flex">
-  <button class="btn-next" (click)="nextStep(true)">
-    {{ currentStep === steps.length - 1 ? 'Recommencer' : 'Valider cette étape' }}
-  </button>
-    <p style="font-size:24px;"*ngIf="currentStep === steps.length - 1"><span style="color:red">Vous avez terminé toutes les étapes.</span></p>
-  </div>
-</div>
-<div class="margin_top_130"></div>
-<hr>
-<div class="margin_top_130"></div>
+
 
 

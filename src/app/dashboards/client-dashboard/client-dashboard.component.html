@@ -30,7 +30,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let inscription of inscriptions">
-          <td style="width:50%;">
+          <td>
             <div id="agencement_details" *ngIf="inscription.id; else loading">
               <div style="margin-right:40px;">
                 <strong>Ville :</strong> {{ inscription.stageCity }} <br>

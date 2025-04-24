@@ -5,7 +5,7 @@
   height: 100vh;
   text-align: center;
   flex-direction: column;
-  background-image: url('/transport-concept-with-car-bridge.jpg');
+  background-image: url('/pic14.jpg');
   background-attachment: fixed;
   background-size:cover;
   background-repeat: no-repeat;
@@ -177,8 +177,10 @@ margin-bottom:20px;
 }
 }
 .call_to_register_home_bottom_container{
-  background: rgb(4 26 58);
-  padding: 20px 25%;
+  background-image:url("/pic14.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   color: white;
   font-family: Poppins-Medium, sans-serif;
 
@@ -188,6 +190,16 @@ margin-bottom:20px;
 }
 
 .call_to_register_home_bottom_container_button{
-display:flex;
-justify-content: center;
+  display:flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.37);
+  padding:16% 20%;
+  h2{
+    font-family: Poppins-Medium,serif;
+    font-size:30px;
+  }
+  button{
+    font-family: Poppins-Regular,serif;
+    border:none;
+  }
 }

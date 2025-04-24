@@ -5,15 +5,23 @@ td{
   margin: 0 auto;
   padding: 2% 10%;
   font-family: Poppins-SemiBold, serif;
-  background: rgb(4 26 58);
+  background-image: url(/pic20.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   h1{
-    font-size:36px;
+    font-size:48px;
   }
   h2{
     text-align:center;
     padding:40px;
     color:white;
-    font-size:36px;
+    font-size:48px;
+  }
+  table{
+    border-radius:10px;
+    padding:20px;
   }
   td{
     text-align: center;
@@ -22,9 +30,14 @@ td{
     padding:20px;
     line-height:30px;
     font-family: Poppins-Medium,serif;
+    width:100%;
+    color:#041a3a;
   }
   th{
     padding:20px;
+    font-size: 28px;
+    color:#041a3a;
+    font-family: Poppins-Bold,serif;
   }
   tr{
     border-bottom:1px solid rgba(28, 28, 30, 1);

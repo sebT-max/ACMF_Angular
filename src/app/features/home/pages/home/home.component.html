@@ -5,11 +5,15 @@
   </button>
 </div>
 
-<div class="call_to_register_home_bottom_container">
-  <app-stepguide></app-stepguide>
-  <h2 style="text-align:center;">Vous n'avez pas de compte,<br> créez en un !</h2>
-  <br>
-  <div class="call_to_register_home_bottom_container_button">
+<hr>
+<div class="call_to_register_home_bottom_container" style="display:flex;justify-content: center;flex-wrap:wrap;">
+  <div style="width:70%">
+    <app-stepguide>
+    </app-stepguide>
+    </div>
+  <div style="width:30%;display:flex;flex-direction:column;justify-content: center">
+    <h2 style="text-align:center;font-size:36px;">Je crée un compte</h2>
+    <br>
     <button style="color:#383f4e;font-weight:600;" class ="see_all_button journey_catalogue_button" routerLink="users/register" >
       Je suis un particulier
     </button>
@@ -17,5 +21,9 @@
       Je suis une entreprise
     </button>
   </div>
+</div>
+<hr>
+<div class="call_to_register_home_bottom_container">
+  <app-stage-all></app-stage-all>
 </div>
 

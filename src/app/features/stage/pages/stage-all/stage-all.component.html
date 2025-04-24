@@ -13,6 +13,7 @@
 
 <div class="card-container">
   @for (stage of stages; track stage.id) {
+    <div class="cards_stages_and_details">
     <div class="card_stages">
 
       <div class="card_stages_date">
@@ -50,6 +51,7 @@
     <!-- Affichage des détails en dehors de la carte, sous la carte sélectionnée -->
     <div *ngIf="selectedStage?.id === stage.id">
       <app-stage-details [stage]="selectedStage" (close)="closeDetails()"></app-stage-details>
+    </div>
     </div>
   }
 </div>

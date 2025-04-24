@@ -1,12 +1,12 @@
-
 <div class="stage-details">
   <div class="stage_details_container1">
-    <h2>{{ stage!.city }}</h2>
+    <h2>Stage {{ stage!.city }}</h2>
     <hr>
-    <p style="margin-top:20px;">📍<strong>Où ?</strong> {{ stage!.street }}</p>
+    <p>📆 Le {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</p>
+    <p>{{ stage!.organisation }}</p>
+    <p>{{ stage!.street }}</p>
     <p>{{ stage!.arrondissement }} arrondissement</p>
-    <p>📆 <strong>Quand ?</strong> Le {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</p>
-    <p>💰<strong>Prix ?</strong> {{ stage!.price }}€/personne</p>
+    <p><strong>Prix: {{ stage!.price }}€</strong></p>
   </div>
 
 
@@ -27,4 +27,5 @@
     02 98 26 10 52
   </div>
 </div>
+
 

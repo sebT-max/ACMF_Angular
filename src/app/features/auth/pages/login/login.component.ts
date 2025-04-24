@@ -8,11 +8,11 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TokenModel } from '../../models/token.model';
-import {NgIf} from "@angular/common";
+import {NgIf, NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-login',
-    imports: [ReactiveFormsModule, NgIf],
+    imports: [ReactiveFormsModule, NgIf, NgOptimizedImage],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

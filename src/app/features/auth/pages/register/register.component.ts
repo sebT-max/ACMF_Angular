@@ -11,7 +11,7 @@ import { UserFormModel } from '../../models/user-form.model';
 import { RegisterFormModel } from '../../models/register-form.model';
 import { LoginFormModel } from '../../models/login-form.model';
 import { TokenModel } from '../../models/token.model';
-import { NgIf, NgForOf } from '@angular/common';
+import {NgIf, NgForOf, NgOptimizedImage} from '@angular/common';
 import { FileRemoveEvent, FileUpload } from 'primeng/fileupload';
 import { CheckboxModule } from 'primeng/checkbox';
 import { catchError, EMPTY } from 'rxjs';
@@ -19,7 +19,7 @@ import { catchError, EMPTY } from 'rxjs';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgForOf, RouterLink, FileUpload, CheckboxModule],
+  imports: [ReactiveFormsModule, NgIf, NgForOf, RouterLink, FileUpload, CheckboxModule, NgOptimizedImage],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })

@@ -8,6 +8,7 @@
   font-size: 24px;
   margin-top: 24px;
   border-radius: 4px;
+
 }
 
 .close_button:hover {
@@ -19,21 +20,16 @@
   flex-direction: column;
 }
 
-
 .stage-details{
   display: flex;
   justify-content: center;
   background:lightgrey;
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   color: #fff;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 1s ease;
-  margin: 0 auto;
   flex-direction: row;
   align-items: flex-start;
-  width: 80%;
-  margin-top:-20px;
 
   hr{
     width:300px;
@@ -41,32 +37,38 @@
 }
 
 .stage_details_container1{
-  border: 1px solid white;
   padding: 20px;
   background: white;
   color: #292c32;
-  line-height: 45px;
-  height: 402px;
-  width: 250px;
+  line-height: 36px;
+  height: 302px;
+  width: 30%;
+  font-family: 'Poppins-Regular',serif;
+  border-radius: 0px 0px 0px 15px;
   hr{
-    height:5px;
+    height: 3px;
     background: #9c7d2c;
-    margin-top:2px;
+    margin-top: 2px;
+    width: 100px;
+    margin-bottom: 16px;
   }
   p{
     margin-top:2px;
   }
   h2{
-    text-align: center;
+    text-align: left;
   }
 }
 #infos-stage-details{
-  background-color: #f8a733;
-  color: rgb(56 63 78);
+  background-color: #041a3a;
+  color: #fff;
   line-height: 39px;
-  height: 402px;
-  width: 250px;
-  padding:20px;
+  height: 302px;
+  width: 30%;
+  padding: 20px;
+  font-family: "POPPINS-EXTRALIGHT", serif;
+  font-size: 14px;
+  border-radius: 0 0 15px 0;
 }
 
 .map-container {
@@ -79,12 +81,12 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  height: 402px;
+  height: 302px;
   background: transparent;
 }
 
 #map {
-  height: 402px;
+  height: 302px;
   width: 100% !important; /* Override inline style for responsive design */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

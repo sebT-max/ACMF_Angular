@@ -1,0 +1,28 @@
+#conditions_generales_container{
+  padding:5% 10%;
+  font-family: Poppins-SemiBold,serif;
+}
+ol{
+  line-height:30px;
+  font-size:16px;
+  h1{
+
+  }
+  p{
+    margin:20px 0px;
+  }
+  li::marker{
+    font-size:30px !important;
+  }
+}
+#logo_conditions{
+  display: flex;
+  justify-content: center;
+}
+#conditions_main_title{
+  text-align:center;
+  font-family: Poppins-SemiBold,serif;
+  margin-top:20px;
+  font-size:36px;
+}
+

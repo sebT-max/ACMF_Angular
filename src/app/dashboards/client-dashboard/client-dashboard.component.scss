@@ -2,17 +2,18 @@ td{
   width:auto;
 }
 .dashboard_client{
-  width:80%;
-  margin:0 auto;
-  padding:20px;
+  margin: 0 auto;
+  padding: 2% 10%;
+  font-family: Poppins-SemiBold, serif;
+  background: rgb(4 26 58);
   h1{
-    background: rgba(0, 0, 0, 0.37);
+    font-size:36px;
   }
   h2{
     text-align:center;
     padding:40px;
-    background: rgba(0, 0, 0, 0.37);
     color:white;
+    font-size:36px;
   }
   td{
     text-align: center;
@@ -20,6 +21,7 @@ td{
     height:20px;
     padding:20px;
     line-height:30px;
+    font-family: Poppins-Medium,serif;
   }
   th{
     padding:20px;

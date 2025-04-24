@@ -3,6 +3,9 @@ import {HomeComponent} from './features/home/pages/home/home.component';
 import {isConnectedGuard} from './features/auth/guards/is-connected.guard';
 import {StageCreateComponent} from './features/stage/pages/stage-create/stage-create.component';
 import {StageAllComponent} from './features/stage/pages/stage-all/stage-all.component';
+import {
+  StatistiquesAndLegisationComponent
+} from './features/home/pages/statistiques-and-legisation/statistiques-and-legisation.component';
 
 export const routes: Routes = [
   {
@@ -16,8 +19,7 @@ export const routes: Routes = [
     path: 'stages-infos',
     loadComponent:()=>
     import('./features/stage/pages/infos-stages/infos-stage.component').then
-((c) => c.InfosStageComponent,
-),
+((c) => c.InfosStageComponent,),
   },
   {
     path: 'qui-sommes-nous ?',
@@ -25,16 +27,24 @@ export const routes: Routes = [
       import('./features/home/pages/qui-sommes-nous/aboutACMF.component').then
       ((c) => c.AboutACMFComponent),
   },
-  /*
-  {
-    path:'b2b',
-  },
+  /*{
+    path:'Professionnels',
+    loadComponent:()=>
+      import('./features/home/pages/qui-sommes-nous/aboutACMF.component').then
+      ((c) => c.AboutACMFComponent),
+  },*/
   {
     path: 'statistiques-et-législation',
-
+    loadComponent:()=>
+      import('./features/home/pages/statistiques-and-legisation/statistiques-and-legisation.component').then
+      ((c) => c.StatistiquesAndLegisationComponent),
   },
-
-   */
+  {
+    path: 'Conditions générales de vente',
+    loadComponent:()=>
+      import('./features/home/pages/conditions générales de vente/conditionsgeneralesdevente.component').then
+      ((c) => c.ConditionsGeneralesDeVenteComponent),
+  },
   {
     path: 'users/register',
     loadComponent: () =>

@@ -1,6 +1,48 @@
 footer {
-  background-color: #232832;
+  background-color: #041a3a;
   text-align: center;
-  padding: 10px;
+  padding: 20px;
   color: #ffffff;
+  font-family: Poppins-SemiBold;
+
+  hr{
+    height: 0.1px;
+    font-weight:100;
+    background-color: grey;
+  }
+
 }
+.footer_part1{
+  display:flex;
+  padding: 20px;
+  align-items: center;
+  div{
+    width:30%;
+    padding:20px;
+  }
+}
+
+#footer_links_to_social_medias{
+display:flex;
+  div{
+    padding:55px 20px 0px 0px;
+  }
+  button{
+    background:transparent;
+    border:none;
+  }
+}
+.space_between{
+  display:flex;
+  justify-content: space-between;
+  .footer_part2{
+    display:flex;
+    padding: 30px 0px 20px 150px;
+    width:20%;
+    div{
+      width:100%;
+      padding:20px;
+    }
+  }
+}
+

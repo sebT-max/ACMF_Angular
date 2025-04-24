@@ -1,7 +1,7 @@
 .infos_stages_container{
-  background: #d8dcde;
-  padding: 125px 40px;
+  padding: 5%;
   line-height: 32px;
+  font-family: Poppins-Medium,serif;
 
   ul{
     margin:10px;
@@ -37,4 +37,14 @@
 #info_stages_content {
   margin-right: 30%; /* Décale le contenu pour qu'il ne soit pas caché par la navbar */
   padding-right: 10px; /* Espace pour éviter que le texte touche la barre latérale */
+}
+#logo_infos_stages{
+  display: flex;
+  justify-content: center;
+}
+#conditions_infos_stages{
+  text-align:center;
+  font-family: Poppins-SemiBold,serif;
+  margin-top:20px;
+  font-size:36px;
 }

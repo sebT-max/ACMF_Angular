@@ -1,0 +1,58 @@
+<h2 style="margin-bottom:0px;">Stages</h2>
+<h2>
+  <button [routerLink]="['/stages/create']" style="float:right;background:white;color:black;border-radius:20px;padding:10px;font-size:16px;"> + Créer un stage</button>
+</h2>
+@if (stages.length > 0) {
+  <table>
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Détails</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      @for(stage of stages;track stage.id){
+        <tr>
+          <td style="font-size:20px;">
+            <p>Capacité restante : {{ stage?.capacity }}</p>
+            {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
+          </td>
+          <td style="display:flex;font-size:20px;align-items:center;">
+            <div style="text-align:left;align-items:center;">
+              <strong>Ville :</strong> {{ stage.city }} <br>
+              <strong>Arrondissement :</strong> {{ stage.arrondissement }} <br>
+              <strong>Rue :</strong> {{ stage.street }} <br>
+            </div>
+            <div style="text-align:left;">
+              <strong>Organisation :</strong> {{ stage.organisation }} <br>
+              <strong>Prix :</strong> {{ stage.price }}€ <br>
+            </div>
+            <ng-template #loading>
+              <span>Chargement...</span>
+            </ng-template>
+          </td>
+
+          <td>
+            <button (click)="onUpdateStage(stage.id)">
+              <fa-icon [icon]="faEdit"></fa-icon> Modifier
+            </button>
+
+            <button
+              (click)="onDeleteStage(stage.id)">
+              <i class="fas fa-window-close"></i>
+              Supprimer
+            </button>
+            <br>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+@else{
+  <ng-template #noInscriptions>
+    <p>Aucune inscription trouvée.</p>
+  </ng-template>
+}

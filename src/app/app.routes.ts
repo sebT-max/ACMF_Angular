@@ -98,10 +98,24 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'admin-stages/all',
+    loadComponent: () =>
+      import('./features/stage/pages/admin-stage-all/admin-stage-all.component').then(
+        (c) => c.AdminStageAllComponent,
+      ),
+  },
+  {
     path: 'stages/create',
     loadComponent: () =>
       import('./features/stage/pages/stage-create/stage-create.component').then(
         (c) => c.StageCreateComponent,
+      ),
+  },
+  {
+    path: 'stages/all',
+    loadComponent: () =>
+      import('./features/stage/pages/stage-all/stage-all.component').then(
+        (c) => c.StageAllComponent,
       ),
   },
   {

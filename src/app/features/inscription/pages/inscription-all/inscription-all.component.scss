@@ -1,0 +1,56 @@
+h1{
+  background: rgba(0, 0, 0, 0.37);
+  padding:20px;
+  text-align: center;
+  color: white;
+  font-family:Poppins-Bold,serif;
+  font-size: 36px;
+}
+h2{
+  text-align: center;
+  padding: 40px;
+  background: transparent;
+  color: white;
+  font-size: 30px;
+  font-family:Poppins-SemiBold,serif;
+}
+td{
+  text-align: center;
+  height:auto;
+  font-size:16px;
+  padding:20px;
+  line-height:30px;
+  font-family:Poppins-Medium,serif;
+  div{
+    margin:0px 20px;
+    line-height: 30px;
+  }
+  button{
+    margin:0 auto;
+    padding:5px;
+  }
+}
+th{
+  padding:20px;
+  font-size: 28px;
+  color:#041a3a;
+  font-family: Poppins-SemiBold,serif;
+}
+tr{
+  border-bottom:1px solid rgba(28, 28, 30, 1);
+}
+
+button{
+  border:none;
+  background:transparent;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin:0 auto;
+}
+
+
+.delete-button:hover {
+  background-color: #c53030;
+}

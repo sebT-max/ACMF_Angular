@@ -1,0 +1,91 @@
+<h2>Inscriptions</h2>
+<ng-container *ngIf="inscriptions.length > 0; else noInscriptions">
+  <table>
+    <thead>
+    <tr>
+      <th>Données du stage</th>
+      <th>Documents</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let inscription of inscriptions">
+      <td style="text-align:left;display:flex;flex-wrap:wrap;">
+        <div>
+          <strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}<br />
+          <strong>Email:</strong> {{ inscription.userEmail }}<br />
+          <strong>Téléphone:</strong> {{ inscription.userPhone}}<br />
+        </div>
+        <br>
+
+        <ng-container *ngIf="inscription.stageId; else loading">
+          <div>
+            <strong>Adresse:</strong> {{ inscription.stageCity }},
+            {{ inscription.stageStreet }}<br />
+            <strong>Organisation:</strong> {{ inscription.stageOrganisation }}<br />
+            <strong>Date:</strong>
+            {{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
+            {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}<br />
+          </div>
+          <div>
+            <strong>Type de stage:</strong> {{ inscription.stageType }}<br />
+            <strong>Statut:</strong>
+            {{ inscription.inscriptionStatut | inscriptionStatut }}
+          </div>
+        </ng-container>
+
+        <ng-template #loading>
+          <span>Chargement...</span>
+        </ng-template>
+      </td>
+
+      <td style="text-align:center;">
+        <ng-container *ngIf="(inscription.documents?.length || 0) > 0; else noDocuments">
+          <div *ngFor="let doc of inscription.documents">
+            <button class="text-primary" (click)="viewFile(doc.fileUrl)">
+              {{ doc.fileName }}
+            </button>
+          </div>
+        </ng-container>
+        <ng-template #noDocuments>
+          <p style="font-size: 16px;">Pas de documents chargés</p>
+        </ng-template>
+      </td>
+
+      <td>
+        <button
+          (click)="onDeleteInscription(inscription.id)"
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+        >
+          <i class="fas fa-trash-alt"></i>
+          Supprimer
+        </button>
+
+        <button
+          *ngIf="inscription.inscriptionStatut === 'EN_ATTENTE'"
+          (click)="validerInscription(inscription.id)"
+          class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+        >
+          <i class="fas fa-check"></i>
+          Valider
+        </button>
+
+        <button (click)="getUserDocuments(inscription.userId)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+        >
+          <i class="fas fa-check"></i>
+          Vérifier documents utilisateur
+        </button>
+        <app-document-utilisateur
+          *ngIf="modalVisible"
+          [documents]="documentsPourModal"
+          (close)="closeModal()"
+        ></app-document-utilisateur>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>
+
+<ng-template #noInscriptions>
+  <p>Aucune inscription trouvée.</p>
+</ng-template>

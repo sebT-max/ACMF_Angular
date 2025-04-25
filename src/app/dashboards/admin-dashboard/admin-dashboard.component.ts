@@ -26,6 +26,9 @@ import {DocumentDTO} from '../../features/inscription/models/DocumentDTO';
 import {
   DocumentUtilisateurComponent
 } from '../../features/document/pages/document-utilisateur/document-utilisateur.component';
+import {InscriptionAllComponent} from '../../features/inscription/pages/inscription-all/inscription-all.component';
+import {StageAllComponent} from '../../features/stage/pages/stage-all/stage-all.component';
+import {AdminStageAllComponent} from '../../features/stage/pages/admin-stage-all/admin-stage-all.component';
 
 
 @Component({
@@ -44,194 +47,38 @@ import {
     FactureComponent,
     PrivateLinkCreateComponent,
     ConvocationCreateComponent,
-    DocumentUtilisateurComponent
+    DocumentUtilisateurComponent,
+    InscriptionAllComponent,
+    StageAllComponent,
+    AdminStageAllComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
-export class AdminDashboardComponent implements OnInit  {
-  private readonly _inscriptionService = inject(InscriptionService);
+export class AdminDashboardComponent {
   private readonly _stageService = inject(StageService);
-  private readonly _documentService = inject(DocumentService);
-  private readonly _router: Router = inject(Router);
   faEdit = faEdit;
+  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll' | 'Factures' | 'privateLinksCreate' | 'privateLinksList' | 'convocations' = 'demandeDevisAll';
+
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
   stageCapacity: number = 0;
   inscriptions: InscriptionListResponse[] = [];
-  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll'|'Factures'|'privateLinksCreate'| 'privateLinksList'|'convocations' = 'demandeDevisAll';
-  documentsPourModal: DocumentDTO[] = [];
-  modalVisible: boolean = false;
 
-  /*
-  groupedDocuments: { [key: string]: DocumentDTO[] } = {};
+
+
+  constructor(private sanitizer: DomSanitizer, private toastr: ToastrService) {
+  }
+}
+
+
+
+/*
+groupedDocuments: { [key: string]: DocumentDTO[] } = {};
 */
-
-  ngOnInit(): void {
-    this.loadInscriptions();
-    this.loadStages();
-  }
-  constructor(private sanitizer: DomSanitizer,private toastr: ToastrService) {}
-
-  getSafeUrl(url: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(url);
-  }
-
-  loadInscriptions(): void {
-    this._inscriptionService.getAllInscriptions().subscribe({
-      next: (inscriptions) => {
-        console.log("Inscriptions récupérées :", inscriptions);
-        this.inscriptions = inscriptions;
-        this.loadStagesDetails(); // Charger les détails des stages après avoir récupéré les inscriptions
-      },
-      error: (err) => {
-        console.error('Erreur lors du chargement des inscriptions', err);
-        alert("Une erreur est survenue lors du chargement des inscriptions.");
-
-      }
-    });
-  }
-
-
- /* viewFile(fileId: string) {
-    window.open(`${API_URL}/inscriptions/file/${fileId}`, '_blank');
-  }*/
-
-  viewFile(url: string) {
-    window.open(url, '_blank'); // ← c’est tout, plus besoin de `${API_URL}...`
-  }
-
-  loadStages(): void {
-    this._stageService.getAllStage().subscribe({
-      next: (stages) => {
-        console.log(`stages récupérés:`, stages);
-        this.stages = stages;
-        this.loadStagesDetails();// Charger les détails des stages après avoir récupéré les stages
-      },
-      error: (err) => {
-        console.error("Erreur lors du chargement des stages", err);
-        alert("Une erreur est survenue lors du chargement des stages.");
-
-      }
-    });
-  }
-  loadStagesDetails(): void {
-    this.inscriptions.forEach(inscription => {
-      if (inscription.stageId != null && !this.stagesDetails[inscription.stageId]) {
-        console.log(`Chargement des détails du stage ${inscription.stageId}`);
-        this._stageService.getStageById(inscription.stageId).subscribe({
-          next: (stage) => {
-            console.log(`Détails du stage ${inscription.stageId} récupérés:`, stage);
-            this.stagesDetails[inscription.stageId!] = stage; // "!" pour TypeScript
-          },
-          error: (err) => {
-            console.error(`Erreur lors du chargement du stage ${inscription.stageId}`, err);
-          }
-        });
-      }
-    });
-  }
-
-
-  getUserDocuments(id: number): void {
-    this._documentService.getDocumentsForUser(id).subscribe({
-      next: (documents: DocumentDTO[]) => {
-        this.documentsPourModal = documents;
-        this.modalVisible = true;
-      },
-      error: (err) => {
-        console.error('Erreur lors requête :', err);
-        alert("Une erreur est survenue lors de la requête");
-      }
-    });
-  }
-
-  closeModal(): void {
-    this.modalVisible = false;
-  }
-
-
-  onDeleteInscription(id: number | undefined): void {
-    if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
-    console.log('Suppression en cours...');
-
-    this._inscriptionService.deleteInscription(id).subscribe({
-      next: () => {
-        alert('Élément supprimé avec succès.');
-        // Rediriger si besoin :
-        this.inscriptions = this.inscriptions.filter(i => i.id !== id);
-        this._router.navigate(['/dashboard-admin']);
-      },
-      error: (err) => {
-        console.error('Erreur lors de la suppression :', err);
-        alert("Une erreur est survenue lors de la suppression.");
-      }
-    });
-  }
-
-
-  onUpdateStage(id: number | undefined): void {
-    if (id === undefined || !confirm('Es-tu sûr de vouloir modifier cet élément ?')) return;
-
-    // Rediriger l'utilisateur vers le formulaire de modification du Stage
-    this._router.navigate([`/stages/update/${id}`]);
-  }
-
-  onDeleteStage(id?: number): void {
-
-    alert("Avant de supprimer, assurez-vous qu'il n'y ait aucune inscription pour ce stage")
-    if (!id) return;
-
-    if (!confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
-
-    this._stageService.deleteStage(id).subscribe({
-      next: () => {
-        this.toastr.success('Stage supprimé avec succès.');
-        this.stages = this.stages.filter(stage => stage.id !== id);
-
-        // Redirection facultative : uniquement si l'élément supprimé est affiché en détail
-        if (this._router.url.includes(`/stages/${id}`)) {
-          this._router.navigate(['/dashboard-admin']);
-        }
-      },
-      error: (err) => {
-        if (err.status === 409 || (err.error?.message?.includes('foreign key'))) {
-          this.toastr.error("Ce stage ne peut pas être supprimé car des inscriptions y sont liées.");
-        } else {
-          this.toastr.error("Une erreur est survenue lors de la suppression.");
-        }
-        console.error('Erreur lors de la suppression :', err);
-      }
-    });
-  }
-
-
-  validerInscription(id: number | undefined): void {
-    if (id === undefined) {
-      console.error("ID d'inscription invalide");
-      return;
-    }
-
-    this._inscriptionService.validateInscription(id!).subscribe({
-      next: (updatedInscription) => {
-        alert('Inscription validée avec succès.');
-
-        // Met à jour le statut dans la liste locale
-        const index = this.inscriptions.findIndex(i => i.id === id);
-        if (index !== -1) {
-          this.inscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
-        }
-
-        // Redirection optionnelle
-        // this._router.navigate(['/dashboard-admin']);
-      },
-      error: (err) => {
-        console.error('Erreur lors de la validation :', err);
-        this.toastr.error("Une erreur s'est produite lors de la validation.");
-
-      }
-    });
-  }
+  /*getSafeUrl(url: string): SafeUrl {
+   return this.sanitizer.bypassSecurityTrustUrl(url);
+ }
 
 }
 

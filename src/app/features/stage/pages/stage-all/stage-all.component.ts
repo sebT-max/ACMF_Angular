@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { StageService } from '../../services/stage.service';
 import { StageDetailsModel } from '../../models/stage-details-model';
 import {Router, ActivatedRoute, RouterLink} from '@angular/router';
@@ -24,6 +24,8 @@ import {environment} from '../../../../../environments/environment';
   styleUrls: ['./stage-all.component.scss']
 })
 export class StageAllComponent implements OnInit {
+  private readonly _router: Router = inject(Router);
+
   stages: StageWithDistance[] = [];
   selectedStage: StageWithDistance | null = null;
   searchTerm: string = '';

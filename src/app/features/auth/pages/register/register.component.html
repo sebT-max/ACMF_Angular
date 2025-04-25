@@ -84,6 +84,8 @@
     <button [disabled]="isLoading || registerForm.invalid" style="margin-top: 1rem;">
       {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
     </button>
+    <p>Vous avez déjà un compte ?<a routerLink="/users/login">Connectez-vous</a></p>
+
   </form>
 </div>
 

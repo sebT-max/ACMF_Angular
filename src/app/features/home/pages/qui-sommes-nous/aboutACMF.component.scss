@@ -1,5 +1,12 @@
+.about_us_main_container{
+  padding:2%;
+  background-image:url("/pic19.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
 .infos_stages_container{
-  padding:5% 10%;
+  padding:5% 0%;
   font-family: Poppins-SemiBold,serif;
 
   ul{
@@ -35,7 +42,27 @@
 
 #info_stages_content {
   margin-right: 30%; /* Décale le contenu pour qu'il ne soit pas caché par la navbar */
-  padding-right: 10px; /* Espace pour éviter que le texte touche la barre latérale */
+  /* Espace pour éviter que le texte touche la barre latérale */
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background:white;
+  padding:5%;
+  h2{
+    font-size:54px;
+    font-family: Poppins-Medium,serif;
+    margin-bottom:20px;
+  }
+  .card{
+    width:40%;
+    margin:5%;
+    background: linear-gradient(234deg, #041a3a, 85%, #b41c1b);
+    padding:20px;
+    line-height:30px;
+    font-size:20px;
+    text-align:left;
+
+  }
 }
 
 
@@ -44,8 +71,10 @@
   justify-content: center;
 }
 #about_main_title{
-  text-align:center;
+  text-align:left;
   font-family: Poppins-SemiBold,serif;
   margin-top:20px;
-  font-size:36px;
+  font-size:78px;
+  color:white;
 }
+

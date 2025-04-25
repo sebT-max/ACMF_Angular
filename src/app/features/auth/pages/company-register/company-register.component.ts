@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {CompanyRegisterFormModel} from '../../models/company-register-form-model';
 import {NgIf, NgOptimizedImage} from '@angular/common';
 import {CheckboxModule} from 'primeng/checkbox';
@@ -19,7 +19,8 @@ import {TokenModel} from '../../models/token.model';
     NgIf,
     CheckboxModule,
     FormsModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    RouterLink
   ],
   templateUrl: './company-register.component.html',
   styleUrl: './company-register.component.scss'

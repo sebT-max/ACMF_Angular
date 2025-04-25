@@ -147,6 +147,19 @@ form {
   margin-bottom: 0.5rem;
 }
 .consignes_container {
- font-size:14px;
+  font-size:14px;
   padding:20px 0;
+  line-height: 30px;
+  color:#09192f;
+  .format{
+    padding:10px 0;
+  }
+  h3{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  h4{
+    font-size: 16px;
+    margin-top:10px;
+  }
 }

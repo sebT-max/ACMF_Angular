@@ -3,13 +3,20 @@
   <div id="inscription_container_details" class="stage-details" *ngIf="stageDetails">
     <div class="details-wrapper">
       <h2>Stage à {{ stageDetails.city }}</h2>
-      <p>{{ stageDetails.street }}</p>
       <p>{{ stageDetails.arrondissement }} arrondissement</p>
+      <p>{{ stageDetails.street }}</p>
       <p>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
       <p>Prix: {{ stageDetails.price }}€</p>
     </div>
     <div class="consignes_container">
-      <h3><span class="icon">⚠️</span> Consignes à respecter !</h3>
+      <h3><span class="icon">⚠️ </span>  <strong> &nbsp; &nbsp;Consignes à respecter !</strong></h3>
+
+      <div class="form-text text-muted format">
+        <ul>
+          <li>Formats acceptés pour les images : JPEG, PNG.</li>
+          <li>La lettre 48N doit être en PDF.</li>
+        </ul>
+      </div>
       <h4>Veuillez intituler vos fichiers de la manière suivante:</h4>
       <ul>
         <h4>-> Permis de conduire:</h4>
@@ -21,12 +28,6 @@
         <li>recto: "(nom_prénom)_identité_recto"</li>
         <li>verso: "(nom_prénom)_identité_verso"</li>
       </ul>
-      <div class="form-text text-muted">
-        <ul>
-          <li>Formats acceptés pour les images : JPEG, PNG.</li>
-          <li>La lettre 48N doit être en PDF.</li>
-        </ul>
-      </div>
     </div>
   </div>
 

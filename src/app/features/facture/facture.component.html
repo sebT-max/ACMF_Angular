@@ -1,4 +1,4 @@
-
+<div class="container">
 <form>
   <input type="text" name="nomEntreprise" placeholder="Nom de l'entreprise" [(ngModel)]="entreprise.nom"><br><br>
   <input type="text" name="adresseEntreprise" placeholder="Adresse" [(ngModel)]="entreprise.adresse"><br><br>
@@ -26,4 +26,5 @@
   <h1>Total : {{ total() | number:'1.2-2' }} €</h1>
 
   <button (click)="generatePDF()">Générer la facture PDF</button>
+</div>
 </div>

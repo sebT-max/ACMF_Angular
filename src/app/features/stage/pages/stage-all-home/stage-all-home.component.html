@@ -1,36 +1,10 @@
 
 <div routerLink="/" id="logo_stage_all">
-  <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf" width="208" height="160">
-</div>
-
-<h1 style="text-align:left;width:80%;margin:0 auto;">Nos stages à venir</h1>
-<div id="stage_filters">
-  <p>Filtre par ville </p>
-  <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" id="city_filter" placeholder="Rechercher par ville">
-  <p>Filtre par date</p>
-
-  <p-calendar
-    [(ngModel)]="selectedDate"
-    (onSelect)="onDateFilter()"
-    [showIcon]="true"
-    dateFormat="dd/mm/yy"
-    [appendTo]="'body'"
-    [firstDayOfWeek]="1"
-    placeholder="Sélectionner une date"
-    inputId="calendarInput">
-  </p-calendar>
-  <button class="invisible_button" (click)="clearDate()">Effacer date</button>
-
-</div>
-
-<br>
-
-<div *ngIf="paginatedStages.length === 0" class="no-results">
-  <p>Aucun stage ne correspond à votre recherche.</p>
+  <img src="/LOGO%20BLEU_small.png" alt="logo_acf" width="208" height="160">
 </div>
 
 <div class="card-container">
-  @for (stage of stages; track stage.id) {
+  @for (stage of stageHomes; track stage.id) {
     <div class="cards_stages_and_details">
       <div class="card_stages">
 
@@ -72,5 +46,10 @@
       </div>
     </div>
   }
+  <button class="see_all_stages_button">
+    <a routerLink="/stages/all">Découvrir les stages</a>
+  </button>
 </div>
+
+
 

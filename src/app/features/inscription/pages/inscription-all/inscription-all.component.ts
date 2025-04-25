@@ -30,25 +30,28 @@ export class InscriptionAllComponent implements OnInit{
   private readonly _stageService = inject(StageService);
   private readonly _documentService = inject(DocumentService);
   private readonly _router: Router = inject(Router);
+
+  constructor(private sanitizer: DomSanitizer,private toastr: ToastrService) {}
+
+
   documentsPourModal: DocumentDTO[] = [];
   modalVisible: boolean = false;
-  inscriptions: InscriptionListResponse[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
-/*  paginatedInscriptions: InscriptionListResponse[] = [];
-  pageSize = 5;
-  currentPage = 1;*/
+  inscriptions: InscriptionListResponse[] = [];
+  paginatedInscriptions: InscriptionListResponse[] = [];
+  pageSize = 3;
+  currentPage = 1;
+
   ngOnInit(): void {
     this.loadInscriptions();
-    this.loadStagesDetails();
   }
-  constructor(private sanitizer: DomSanitizer,private toastr: ToastrService) {}
 
   loadInscriptions(): void {
     this._inscriptionService.getAllInscriptions().subscribe({
       next: (inscriptions) => {
         console.log("Inscriptions récupérées :", inscriptions);
         this.inscriptions = inscriptions;
-        /*this.paginate();*/
+        this.paginate();
         this.loadStagesDetails(); // Charger les détails des stages après avoir récupéré les inscriptions
       },
       error: (err) => {
@@ -61,58 +64,15 @@ export class InscriptionAllComponent implements OnInit{
   loadStagesDetails(): void {
     this.inscriptions.forEach(inscription => {
       if (inscription.stageId != null && !this.stagesDetails[inscription.stageId]) {
-        console.log(`Chargement des détails du stage ${inscription.stageId}`);
         this._stageService.getStageById(inscription.stageId).subscribe({
           next: (stage) => {
-            console.log(`Détails du stage ${inscription.stageId} récupérés:`, stage);
-            this.stagesDetails[inscription.stageId!] = stage; // "!" pour TypeScript
+            this.stagesDetails[inscription.stageId!] = stage;
+            // "!" pour TypeScript
           },
           error: (err) => {
             console.error(`Erreur lors du chargement du stage ${inscription.stageId}`, err);
           }
         });
-      }
-    });
-  }
-  getUserDocuments(id: number): void {
-    this._documentService.getDocumentsForUser(id).subscribe({
-      next: (documents: DocumentDTO[]) => {
-        this.documentsPourModal = documents;
-        this.modalVisible = true;
-      },
-      error: (err) => {
-        console.error('Erreur lors requête :', err);
-        alert("Une erreur est survenue lors de la requête");
-      }
-    });
-  }
-
-  closeModal(): void {
-    this.modalVisible = false;
-  }
-  validerInscription(id: number | undefined): void {
-    if (id === undefined) {
-      console.error("ID d'inscription invalide");
-      return;
-    }
-
-    this._inscriptionService.validateInscription(id!).subscribe({
-      next: (updatedInscription) => {
-        alert('Inscription validée avec succès.');
-
-        // Met à jour le statut dans la liste locale
-        const index = this.inscriptions.findIndex(i => i.id === id);
-        if (index !== -1) {
-          this.inscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
-        }
-
-        // Redirection optionnelle
-        // this._router.navigate(['/dashboard-admin']);
-      },
-      error: (err) => {
-        console.error('Erreur lors de la validation :', err);
-        this.toastr.error("Une erreur s'est produite lors de la validation.");
-
       }
     });
   }
@@ -125,8 +85,8 @@ export class InscriptionAllComponent implements OnInit{
       next: () => {
         alert('Élément supprimé avec succès.');
         // Rediriger si besoin :
-        this.inscriptions = this.inscriptions.filter(i => i.id !== id);
-        this._router.navigate(['/dashboard-admin']);
+        this.paginatedInscriptions = this.paginatedInscriptions.filter(i => i.id !== id);
+        this.paginate();
       },
       error: (err) => {
         console.error('Erreur lors de la suppression :', err);
@@ -138,10 +98,72 @@ export class InscriptionAllComponent implements OnInit{
     window.open(url, '_blank'); // ← c’est tout, plus besoin de `${API_URL}...`
   }
 
-  /*paginate(): void {
+  paginate(): void {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    this.inscriptions = this.paginatedInscriptions.slice(start, end);
-  }*/
+    this.paginatedInscriptions = this.inscriptions.slice(start, end);
+  }
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.paginate();
+  }
+  canGoNext(): boolean {
+    return this.currentPage < this.totalPages();
+  }
+
+  canGoPrev(): boolean {
+    return this.currentPage > 1;
+  }
+
+
+  totalPages(): number {
+    return Math.ceil(this.inscriptions.length / this.pageSize);
+  }
+
+  closeModal(): void {
+    this.modalVisible = false;
+  }
+
+  getUserDocuments(id: number): void {
+    this._documentService.getDocumentsForUser(id).subscribe({
+      next: (documents: DocumentDTO[]) => {
+        this.documentsPourModal = documents;
+        this.modalVisible = true;
+      },
+      error: (err) => {
+        console.error('Erreur lors requête :', err);
+        alert("Une erreur est survenue lors de la requête");
+      }
+    });
+  }
+  validerInscription(id: number | undefined): void {
+    alert("Êtes-vous sûr de valider l'inscription ?")
+    if (id === undefined) {
+      console.error("ID d'inscription invalide");
+      return;
+    }
+
+    this._inscriptionService.validateInscription(id!).subscribe({
+      next: (updatedInscription) => {
+        alert('Inscription validée avec succès.');
+
+        // Met à jour le statut dans la liste locale
+        const index = this.paginatedInscriptions.findIndex(i => i.id === id);
+        if (index !== -1) {
+          this.paginatedInscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
+        }
+        this.paginate();
+
+        // Redirection optionnelle
+        // this._router.navigate(['/dashboard-admin']);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la validation :', err);
+        this.toastr.error("Une erreur s'est produite lors de la validation.");
+
+      }
+    });
+  }
+
 
 }

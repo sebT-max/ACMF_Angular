@@ -150,6 +150,46 @@ h1{
   display: flex;
   justify-content: center;
 }
+.custom-date-picker {
+  font-size: 16px;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f4f7fa;
+  width: 100%;
+  max-width: 300px;
+  transition: all 0.3s ease;
+}
 
+.custom-date-picker:focus {
+  outline: none;
+  border-color: #4d90fe; /* Couleur bleu plus joli */
+  background-color: #ffffff; /* Fond blanc au focus */
+  box-shadow: 0 0 8px rgba(77, 144, 254, 0.5); /* Ajout d'une ombre */
+}
 
+.custom-date-picker::-webkit-calendar-picker-indicator {
+  background-color: #4d90fe; /* Couleur de l'icône du calendrier */
+  border-radius: 50%;
+  padding: 5px;
+}
 
+.custom-date-picker::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+.selected-date{
+  float:right;
+  margin-right:25px;
+}
+
+.invisible_button{
+  background:transparent;
+  border:none;
+}
+.no-results {
+  text-align: center;
+  color: #555;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}

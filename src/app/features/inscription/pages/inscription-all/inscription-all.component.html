@@ -1,5 +1,5 @@
 <h2>Inscriptions</h2>
-<ng-container *ngIf="inscriptions.length > 0; else noInscriptions">
+<ng-container *ngIf="paginatedInscriptions.length > 0; else noInscriptions">
   <table>
     <thead>
     <tr>
@@ -9,7 +9,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let inscription of inscriptions">
+    <tr *ngFor="let inscription of paginatedInscriptions">
       <td style="text-align:left;display:flex;flex-wrap:wrap;">
         <div>
           <strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}<br />
@@ -89,3 +89,9 @@
 <ng-template #noInscriptions>
   <p>Aucune inscription trouvée.</p>
 </ng-template>
+
+<div class="pagination">
+  <button (click)="changePage(currentPage - 1)" [disabled]="!canGoPrev()">← Précédent</button>
+  <button (click)="changePage(currentPage + 1)" [disabled]="!canGoNext()">Suivant →</button>
+
+</div>

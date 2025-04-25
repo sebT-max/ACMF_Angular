@@ -5,13 +5,14 @@ import {NgIf} from '@angular/common';
 import {Button} from 'primeng/button';
 import {StepGuideComponent} from '../stepguide/stepguide.component';
 import {StageAllComponent} from '../../../stage/pages/stage-all/stage-all.component';
+import {StageAllHomeComponent} from '../../../stage/pages/stage-all-home/stage-all-home.component';
 
 @Component({
   selector: 'app-home',
   imports: [
     RouterLink,
     StepGuideComponent,
-    StageAllComponent
+    StageAllHomeComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'], // Correction ici
@@ -20,4 +21,5 @@ import {StageAllComponent} from '../../../stage/pages/stage-all/stage-all.compon
 export class HomeComponent {
   private _authService :AuthService = inject(AuthService);
   userConnected = this._authService.currentUser;
+
 }

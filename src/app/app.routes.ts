@@ -118,6 +118,7 @@ export const routes: Routes = [
         (c) => c.StageAllComponent,
       ),
   },
+
   {
     path: 'stages/update/:id',
     loadComponent: () =>

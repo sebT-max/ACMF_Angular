@@ -1,0 +1,271 @@
+.cards_stages_and_details{
+  background: white;
+  box-shadow: 3px 2px 15px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+.card_stages{
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+  color: #041a3a;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translate(0px, -20x);
+  &:hover{
+    border-left:1px solid white;
+  }
+}
+.inscription_button{
+  width: 140px;
+  font-size: 20px;
+  align-items: center;
+  border: 1px solid white;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #b41c1b;
+  color:white;
+  height:70px;
+}
+.details_button{
+  width: 140px;
+  font-size: 20px;
+  align-items: center;
+  border: none;
+  color: #2d333b;
+  padding: 8px;
+  border-radius: 3px;
+  background: white;
+}
+.close_button {
+  width: 140px;
+  font-size: 20px;
+  align-items: center;
+  background-color: #e0e4e9;
+  border: 1px solid white;
+  color: #2d333b;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+.close_button:hover {
+  background-color: darkred;
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+  padding:2% 0%;
+}
+
+.card_stages {
+  padding: 12px;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+h1{
+  font-family: Poppins-Medium, serif;
+  text-align: center;
+  font-size:40px;
+  color: #0a0a1e;
+}
+
+.card_stages_date{
+  height: 70px;
+  border: 1px solid #ccc;
+  align-items: baseline;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  font-family: Poppins-Medium, serif;
+  background: #041a3a;
+  color:white;
+  border-radius: 10px;
+  width: 160px;
+}
+
+.card_stages_remaining_places_and_distance{
+  height: 70px;
+  align-items: baseline;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  width:60%;
+  font-size: 12px;
+  gap:10px;
+  color:dimgrey;
+  font-family: Poppins-Medium, serif;
+  border-radius: 10px;
+}
+.card_stages_all_datas{
+  width: 80%;
+  padding: 10px 20px;
+  font-family: Poppins-Medium, serif;
+  font-size:12px;
+}
+#stage_price{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:20px;
+  font-family: Poppins-Medium, serif;
+}
+
+#stage_filters{
+  display:flex;
+  flex-wrap: wrap;
+  width:80%;
+  margin: 20px auto 0;
+  p{
+    font-family: Poppins-Medium, serif;
+    padding:20px;
+  }
+  input{
+    padding: 10px;
+    border-radius: 10px;
+    width: 30%;
+    margin: 18px auto 0px;
+    border: none;
+    box-shadow: 0px 0px 1px grey;
+    height: 28px;
+  }
+  h1{
+    color:white;
+    box-shadow: 0px 0px 1px white;
+    border:none;
+  }
+}
+.app-stage-details {
+  margin-top: 0px; /* Espacement entre la carte et les détails */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+}
+#logo_stage_all{
+  display: flex;
+  justify-content: center;
+}
+.see_all_stages_button{
+  margin: 20px auto 0;
+  background: #041a3a;
+  border-radius: 10px;
+  padding: 10px 30px;
+  font-size: 18px;
+  color: #b41c1b;
+}
+
+.p-ripple {
+  overflow: hidden;
+  position: relative;
+  padding: 10px;
+}
+.p-datepicker .p-datepicker-panel {
+  min-width: 100%;
+  background: #222730;
+}
+.p-datepicker-buttonbar {
+  display: flex;
+  padding: var(--p-datepicker-buttonbar-padding);
+  border-top: 1px solid var(--p-datepicker-buttonbar-border-color);
+  flex-direction: row;
+}
+.p-datepicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--p-datepicker-header-padding);
+  background: var(--p-datepicker-header-background);
+  color: var(--p-datepicker-header-color);
+  border-bottom: 1px solid var(--p-datepicker-header-border-color);
+  flex-direction: row;
+}
+.p-inputtext {
+  /*font-family: inherit;*/
+  font-feature-settings: inherit;
+  font-size: 20px;
+  color: black !important;
+  background: var(--p-inputtext-background);
+  padding-block: var(--p-inputtext-padding-y);
+  /* padding-inline: var(--p-inputtext-padding-x); */
+  border: 1px solid var(--p-inputtext-border-color);
+  transition: background var(--p-inputtext-transition-duration), color var(--p-inputtext-transition-duration), border-color var(--p-inputtext-transition-duration), outline-color var(--p-inputtext-transition-duration), box-shadow var(--p-inputtext-transition-duration);
+  appearance: none;
+  border-radius: var(--p-inputtext-border-radius);
+  outline-color: black !important;
+  box-shadow: var(--p-inputtext-shadow);
+}
+.p-datepicker-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  width: var(--p-datepicker-date-width);
+  height: var(--p-datepicker-date-height);
+  border-radius: var(--p-datepicker-date-border-radius);
+  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), box-shadow var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
+  border: 1px solid transparent;
+  outline-color: transparent;
+  color: #222730 !important;
+}
+.p-datepicker-day-selected {
+  background: #222730 !important;
+  color: white !important;
+  border-radius: 25px !important;
+}
+.p-datepicker-day-selected {
+  background: var(--p-datepicker-date-selected-background);
+  color: white;
+  background: #222730 !important;
+  border-radius: 30px;
+}
+.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  color: #fff !important;
+  font-size: 20px;
+  width:270px !important;
+  transform:translate(0px,20px);
+  /* display: none; */
+}
+.p-datepicker-dropdown {
+  cursor: pointer;
+  display: inline-flex;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  width: var(--p-datepicker-dropdown-width);
+  border-start-end-radius: var(--p-datepicker-dropdown-border-radius);
+  border-end-end-radius: var(--p-datepicker-dropdown-border-radius);
+  /* background: var(--p-datepicker-dropdown-background); */
+  border: 1px solid var(--p-datepicker-dropdown-border-color);
+  border-inline-start: 0 none;
+  color: var(--p-datepicker-dropdown-color);
+  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
+  outline-color: #000;
+  border-radius: 50px !important;;
+  background: red !important;
+}
+.p-datepicker-dropdown:not(:disabled):hover {
+  background: red !important;
+  border-color: var(--p-datepicker-dropdown-hover-border-color);
+  color: var(--p-datepicker-dropdown-hover-color);
+  border-radius: 30px;
+}
+.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input:hover {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  background:transparent !important;
+}
+
+
+

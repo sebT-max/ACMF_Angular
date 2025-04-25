@@ -8,10 +8,10 @@ h1{
 }
 h2{
   text-align: center;
-  padding: 40px;
+  padding: 10px;
   background: transparent;
   color: white;
-  font-size: 30px;
+  font-size: 36px;
   font-family:Poppins-SemiBold,serif;
 }
 td{
@@ -53,4 +53,27 @@ button{
 
 .delete-button:hover {
   background-color: #c53030;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  button{
+    font-size:24px;
+    display:flex;
+    color:black;
+    background: white;
+    padding:10px;
+    border-radius:10px;
+  }
+}
+:host {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  margin-top: auto;
+  text-align: center;
 }

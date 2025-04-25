@@ -49,7 +49,6 @@ import {AdminStageAllComponent} from '../../features/stage/pages/admin-stage-all
     ConvocationCreateComponent,
     DocumentUtilisateurComponent,
     InscriptionAllComponent,
-    StageAllComponent,
     AdminStageAllComponent
   ],
   templateUrl: './admin-dashboard.component.html',

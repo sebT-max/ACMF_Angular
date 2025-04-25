@@ -1,12 +1,19 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import { StageService } from '../../services/stage.service';
 import { StageDetailsModel } from '../../models/stage-details-model';
 import {Router, ActivatedRoute, RouterLink} from '@angular/router';
 import { StageDetailsComponent } from '../stage-details/stage-details.component';
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StageWithDistance} from '../../models/StageWithDistance';
 import {environment} from '../../../../../environments/environment';
+import { CalendarModule } from 'primeng/calendar';
+import {Locale} from 'date-fns';
+import {fr} from 'date-fns/locale';
+import { Calendar } from 'primeng/calendar';
+import { Translation } from 'primeng/api';
+import { frTranslation } from '../../../../primeng.locale';
+
 
 
 @Component({
@@ -19,26 +26,34 @@ import {environment} from '../../../../../environments/environment';
     RouterLink,
     NgIf,
     DecimalPipe,
-    NgForOf
+    ReactiveFormsModule,
+    Calendar,
+    NgOptimizedImage,
+    CalendarModule
   ],
   styleUrls: ['./stage-all.component.scss']
 })
 export class StageAllComponent implements OnInit {
+
+  @Input() limit: number | null = null;
+
   private readonly _router: Router = inject(Router);
 
   stages: StageWithDistance[] = [];
   selectedStage: StageWithDistance | null = null;
   searchTerm: string = '';
-  selectedDate: string = ''; // format ISO yyyy-MM-dd
+  selectedDate: Date | null = null;
   userLatitude: number | null = null;
   userLongitude: number | null = null;
+  paginatedStages: StageWithDistance[] = [];
+  filteredStages: StageWithDistance[] = [];  // Stages filtrés selon la date
 
-
-  constructor(
-    private _stageService: StageService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  pageSize = 3;
+  currentPage = 1;
+  constructor( private _stageService: StageService,
+               private router: Router,
+               private route: ActivatedRoute,) {
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -46,6 +61,9 @@ export class StageAllComponent implements OnInit {
       this.searchTerm = params['searchTerm'] || '';
       this.getUserLocation();
     });
+  }
+  get hasMoreStages(): boolean {
+    return this.limit !== null && this.stages.length === this.limit;
   }
 
   getUserLocation() {
@@ -102,9 +120,17 @@ export class StageAllComponent implements OnInit {
         .filter(stage => {
           const stageDate = new Date(stage.dateDebut);
           const isFuture = stageDate >= now;
-          const matchesSelectedDate = this.selectedDate
-            ? stageDate.toISOString().split('T')[0] === this.selectedDate
-            : true;
+
+          // Vérification de la date sélectionnée
+          let matchesSelectedDate = true;
+          if (this.selectedDate) {
+            // Comparer seulement l'année, le mois et le jour
+            matchesSelectedDate =
+              stageDate.getFullYear() === this.selectedDate.getFullYear() &&
+              stageDate.getMonth() === this.selectedDate.getMonth() &&
+              stageDate.getDate() === this.selectedDate.getDate();
+          }
+
           return isFuture && matchesSelectedDate;
         });
     };
@@ -120,13 +146,11 @@ export class StageAllComponent implements OnInit {
           const [lng, lat] = coords;
           stage.distance = this.calculateDistance(this.userLatitude, this.userLongitude, lat, lng);
         } else {
-          stage.distance = Infinity; // On cache ceux qu’on n’a pas pu géocoder
+          stage.distance = Infinity; // On cache ceux qu'on n'a pas pu géocoder
         }
       }
-      filteredStages.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
-
-      // Trie les stages par distance
-      this.stages = filteredStages.sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
+      const sorted = filteredStages.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
+      this.stages = this.limit ? sorted.slice(0, this.limit) : sorted;
     };
 
     if (this.searchTerm) {
@@ -145,9 +169,26 @@ export class StageAllComponent implements OnInit {
       });
     }
   }
-
   onDateFilter(): void {
-    this.loadStages();
+    // Si la date est sélectionnée
+    if (this.selectedDate) {
+      // Filtrer les stages en fonction de la date sélectionnée
+      this.filteredStages = this.stages.filter(stage =>
+        new Date(stage.dateDebut).toLocaleDateString() === this.selectedDate?.toLocaleDateString()
+      );
+    } else {
+      // Si aucune date n'est sélectionnée, afficher tous les stages
+      this.filteredStages = this.stages;
+    }
+
+    // Vérifier si la latitude et la longitude sont disponibles
+    if (this.userLatitude !== null && this.userLongitude !== null) {
+      // Appliquer un filtre en fonction de la distance
+      this.loadStagesWithDistance();
+    } else {
+      // Si pas de géolocalisation, charger tous les stages sans distance
+      this.loadStages();
+    }
   }
   loadStages(): void {
     const now = new Date();
@@ -157,12 +198,19 @@ export class StageAllComponent implements OnInit {
         .filter(stage => {
           const stageDate = new Date(stage.dateDebut);
           const isFuture = stageDate >= now;
-          const matchesSelectedDate = this.selectedDate
-            ? stageDate.toISOString().split('T')[0] === this.selectedDate
-            : true;
+
+          // Vérification de la date sélectionnée
+          let matchesSelectedDate = true;
+          if (this.selectedDate) {
+            // Comparer seulement l'année, le mois et le jour
+            matchesSelectedDate =
+              stageDate.getFullYear() === this.selectedDate.getFullYear() &&
+              stageDate.getMonth() === this.selectedDate.getMonth() &&
+              stageDate.getDate() === this.selectedDate.getDate();
+          }
+
           return isFuture && matchesSelectedDate;
-        })
-        .sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
+        });
     };
 
     if (this.searchTerm) {
@@ -197,6 +245,39 @@ export class StageAllComponent implements OnInit {
       queryParams: { searchTerm: this.searchTerm },
       queryParamsHandling: 'merge',
     });
-    this.loadStages();
+
+    if (this.userLatitude !== null && this.userLongitude !== null) {
+      this.loadStagesWithDistance();
+    } else {
+      this.loadStages();
+    }
   }
+  paginate(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedStages = this.stages.slice(start, end);
+  }
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.paginate();
+  }
+  canGoNext(): boolean {
+    return this.currentPage < this.totalPages();
+  }
+
+  canGoPrev(): boolean {
+    return this.currentPage > 1;
+  }
+
+
+  totalPages(): number {
+    return Math.ceil(this.stages.length / this.pageSize);
+  }
+  clearDate() {
+    this.selectedDate = null;
+    this.onDateFilter();  // Appeler explicitement la méthode de filtrage après réinitialisation
+  }
+
+  protected readonly fr = fr;
+  protected readonly frTranslation = frTranslation;
 }

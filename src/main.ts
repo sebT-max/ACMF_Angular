@@ -1,11 +1,14 @@
+/// <reference types="@angular/localize" />
+
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import {registerLocaleData} from '@angular/common';
 import {importProvidersFrom, LOCALE_ID} from '@angular/core';
-import localeFr from '@angular/common/locales/fr';
 import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';  // Importe la locale française
+import { frTranslation } from './app/primeng.locale';
+import localeFr from '@angular/common/locales/fr';
 
 
 // Enregistrer la locale française
@@ -15,14 +18,19 @@ bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
     ...appConfig.providers,
-    { provide: LOCALE_ID, useValue: 'fr' },                      // Locale en français
-    importProvidersFrom(BrowserAnimationsModule),               // Requis pour Toastr
+
+    // 👉 Pour Angular i18n
+    { provide: LOCALE_ID, useValue: 'fr' },
+
+    // 👉 Pour les animations (Toastr / PrimeNG ripple)
+    importProvidersFrom(BrowserAnimationsModule),
     importProvidersFrom(ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true
     })),
-    provideAnimations()
+
+    provideAnimations(),
   ]
 })
   .catch(err => console.error(err));

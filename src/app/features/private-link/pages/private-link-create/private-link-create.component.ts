@@ -80,9 +80,12 @@ export class PrivateLinkCreateComponent {
 
   onSubmit() {
     const { email, stageId } = this.createLinkForm.value;
-
+    console.log('Email:', email);
+    console.log('Stage ID:', stageId);
     this.authService.getCompanyByEmailPublic(email).subscribe({
       next: (entreprise) => {
+        console.log('Entreprise trouvée:', entreprise); // Affiche l'objet entreprise dans la console
+
         const entrepriseId = entreprise.id;
 
         this.privateLinkService.createPrivateLink(entrepriseId, stageId).subscribe({
@@ -92,6 +95,7 @@ export class PrivateLinkCreateComponent {
             const expiration = res.expirationDate
               ? ` (expire le ${new Date(res.expirationDate).toLocaleString()})`
               : '';
+            console.log('Lien privé créé:', this.linkUrl); // Affiche l'URL du lien privé
 
             this.showToast(
               `Lien créé pour <strong>${entreprise.name}</strong>.<br>
@@ -101,6 +105,7 @@ export class PrivateLinkCreateComponent {
           },
           error: (err) => {
             this.linkUrl = null;
+            console.error('Erreur lors de la création du lien privé:', err); // Affiche l'erreur dans la console
 
             if (err.status === 0) {
               this.showToast(`Erreur de connexion : veuillez vérifier votre réseau.`, 'error');
@@ -112,7 +117,9 @@ export class PrivateLinkCreateComponent {
           }
         });
       },
-      error: () => {
+      error: (err) => {
+        console.error('Entreprise non trouvée pour cet email:', err); // Affiche l'erreur dans la console
+
         this.message = "Entreprise non trouvée pour cet email.";
       }
     });

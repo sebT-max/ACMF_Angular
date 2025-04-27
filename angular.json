@@ -7,7 +7,7 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
-          "fr-PR": "src/locale/messages.fr.xlf"
+          "fr-PR": "src/locales/messages.fr.xlf"
         }
       },
       "projectType": "application",
@@ -40,12 +40,11 @@
               }
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/saga-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeflex/primeflex.css",
               "node_modules/ngx-toastr/toastr.css",
               "mapbox-gl/dist/mapbox-gl.css",
-              "src/styles.scss",
-              "src/assets/fonts/fonts.scss"
+              "src/styles.scss"
             ]
           ,
             "scripts": []

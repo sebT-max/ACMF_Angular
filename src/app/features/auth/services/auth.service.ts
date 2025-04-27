@@ -65,7 +65,19 @@ export class AuthService {
     );
   }
   getCompanyByEmailPublic(email: string): Observable<CompanyTokenModel> {
-    return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`);
+    console.log('Appel API pour obtenir l\'entreprise avec l\'email:', email); // Affiche l'email utilisé
+
+    return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`).pipe(
+      tap((resp: CompanyTokenModel) => {
+        console.log('Réponse de l\'API:', resp); // Affiche la réponse de l'API
+        this.currentCompany.set(resp);
+        localStorage.setItem('currentCompany', JSON.stringify(resp));
+      }),
+      catchError(err => {
+        console.error('Erreur API:', err); // Affichez l'erreur dans la console si l'API échoue
+        return throwError(() => new Error('Erreur lors de l\'appel API'));
+      })
+    );
   }
 
   // Vérifier si un utilisateur ou une entreprise est authentifié

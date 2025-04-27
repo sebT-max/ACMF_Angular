@@ -1,11 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
-
-@import url('https://fonts.googleapis.com/css2?family=Yesteryear&display=swap');
+@use 'assets/fonts/fonts.scss';
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
-@import 'primeicons/primeicons.css';
-@import 'assets/fonts/fonts.scss';
-
+@import "primeicons/primeicons.css";
 
 *{
   margin: 0;

@@ -6,7 +6,7 @@
   background-position: center;
 }
 .infos_stages_container{
-  padding:5% 0%;
+  padding:3% 0%;
   font-family: Poppins-SemiBold,serif;
 
   ul{
@@ -41,17 +41,18 @@
 }
 
 #info_stages_content {
-  margin-right: 30%; /* Décale le contenu pour qu'il ne soit pas caché par la navbar */
-  /* Espace pour éviter que le texte touche la barre latérale */
-  display:flex;
+  margin-right: 18%;
+  display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  background:white;
-  padding:5%;
+  background: white;
+  padding: 5%;
+  border-radius: 0px 80px 0px 80px;
   h2{
     font-size:54px;
     font-family: Poppins-Medium,serif;
-    margin-bottom:20px;
+    margin-bottom:60px;
+    line-height:50px;
   }
   .card{
     width:40%;
@@ -71,10 +72,11 @@
   justify-content: center;
 }
 #about_main_title{
-  text-align:left;
-  font-family: Poppins-SemiBold,serif;
-  margin-top:20px;
-  font-size:78px;
-  color:white;
+  text-align: left;
+  font-family: Poppins-SemiBold, serif;
+  margin-top: 20px;
+  font-size: 78px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
 }
 

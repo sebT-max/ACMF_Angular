@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prettier": "npx prettier --write ./src/**/*.{ts,scss,html,md} --ignore-unknown"
+    "prettier": "npx prettier --write ./src/**/*.{ts,scss,html,md} --ignore-unknown",
+    "generate-font": "node tools/convert-font.js"
   },
   "private": true,
   "dependencies": {
@@ -25,8 +26,10 @@
     "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@primeng/themes": "^19.1.0",
     "@stripe/stripe-js": "^7.1.0",
+    "@types/jspdf": "^1.3.3",
     "date-fns": "^4.1.0",
     "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "mapbox-gl": "^2.10.0",
     "ngx-toastr": "^19.0.0",
     "primeflex": "^4.0.0",

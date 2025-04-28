@@ -90,8 +90,25 @@
   <p>Aucune inscription trouvée.</p>
 </ng-template>
 
-<div class="pagination">
-  <button (click)="changePage(currentPage - 1)" [disabled]="!canGoPrev()">← Précédent</button>
-  <button (click)="changePage(currentPage + 1)" [disabled]="!canGoNext()">Suivant →</button>
+<div class="pagination-controls">
 
+  <button
+    [disabled]="!canGoPrev()"
+    (click)="changePage(currentPage - 1)"
+    class="pagination-button"
+  >
+    Précédent
+  </button>
+
+  <span class="pagination-info">
+    Page {{ currentPage }} sur {{ totalPages() }}
+  </span>
+
+  <button
+    [disabled]="!canGoNext()"
+    (click)="changePage(currentPage + 1)"
+    class="pagination-button"
+  >
+    Suivant
+  </button>
 </div>

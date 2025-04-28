@@ -28,6 +28,7 @@ td{
   button{
     margin:0 auto;
     padding:5px;
+    color:black !important;
   }
 }
 th{
@@ -54,7 +55,7 @@ button{
 .delete-button:hover {
   background-color: #c53030;
 }
-.pagination {
+/*.pagination {
   display: flex;
   justify-content: center;
   button{
@@ -65,7 +66,7 @@ button{
     padding:10px;
     border-radius:10px;
   }
-}
+}*/
 :host {
   position: relative;
   min-height: 100vh;
@@ -77,3 +78,53 @@ button{
   margin-top: auto;
   text-align: center;
 }
+.invisible_button{
+  background:transparent;
+  border:none;
+}
+.no-results {
+  text-align: center;
+  color: #555;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 15px;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #1565c0;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.pagination-info {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Ajustement pour le message "pas de résultat" */
+.no-results {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666;
+}
+

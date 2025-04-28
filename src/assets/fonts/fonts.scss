@@ -50,7 +50,11 @@
 }
 @font-face {
   font-family: 'Poppins-Regular';
-  src: url('Poppins-Regular.js') format('truetype');
+  src: url('Poppins-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('Poppins-Regular-normal.js') format('truetype');
   font-style: normal;
 }
 

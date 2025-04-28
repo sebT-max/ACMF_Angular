@@ -160,10 +160,7 @@ export class InscriptionAllComponent implements OnInit{
       error: (err) => {
         console.error('Erreur lors de la validation :', err);
         this.toastr.error("Une erreur s'est produite lors de la validation.");
-
       }
     });
   }
-
-
 }

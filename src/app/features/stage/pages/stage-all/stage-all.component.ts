@@ -45,9 +45,9 @@ export class StageAllComponent implements OnInit {
   userLongitude: number | null = null;
   paginatedStages: StageWithDistance[] = [];
   filteredStages: StageWithDistance[] = [];  // Stages filtrés selon la date
-
   pageSize = 3;
   currentPage = 1;
+
   constructor(
     private _stageService: StageService,
     private router: Router,

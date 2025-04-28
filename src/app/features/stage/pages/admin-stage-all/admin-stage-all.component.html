@@ -1,58 +1,105 @@
-<h2 style="margin-bottom:0px;">Stages</h2>
-<h2>
-  <button [routerLink]="['/stages/create']" style="float:right;background:white;color:black;border-radius:20px;padding:10px;font-size:16px;"> + Créer un stage</button>
-</h2>
-@if (stages.length > 0) {
-  <table>
-    <thead>
-    <tr>
-      <th>Date</th>
-      <th>Détails</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
+<div class="stages-container">
+  <div class="header-section">
+    <h2>Stages</h2>
+    <button [routerLink]="['/stages/create']" id="admin_stage_creation_button" class="create-button">+ Créer un stage</button>
+  </div>
 
-    <tbody>
-      @for(stage of stages;track stage.id){
-        <tr>
-          <td style="font-size:20px;">
-            <p>Capacité restante : {{ stage?.capacity }}</p>
-            {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}
-          </td>
-          <td style="display:flex;font-size:20px;align-items:center;">
-            <div style="text-align:left;align-items:center;">
-              <strong>Ville :</strong> {{ stage.city }} <br>
-              <strong>Arrondissement :</strong> {{ stage.arrondissement }} <br>
-              <strong>Rue :</strong> {{ stage.street }} <br>
-            </div>
-            <div style="text-align:left;">
-              <strong>Organisation :</strong> {{ stage.organisation }} <br>
-              <strong>Prix :</strong> {{ stage.price }}€ <br>
-            </div>
-            <ng-template #loading>
-              <span>Chargement...</span>
-            </ng-template>
-          </td>
+  <div class="filters-section">
+    <div class="search-box">
+      <label for="city_filter">Filtre par mots-clés:</label>
+      <div class="search-input-container">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          id="city_filter"
+          placeholder="Ville, rue, organisation..."
+          (keyup.enter)="onSearch()"
+        >
+        <button class="search-button" (click)="onSearch()">Rechercher</button>
+        <button class="reset-button" (click)="resetFilters()" *ngIf="searchTerm">Réinitialiser</button>
+      </div>
+      <p class="filter-hint">Recherchez par ville, arrondissement, rue, organisation ou prix</p>
+    </div>
+  </div>
 
-          <td>
-            <button (click)="onUpdateStage(stage.id)">
-              <fa-icon [icon]="faEdit"></fa-icon> Modifier
-            </button>
+  <div class="results-section">
+    <p *ngIf="searchTerm && filteredStages.length > 0" class="results-count">
+      {{ filteredStages.length }} résultat(s) trouvé(s) pour "{{ searchTerm }}"
+    </p>
+    <p *ngIf="searchTerm && filteredStages.length === 0" class="no-results">
+      Aucun résultat trouvé pour "{{ searchTerm }}"
+    </p>
+  </div>
 
-            <button
-              (click)="onDeleteStage(stage.id)">
-              <i class="fas fa-window-close"></i>
-              Supprimer
-            </button>
-            <br>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
-}
-@else{
-  <ng-template #noInscriptions>
-    <p>Aucune inscription trouvée.</p>
-  </ng-template>
-}
+  @if (filteredStages.length > 0) {
+    <table class="stages-table">
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Détails</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        @for(stage of paginatedStages; track stage.id) {
+          <tr>
+            <td class="date-cell">
+              <p class="capacity">Capacité restante : {{ stage?.capacity }}</p>
+              <p class="dates">{{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</p>
+            </td>
+            <td class="details-cell">
+              <div class="details-grid">
+                <div class="location-details">
+                  <p><strong>Ville :</strong> {{ stage.city }}</p>
+                  <p><strong>Arrondissement :</strong> {{ stage.arrondissement }}</p>
+                  <p><strong>Rue :</strong> {{ stage.street }}</p>
+                </div>
+                <div class="org-details">
+                  <p><strong>Organisation :</strong> {{ stage.organisation }}</p>
+                  <p><strong>Prix :</strong> {{ stage.price }}€</p>
+                </div>
+              </div>
+            </td>
+
+            <td class="actions-cell">
+              <button class="action-button edit" (click)="onUpdateStage(stage.id)">
+                <fa-icon [icon]="faEdit"></fa-icon> Modifier
+              </button>
+              <button class="action-button delete" (click)="onDeleteStage(stage.id)">
+                <i class="fas fa-window-close"></i> Supprimer
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pagination-controls">
+      <button
+        [disabled]="!canGoPrev()"
+        (click)="changePage(currentPage - 1)"
+        class="pagination-button"
+      >
+        Précédent
+      </button>
+
+      <span class="pagination-info">
+        Page {{ currentPage }} sur {{ totalPages() }}
+      </span>
+
+      <button
+        [disabled]="!canGoNext()"
+        (click)="changePage(currentPage + 1)"
+        class="pagination-button"
+      >
+        Suivant
+      </button>
+    </div>
+  }
+  @else {
+    <div class="no-stages">
+      <p>Aucun stage trouvé.</p>
+    </div>
+  }
+</div>

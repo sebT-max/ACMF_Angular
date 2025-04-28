@@ -1,4 +1,3 @@
-
 <div routerLink="/" id="logo_stage_all">
   <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf" width="208" height="160">
 </div>
@@ -20,7 +19,6 @@
     inputId="calendarInput">
   </p-calendar>
   <button class="invisible_button" (click)="clearDate()">Effacer date</button>
-
 </div>
 
 <br>
@@ -30,7 +28,7 @@
 </div>
 
 <div class="card-container">
-  @for (stage of stages; track stage.id) {
+  @for (stage of paginatedStages; track stage.id) {
     <div class="cards_stages_and_details">
       <div class="card_stages">
 
@@ -74,3 +72,25 @@
   }
 </div>
 
+<!-- Ajout des contrôles de pagination -->
+<div class="pagination-controls" *ngIf="filteredStages.length > pageSize">
+  <button
+    [disabled]="!canGoPrev()"
+    (click)="changePage(currentPage - 1)"
+    class="pagination-button"
+  >
+    Précédent
+  </button>
+
+  <span class="pagination-info">
+    Page {{ currentPage }} sur {{ totalPages() }}
+  </span>
+
+  <button
+    [disabled]="!canGoNext()"
+    (click)="changePage(currentPage + 1)"
+    class="pagination-button"
+  >
+    Suivant
+  </button>
+</div>

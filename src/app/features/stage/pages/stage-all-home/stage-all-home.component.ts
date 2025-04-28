@@ -111,7 +111,7 @@ export class StageAllHomeComponent implements OnInit {
         }
       }
 
-      const sorted = filtered.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
+      const sorted = this.sortStagesByDate(filtered);
       this.stageHomes = this.limit ? sorted.slice(0, this.limit) : sorted;
       this.paginate();
     };
@@ -126,15 +126,20 @@ export class StageAllHomeComponent implements OnInit {
     const now = new Date();
     this._stageService.getAllStage().subscribe({
       next: (stages: StageWithDistance[]) => {
-        const filtered = stages
-          .filter(stage => new Date(stage.dateDebut) >= now)
-          .sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
-        this.stageHomes = this.limit ? filtered.slice(0, this.limit) : filtered;
+        const filtered = stages.filter(stage => new Date(stage.dateDebut) >= now);
+        const sorted = this.sortStagesByDate(filtered);
+
+        this.stageHomes = this.limit ? sorted.slice(0, this.limit) : sorted;
         this.paginate();
       },
       error: (error: string) => console.error('Erreur de chargement:', error)
     });
   }
+
+  private sortStagesByDate(stages: StageWithDistance[]): StageWithDistance[] {
+    return stages.sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
+  }
+
 
   selectStage(stage: StageWithDistance) {
     this.selectedStage = this.selectedStage?.id === stage.id ? null : stage;

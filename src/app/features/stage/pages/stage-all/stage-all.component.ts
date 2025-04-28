@@ -14,8 +14,6 @@ import { Calendar } from 'primeng/calendar';
 import { Translation } from 'primeng/api';
 import { frTranslation } from '../../../../primeng.locale';
 
-
-
 @Component({
   selector: 'app-stage-all',
   templateUrl: './stage-all.component.html',
@@ -50,18 +48,19 @@ export class StageAllComponent implements OnInit {
 
   pageSize = 3;
   currentPage = 1;
-  constructor( private _stageService: StageService,
-               private router: Router,
-               private route: ActivatedRoute,) {
-  }
+  constructor(
+    private _stageService: StageService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.loadStages();
       this.searchTerm = params['searchTerm'] || '';
       this.getUserLocation();
     });
   }
+
   get hasMoreStages(): boolean {
     return this.limit !== null && this.stages.length === this.limit;
   }
@@ -86,6 +85,7 @@ export class StageAllComponent implements OnInit {
       this.loadStages();
     }
   }
+
   getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
 
@@ -100,6 +100,7 @@ export class StageAllComponent implements OnInit {
       })
       .catch(() => null);
   }
+
   calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371; // Rayon de la Terre en km
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -112,33 +113,81 @@ export class StageAllComponent implements OnInit {
     return R * c; // Distance en km
   }
 
+  onDateFilter(): void {
+    // Réinitialiser la pagination lors du changement de filtre
+    this.currentPage = 1;
+
+    // Si la date est sélectionnée
+    if (this.selectedDate) {
+      // Filtrer les stages en fonction de la date sélectionnée
+      this.filteredStages = this.stages.filter(stage => {
+        const stageDate = new Date(stage.dateDebut);
+        return stageDate.getFullYear() === this.selectedDate?.getFullYear() &&
+          stageDate.getMonth() === this.selectedDate?.getMonth() &&
+          stageDate.getDate() === this.selectedDate?.getDate();
+      });
+    } else {
+      // Si aucune date n'est sélectionnée, utiliser tous les stages
+      this.filteredStages = [...this.stages];
+    }
+
+    // Appliquer le tri par date
+    this.filteredStages = this.sortStagesByDate(this.filteredStages);
+
+    // Mettre à jour la pagination
+    this.paginate();
+  }
+
+  loadStages(): void {
+    const now = new Date();
+
+    const loadAndProcessStages = (stages: StageWithDistance[]) => {
+      // Filtrer les stages futurs uniquement
+      const futureStages = stages.filter(stage => {
+        const stageDate = new Date(stage.dateDebut);
+        return stageDate >= now;
+      });
+
+      // Trier par date
+      this.stages = this.sortStagesByDate(futureStages);
+
+      // Appliquer les filtres actifs
+      this.applyFilters();
+    };
+
+    if (this.searchTerm) {
+      this._stageService.getFilteredStages(this.searchTerm).subscribe({
+        next: (stages: StageWithDistance[]) => {
+          loadAndProcessStages(stages);
+        },
+        error: (error: string) => console.error('Erreur de chargement:', error)
+      });
+    } else {
+      this._stageService.getAllStage().subscribe({
+        next: (stages: StageWithDistance[]) => {
+          loadAndProcessStages(stages);
+        },
+        error: (error: string) => console.error('Erreur de chargement:', error)
+      });
+    }
+  }
+
+  private sortStagesByDate(stages: StageWithDistance[]): StageWithDistance[] {
+    return [...stages].sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
+  }
+
   loadStagesWithDistance(): void {
     const now = new Date();
 
-    const filterAndSortStages = (stages: StageWithDistance[]) => {
-      return stages
-        .filter(stage => {
-          const stageDate = new Date(stage.dateDebut);
-          const isFuture = stageDate >= now;
-
-          // Vérification de la date sélectionnée
-          let matchesSelectedDate = true;
-          if (this.selectedDate) {
-            // Comparer seulement l'année, le mois et le jour
-            matchesSelectedDate =
-              stageDate.getFullYear() === this.selectedDate.getFullYear() &&
-              stageDate.getMonth() === this.selectedDate.getMonth() &&
-              stageDate.getDate() === this.selectedDate.getDate();
-          }
-
-          return isFuture && matchesSelectedDate;
-        });
-    };
-
     const processStages = async (stages: StageWithDistance[]) => {
-      const filteredStages = filterAndSortStages(stages);
+      // Filtrer pour n'avoir que les stages futurs
+      const futureStages = stages.filter(stage => {
+        const stageDate = new Date(stage.dateDebut);
+        return stageDate >= now;
+      });
 
-      for (const stage of filteredStages) {
+      // Calculer les distances pour chaque stage
+      for (const stage of futureStages) {
         const fullAddress = `${stage.street}, ${stage.city}`;
         const coords = await this.getCoordinatesFromAddress(fullAddress);
 
@@ -149,8 +198,12 @@ export class StageAllComponent implements OnInit {
           stage.distance = Infinity; // On cache ceux qu'on n'a pas pu géocoder
         }
       }
-      const sorted = filteredStages.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
-      this.stages = this.limit ? sorted.slice(0, this.limit) : sorted;
+
+      // Stocker tous les stages triés par date
+      this.stages = this.sortStagesByDate(futureStages);
+
+      // Appliquer les filtres actifs
+      this.applyFilters();
     };
 
     if (this.searchTerm) {
@@ -169,67 +222,34 @@ export class StageAllComponent implements OnInit {
       });
     }
   }
-  onDateFilter(): void {
-    // Si la date est sélectionnée
+
+  // Méthode pour appliquer tous les filtres actifs
+  applyFilters(): void {
+    // Commencer avec tous les stages
+    let filtered = [...this.stages];
+
+    // Appliquer le filtre de date si nécessaire
     if (this.selectedDate) {
-      // Filtrer les stages en fonction de la date sélectionnée
-      this.filteredStages = this.stages.filter(stage =>
-        new Date(stage.dateDebut).toLocaleDateString() === this.selectedDate?.toLocaleDateString()
-      );
-    } else {
-      // Si aucune date n'est sélectionnée, afficher tous les stages
-      this.filteredStages = this.stages;
-    }
-
-    // Vérifier si la latitude et la longitude sont disponibles
-    if (this.userLatitude !== null && this.userLongitude !== null) {
-      // Appliquer un filtre en fonction de la distance
-      this.loadStagesWithDistance();
-    } else {
-      // Si pas de géolocalisation, charger tous les stages sans distance
-      this.loadStages();
-    }
-  }
-  loadStages(): void {
-    const now = new Date();
-
-    const filterAndSortStages = (stages: StageWithDistance[]) => {
-      return stages
-        .filter(stage => {
-          const stageDate = new Date(stage.dateDebut);
-          const isFuture = stageDate >= now;
-
-          // Vérification de la date sélectionnée
-          let matchesSelectedDate = true;
-          if (this.selectedDate) {
-            // Comparer seulement l'année, le mois et le jour
-            matchesSelectedDate =
-              stageDate.getFullYear() === this.selectedDate.getFullYear() &&
-              stageDate.getMonth() === this.selectedDate.getMonth() &&
-              stageDate.getDate() === this.selectedDate.getDate();
-          }
-
-          return isFuture && matchesSelectedDate;
-        });
-    };
-
-    if (this.searchTerm) {
-      this._stageService.getFilteredStages(this.searchTerm).subscribe({
-        next: (stages: StageWithDistance[]) => {
-          this.stages = filterAndSortStages(stages);
-        },
-        error: (error: string) => console.error('Erreur de chargement:', error)
-      });
-    } else {
-      this._stageService.getAllStage().subscribe({
-        next: (stages: StageWithDistance[]) => {
-          this.stages = filterAndSortStages(stages);
-        },
-        error: (error: string) => console.error('Erreur de chargement:', error)
+      filtered = filtered.filter(stage => {
+        const stageDate = new Date(stage.dateDebut);
+        return stageDate.getFullYear() === this.selectedDate?.getFullYear() &&
+          stageDate.getMonth() === this.selectedDate?.getMonth() &&
+          stageDate.getDate() === this.selectedDate?.getDate();
       });
     }
-  }
 
+    // Mettre à jour les stages filtrés
+    this.filteredStages = this.sortStagesByDate(filtered);
+
+    // Si la limite est définie, appliquer la limite
+    if (this.limit !== null) {
+      this.filteredStages = this.filteredStages.slice(0, this.limit);
+    }
+
+    // Réinitialiser la pagination
+    this.currentPage = 1;
+    this.paginate();
+  }
 
   selectStage(stage: StageDetailsModel) {
     this.selectedStage = this.selectedStage?.id === stage.id ? null : stage;
@@ -246,21 +266,28 @@ export class StageAllComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
 
+    // Réinitialiser la pagination
+    this.currentPage = 1;
+
     if (this.userLatitude !== null && this.userLongitude !== null) {
       this.loadStagesWithDistance();
     } else {
       this.loadStages();
     }
   }
+
   paginate(): void {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    this.paginatedStages = this.stages.slice(start, end);
+    // Utiliser les stages filtrés pour la pagination
+    this.paginatedStages = this.filteredStages.slice(start, end);
   }
+
   changePage(page: number): void {
     this.currentPage = page;
     this.paginate();
   }
+
   canGoNext(): boolean {
     return this.currentPage < this.totalPages();
   }
@@ -269,13 +296,15 @@ export class StageAllComponent implements OnInit {
     return this.currentPage > 1;
   }
 
-
   totalPages(): number {
-    return Math.ceil(this.stages.length / this.pageSize);
+    return Math.ceil(this.filteredStages.length / this.pageSize);
   }
+
   clearDate() {
     this.selectedDate = null;
-    this.onDateFilter();  // Appeler explicitement la méthode de filtrage après réinitialisation
+    // Réinitialiser la pagination
+    this.currentPage = 1;
+    this.onDateFilter();
   }
 
   protected readonly fr = fr;

@@ -1,16 +1,36 @@
 <div class="home_container">
-  <p>Conduisez l'esprit tranquille<br>Récupérez le contrôle</p>
-  <button class="see_all_button journey_catalogue_button flexCenter">
-    <a routerLink="/stages/all">Découvrir les stages</a>
-  </button>
+  <div class="first_home_container_division">
+    <p>Conduisez l'esprit tranquille<br>Récupérez le contrôle</p>
+    <button class="see_all_button journey_catalogue_button flexCenter">
+      <a routerLink="/stages/all">Découvrir les stages</a>
+    </button>
+  </div>
 </div>
+<hr>
+<hr>
+<hr>
+<hr>
 
-<hr>
-<hr>
+
 <div class="call_to_register_home_bottom_container" style="display:flex;justify-content: center;flex-wrap:wrap;">
-  <app-stage-all-home></app-stage-all-home>
-  <div style="width:70%">
-    <app-stepguide>
+  <div class="second_home_container_division">
+    <div class="logo_header">
+      <img src="/LOGO%20BLANC_small.png" alt="logo_acf" width="358">
+    </div>
+    <p>
+      <span style="color:#041a3a;background:white;">Actions</span>
+      <span style="color:white;background:#041a3a;">Conduite</span>
+      <span style="color:#b41c1b;">France</span>
+    </p>
+    <hr>
+    <div class="second_home_container_division_content">
+      <p>Stages de sensibilisation à la sécurité routière</p>
+      <p>Récupération de points de permis sur l'ensemble du département: Quimper, Le Faou, Landerneau et le Relecq Kehuon.</p>
+    </div>
+  <app-stage-all-home id="stage_all_home"></app-stage-all-home>
+  </div>
+    <div style="width:70%">
+    <app-stepguide id="step_guide_home">
     </app-stepguide>
   </div>
   <div style="width:30%;display:flex;flex-direction:column;justify-content: center">

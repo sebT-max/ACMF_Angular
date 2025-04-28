@@ -50,10 +50,12 @@
 #logo_infos_stages{
   display: flex;
   justify-content: center;
+  background: #041a3a;
 }
 #conditions_infos_stages{
   text-align:center;
   font-family: Poppins-SemiBold,serif;
-  margin-top:20px;
-  font-size:36px;
+  font-size:48px;
+  padding:20px;
+  background: transparent;
 }

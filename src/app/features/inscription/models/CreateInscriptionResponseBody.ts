@@ -7,6 +7,7 @@ export interface CreateInscriptionResponseBody {
   userId: number | null;
   stageId: number | null;
   stageType: string | null;
+  stageCapacity: number | null;
   inscriptionStatut: string;
   stage?: StageDetailsModel;
   user?: UserFormModel;

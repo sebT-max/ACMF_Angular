@@ -17,5 +17,6 @@ export interface InscriptionListResponse {
   userPhone: string;
   stageType: string;
   inscriptionStatut: string;
+  stageCapacity: number | null;
   documents: DocumentDTO[];
 }

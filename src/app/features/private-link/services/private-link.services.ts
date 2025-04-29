@@ -7,6 +7,7 @@ import {InscriptionFormModel} from '../../inscription/models/inscription-form.mo
 import {CreateInscriptionResponseBody} from '../../inscription/models/CreateInscriptionResponseBody';
 import {PrivateLinkFormData} from '../Model/PrivateLinkFormData';
 import {LinkDetails} from '../Model/LinkDetails';
+import {PrivateLinkModel} from '../Model/PrivateLinkModel';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,16 @@ export class PrivateLinkService {
   }
   // Récupérer la liste des liens privés
 
-  getPrivateLinks(): Observable<any[]> {
-    return this._httpClient.get<any[]>(`${API_URL}particulier/private-links`);
+  getAllLinks() : Observable<PrivateLinkModel[]> {
+    return this._httpClient.get<PrivateLinkModel[]>(`${API_URL}private-links/all`);
+  }
+
+  getPrivateLinks(): Observable<PrivateLinkModel[]> {
+    return this._httpClient.get<PrivateLinkModel[]>(`${API_URL}particulier/private-links`);
   }
   // Optionnel : une méthode pour désactiver un lien privé
-  deactivatePrivateLink(linkId: number): Observable<any> {
-    return this._httpClient.put<any[]>(`${API_URL}company/deactivate/${linkId}`, {});
+  deactivateLink(linkId: number): Observable<PrivateLinkModel> {
+    return this._httpClient.put<PrivateLinkModel>(`${API_URL}privateLinks/deactivate/${linkId}`, {});
   }
   getCompanyPrivateLinks(): Observable<any[]> {
     return this._httpClient.get<any[]>(`${API_URL}privateLinks/me`);
@@ -53,6 +58,3 @@ export class PrivateLinkService {
     return this._httpClient.post<PrivateLinkFormData>(`${API_URL}inscriptions/${token}`, formData);
   }
 }
-/*formData: FormData
-Lien créé pour Jupiler.
-  http://localhost:4200/inscription/556064f3-c551-4a8c-b824-86e037468b40 (expire le 26/04/2025 03:29:31)*/

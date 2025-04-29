@@ -8,4 +8,5 @@ export interface PrivateLinkModel {
   entrepriseId: number;
   entrepriseNom: string;
   stageInfo:StageInfoResponse;
+  active: boolean;
 }

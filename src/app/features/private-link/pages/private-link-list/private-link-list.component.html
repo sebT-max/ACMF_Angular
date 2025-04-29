@@ -20,10 +20,13 @@
       </td>
       <td><a [href]="'http://localhost:4200/inscription/' + link.token">Lien d'inscription</a></td>
       <td>{{ link.expirationDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ link.id }}</td>
       <td>
-<!--
-        <button class="disabled" (click)="deactivateLink(link.id)" class="btn btn-danger">Désactiver</button>
--->
+        <button
+          class="btn btn-danger"
+          (click)="deactivateLink(link.id)">
+          Désactiver
+        </button>
       </td>
     </tr>
     </tbody>

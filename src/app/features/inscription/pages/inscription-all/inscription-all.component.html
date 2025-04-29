@@ -46,7 +46,6 @@
       <tr *ngFor="let inscription of paginatedInscriptions">
         <td class="date-cell">
           <div>
-            <p class="capacity">Capacité restante : </p>
             <p>{{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
               {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}</p>
             <p><strong>Organisation:</strong> {{ inscription.stageOrganisation }}</p>
@@ -62,8 +61,8 @@
             <div class="details-grid">
 
               <div class="stagiaire_details>">
-                <p class="inscription_stagiaire"><strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}</p>
-                <p class="inscription_stagiaire_email"><strong>Email:</strong> {{ inscription.userEmail }}</p>
+                <p class="inscription_stagiaire">{{ inscription.userLastName }} {{ inscription.userFirstName }}</p>
+                <p class="inscription_stagiaire_email">{{ inscription.userEmail }}</p>
                 <p class="inscription_stagiaire_telephone"><strong>Téléphone:</strong> {{ inscription.userPhone}}</p>
               </div>
               <div class="stage-type_status">
@@ -97,17 +96,14 @@
 
           <button
             *ngIf="inscription.inscriptionStatut === 'EN_ATTENTE'"
-            (click)="validerInscription(inscription.id)"
-            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
-          >
+            (click)="validerInscription(inscription.id)">
             <i class="fas fa-check"></i>
             Valider
           </button>
 
-          <button (click)="getUserDocuments(inscription.userId)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
-          >
-            <i class="fas fa-check"></i>
-            Vérifier documents
+          <button  class="action-button verify" (click)="getUserDocuments(inscription.userId)">
+            <i class="fas fa-search"></i>
+            Documents
           </button>
           <app-document-utilisateur
             *ngIf="modalVisible"

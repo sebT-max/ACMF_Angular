@@ -15,12 +15,12 @@ h2{
   font-family:Poppins-SemiBold,serif;
 }
 td{
-  text-align: center;
+  text-align: left;
   height:auto;
   font-size:16px;
-  padding:20px;
-  line-height:30px;
+  line-height:36px;
   font-family:Poppins-Medium,serif;
+  padding:10px;
   div{
     margin:0px 20px;
     line-height: 30px;
@@ -28,7 +28,6 @@ td{
   button{
     margin:0 auto;
     padding:5px;
-    color:black !important;
   }
 }
 th{
@@ -55,18 +54,7 @@ button{
 .delete-button:hover {
   background-color: #c53030;
 }
-/*.pagination {
-  display: flex;
-  justify-content: center;
-  button{
-    font-size:24px;
-    display:flex;
-    color:black;
-    background: white;
-    padding:10px;
-    border-radius:10px;
-  }
-}*/
+
 :host {
   position: relative;
   min-height: 100vh;
@@ -120,7 +108,6 @@ button{
   font-weight: 500;
 }
 
-/* Ajustement pour le message "pas de résultat" */
 .no-results {
   text-align: center;
   padding: 20px;
@@ -148,14 +135,13 @@ inscriptions_stages_datas_th{
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  th, td {
+  th {
     border: 1px solid #ddd;
     padding: 12px;
   }
 
   th {
     background-color: #f8f9fa;
-    text-align: left;
     font-weight: bold;
   }
 
@@ -185,7 +171,6 @@ inscriptions_stages_datas_th{
   width: 40%;
 
   .details-grid {
-    display: flex;
     gap: 20px;
 
     .location-details, .org-details {
@@ -216,18 +201,23 @@ inscriptions_stages_datas_th{
     &.edit {
       background-color: #17a2b8;
       color: white;
-
       &:hover {
         background-color: #138496;
       }
     }
 
     &.delete {
-      background-color: #dc3545;
+      background-color: #b41c1b;
       color: white;
-
       &:hover {
         background-color: #c82333;
+      }
+    }
+    &.verify{
+      background-color: #041a3a;
+      color:white;
+      &:hover {
+        opacity: 0.9;
       }
     }
   }
@@ -276,7 +266,6 @@ inscriptions_stages_datas_th{
 
 .stages-container {
   padding: 20px;
-  max-width: 1200px;
   margin: 0 auto;
 }
 .header-section {
@@ -287,7 +276,7 @@ inscriptions_stages_datas_th{
 
   h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 36px;
   }
 }
 

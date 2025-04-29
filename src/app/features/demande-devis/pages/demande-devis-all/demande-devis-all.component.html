@@ -1,31 +1,33 @@
-<table class="table table-bordered table-striped">
-  <thead>
-  <tr>
-    <th>Entreprise</th>
-    <th>Contact</th>
-    <th>Nombre de Stagiaires</th>
-    <th>Message du contact de l'entreprise</th>
-  </tr>
-  </thead>
-  <tbody>
-    @for (demandeDevis of demandesDevis; track demandeDevis.id) {
-      <tr>
-        <td>
-          <strong>Nom: </strong>{{ demandeDevis?.entrepriseName }}<br/>
-          <strong>Mail: </strong>
-          <a [href]="'mailto:' + demandeDevis?.entrepriseMail">
-            {{ demandeDevis?.entrepriseMail }}
-          </a><br/>
+<div class="demande_devis_container">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>Entreprise</th>
+      <th>Contact</th>
+      <th>Nombre de Stagiaires</th>
+      <th>Message du contact de l'entreprise</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (demandeDevis of demandesDevis; track demandeDevis.id) {
+        <tr>
+          <td>
+            <strong>Nom: </strong>{{ demandeDevis?.entrepriseName }}<br/>
+            <strong>Mail: </strong>
+            <a [href]="'mailto:' + demandeDevis?.entrepriseMail">
+              {{ demandeDevis?.entrepriseMail }}
+            </a><br/>
 
-          <strong>Téléphone: </strong>
-          <a [href]="'tel:' + demandeDevis?.entrepriseTelephone">
-            {{ demandeDevis?.entrepriseTelephone }}
-          </a>
-        </td>
-        <td>{{ demandeDevis?.contactFirstName }} {{ demandeDevis?.contactLastName }}</td>
-        <td style="text-align: center">{{ demandeDevis?.numberOfInterns }}</td>
-        <td>{{ demandeDevis?.message }}</td>
-      </tr>
-    }
-  </tbody>
-</table>
+            <strong>Téléphone: </strong>
+            <a [href]="'tel:' + demandeDevis?.entrepriseTelephone">
+              {{ demandeDevis?.entrepriseTelephone }}
+            </a>
+          </td>
+          <td>{{ demandeDevis?.contactFirstName }} {{ demandeDevis?.contactLastName }}</td>
+          <td style="text-align: center">{{ demandeDevis?.numberOfInterns }}</td>
+          <td>{{ demandeDevis?.message }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

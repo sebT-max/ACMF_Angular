@@ -147,11 +147,6 @@ export class PrivateLinkFormComponent implements OnInit {
       return;
     }
 
-    if (!this.stageId) {
-      this._toastr.error("Aucun stage lié à ce lien.");
-      return;
-    }
-
     const formData = new FormData();
 
     formData.append('lastname', this.privateLinkForm.value.lastname);
@@ -163,20 +158,17 @@ export class PrivateLinkFormComponent implements OnInit {
     formData.append('acceptTerms', this.privateLinkForm.value.acceptTerms);
     formData.append('roleId', this.privateLinkForm.value.roleId);
 
-    Object.entries(this.uploadedFiles).forEach(([key, files]) => {
-      files.forEach(file => {
-        formData.append(key, file);
-      });
-    });
-
-    formData.append('stageId', String(this.stageId));
-
-    if (this.entrepriseId) {
-      formData.append('entrepriseId', String(this.entrepriseId));
+    // Ajouter stageId et entrepriseId si présents
+    if (this.stageId) {
+      formData.append('stageId', this.stageId.toString());
     }
-    console.log('--- Contenu de FormData ---');
-    formData.forEach((value, key) => {
-      console.log(`${key}:`, value);
+    if (this.entrepriseId) {
+      formData.append('entrepriseId', this.entrepriseId.toString());
+    }
+
+    // Ajouter TOUS les fichiers sous la clé "files"
+    [...this.uploadedFiles.permis, ...this.uploadedFiles.carteId].forEach(file => {
+      formData.append('files', file, file.name); // clé unique "files" pour tous les documents
     });
 
     this.isLoading = true;
@@ -184,9 +176,11 @@ export class PrivateLinkFormComponent implements OnInit {
 
     if (!token) {
       this._toastr.error("Token non trouvé dans l'URL.");
+      this.isLoading = false;
       return;
     }
-    this._privateLinkService.submitInscription(token,formData).subscribe({
+
+    this._privateLinkService.submitInscription(token, formData).subscribe({
       next: (res: any) => {
         const message = res?.message || 'Inscription envoyée avec succès !';
         this._toastr.success(message);
@@ -202,6 +196,3 @@ export class PrivateLinkFormComponent implements OnInit {
     });
   }
 }
-
-/*Lien créé pour Jupiler.
-  http://localhost:4200/inscription/5b4c37b7-8b58-463d-b04b-8b9e2adfccac (expire le 26/04/2025 03:46:05)*/

@@ -12,7 +12,9 @@ import {ToastrService} from 'ngx-toastr';
 import {DomSanitizer} from '@angular/platform-browser';
 import {DocumentDTO} from '../../models/DocumentDTO';
 import {DocumentService} from '../../../document/pages/services/document.services';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {StageWithDistance} from '../../../stage/models/StageWithDistance';
 @Component({
   selector: 'app-inscription-all',
   imports: [
@@ -20,7 +22,8 @@ import {Router} from '@angular/router';
     DocumentUtilisateurComponent,
     InscriptionStatutPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    FormsModule
   ],
   templateUrl: './inscription-all.component.html',
   styleUrl: './inscription-all.component.scss'
@@ -31,19 +34,26 @@ export class InscriptionAllComponent implements OnInit{
   private readonly _documentService = inject(DocumentService);
   private readonly _router: Router = inject(Router);
 
-  constructor(private sanitizer: DomSanitizer,private toastr: ToastrService) {}
-
-
   documentsPourModal: DocumentDTO[] = [];
   modalVisible: boolean = false;
   stagesDetails: { [key: number]: StageDetailsModel } = {};
   inscriptions: InscriptionListResponse[] = [];
+  searchTerm: string = '';
   paginatedInscriptions: InscriptionListResponse[] = [];
+  filteredInscriptions: InscriptionListResponse[] = [];
   pageSize = 3;
   currentPage = 1;
 
+  constructor(private sanitizer: DomSanitizer,
+              private toastr: ToastrService,
+              private router: Router,
+              private route: ActivatedRoute) {}
+
   ngOnInit(): void {
-    this.loadInscriptions();
+    this.route.queryParams.subscribe(params => {
+      this.searchTerm = params['searchTerm'] || '';
+      this.loadInscriptions();
+    });
   }
 
   loadInscriptions(): void {
@@ -51,16 +61,16 @@ export class InscriptionAllComponent implements OnInit{
       next: (inscriptions) => {
         console.log("Inscriptions récupérées :", inscriptions);
         this.inscriptions = inscriptions;
-        this.paginate();
+        this.applyFilters();
         this.loadStagesDetails(); // Charger les détails des stages après avoir récupéré les inscriptions
       },
       error: (err) => {
         console.error('Erreur lors du chargement des inscriptions', err);
         alert("Une erreur est survenue lors du chargement des inscriptions.");
-
       }
     });
   }
+
   loadStagesDetails(): void {
     this.inscriptions.forEach(inscription => {
       if (inscription.stageId != null && !this.stagesDetails[inscription.stageId]) {
@@ -77,36 +87,86 @@ export class InscriptionAllComponent implements OnInit{
     });
   }
 
-  onDeleteInscription(id: number | undefined): void {
-    if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
-    console.log('Suppression en cours...');
-
-    this._inscriptionService.deleteInscription(id).subscribe({
-      next: () => {
-        alert('Élément supprimé avec succès.');
-        // Rediriger si besoin :
-        this.paginatedInscriptions = this.paginatedInscriptions.filter(i => i.id !== id);
-        this.paginate();
-      },
-      error: (err) => {
-        console.error('Erreur lors de la suppression :', err);
-        alert("Une erreur est survenue lors de la suppression.");
-      }
+  // Correction de la méthode de tri pour utiliser uniquement les dates de début
+  private sortInscriptionsByDate(inscriptions: InscriptionListResponse[]): InscriptionListResponse[] {
+    return [...inscriptions].sort((a, b) => {
+      const dateA = new Date(a.stageDateDebut).getTime();
+      const dateB = new Date(b.stageDateDebut).getTime();
+      return dateA - dateB;
     });
   }
-  viewFile(url: string) {
-    window.open(url, '_blank'); // ← c’est tout, plus besoin de `${API_URL}...`
+
+  onSearch(): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { searchTerm: this.searchTerm },
+      queryParamsHandling: 'merge',
+    });
+    // Le reste sera géré par le subscription aux queryParams dans ngOnInit
   }
 
+  // Méthode pour appliquer tous les filtres actifs
+  applyFilters(): void {
+    // Commencer avec tous les stages
+    if (this.searchTerm.trim() === '') {
+      this.filteredInscriptions = [...this.inscriptions];
+    } else {
+      const searchTermLower = this.searchTerm.toLowerCase().trim();
+
+      this.filteredInscriptions = this.inscriptions.filter(inscription => {
+        // Recherche dans tous les champs pertinents
+        return (
+          (inscription.stageCity && inscription.stageCity.toLowerCase().includes(searchTermLower)) ||
+          (inscription.stageArrondissement && inscription.stageArrondissement.toLowerCase().includes(searchTermLower)) ||
+          (inscription.stageStreet && inscription.stageStreet.toLowerCase().includes(searchTermLower)) ||
+          (inscription.stageOrganisation && inscription.stageOrganisation.toLowerCase().includes(searchTermLower)) ||
+          (inscription.stagePrice && inscription.stagePrice.toString().includes(searchTermLower)) ||
+          (inscription.userFirstName && inscription.userFirstName.toString().includes(searchTermLower)) ||
+          (inscription.userLastName && inscription.userLastName.toString().includes(searchTermLower)) ||
+          (inscription.userEmail && inscription.userEmail.toString().includes(searchTermLower)) ||
+          (inscription.userPhone && inscription.userPhone.toString().includes(searchTermLower)) ||
+          (inscription.inscriptionStatut && inscription.inscriptionStatut.toUpperCase().includes(searchTermLower)) ||
+          (inscription.stageDateDebut && inscription.stageDateDebut.toUpperCase().includes(searchTermLower)) ||
+          (inscription.stageDateFin && inscription.stageDateFin.toUpperCase().includes(searchTermLower)) ||
+          (inscription.stageType && inscription.stageType.toLowerCase().includes(searchTermLower))
+        );
+      });
+    }
+
+    // Trier les résultats par date
+    this.filteredInscriptions = this.sortInscriptionsByDate(this.filteredInscriptions);
+
+    // Réinitialiser la pagination
+    this.currentPage = 1;
+    this.paginate();
+  }
+
+  // Méthode pour réinitialiser les filtres
+  resetFilters(): void {
+    this.searchTerm = '';
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { searchTerm: null },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  viewFile(url: string) {
+    window.open(url, '_blank'); // ← c'est tout, plus besoin de `${API_URL}...`
+  }
+
+  // Correction de la méthode paginate pour utiliser filteredInscriptions
   paginate(): void {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    this.paginatedInscriptions = this.inscriptions.slice(start, end);
+    this.paginatedInscriptions = this.filteredInscriptions.slice(start, end);
   }
+
   changePage(page: number): void {
     this.currentPage = page;
     this.paginate();
   }
+
   canGoNext(): boolean {
     return this.currentPage < this.totalPages();
   }
@@ -115,9 +175,9 @@ export class InscriptionAllComponent implements OnInit{
     return this.currentPage > 1;
   }
 
-
+  // Mise à jour de totalPages pour utiliser filteredInscriptions
   totalPages(): number {
-    return Math.ceil(this.inscriptions.length / this.pageSize);
+    return Math.ceil(this.filteredInscriptions.length / this.pageSize);
   }
 
   closeModal(): void {
@@ -136,30 +196,59 @@ export class InscriptionAllComponent implements OnInit{
       }
     });
   }
+
   validerInscription(id: number | undefined): void {
-    alert("Êtes-vous sûr de valider l'inscription ?")
+    if (!confirm("Êtes-vous sûr de valider l'inscription ?")) {
+      return;
+    }
+
     if (id === undefined) {
       console.error("ID d'inscription invalide");
       return;
     }
 
-    this._inscriptionService.validateInscription(id!).subscribe({
+    this._inscriptionService.validateInscription(id).subscribe({
       next: (updatedInscription) => {
         alert('Inscription validée avec succès.');
 
         // Met à jour le statut dans la liste locale
-        const index = this.paginatedInscriptions.findIndex(i => i.id === id);
+        const index = this.inscriptions.findIndex(i => i.id === id);
         if (index !== -1) {
-          this.paginatedInscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
+          this.inscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
         }
-        this.paginate();
 
-        // Redirection optionnelle
-        // this._router.navigate(['/dashboard-admin']);
+        // Mise à jour également dans la liste filtrée
+        const filteredIndex = this.filteredInscriptions.findIndex(i => i.id === id);
+        if (filteredIndex !== -1) {
+          this.filteredInscriptions[filteredIndex].inscriptionStatut = updatedInscription.inscriptionStatut;
+        }
+
+        this.applyFilters(); // Réappliquer les filtres pour mettre à jour la pagination
       },
       error: (err) => {
         console.error('Erreur lors de la validation :', err);
         this.toastr.error("Une erreur s'est produite lors de la validation.");
+      }
+    });
+  }
+
+  onDeleteInscription(id: number | undefined): void {
+    if (id === undefined || !confirm('Es-tu sûr de vouloir supprimer cet élément ?')) return;
+    console.log('Suppression en cours...');
+
+    this._inscriptionService.deleteInscription(id).subscribe({
+      next: () => {
+        alert('Élément supprimé avec succès.');
+
+        // Supprimer l'inscription des deux listes
+        this.inscriptions = this.inscriptions.filter(i => i.id !== id);
+        this.filteredInscriptions = this.filteredInscriptions.filter(i => i.id !== id);
+
+        this.applyFilters(); // Réappliquer les filtres pour mettre à jour la pagination
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suppression :', err);
+        alert("Une erreur est survenue lors de la suppression.");
       }
     });
   }

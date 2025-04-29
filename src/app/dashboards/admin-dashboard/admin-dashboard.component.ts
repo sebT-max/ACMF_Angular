@@ -57,7 +57,7 @@ import {AdminStageAllComponent} from '../../features/stage/pages/admin-stage-all
 export class AdminDashboardComponent {
   private readonly _stageService = inject(StageService);
   faEdit = faEdit;
-  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll' | 'Factures' | 'privateLinksCreate' | 'privateLinksList' | 'convocations' = 'demandeDevisAll';
+  activeTab: 'inscriptions' | 'stages' | 'codePromo' | 'demandeDevisAll' | 'Factures' | 'privateLinksCreate' | 'privateLinksList' | 'convocations' = 'inscriptions';
 
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};

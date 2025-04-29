@@ -3,12 +3,6 @@
 
   <div class="tabs">
     <button
-      (click)="activeTab = 'demandeDevisAll'"
-      [class.active]="activeTab === 'demandeDevisAll'"
-    >
-      Demandes de Devis
-    </button>
-    <button
       (click)="activeTab = 'inscriptions'"
       [class.active]="activeTab === 'inscriptions'"
     >
@@ -26,6 +20,12 @@
       [class.active]="activeTab === 'codePromo'"
     >
       Code Promo
+    </button>
+    <button
+      (click)="activeTab = 'demandeDevisAll'"
+      [class.active]="activeTab === 'demandeDevisAll'"
+    >
+      Demandes de Devis
     </button>
 
     <button

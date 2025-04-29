@@ -1,114 +1,148 @@
-<h2>Inscriptions</h2>
-<ng-container *ngIf="paginatedInscriptions.length > 0; else noInscriptions">
-  <table>
-    <thead>
-    <tr>
-      <th>Données du stage</th>
-      <th>Documents</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let inscription of paginatedInscriptions">
-      <td style="text-align:left;display:flex;flex-wrap:wrap;">
-        <div>
-          <strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}<br />
-          <strong>Email:</strong> {{ inscription.userEmail }}<br />
-          <strong>Téléphone:</strong> {{ inscription.userPhone}}<br />
-        </div>
-        <br>
+<div class="stages-container">
+  <div class="header-section">
+    <h2>Inscriptions</h2>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <label for="city_filter">Filtre par mots-clés:</label>
+      <div class="search-input-container">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          id="city_filter"
+          placeholder="Ville, rue, organisation..."
+          (keyup.enter)="onSearch()"
+        >
+        <button class="search-button" (click)="onSearch()">Rechercher</button>
+        <button class="reset-button" (click)="resetFilters()" *ngIf="searchTerm">Réinitialiser</button>
+      </div>
+      <p class="filter-hint">Recherchez par ville, arrondissement, rue, organisation ou prix</p>
+    </div>
+  </div>
+
+  <div class="results-section">
+    <p *ngIf="searchTerm && filteredInscriptions.length > 0" class="results-count">
+      {{ filteredInscriptions.length }} résultat(s) trouvé(s) pour "{{ searchTerm }}"
+    </p>
+    <p *ngIf="searchTerm && filteredInscriptions.length === 0" class="no-results">
+      Aucun résultat trouvé pour "{{ searchTerm }}"
+    </p>
+  </div>
+
+
+  <ng-container *ngIf="filteredInscriptions.length > 0; else noInscriptions">
+    <table class="stages-table">
+      <thead>
+      <tr>
+        <th>Données stage</th>
+        <th id="inscriptions_stages_datas_th">Données stagiaire</th>
+        <th>Documents</th>
+        <th id="th_actions_admin">Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let inscription of paginatedInscriptions">
+        <td class="date-cell">
+          <div>
+            <p class="capacity">Capacité restante : </p>
+            <p>{{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
+              {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}</p>
+            <p><strong>Organisation:</strong> {{ inscription.stageOrganisation }}</p>
+          </div>
+          <div class="location-details">
+            <p>Ville: {{ inscription.stageCity }}</p>
+            <p>Rue: {{ inscription.stageStreet }}</p>
+          </div>
+        </td>
 
         <ng-container *ngIf="inscription.stageId; else loading">
-          <div>
-            <strong>Adresse:</strong> {{ inscription.stageCity }},
-            {{ inscription.stageStreet }}<br />
-            <strong>Organisation:</strong> {{ inscription.stageOrganisation }}<br />
-            <strong>Date:</strong>
-            {{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
-            {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}<br />
-          </div>
-          <div>
-            <strong>Type de stage:</strong> {{ inscription.stageType }}<br />
-            <strong>Statut:</strong>
-            {{ inscription.inscriptionStatut | inscriptionStatut }}
-          </div>
+          <td class="details-cell">
+            <div class="details-grid">
+
+              <div class="stagiaire_details>">
+                <p class="inscription_stagiaire"><strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}</p>
+                <p class="inscription_stagiaire_email"><strong>Email:</strong> {{ inscription.userEmail }}</p>
+                <p class="inscription_stagiaire_telephone"><strong>Téléphone:</strong> {{ inscription.userPhone}}</p>
+              </div>
+              <div class="stage-type_status">
+                <p><strong>Type de stage: </strong> {{ inscription.stageType }}</p>
+                <p><strong>Statut: </strong>{{ inscription.inscriptionStatut | inscriptionStatut }}</p>
+              </div>
+            </div>
         </ng-container>
 
         <ng-template #loading>
           <span>Chargement...</span>
         </ng-template>
-      </td>
 
-      <td style="text-align:center;">
-        <ng-container *ngIf="(inscription.documents?.length || 0) > 0; else noDocuments">
-          <div *ngFor="let doc of inscription.documents">
-            <button class="text-primary" (click)="viewFile(doc.fileUrl)">
-              {{ doc.fileName }}
-            </button>
-          </div>
-        </ng-container>
-        <ng-template #noDocuments>
-          <p style="font-size: 16px;">Pas de documents chargés</p>
-        </ng-template>
-      </td>
+        <td style="text-align:center;">
+          <ng-container *ngIf="(inscription.documents?.length || 0) > 0; else noDocuments">
+            <div *ngFor="let doc of inscription.documents">
+              <button class="text-primary" (click)="viewFile(doc.fileUrl)">
+                {{ doc.fileName }}
+              </button>
+            </div>
+          </ng-container>
+          <ng-template #noDocuments>
+            <p style="font-size: 16px;">Pas de documents chargés</p>
+          </ng-template>
+        </td>
 
-      <td>
-        <button
-          (click)="onDeleteInscription(inscription.id)"
-          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
-        >
-          <i class="fas fa-trash-alt"></i>
-          Supprimer
-        </button>
+        <td class="actions-cell">
+          <button class="action-button delete" (click)="onDeleteInscription(inscription.id)">
+            <i class="fas fa-window-close"></i> Supprimer
+          </button>
 
-        <button
-          *ngIf="inscription.inscriptionStatut === 'EN_ATTENTE'"
-          (click)="validerInscription(inscription.id)"
-          class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
-        >
-          <i class="fas fa-check"></i>
-          Valider
-        </button>
+          <button
+            *ngIf="inscription.inscriptionStatut === 'EN_ATTENTE'"
+            (click)="validerInscription(inscription.id)"
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+          >
+            <i class="fas fa-check"></i>
+            Valider
+          </button>
 
-        <button (click)="getUserDocuments(inscription.userId)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
-        >
-          <i class="fas fa-check"></i>
-          Vérifier documents utilisateur
-        </button>
-        <app-document-utilisateur
-          *ngIf="modalVisible"
-          [documents]="documentsPourModal"
-          (close)="closeModal()"
-        ></app-document-utilisateur>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</ng-container>
+          <button (click)="getUserDocuments(inscription.userId)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl shadow-md transition duration-200 ease-in-out flex items-center gap-2"
+          >
+            <i class="fas fa-check"></i>
+            Vérifier documents
+          </button>
+          <app-document-utilisateur
+            *ngIf="modalVisible"
+            [documents]="documentsPourModal"
+            (close)="closeModal()"
+          ></app-document-utilisateur>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
 
-<ng-template #noInscriptions>
-  <p>Aucune inscription trouvée.</p>
-</ng-template>
+  <ng-template #noInscriptions>
+    <p>Aucune inscription trouvée.</p>
+  </ng-template>
 
-<div class="pagination-controls">
+  <div class="pagination-controls">
 
-  <button
-    [disabled]="!canGoPrev()"
-    (click)="changePage(currentPage - 1)"
-    class="pagination-button"
-  >
-    Précédent
-  </button>
+    <button
+      [disabled]="!canGoPrev()"
+      (click)="changePage(currentPage - 1)"
+      class="pagination-button"
+    >
+      Précédent
+    </button>
 
-  <span class="pagination-info">
+    <span class="pagination-info">
     Page {{ currentPage }} sur {{ totalPages() }}
   </span>
 
-  <button
-    [disabled]="!canGoNext()"
-    (click)="changePage(currentPage + 1)"
-    class="pagination-button"
-  >
-    Suivant
-  </button>
-</div>
+    <button
+      [disabled]="!canGoNext()"
+      (click)="changePage(currentPage + 1)"
+      class="pagination-button"
+    >
+      Suivant
+    </button>
+  </div>

@@ -6,14 +6,14 @@
 }
 
 h2 {
-  color: #333;
+  color: white;
   border-bottom: 1px solid #ddd;
   padding-bottom: 10px;
   margin-top: 30px;
 }
 
 .form-section {
-  background-color: #f9f9f9;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -87,7 +87,7 @@ input, select {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #2b2d30;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -123,7 +123,5 @@ tfoot button {
 tfoot button:hover {
   background-color: #5a6268;
 }
-form{
-  height:100vh;
-}
+
 

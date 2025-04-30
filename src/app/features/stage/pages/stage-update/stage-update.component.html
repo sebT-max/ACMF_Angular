@@ -1,24 +1,18 @@
-<div class="margin_top_130"></div>
-<h1>Modifier le stage</h1>
+
 
 <form [formGroup]="stageUpdateCreationForm" class="register_form" (ngSubmit)="handleUpdateStageCreation()">
-  <!--<div>
-    <label for="dateDeStage"></label>
-    <input id="dateDeStage" type="date" selectionMode="range" placeholder="Date de stage" formControlName="dateDeStage" required>
-  </div>-->
-  <div>
-    <p-datepicker
-      selectionMode="range"
-      id="dateDeStage"
-      formControlName="dateDeStage"
-      [showIcon]="true"
-      [showButtonBar]="true"
-      [readonlyInput]="true"
-      dateFormat="dd/mm/yy"
-      placeholder="Sélectionnez les dates"
-      [required]="true">
-    </p-datepicker>
-  </div>
+  <h1>Modifier le stage</h1>
+  <p-datepicker
+    selectionMode="range"
+    id="dateDeStage"
+    formControlName="dateDeStage"
+    [showIcon]="true"
+    [showButtonBar]="true"
+    [readonlyInput]="true"
+    dateFormat="dd/mm/yy"
+    placeholder="Sélectionnez les dates"
+    [required]="true">
+  </p-datepicker>
 
   <div>
     <input id="price" type="number" placeholder="prix" formControlName="price" required>

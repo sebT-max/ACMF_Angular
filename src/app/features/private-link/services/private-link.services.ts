@@ -37,10 +37,6 @@ export class PrivateLinkService {
   getPrivateLinks(): Observable<PrivateLinkModel[]> {
     return this._httpClient.get<PrivateLinkModel[]>(`${API_URL}particulier/private-links`);
   }
-  // Optionnel : une méthode pour désactiver un lien privé
-  deactivateLink(linkId: number): Observable<PrivateLinkModel> {
-    return this._httpClient.put<PrivateLinkModel>(`${API_URL}privateLinks/deactivate/${linkId}`, {});
-  }
   getCompanyPrivateLinks(): Observable<any[]> {
     return this._httpClient.get<any[]>(`${API_URL}privateLinks/me`);
   }
@@ -56,5 +52,13 @@ export class PrivateLinkService {
 
   submitInscription(token: string, formData: FormData): Observable<PrivateLinkFormData> {
     return this._httpClient.post<PrivateLinkFormData>(`${API_URL}inscriptions/${token}`, formData);
+  }
+
+  // Optionnel : une méthode pour désactiver un lien privé
+  deactivateLink(linkId: number): Observable<PrivateLinkModel> {
+    return this._httpClient.put<PrivateLinkModel>(`${API_URL}privateLinks/deactivate/${linkId}`, {});
+  }
+  reactivateLink(linkId: number): Observable<PrivateLinkModel> {
+    return this._httpClient.put<PrivateLinkModel>(`${API_URL}privateLinks/reactivate/${linkId}`, {});
   }
 }

@@ -106,6 +106,7 @@ button{
 .pagination-info {
   font-size: 16px;
   font-weight: 500;
+  color:white;
 }
 
 .no-results {
@@ -304,6 +305,7 @@ inscriptions_stages_datas_th{
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
+      color:white;
     }
 
     .search-input-container {
@@ -321,8 +323,8 @@ inscriptions_stages_datas_th{
 
     .filter-hint {
       margin-top: 5px;
-      font-size: 12px;
-      color: #666;
+      font-size: 14px;
+      color: white;
     }
   }
 }
@@ -358,7 +360,7 @@ inscriptions_stages_datas_th{
 
   .results-count {
     font-weight: 500;
-    color: #333;
+    color: white;
   }
 
   .no-results {

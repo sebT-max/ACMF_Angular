@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import jsPDF from 'jspdf';
 import { FormsModule } from '@angular/forms';
-import { DecimalPipe, NgForOf } from '@angular/common';
+import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -18,7 +18,8 @@ interface LigneFacture {
   imports: [
     FormsModule,
     DecimalPipe,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   styleUrls: ['./facture.component.scss']
 })

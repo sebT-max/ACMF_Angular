@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DatePipe, NgForOf} from '@angular/common';
+import {DatePipe, NgClass, NgForOf} from '@angular/common';
 import {PrivateLinkService} from '../../services/private-link.services';
 import {PrivateLinkModel} from '../../Model/PrivateLinkModel';
 import {StageInfoResponse} from '../../../stage/models/stageInfoResponse';
@@ -9,7 +9,8 @@ import {ToastrService} from 'ngx-toastr';
   selector: 'app-private-link-list',
   imports: [
     DatePipe,
-    NgForOf
+    NgForOf,
+    NgClass
   ],
   templateUrl: './private-link-list.component.html',
   styleUrl: './private-link-list.component.scss'
@@ -37,8 +38,14 @@ export class PrivateLinkListComponent implements OnInit {
       }
     });
   }
+  toggleLinkStatus(link: any): void {
+    if (link.isActive) {
+      this.deactivateLink(link.id);
+    } else {
+      this.reactivateLink(link.id);
+    }
+  }
 
-  // Optionnel : fonction pour désactiver un lien
   deactivateLink(linkId: number): void {
     console.log(`Désactivation du lien avec l'ID : ${linkId}`);
     this.privateLinkService.deactivateLink(linkId).subscribe({
@@ -52,6 +59,22 @@ export class PrivateLinkListComponent implements OnInit {
       error: (err) => {
         console.error('Erreur lors de la désactivation du lien privés', err);
         this.toastr.error('Échec de la désactivation du lien', 'Erreur');
+      }
+    });
+  }
+  reactivateLink(linkId: number): void {
+    console.log(`Réactivation du lien avec l'ID : ${linkId}`);
+    this.privateLinkService.reactivateLink(linkId).subscribe({
+      next: (privateLink:PrivateLinkModel) => {
+        console.log(privateLink);
+        // Exemple de mise à jour locale du lien pour désactiver le bouton
+        const link = this.privateLinks.find(l => l.id === linkId);
+        if (link) link.active = true;
+        this.toastr.success('Lien réactivé avec succès', 'Succès');
+      },
+      error: (err:any) => {
+        console.error('Erreur lors de la réactivation du lien privés', err);
+        this.toastr.error('Échec de la réactivation du lien', 'Erreur');
       }
     });
   }

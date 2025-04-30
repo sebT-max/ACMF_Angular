@@ -7,19 +7,27 @@ h1{
   font-size: 36px;
 }
 h2{
+  text-align: center;
+  padding: 10px;
+  background: transparent;
   color: white;
+  font-size: 36px;
   font-family:Poppins-SemiBold,serif;
 }
 td{
-  text-align: center;
-  height:auto;
-  font-size:16px;
-  padding:20px;
-  line-height:30px;
-  font-family:Poppins-Medium,serif;
+  text-align: left;
+  height: auto;
+  font-size: 16px;
+  line-height: 36px;
+  font-family: Poppins-Medium, serif;
+  padding: 12px 20px;
   div{
     margin:0px 20px;
     line-height: 30px;
+  }
+  button{
+    margin:0 auto;
+    padding:5px;
   }
 }
 th{
@@ -47,23 +55,26 @@ button{
   background-color: #c53030;
 }
 
-button{
-  border:none;
-  background:transparent;
-  display:flex;
+:host {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin:0 auto;
 }
-#admin_stage_creation_button{
-  float:right;
-  color:#292c32;
-  border-radius:20px;
-  font-size:24px;
+
+.pagination {
+  margin-top: auto;
+  text-align: center;
 }
-.delete-button:hover {
-  background-color: #c53030;
+.invisible_button{
+  background:transparent;
+  border:none;
+}
+.no-results {
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  margin-top: 2rem;
 }
 .pagination-controls {
   display: flex;
@@ -95,93 +106,37 @@ button{
 .pagination-info {
   font-size: 16px;
   font-weight: 500;
+  color:white;
 }
 
-/* Ajustement pour le message "pas de résultat" */
 .no-results {
   text-align: center;
   padding: 20px;
   font-size: 18px;
-  color: #666;
-}
-.stages-container {
-  padding: 20px;
- /* max-width: 1200px;*/
-  margin: 0 auto;
-}
-
-.header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-
-  h2 {
-    margin: 0;
-    font-size: 36px;
-  }
-}
-
-.create-button {
-  background-color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-
-  &:hover {
-    background-color: #45a049;
-  }
-}
-
-
-.search-button, .reset-button {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.search-button {
-  background-color: #007bff;
   color: white;
-
-  &:hover {
-    background-color: #0069d9;
+}
+#inscriptions_actions_td{
+  width:100% !important;
+  display:flex;
+  justify-content: center;
+  button{
+    width:100px !important;
   }
 }
-
-.reset-button {
-  background-color: #6c757d;
-  color: white;
-
-  &:hover {
-    background-color: #5a6268;
-  }
+#inscriptions_stages_datas_td{
+  text-align:left;
+  display:flex;
+  flex-wrap:wrap;
 }
-
-.results-section {
-  margin-bottom: 15px;
-
-  .results-count {
-    font-weight: 500;
-    color: #333;
-  }
-
-  .no-results {
-    color: #dc3545;
-    font-weight: 500;
-  }
+inscriptions_stages_datas_th{
+  width:50% !important;
 }
 
 .stages-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-
-  th, td {
+  th {
     border: 1px solid #ddd;
     padding: 12px;
   }
@@ -199,25 +154,24 @@ button{
     background-color: #e9ecef;
   }
 }
-
 .date-cell {
   width: 25%;
 
-  .capacity {
+  .inscription_stagiaire {
     font-weight: 500;
     margin-bottom: 8px;
   }
-
-  .dates {
+  .inscription_stagiaire_email {
     margin: 0;
   }
-}
+  .inscription_stagiaire_telephone{
 
+  }
+}
 .details-cell {
-  width: 50%;
+  width: 40%;
 
   .details-grid {
-    display: flex;
     gap: 20px;
 
     .location-details, .org-details {
@@ -229,7 +183,6 @@ button{
     }
   }
 }
-
 .actions-cell {
   width: 15%;
 
@@ -247,18 +200,16 @@ button{
     font-weight: normal;
 
     &.edit {
-      background-color: #292c32;
+      background-color: #041a3a;
       color: white;
-
       &:hover {
-        opacity: 0.9;
+        opacity:0.9;
       }
     }
 
     &.delete {
       background-color: #b41c1b;
       color: white;
-
       &:hover {
         background-color: #c82333;
       }
@@ -313,3 +264,111 @@ button{
   color: #6c757d;
   font-size: 16px;
 }
+
+.stages-container {
+  padding: 20px;
+  width:80%;
+  margin:0 auto;
+}
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    font-size: 36px;
+  }
+}
+
+.create-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.filters-section {
+  margin-bottom: 20px;
+
+  .search-box {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color:white;
+    }
+
+    .search-input-container {
+      display: flex;
+      gap: 10px;
+
+      input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+    }
+
+    .filter-hint {
+      margin-top: 5px;
+      font-size: 12px;
+      color: white;
+    }
+  }
+}
+
+.search-button, .reset-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: white;
+
+  &:hover {
+    background-color: #0069d9;
+  }
+}
+
+.reset-button {
+  background-color: #6c757d;
+  color: white;
+
+  &:hover {
+    background-color: #5a6268;
+  }
+}
+
+.results-section {
+  margin-bottom: 15px;
+
+  .results-count {
+    font-weight: 500;
+    color: white;
+  }
+
+  .no-results {
+    color: #dc3545;
+    font-weight: 500;
+  }
+}
+
+
+

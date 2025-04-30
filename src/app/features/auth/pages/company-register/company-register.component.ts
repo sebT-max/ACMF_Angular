@@ -7,7 +7,7 @@ import {NgIf, NgOptimizedImage} from '@angular/common';
 import {CheckboxModule} from 'primeng/checkbox';
 import {Password} from 'primeng/password';
 import {CompanyTokenModel} from '../../models/CompanyTokenModel';
-import {catchError} from 'rxjs';
+import {catchError, EMPTY} from 'rxjs';
 import {LoginFormModel} from '../../models/login-form.model';
 import {TokenModel} from '../../models/token.model';
 
@@ -65,8 +65,14 @@ export class CompanyRegisterComponent {
 
     this.$_authService.entrepriseRegister(this.CompanyRegisterFormModel).pipe(
       catchError((error) => {
-        this.errorMessage = error.message;
-        return [];
+        console.error("Erreur d'enregistrement", error);
+        this.isLoading = false;
+        if (error.status === 400 && error.error.message === "Email already in use.") {
+          this.errorMessage = "Cet email est déjà utilisé.";
+        } else {
+          this.errorMessage = "Une erreur est survenue lors de l'inscription.";
+        }
+        return EMPTY;
       })
     ).subscribe({
       next: (datas:CompanyTokenModel | null) => {

@@ -192,7 +192,7 @@ export class InscriptionAllComponent implements OnInit{
       },
       error: (err) => {
         console.error('Erreur lors requête :', err);
-        alert("Une erreur est survenue lors de la requête");
+        alert("Aucun document trouvé pour l'utilisateur");
       }
     });
   }

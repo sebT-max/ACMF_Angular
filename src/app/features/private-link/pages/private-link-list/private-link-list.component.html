@@ -23,9 +23,10 @@
       <td>{{ link.id }}</td>
       <td>
         <button
-          class="btn btn-danger"
-          (click)="deactivateLink(link.id)">
-          Désactiver
+          class="btn"
+          [ngClass]="link.active ? 'btn-danger' : 'btn-success'"
+          (click)="toggleLinkStatus(link)">
+          {{ link.active ? 'Désactiver' : 'Réactiver' }}
         </button>
       </td>
     </tr>

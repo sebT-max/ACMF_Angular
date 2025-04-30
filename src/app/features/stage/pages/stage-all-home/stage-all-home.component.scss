@@ -117,10 +117,10 @@ h1{
 }
 
 #stage_filters{
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
-  width:80%;
-  margin: 20px auto 0;
+  align-items: baseline;
+
   p{
     font-family: Poppins-Medium, serif;
     padding:20px;

@@ -58,6 +58,7 @@ export class StageAllComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchTerm = params['searchTerm'] || '';
       this.getUserLocation();
+      this.loadStagesWithDistance();
     });
   }
 

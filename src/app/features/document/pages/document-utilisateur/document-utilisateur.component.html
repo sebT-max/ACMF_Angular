@@ -2,14 +2,14 @@
 <div class="modal-overlay" (click)="closeModal()">
   <!-- Modal content -->
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <button style="font-size:44px;margin-top:20px;width:55px;border-radius:50px;" class="close-button" (click)="closeModal()" aria-label="Fermer">&times;</button>
+    <button class="close-button" (click)="closeModal()" aria-label="Fermer">&times;</button>
     <h2>Documents de l'utilisateur</h2>
 
     <div *ngIf="documents.length > 0; else aucunDoc">
       <div *ngFor="let doc of documents" class="document-card">
         <p><strong>📄 {{ doc.fileName }}</strong></p>
-        <p>Type : {{ doc.type }}</p>
-        <a [href]="doc.fileUrl" target="_blank">➡️ Voir le document</a>
+       <!-- <p>Type : {{ doc.type }}</p>-->
+        <a style="text-decoration: none;" [href]="doc.fileUrl" target="_blank">➡️ Voir le document</a>
       </div>
     </div>
 

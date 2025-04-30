@@ -15,6 +15,7 @@ import {NgIf, NgForOf, NgOptimizedImage} from '@angular/common';
 import { FileRemoveEvent, FileUpload } from 'primeng/fileupload';
 import { CheckboxModule } from 'primeng/checkbox';
 import { catchError, EMPTY } from 'rxjs';
+import {CompanyTokenModel} from '../../models/CompanyTokenModel';
 
 @Component({
   selector: 'app-register',
@@ -84,9 +85,43 @@ export class RegisterComponent {
         }
         return EMPTY;
       })
-    ).subscribe(() => {
-      console.log('Utilisateur créé avec succès ! Connexion en cours...');
-      this._router.navigate(['/']);
+    ).subscribe({
+      next: (datas:TokenModel | null) => {
+        if (!datas) {
+          this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+          return;
+        }
+        console.log('Création réussie, voici son Id :', datas);
+        this.errorMessage = null;
+        this.isLoading = false;
+        const loginPayload: LoginFormModel = {
+          email: this.registerFormModel.email,
+          password: this.registerFormModel.password,
+        };
+        this.$_authService.login(loginPayload).subscribe({
+          next: (loginResponse: TokenModel | null) => {
+            if (loginResponse) {
+              console.log('Connexion réussie !');
+              this.errorMessage = null;
+              this._router.navigate(['/']); // Ou ta route d'accueil
+            } else {
+              console.error('Réponse login vide');
+              this.errorMessage = "La connexion a échoué.";
+            }
+          },
+          error: (loginError: any) => {
+            console.error('Erreur lors de la connexion automatique', loginError);
+            this.errorMessage = 'Inscription réussie, mais connexion impossible.';
+          }
+        });
+      },
+      error: (error: any) => {
+        console.error("Erreur d'enregistrement", error);
+        this.isLoading = false;
+        if (error.status === 400 && error.error.message === "Email already in use.") {
+          this.errorMessage = "Cet email est déjà utilisé.";
+        }
+      }
     });
   }
 }

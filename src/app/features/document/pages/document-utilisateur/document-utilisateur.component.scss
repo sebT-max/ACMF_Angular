@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  padding:20px;
 }
 
 .modal-content {
@@ -16,9 +17,12 @@
   padding: 2rem;
   border-radius: 16px;
   max-width: 600px;
-  width: 90%;
+  width: 100%;
   position: absolute;
   animation: fadeIn 0.3s ease-in-out;
+  p{
+    text-align: center;
+  }
 
   h2 {
     text-align: center;
@@ -48,9 +52,12 @@
   right: 16px;
   background: none;
   border: none;
-  font-size: 2rem;
   color: #aaa;
   cursor: pointer;
+  font-size:44px;
+  margin-top:20px;
+  width:55px;
+  border-radius:50px;
 
   &:hover {
     color: red;

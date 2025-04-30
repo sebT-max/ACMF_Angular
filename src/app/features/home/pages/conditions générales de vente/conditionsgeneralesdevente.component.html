@@ -55,12 +55,16 @@
       <p>En cas de litige, une solution amiable sera privilégiée. À défaut d'accord amiable, les tribunaux du ressort du siège social de Action Conduite France seront seuls compétents.</p>
     </li>
   </ol>
+  <hr>
+  <br/>
+  <p>* À cocher pendant le processus d'inscription</p>
+  <br/>
+  <label>
+    <input type="checkbox" [(ngModel)]="accepted" />
+    J'ai lu et j'accepte les conditions
+  </label>
+
+  <br />
+  <button [disabled]="!accepted" (click)="retour()" class="see_all_button">Retour à l'inscription</button>
 </div>
-<label>
-  <input type="checkbox" [(ngModel)]="accepted" />
-  J'ai lu et j'accepte les conditions
-</label>
 
-<br />
-
-<button [disabled]="!accepted" (click)="retour()">Retour à l'inscription</button>

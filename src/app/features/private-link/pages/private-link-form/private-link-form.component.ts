@@ -7,11 +7,13 @@ import { InscriptionService } from '../../../inscription/inscription-services';
 import { PrivateLinkService } from '../../services/private-link.services';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {CgvModalComponent} from '../../../cgv-modal/cgv-modal.component';
+
 
 @Component({
   selector: 'app-private-link-form',
   standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FileUpload, NgOptimizedImage],
+  imports: [CommonModule, ReactiveFormsModule, FileUpload, NgOptimizedImage, CgvModalComponent],
   templateUrl: './private-link-form.component.html',
   styleUrl: './private-link-form.component.scss'
 })
@@ -39,6 +41,7 @@ export class PrivateLinkFormComponent implements OnInit {
   stageId?: number;
   entrepriseId?: number;
   isLoading = false;
+  showModal = false;
 
   ngOnInit(): void {
     this.privateLinkForm = this._fb.group({
@@ -81,6 +84,27 @@ export class PrivateLinkFormComponent implements OnInit {
         }
       });
     }
+    const savedForm = localStorage.getItem('registerForm');
+    if (savedForm) {
+      this.privateLinkForm.patchValue(JSON.parse(savedForm));
+      localStorage.removeItem('registerForm');
+    }
+
+    this._route.queryParams.subscribe(params => {
+      if (params['accepted'] === 'true') {
+        this.privateLinkForm.get('acceptTerms')?.setValue(true);
+      }
+    });
+  }
+
+  openModal(event: Event) {
+    event.preventDefault();
+    this.showModal = true;
+  }
+
+  onModalAccepted() {
+    this.showModal = false;
+    this.privateLinkForm.get('acceptTerms')?.setValue(true); // coche la case
   }
 
   onFilesChange(event: any, type: 'permis' | 'carteId') {

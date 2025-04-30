@@ -1,10 +1,9 @@
 <div class="register_form_container">
-  <div class="aside_form">
-    <img id="logo_register_form" ngSrc="/LOGO%20BLANC_small.png" alt="logo_acf" width="308" height="280">
-  </div>
+
   <form [formGroup]="privateLinkForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="register_form">
+    <h1>Formulaire d'inscription</h1>
     <div>
-      <label for="lastname">Nom :</label>
+      <!--<label for="lastname">Nom :</label>-->
       <input id="lastname" type="text" placeholder="Nom" formControlName="lastname" />
       <div *ngIf="privateLinkForm.get('lastname')?.invalid && privateLinkForm.get('lastname')?.touched" class="error-message">
         Le nom est requis.
@@ -13,7 +12,7 @@
 
     <!-- Prénom -->
     <div>
-      <label for="firstname">Prénom :</label>
+     <!-- <label for="firstname">Prénom :</label>-->
       <input id="firstname" type="text" placeholder="Prénom" formControlName="firstname" />
       <div *ngIf="privateLinkForm.get('firstname')?.invalid && privateLinkForm.get('firstname')?.touched" class="error-message">
         Le prénom est requis.
@@ -22,7 +21,7 @@
 
     <!-- Email -->
     <div>
-      <label for="email">Email :</label>
+   <!--   <label for="email">Email :</label>-->
       <input id="email" type="email" placeholder="Email" formControlName="email" />
       <div *ngIf="privateLinkForm.get('email')?.invalid && privateLinkForm.get('email')?.touched" class="error-message">
         <span *ngIf="privateLinkForm.get('email')?.errors?.['required']">L'email est requis.</span>
@@ -32,7 +31,7 @@
 
     <!-- Mot de passe -->
     <div>
-      <label for="password">Mot de passe :</label>
+   <!--   <label for="password">Mot de passe :</label>-->
       <input id="password" type="password" placeholder="Mot de passe" formControlName="password" />
       <div *ngIf="privateLinkForm.get('password')?.invalid && privateLinkForm.get('password')?.touched" class="error-message">
         <span *ngIf="privateLinkForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
@@ -42,7 +41,7 @@
 
     <!-- Date de naissance -->
     <div>
-      <label for="birthDate">Date de naissance :</label>
+     <!-- <label for="birthDate">Date de naissance :</label>-->
       <input id="birthDate" type="date" formControlName="birthDate" />
       <div *ngIf="privateLinkForm.get('birthDate')?.invalid && privateLinkForm.get('birthDate')?.touched" class="error-message">
         La date de naissance est requise.
@@ -51,73 +50,73 @@
 
     <!-- Téléphone -->
     <div>
-      <label for="telephone">Téléphone :</label>
+     <!-- <label for="telephone">Téléphone :</label>-->
       <input id="telephone" type="text" placeholder="Téléphone" formControlName="telephone" />
       <div *ngIf="privateLinkForm.get('telephone')?.invalid && privateLinkForm.get('telephone')?.touched" class="error-message">
         Le téléphone est requis.
       </div>
     </div>
-
+  <div id="private_link_file_upload">
+    <!-- Permis -->
+    <div>
+      <label for="permis"><strong>Permis :</strong></label>
+      <p-fileUpload
+        name="permis"
+          [customUpload]="true"
+          (uploadHandler)="uploadFiles($event)"
+          (onSelect)="onFilesChange($event, 'permis')"
+          (onRemove)="onRemoveFile($event, 'permis')"
+          [multiple]="true"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          accept=".pdf,image/*"
+          chooseLabel="Choisir le fichier"
+          mode="advanced"
+          [maxFileSize]="5000000"
+        ></p-fileUpload>
+    </div>
+    <div>
+      <!-- Carte d'identité -->
+      <label for="carteId"><strong>Carte d'identité :</strong></label>
+      <p-fileUpload
+        name="carteId"
+        [customUpload]="true"
+        (uploadHandler)="uploadFiles($event)"
+        (onSelect)="onFilesChange($event, 'carteId')"
+        (onRemove)="onRemoveFile($event, 'carteId')"
+        [multiple]="true"
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        accept=".pdf,image/*"
+        chooseLabel="Choisir le fichier"
+        mode="advanced"
+        [maxFileSize]="5000000"
+      ></p-fileUpload>
+    </div>
+    </div>
     <!-- RGPD -->
-    <div class="checkbox_register">
-      <input style="color:black;" id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
-      <!-- <label for="acceptTerms" style=""></label>-->
-      <p style="color:black;font-weight:100;font-size:10px;">Acceptez nos Conditions d'utilisation et notre Politique de confidentialité</p>
-    </div>
+    <div id="checkbox_submit">
+      <div class="checkbox_register">
+        <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
+        <p>
+          Acceptez nos
+          <a href="#" (click)="openModal($event)" style="text-decoration: underline;">
+            Conditions d'utilisation
+          </a>
+          et notre Politique de confidentialité
+        </p>
+      </div>
 
-    <div *ngIf="privateLinkForm.get('acceptTerms')?.invalid && privateLinkForm.get('acceptTerms')?.touched" class="error-message">
-      Acceptez nos Conditions d'utilisation et notre Politique de confidentialité
-    </div>
 
-    <!-- Erreur serveur -->
+      <div *ngIf="privateLinkForm.get('acceptTerms')?.invalid && privateLinkForm.get('acceptTerms')?.touched" class="error-message">
+        Acceptez nos Conditions d'utilisation et notre Politique de confidentialité
+      </div>
+      <app-cgv-modal *ngIf="showModal" (accepted)="onModalAccepted()"></app-cgv-modal>
+
+      <button type="submit" [disabled]="privateLinkForm.invalid">Envoyer</button>
+    </div>
     <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">
       {{ errorMessage }}
     </div>
-
-
-    <!-- Permis -->
-    <label for="permis"><strong>Permis :</strong></label>
-    <p-fileUpload
-      name="permis"
-      [customUpload]="true"
-      (uploadHandler)="uploadFiles($event)"
-      (onSelect)="onFilesChange($event, 'permis')"
-      (onRemove)="onRemoveFile($event, 'permis')"
-      [multiple]="true"
-      [showUploadButton]="false"
-      [showCancelButton]="false"
-      accept=".pdf,image/*"
-      chooseLabel="Choisir le fichier"
-      mode="advanced"
-      [maxFileSize]="5000000"
-    ></p-fileUpload>
-
-    <!-- Carte d'identité -->
-    <label for="carteId"><strong>Carte d'identité :</strong></label>
-    <p-fileUpload
-      name="carteId"
-      [customUpload]="true"
-      (uploadHandler)="uploadFiles($event)"
-      (onSelect)="onFilesChange($event, 'carteId')"
-      (onRemove)="onRemoveFile($event, 'carteId')"
-      [multiple]="true"
-      [showUploadButton]="false"
-      [showCancelButton]="false"
-      accept=".pdf,image/*"
-      chooseLabel="Choisir le fichier"
-      mode="advanced"
-      [maxFileSize]="5000000"
-    ></p-fileUpload>
-
-    <button type="submit" [disabled]="privateLinkForm.invalid">Envoyer</button>
   </form>
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-
-<!--lien
-Lien créé pour Jupiler.
-http://localhost:4200/inscription/94084669-0cf4-43e9-929f-f542d9bf1496 (expire le 26/04/2025 10:23:08)-->
-
-
 </div>

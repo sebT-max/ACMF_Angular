@@ -15,7 +15,7 @@ export class StepGuideComponent implements OnInit {
 
   steps = [
     { title: 'Étape 1', content: 'Pour réserver un stage, inscrivez-vous !' },
-    { title: 'Étape 2', content: 'Filtrez les stages en dessous !' },
+    { title: 'Étape 2', content: 'Cliquez sur "Nos stages" dans la barre de navigation et faites votre choix !' },
     { title: 'Étape 3', content: 'Téléversez vos fichiers:\n- Recto-Verso de votre Permis de conduire \n- Recto-Verso de votre carte d\'identité \n-Eventuelle Lettre 48_N)' },
     { title: 'Étape 4', content: 'Validez et terminez l’inscription. Vos réservations se trouvent dans votre espace client.' }
   ];

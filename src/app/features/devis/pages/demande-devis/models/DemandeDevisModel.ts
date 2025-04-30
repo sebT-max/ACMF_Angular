@@ -1,12 +1,10 @@
+import {EntrepriseDto} from './EntrepriseDTO';
+
 export interface DemandeDevisModel {
   id:number;
-  entrepriseName: string;
-  entrepriseMail: string;
-  entrepriseTelephone: string;
+  entreprise: EntrepriseDto;
   contactFirstName: string;
   contactLastName: string;
-  /*telephone: string;
-  email: string;*/
   numberOfInterns: number;
   message: string;
 }

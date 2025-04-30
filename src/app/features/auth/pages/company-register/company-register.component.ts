@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
-import {Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CompanyRegisterFormModel} from '../../models/company-register-form-model';
 import {NgIf, NgOptimizedImage} from '@angular/common';
 import {CheckboxModule} from 'primeng/checkbox';
@@ -25,7 +25,7 @@ import {TokenModel} from '../../models/token.model';
   templateUrl: './company-register.component.html',
   styleUrl: './company-register.component.scss'
 })
-export class CompanyRegisterComponent {
+export class CompanyRegisterComponent implements OnInit {
 
   private readonly $_authService: AuthService = inject(AuthService);
   private readonly _formBuilder: FormBuilder = inject(FormBuilder);
@@ -34,8 +34,10 @@ export class CompanyRegisterComponent {
   companyRegisterForm: FormGroup;
   CompanyRegisterFormModel!: CompanyRegisterFormModel;
   errorMessage: string | null = null; // Ajout de la gestion d'erreur
+  isLoading = false;
 
-  constructor() {
+
+  constructor(private router: Router, private route: ActivatedRoute) {
     this.companyRegisterForm = this._formBuilder.group({
       name: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
@@ -45,7 +47,29 @@ export class CompanyRegisterComponent {
       roleId: [3, [Validators.required]]
     });
   }
-  isLoading = false;
+  ngOnInit() {
+    const savedForm = localStorage.getItem('registerForm');
+    if (savedForm) {
+      this.companyRegisterForm.patchValue(JSON.parse(savedForm));
+      localStorage.removeItem('registerForm');
+    }
+
+    this.route.queryParams.subscribe(params => {
+      if (params['accepted'] === 'true') {
+        this.companyRegisterForm.get('acceptTerms')?.setValue(true);
+      }
+    });
+  }
+  goToConditions(event: Event) {
+    event.preventDefault(); // pour éviter la navigation par défaut
+    localStorage.setItem('registerForm', JSON.stringify(this.companyRegisterForm.value));
+
+    const redirectPath = this.router.url.includes('company') ? 'company/register' : 'users/register';
+    this.router.navigate(['/Conditions générales de vente'], {
+      queryParams: { redirect: redirectPath }
+    });
+  }
+
 
   handleCompagnyRegisterFormSubmit(): void {
     console.log(this.companyRegisterForm.value);

@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
-import {StageDetailsModel} from '../../../stage/models/stage-details-model';
-import {StageService} from '../../../stage/services/stage.service';
+import {StageDetailsModel} from '../../../../../stage/models/stage-details-model';
+import {StageService} from '../../../../../stage/services/stage.service';
 import {DemandeDevisService} from '../../services/demande-devis.services';
 import {DemandeDevisModel} from '../../models/DemandeDevisModel';
 import {Textarea, TextareaModule} from 'primeng/textarea';

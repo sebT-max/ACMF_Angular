@@ -1,17 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {DatePipe, NgIf} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
-import {StageDetailsComponent} from '../../../stage/pages/stage-details/stage-details.component';
-import {StageDetailsModel} from '../../../stage/models/stage-details-model';
 import {DemandeDevisModel} from '../../models/DemandeDevisModel';
-import {StageService} from '../../../stage/services/stage.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {DemandeDevisService} from '../../services/demande-devis.services';
 
 @Component({
   selector: 'app-demande-devis-all',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './demande-devis-all.component.html',
   styleUrl: './demande-devis-all.component.scss'

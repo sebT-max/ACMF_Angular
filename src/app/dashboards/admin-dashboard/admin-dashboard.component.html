@@ -27,6 +27,12 @@
     >
       Demandes de Devis
     </button>
+    <button
+      (click)="activeTab = 'creationDevis'"
+      [class.active]="activeTab === 'creationDevis'"
+    >
+      Créer un devis
+    </button>
 
     <button
       (click)="activeTab = 'Factures'"
@@ -71,6 +77,10 @@
   <div *ngIf="activeTab === 'demandeDevisAll'" class="tab-content">
     <h2>Demandes de devis</h2>
     <app-demande-devis-all></app-demande-devis-all>
+  </div>
+  <div *ngIf="activeTab === 'creationDevis'" class="tab-content">
+    <h2>Créer un devis</h2>
+    <app-creation-devis></app-creation-devis>
   </div>
   <div *ngIf="activeTab === 'Factures'" class="tab-content">
     <h2>Factures</h2>

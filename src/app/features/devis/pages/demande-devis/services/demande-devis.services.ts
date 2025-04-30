@@ -1,7 +1,7 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
-import {TokenModel} from '../../auth/models/token.model';
-import {API_URL} from '../../../core/constants/api-constant';
+import {TokenModel} from '../../../../auth/models/token.model';
+import {API_URL} from '../../../../../core/constants/api-constant';
 import {DemandeDevisModel} from '../models/DemandeDevisModel';
 import {Observable} from 'rxjs';
 
@@ -33,21 +33,14 @@ export class DemandeDevisService{
     this.loadUserRoles();
   }
   createDemandeDevis(demandeDevis:DemandeDevisModel){
-    return this._httpClient.post<DemandeDevisModel>(`${API_URL}demandeDevis/create`,demandeDevis);
+    return this._httpClient.post<DemandeDevisModel>(`${API_URL}demandeDevis/create`,demandeDevis,
+      {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      }
+    );
   }
   getAllDemandeDevis(): Observable<DemandeDevisModel[]> {
     return this._httpClient.get<DemandeDevisModel[]>(`${API_URL}demandeDevis/all`);
   }
-  /*
-  getStageById(stageId:number): Observable<StageDetailsModel> {
-    return this._httpClient.get<StageDetailsModel>(`${API_URL}stages/${stageId}`);
-  }
-  getFilteredStages(searchTerm: string): Observable<StageDetailsModel[]> {
-    const params = new HttpParams().set('searchTerm', searchTerm);
-    return this._httpClient.get<StageDetailsModel[]>(`${API_URL}stages/search`, { params });
-  }
-  deleteStage(id:number | undefined): Observable<void> {
-    return this._httpClient.delete<void>(`${API_URL}stages/delete/${id}`);
-  }*/
 }
 

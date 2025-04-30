@@ -205,5 +205,11 @@ export const routes: Routes = [
         (c) => c.DocumentUtilisateurComponent
       ),
   },
-
+  {
+    path: 'devis/create',
+    loadComponent: () =>
+      import('./features/devis/pages/creation-devis/creation-devis.component').then(
+        (c) => c.CreationDevisComponent
+      ),
+  },
 ];

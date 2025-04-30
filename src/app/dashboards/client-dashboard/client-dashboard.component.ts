@@ -1,11 +1,6 @@
-import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
-import {StageDetailsModel} from '../../features/stage/models/stage-details-model';
-import {StageService} from '../../features/stage/services/stage.service';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 import {InscriptionService} from '../../features/inscription/inscription-services';
-import {InscriptionFormModel} from '../../features/inscription/models/inscription-form.model';
-import {CommonModule, DatePipe, NgClass} from '@angular/common';
-import {TokenModel} from '../../features/auth/models/token.model';
+import {CommonModule, DatePipe} from '@angular/common';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 import {CodePromoCreateComponent} from '../../features/code-promo/pages/code-promo-create/code-promo-create.component';
 import {DocumentMeComponent} from '../../features/document/pages/document-me/document-me.component';

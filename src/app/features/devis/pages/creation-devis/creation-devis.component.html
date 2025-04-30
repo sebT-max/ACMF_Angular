@@ -1,0 +1,140 @@
+<div class="container">
+  <h2>Informations (préremplies) sur ACF</h2>
+  <div class="form-section">
+    <form>
+      <div class="form-group">
+        <label for="nomEntreprise">Nom de l'entreprise</label>
+        <input type="text" id="nomEntreprise" name="nomEntreprise" placeholder="Nom de l'entreprise" [(ngModel)]="entreprise.nom">
+      </div>
+      <div class="form-group">
+        <label for="adresseEntreprise">Adresse</label>
+        <input type="text" id="adresseEntreprise" name="adresseEntreprise" placeholder="Adresse" [(ngModel)]="entreprise.adresse">
+      </div>
+      <div class="form-group">
+        <label for="tvaEntreprise">Numéro TVA</label>
+        <input type="text" id="tvaEntreprise" name="tvaEntreprise" placeholder="Numéro TVA" [(ngModel)]="entreprise.tva">
+      </div>
+      <div class="form-group">
+        <label for="emailEntreprise">Email</label>
+        <input type="email" id="emailEntreprise" name="emailEntreprise" placeholder="Email" [(ngModel)]="entreprise.email">
+      </div>
+      <div class="form-group">
+        <label for="telEntreprise">Téléphone</label>
+        <input type="tel" id="telEntreprise" name="telEntreprise" placeholder="Téléphone" [(ngModel)]="entreprise.telephone">
+      </div>
+    </form>
+  </div>
+
+  <h2>Informations de facturation</h2>
+  <div class="form-section">
+    <form>
+      <!--<div class="form-group">
+        <label for="numeroFacture">Numéro de facture</label>
+        <input type="text" id="numeroFacture" name="numeroFacture" placeholder="Numéro de facture" [(ngModel)]="devis.numero" readonly>
+      </div>-->
+      <div class="form-group">
+        <label for="dateFacture">Date de devis</label>
+        <input type="date" id="dateFacture" name="dateFacture" [(ngModel)]="devis.date">
+      </div>
+    <!--  <div class="form-group">
+        <label for="echeanceFacture">Date d'échéance</label>
+        <input type="date" id="echeanceFacture" name="echeanceFacture" [(ngModel)]="devis.echeance">
+      </div>-->
+    </form>
+  </div>
+
+  <h2>Informations client</h2>
+  <div class="form-section">
+    <form>
+      <div class="form-group">
+        <label for="nomClient">Nom du client</label>
+        <input type="text" id="nomClient" name="nomClient" placeholder="Nom complet" [(ngModel)]="devis.nom">
+      </div>
+      <div class="form-group">
+        <label for="adresseClient">Adresse</label>
+        <input type="text" id="adresseClient" name="adresseClient" placeholder="Adresse" [(ngModel)]="devis.adresse">
+      </div>
+      <!--<div class="form-group">
+        <label for="permisClient">Numéro de permis (facultatif)</label>
+        <input type="text" id="permisClient" name="permisClient" placeholder="Numéro de permis" [(ngModel)]="devis.permis">
+      </div>-->
+    </form>
+  </div>
+
+  <h2>Détails du stage</h2>
+  <div class="form-section">
+    <form>
+      <div class="form-group">
+        <label for="dateStage">Date du stage</label>
+        <input type="text" id="dateStage" name="dateStage" placeholder="Date du stage" [(ngModel)]="devis.dateStage">
+      </div>
+      <div class="form-group">
+        <label for="horairesStage">Horaires</label>
+        <input type="text" id="horairesStage" name="horairesStage" placeholder="Horaires" [(ngModel)]="devis.horaires">
+      </div>
+      <div class="form-group">
+        <label for="lieuStage">Lieu</label>
+        <input type="text" id="lieuStage" name="lieuStage" placeholder="Lieu" [(ngModel)]="devis.lieu">
+      </div>
+      <div class="form-group">
+        <label for="modePaiement">Mode de paiement</label>
+        <select id="modePaiement" name="modePaiement" [(ngModel)]="devis.modePaiement">
+          <option value="Virement bancaire">Virement bancaire</option>
+          <option value="Carte bancaire">Carte bancaire</option>
+          <option value="Espèces">Espèces</option>
+          <option value="Chèque">Chèque</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <h2>Lignes de devis</h2>
+  <table class="facture-table">
+    <thead>
+    <tr>
+      <th>Description</th>
+      <th>Quantité</th>
+      <th>Prix unitaire (€)</th>
+      <th>Total/ligne (€)</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ligne of lignes; let i = index">
+      <td><input type="text" [(ngModel)]="ligne.description" name="desc{{i}}" placeholder="Description"></td>
+      <td><input type="number" [(ngModel)]="ligne.quantite" name="quantite{{i}}" min="1"></td>
+      <td><input type="number" [(ngModel)]="ligne.prixUnitaire" name="prix{{i}}" step="0.01"></td>
+      <td>{{ ligne.quantite * ligne.prixUnitaire | number:'1.2-2' }} €</td>
+      <td><button type="button" (click)="removeLigne(i)" *ngIf="lignes.length > 1">Supprimer</button></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="5">
+        <button type="button" (click)="addLigne()">+ Ajouter une ligne</button>
+      </td>
+
+    </tr>
+    </tfoot>
+  </table>
+
+  <div class="facture-summary">
+    <div class="amount-row">
+      <span>Sous-total:</span>
+      <span>{{ sousTotal() | number:'1.2-2' }} €</span>
+    </div>
+    <div class="amount-row">
+      <span>TVA (20%):</span>
+      <span>{{ tva() | number:'1.2-2' }} €</span>
+    </div>
+    <div class="amount-row total">
+      <span>Total TTC:</span>
+      <span>{{ total() | number:'1.2-2' }} €</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="button" (click)="generatePDF()" class="generate-btn">Générer le devis PDF</button>
+  </div>
+</div>
+

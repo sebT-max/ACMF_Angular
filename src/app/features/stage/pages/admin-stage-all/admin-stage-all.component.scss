@@ -283,7 +283,7 @@ inscriptions_stages_datas_th{
 }
 
 .create-button {
-  background-color: #4CAF50;
+  background-color: #042f52;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -292,7 +292,8 @@ inscriptions_stages_datas_th{
   font-weight: bold;
 
   &:hover {
-    background-color: #45a049;
+    background-color: #042f52;
+    opacity:0.9;
   }
 }
 

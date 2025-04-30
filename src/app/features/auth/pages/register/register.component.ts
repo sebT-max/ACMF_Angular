@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import {
   FormBuilder,
@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
 import { UserFormModel } from '../../models/user-form.model';
 import { RegisterFormModel } from '../../models/register-form.model';
 import { LoginFormModel } from '../../models/login-form.model';
@@ -24,7 +24,7 @@ import {CompanyTokenModel} from '../../models/CompanyTokenModel';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private readonly $_authService: AuthService = inject(AuthService);
   private readonly _formBuilder: FormBuilder = inject(FormBuilder);
   private readonly _router: Router = inject(Router);
@@ -35,7 +35,7 @@ export class RegisterComponent {
   isLoading = false;
 
 
-  constructor() {
+  constructor(private router: Router, private route: ActivatedRoute) {
     this.registerForm = this._formBuilder.group({
       lastname: [null, Validators.required],
       firstname: [null, Validators.required],
@@ -47,6 +47,30 @@ export class RegisterComponent {
       roleId: [1, Validators.required]
     });
   }
+
+  ngOnInit() {
+    const savedForm = localStorage.getItem('registerForm');
+    if (savedForm) {
+      this.registerForm.patchValue(JSON.parse(savedForm));
+      localStorage.removeItem('registerForm');
+    }
+
+    this.route.queryParams.subscribe(params => {
+      if (params['accepted'] === 'true') {
+        this.registerForm.get('acceptTerms')?.setValue(true);
+      }
+    });
+  }
+  goToConditions(event: Event) {
+    event.preventDefault(); // pour éviter la navigation par défaut
+    localStorage.setItem('registerForm', JSON.stringify(this.registerForm.value));
+
+    const redirectPath = this.router.url.includes('company') ? 'company/register' : 'users/register';
+    this.router.navigate(['/Conditions générales de vente'], {
+      queryParams: { redirect: redirectPath }
+    });
+  }
+
 
   // Soumission du formulaire
   handleRegisterFormSubmit(): void {

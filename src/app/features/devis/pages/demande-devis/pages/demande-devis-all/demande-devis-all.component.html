@@ -12,20 +12,20 @@
       @for (demandeDevis of demandesDevis; track demandeDevis.id) {
         <tr>
           <td>
-            <strong>Nom: </strong>{{ demandeDevis?.entrepriseName }}<br/>
+            <strong>Nom: </strong>{{ demandeDevis.entreprise.name}}<br/>
             <strong>Mail: </strong>
-            <a [href]="'mailto:' + demandeDevis?.entrepriseMail">
-              {{ demandeDevis?.entrepriseMail }}
+            <a [href]="'mailto:' + demandeDevis.entreprise.email">
+              {{ demandeDevis.entreprise.email }}
             </a><br/>
 
             <strong>Téléphone: </strong>
-            <a [href]="'tel:' + demandeDevis?.entrepriseTelephone">
-              {{ demandeDevis?.entrepriseTelephone }}
+            <a [href]="'tel:' + demandeDevis.entreprise.telephone">
+              {{ demandeDevis.entreprise.telephone }}
             </a>
           </td>
-          <td>{{ demandeDevis?.contactFirstName }} {{ demandeDevis?.contactLastName }}</td>
-          <td style="text-align: center">{{ demandeDevis?.numberOfInterns }}</td>
-          <td>{{ demandeDevis?.message }}</td>
+          <td>{{ demandeDevis.contactFirstName }} {{ demandeDevis?.contactLastName }}</td>
+          <td style="text-align: center">{{ demandeDevis.numberOfInterns }}</td>
+          <td>{{ demandeDevis.message }}</td>
         </tr>
       }
     </tbody>

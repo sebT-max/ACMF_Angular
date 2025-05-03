@@ -7,7 +7,7 @@ export const isConnectedGuard: CanActivateFn = (route, state) => {
   const _router: Router = inject(Router);
 
   if ($_authService.isAuthenticated()) {
-    return true; // L'utilisateur est connecté, on le laisse passer
+    return true;
   }
 
 

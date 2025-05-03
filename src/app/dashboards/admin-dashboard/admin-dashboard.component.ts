@@ -28,20 +28,14 @@ import {CreationDevisComponent} from '../../features/devis/pages/creation-devis/
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
-    DatePipe,
     NgIf,
-    RouterLink,
     CodePromoCreateComponent,
     DemandeDevisAllComponent,
-    InscriptionStatutPipe,
-    NgForOf,
-    FaIconComponent,
     PrivateLinkCreateComponent,
     PrivateLinkListComponent,
     FactureComponent,
     PrivateLinkCreateComponent,
     ConvocationCreateComponent,
-    DocumentUtilisateurComponent,
     InscriptionAllComponent,
     AdminStageAllComponent,
     CreationDevisComponent
@@ -66,14 +60,3 @@ export class AdminDashboardComponent {
 }
 
 
-
-/*
-groupedDocuments: { [key: string]: DocumentDTO[] } = {};
-*/
-  /*getSafeUrl(url: string): SafeUrl {
-   return this.sanitizer.bypassSecurityTrustUrl(url);
- }
-
-}
-
-/*editInscription(id: number | undefined): void {}*/

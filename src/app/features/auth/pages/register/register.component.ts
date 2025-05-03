@@ -6,21 +6,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
-import { UserFormModel } from '../../models/user-form.model';
+import {ActivatedRoute,Router, RouterLink} from '@angular/router';
 import { RegisterFormModel } from '../../models/register-form.model';
 import { LoginFormModel } from '../../models/login-form.model';
 import { TokenModel } from '../../models/token.model';
-import {NgIf, NgForOf, NgOptimizedImage} from '@angular/common';
-import { FileRemoveEvent, FileUpload } from 'primeng/fileupload';
+import {NgIf,NgOptimizedImage} from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
 import { catchError, EMPTY } from 'rxjs';
-import {CompanyTokenModel} from '../../models/CompanyTokenModel';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgForOf, RouterLink, FileUpload, CheckboxModule, NgOptimizedImage],
+  imports: [ReactiveFormsModule, NgIf,RouterLink, CheckboxModule, NgOptimizedImage],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })

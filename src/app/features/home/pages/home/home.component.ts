@@ -1,10 +1,8 @@
 import {Component, inject, ViewChild} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {AuthService} from '../../../auth/services/auth.service';
-import {NgIf, NgOptimizedImage} from '@angular/common';
-import {Button} from 'primeng/button';
+import {NgOptimizedImage} from '@angular/common';
 import {StepGuideComponent} from '../stepguide/stepguide.component';
-import {StageAllComponent} from '../../../stage/pages/stage-all/stage-all.component';
 import {StageAllHomeComponent} from '../../../stage/pages/stage-all-home/stage-all-home.component';
 
 @Component({

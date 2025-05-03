@@ -7,8 +7,7 @@ import {DemandeDevisService} from '../../services/demande-devis.services';
 @Component({
   selector: 'app-demande-devis-all',
   imports: [
-    ReactiveFormsModule,
-    RouterLink
+    ReactiveFormsModule
   ],
   templateUrl: './demande-devis-all.component.html',
   styleUrl: './demande-devis-all.component.scss'
@@ -18,8 +17,6 @@ export class DemandeDevisAllComponent implements OnInit {
 
   constructor(
     private _demandeDevisService: DemandeDevisService,
-    private router: Router,
-    private route: ActivatedRoute
   ) {}
   ngOnInit() {
 

@@ -1,14 +1,11 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {catchError, Observable, tap, throwError} from 'rxjs';
-
 import { TokenModel } from '../models/token.model';
 import { RegisterFormModel } from '../models/register-form.model';
 import { LoginFormModel } from '../models/login-form.model';
 import { UserResponseModel } from '../models/user-response.model';
 import { CompanyRegisterFormModel } from '../models/company-register-form-model';
-import { InscriptionFormModel } from '../../inscription/models/inscription-form.model';
-
 import { API_URL } from '../../../core/constants/api-constant';
 import { CompanyTokenModel } from '../models/CompanyTokenModel';
 
@@ -19,7 +16,7 @@ export class AuthService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
   private userRoles: string[] = [];
 
-  // Signaux pour l'utilisateur et l'entreprise
+
   currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
   currentCompany: WritableSignal<CompanyTokenModel | null> = signal<CompanyTokenModel | null>(null);
 
@@ -28,7 +25,6 @@ export class AuthService {
     this.loadCompanyFromLocalStorage();
   }
 
-  // Charger l'utilisateur depuis le localStorage
   private loadUserFromLocalStorage() {
     const localStorageUser = localStorage.getItem('currentUser');
     if (localStorageUser) {
@@ -42,7 +38,6 @@ export class AuthService {
     }
   }
 
-  // Charger l'entreprise depuis le localStorage
   private loadCompanyFromLocalStorage() {
     const localStorageCompany = localStorage.getItem('currentCompany');
     if (localStorageCompany) {
@@ -54,15 +49,6 @@ export class AuthService {
         localStorage.removeItem('currentCompany');
       }
     }
-  }
-  // Récupérer l'entreprise par email
-  getCompanyByEmail(email: string): Observable<CompanyTokenModel> {
-    return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`).pipe(
-      tap((resp: CompanyTokenModel) => {
-        this.currentCompany.set(resp);
-        localStorage.setItem('currentCompany', JSON.stringify(resp));
-      })
-    );
   }
   getCompanyByEmailPublic(email: string): Observable<CompanyTokenModel> {
     console.log('Appel API pour obtenir l\'entreprise avec l\'email:', email); // Affiche l'email utilisé
@@ -80,12 +66,10 @@ export class AuthService {
     );
   }
 
-  // Vérifier si un utilisateur ou une entreprise est authentifié
   isAuthenticated(): boolean {
     return this.currentUser() !== null || this.currentCompany() !== null;
   }
 
-  // Vérifier si l'utilisateur ou l'entreprise a un rôle spécifique
   hasRole(role: string): boolean {
     if (this.currentUser()) {
       const userRoles = this.currentUser()?.role ? [this.currentUser()?.role.name] : [];
@@ -104,8 +88,6 @@ export class AuthService {
     return false;
   }
 
-
-  // Récupérer le token de l'utilisateur ou de l'entreprise
   getToken(): string | null {
     const currentUserValue = this.currentUser();
     const currentCompanyValue = this.currentCompany();
@@ -113,14 +95,7 @@ export class AuthService {
     return currentUserValue?.token ?? currentCompanyValue?.token ?? null;
   }
 
-// Récupérer l'en-tête d'autorisation avec le token
-  getAuthorizationHeader(): string {
-    const token = this.getToken();
-    // Renvoie un en-tête Authorization ou une chaîne vide si pas de token
-    return token ? `Bearer ${token}` : '';
-  }
 
-// Récupérer les en-têtes d'autorisation
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
     // Si un token existe, on ajoute l'en-tête Authorization
@@ -129,7 +104,6 @@ export class AuthService {
       : new HttpHeaders();
   }
 
-// Options avec les en-têtes d'authentification
   getAuthOptions() {
     return {
       headers: this.getAuthHeaders(),

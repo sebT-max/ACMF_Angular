@@ -8,5 +8,5 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './create-role.component.scss',
 })
 export class CreateRoleComponent {
-  //private readonly;
+
 }

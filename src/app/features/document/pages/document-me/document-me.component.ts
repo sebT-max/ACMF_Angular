@@ -3,7 +3,6 @@ import {DocumentDTO} from '../../../inscription/models/DocumentDTO';
 import {DocumentService} from '../services/document.services';
 import {DatePipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {DocumentUpdateComponent} from '../document-update/document-update.component';
 
 @Component({
   selector: 'app-document-me',
@@ -11,8 +10,7 @@ import {DocumentUpdateComponent} from '../document-update/document-update.compon
     NgOptimizedImage,
     NgIf,
     NgForOf,
-    DatePipe,
-    DocumentUpdateComponent
+    DatePipe
   ],
   templateUrl: './document-me.component.html',
   styleUrl: './document-me.component.scss'
@@ -33,10 +31,8 @@ constructor(
   loadDocuments(): void {
     this._documentService.getMyDocuments().subscribe({
       next: (documents) => {
-        // Trier les documents par date de téléchargement décroissante
         documents.sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime());
 
-        // Regrouper les documents par type
         this.groupedDocuments = documents.reduce((groups, doc) => {
           const type = doc.type;
           if (!groups[type]) {
@@ -49,10 +45,8 @@ constructor(
       error: (err) => console.error('Erreur lors du chargement des documents', err)
     });
   }
-  // Ajoute cette méthode pour obtenir les clés d'un objet
   objectKeys = Object.keys;
 
-// Méthode pour obtenir un label lisible pour chaque type de document
   getDocumentTypeLabel(type: string): string {
     switch (type) {
       case 'id':

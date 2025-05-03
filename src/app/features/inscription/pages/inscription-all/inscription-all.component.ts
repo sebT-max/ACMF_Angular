@@ -14,7 +14,6 @@ import {DocumentDTO} from '../../models/DocumentDTO';
 import {DocumentService} from '../../../document/pages/services/document.services';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {StageWithDistance} from '../../../stage/models/StageWithDistance';
 @Component({
   selector: 'app-inscription-all',
   imports: [

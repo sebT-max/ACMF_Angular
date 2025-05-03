@@ -1,11 +1,5 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from './features/home/pages/home/home.component';
 import {isConnectedGuard} from './features/auth/guards/is-connected.guard';
-import {StageCreateComponent} from './features/stage/pages/stage-create/stage-create.component';
-import {StageAllComponent} from './features/stage/pages/stage-all/stage-all.component';
-import {
-  StatistiquesAndLegisationComponent
-} from './features/home/pages/statistiques-and-legisation/statistiques-and-legisation.component';
 
 export const routes: Routes = [
   {
@@ -82,14 +76,6 @@ export const routes: Routes = [
         (c) => c.LoginComponent,
       ),
   },
-
-  /*{
-    path: 'company/login',
-    loadComponent: () =>
-      import('./features/auth/pages/company-login/company-login.component').then(
-        (c) => c.CompanyLoginComponent,
-      ),
-  },*/
   {
     path: 'stages/all',
     loadComponent: () =>
@@ -182,7 +168,6 @@ export const routes: Routes = [
       ),
   },
 
-  // Route pour lister les liens privés (accessible par l'admin)
   {
     path: 'private-links/list',
     canActivate: [isConnectedGuard], // Peut être protégé par le rôle admin si nécessaire

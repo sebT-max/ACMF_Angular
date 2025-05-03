@@ -66,20 +66,11 @@ export class HeaderComponent {
     }, 300);
   }
 
-  cancelCloseLoginModal() {
-    clearTimeout(this.closeTimeout);
-  }
 
   selectType(type: string, event: Event) {
     event.stopPropagation();
     console.log(`Type sélectionné : ${type}`);
     this.startCloseRegisterModal();
-  }
-
-  selectLoginType(type: string, event: Event) {
-    event.stopPropagation();
-    console.log(`Type sélectionné : ${type}`);
-    this.startCloseLoginModal();
   }
 
   // 🎯 Détection du scroll

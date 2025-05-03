@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DecimalPipe, NgForOf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
 
@@ -7,9 +6,7 @@ import jsPDF from 'jspdf';
   selector: 'app-convocation-create',
   standalone: true,
   imports: [
-    DecimalPipe,
     FormsModule,
-    NgForOf,
     ReactiveFormsModule
   ],
   templateUrl: './convocation-create.component.html',
@@ -76,7 +73,6 @@ export class ConvocationCreateComponent implements OnInit {
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 10;
 
-    // Définir Poppins comme police par défaut pour tout le document
     try {
       doc.setFont('Poppins-Regular', 'normal');
       console.log('Police Poppins appliquée au document');
@@ -86,7 +82,6 @@ export class ConvocationCreateComponent implements OnInit {
       doc.setFont('helvetica', 'normal');
     }
 
-    // Charger l'image
     const imgLoadPromise = new Promise<void>((resolve) => {
       const img = new Image();
       img.src = this.entreprise.logo;
@@ -110,24 +105,20 @@ export class ConvocationCreateComponent implements OnInit {
       };
     });
 
-    // Attendre que l'image soit chargée
     await imgLoadPromise;
 
     let y = margin;
 
-    // Informations entreprise
     doc.setFontSize(10);
     doc.text(this.entreprise.nom, pageWidth - 90, y); y += 5;
     doc.text(this.entreprise.adresse, pageWidth - 90, y); y += 5;
     doc.text(`Email: ${this.entreprise.email}`, pageWidth - 90, y); y += 5;
     doc.text(`Tél: ${this.entreprise.telephone}`, pageWidth - 90, y);
 
-    // Titre
     y += 30;
     doc.setFontSize(24);
     doc.text('CONVOCATION DE STAGE', pageWidth / 2, y, { align: 'center' });
 
-    // Date
     const today = new Date();
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     const dateStr = today.toLocaleDateString('fr-FR', options);
@@ -139,7 +130,6 @@ export class ConvocationCreateComponent implements OnInit {
     const textWidth = doc.getTextWidth(dateText);
     doc.text(dateText, pageWidth - textWidth - 10, y);
 
-    // Détails stagiaire
     y += 20;
     doc.setFontSize(14);
     doc.text('Stage de récupération de points (cas n°1)', margin, y); y += 10;
@@ -148,7 +138,6 @@ export class ConvocationCreateComponent implements OnInit {
     doc.text(`Adresse du stagiaire: ${this.facture.adresse}`, margin, y); y += 8;
     doc.text(`Numéro de permis : ${this.facture.permis}`, margin, y); y += 12;
 
-    // Info rendez-vous
     doc.text('Votre rendez-vous :', margin, y); y += 8;
     doc.text(this.facture.lieu, margin, y); y += 8;
     doc.text(this.facture.dateStage, margin, y); y += 8;
@@ -156,14 +145,12 @@ export class ConvocationCreateComponent implements OnInit {
     // On garde la même police Poppins, pas besoin de la redéfinir
     doc.text('(Il est recommandé de se présenter 1/4 h avant l\heure du Rdv)', margin, y);
 
-    // Avertissements
     y += 20;
     doc.setTextColor(200, 0, 0);
     doc.text('ATTENTION : Votre présence et le respect des horaires sont obligatoires', margin, y); y += 6;
     doc.text('Tout retard sera considéré comme une absence totale.', margin, y);
     doc.setTextColor(0, 0, 0);
 
-    // Documents à envoyer
     y += 10;
     doc.text('Documents à transmettre AVANT le stage (par mail ou SMS) :', margin, y); y += 6;
     doc.text('- Recto/verso du permis de conduire ou récépissé', margin, y); y += 6;
@@ -175,7 +162,7 @@ export class ConvocationCreateComponent implements OnInit {
     doc.text('- Pièce d\identité', margin, y); y += 6;
     doc.text('- Cette convocation (imprimée ou sur smartphone)', margin, y);
 
-    // Conditions
+
     y += 10;
     doc.setFontSize(10);
     doc.text(
@@ -184,7 +171,6 @@ export class ConvocationCreateComponent implements OnInit {
       y
     );
 
-    // Pied de page
     doc.setFontSize(8);
     doc.setTextColor(100, 100, 100);
     doc.text(
@@ -194,7 +180,6 @@ export class ConvocationCreateComponent implements OnInit {
       { align: 'center' }
     );
 
-    // Télécharger le PDF
     doc.save('convocation-stage.pdf');
   }
 }

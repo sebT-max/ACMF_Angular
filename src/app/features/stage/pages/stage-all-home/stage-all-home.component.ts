@@ -18,8 +18,7 @@ import { environment } from '../../../../../environments/environment';
     FormsModule,
     RouterLink,
     NgIf,
-    DecimalPipe,
-    NgForOf
+    DecimalPipe
   ],
   styleUrls: ['./stage-all-home.component.scss']
 })

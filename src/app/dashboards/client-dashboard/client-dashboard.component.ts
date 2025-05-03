@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {InscriptionService} from '../../features/inscription/inscription-services';
 import {CommonModule, DatePipe} from '@angular/common';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
-import {CodePromoCreateComponent} from '../../features/code-promo/pages/code-promo-create/code-promo-create.component';
-import {DocumentMeComponent} from '../../features/document/pages/document-me/document-me.component';
 import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
 
 @Component({
@@ -11,9 +9,7 @@ import {InscriptionListResponse} from '../../features/inscription/models/Inscrip
   imports: [
     DatePipe,
     CommonModule,
-    InscriptionStatutPipe,
-    CodePromoCreateComponent,
-    DocumentMeComponent
+    InscriptionStatutPipe
   ],
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.scss'

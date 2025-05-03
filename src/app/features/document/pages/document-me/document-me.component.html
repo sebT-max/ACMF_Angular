@@ -3,7 +3,6 @@
 
     <h1>{{ document.fileName }}</h1>
 
-    <!-- Affichage de l'image si c'est une image -->
     <div *ngIf="isImage(document.fileUrl)">
       <img
         [ngSrc]="document.fileUrl"
@@ -21,7 +20,6 @@
       </button>
     </div>
 
-    <!-- Lien cliquable pour les fichiers PDF ou autres types -->
     <div *ngIf="!isImage(document.fileUrl)">
       <img alt ="" src="icon.png" style="height:100px;margin-bottom:20px;"/>
       <a [href]="document.fileUrl" target="_blank" rel="noopener noreferrer">

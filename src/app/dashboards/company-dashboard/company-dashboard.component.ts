@@ -16,14 +16,12 @@ import {InscriptionListResponse} from '../../features/inscription/models/Inscrip
 @Component({
   selector: 'app-company-dashboard',
   imports: [
-    CurrencyPipe,
     DatePipe,
     NgForOf,
     NgIf,
     DemandeDevisComponent,
     InscriptionStatutPipe,
-    NgClass,
-    PrivateLinkFormComponent
+    NgClass
   ],
   templateUrl: './company-dashboard.component.html',
   styleUrl: './company-dashboard.component.scss'
@@ -98,29 +96,5 @@ export class CompanyDashboardComponent implements OnInit {
 
   toggleTokenVisibility() {
     this.isTokenVisible = !this.isTokenVisible;
-  }
-
-  onDeleteInscription(id: number | undefined): void {
-    if (id === undefined) {
-      console.error('ID manquant pour la suppression');
-      alert("Impossible de supprimer l'inscription : ID non défini.");
-      return;
-    }
-
-    if (confirm('Es-tu sûr de vouloir supprimer cet élément ?')) {
-      console.log('Suppression en cours...');
-
-      this._inscriptionService.deleteInscription(id).subscribe({
-        next: () => {
-          alert('Élément supprimé avec succès.');
-          this.inscriptions = this.inscriptions.filter(i => i.id !== id);
-          this._router.navigate(['/dashboard-admin']);
-        },
-        error: (err) => {
-          console.error('Erreur lors de la suppression :', err);
-          alert("Une erreur est survenue lors de la suppression.");
-        }
-      });
-    }
   }
 }

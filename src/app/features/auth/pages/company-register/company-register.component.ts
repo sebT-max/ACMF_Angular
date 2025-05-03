@@ -5,7 +5,6 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CompanyRegisterFormModel} from '../../models/company-register-form-model';
 import {NgIf, NgOptimizedImage} from '@angular/common';
 import {CheckboxModule} from 'primeng/checkbox';
-import {Password} from 'primeng/password';
 import {CompanyTokenModel} from '../../models/CompanyTokenModel';
 import {catchError, EMPTY} from 'rxjs';
 import {LoginFormModel} from '../../models/login-form.model';

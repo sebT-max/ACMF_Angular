@@ -1,8 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
-import {StageService} from '../../../stage/services/stage.service';
-import {StageDetailsModel} from '../../../stage/models/stage-details-model';
+import {Router} from '@angular/router';
 import {CodePromoService} from '../../services/code-promo.services';
 import {CodePromoFormModel} from '../../models/code-promo-Form.Model';
 

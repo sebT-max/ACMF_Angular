@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StageService } from '../../../stage/services/stage.service';
-import { AuthService } from '../../../auth/services/auth.service';
 import { InscriptionService } from '../../inscription-services';
 import { InscriptionFormModel } from '../../models/inscription-form.model';
 import { TokenModel } from '../../../auth/models/token.model';
@@ -29,14 +28,14 @@ import {CodePromoService} from '../../../code-promo/services/code-promo.services
 })
 export class InscriptionCreateComponent implements OnInit {
   private readonly _stageService = inject(StageService);
-  private readonly _authService = inject(AuthService);
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _fb = inject(FormBuilder);
   private readonly _router = inject(Router);
   private readonly _stripeService = inject(StripeService);
   private readonly _codePromoService = inject(CodePromoService);
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService) {
+  }
 
   inscriptionCreationForm!: FormGroup;
   currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
@@ -58,9 +57,9 @@ export class InscriptionCreateComponent implements OnInit {
 
 
   stageTypes = [
-    { value: 'VOLONTAIRE', label: 'Volontaire' },
-    { value: 'PROBATOIRE', label: 'Probatoire' },
-    { value: 'TRIBUNAL', label: 'Tribunal' }
+    {value: 'VOLONTAIRE', label: 'Volontaire'},
+    {value: 'PROBATOIRE', label: 'Probatoire'},
+    {value: 'TRIBUNAL', label: 'Tribunal'}
   ];
 
   ngOnInit(): void {
@@ -144,10 +143,6 @@ export class InscriptionCreateComponent implements OnInit {
       error: (err: any) => console.error('Erreur d’envoi de fichiers :', err)
     });
   }
- /* removeManualFile(type: DocumentType, index: number): void {
-    this.uploadedFiles[type].splice(index, 1);
-  }*/
-
 
   onRemoveFile(event: FileRemoveEvent, field: string): void {
     // Vérification pour s'assurer que `files` contient des fichiers
@@ -157,13 +152,10 @@ export class InscriptionCreateComponent implements OnInit {
     } else {
       console.log('Aucun fichier à supprimer.');
     }
-
-    // Autres opérations que tu souhaites faire avec le fichier supprimé
   }
 
   handleInscription(): void {
     this.isLoading = true;
-
     const user = this.currentUser();
     if (!user) {
       console.error('Utilisateur non trouvé');
@@ -185,7 +177,6 @@ export class InscriptionCreateComponent implements OnInit {
     const selected = this.stageTypes.find(type => type.value === selectedValue);
     const selectedLabel = selected ? selected.label : null;
 
-    // Validation conditionnelle pour la lettre 48N
     if (selectedLabel === 'Tribunal' && this.uploadedFiles.lettre48n.length === 0) {
       this.lettre48nError = 'Vous devez nous fournir la lettre 48_N du tribunal.';
       this.isLoading = false;
@@ -227,21 +218,17 @@ export class InscriptionCreateComponent implements OnInit {
   }
 
   private proceedWithInscription(finalPrice: number): void {
-    // Logique pour traiter l'inscription avec le prix final
     const inscriptionData: InscriptionFormModel = {
-      userId: this.currentUser()?.id?? null,
+      userId: this.currentUser()?.id ?? null,
       stageId: this.stageId,
       stageType: this.inscriptionCreationForm.value.stageType,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
       documents: [],
       codePromo: this.inscriptionCreationForm.value.codePromo || null
     };
-
-    // Créer un objet FormData
     const formData = new FormData();
-    formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
+    formData.append('request', new Blob([JSON.stringify(inscriptionData)], {type: 'application/json'}));
 
-    // Ajouter les fichiers
     const files = this.uploadedFiles.permis.concat(
       this.uploadedFiles.carteId,
       this.uploadedFiles.lettre48n
@@ -275,100 +262,5 @@ export class InscriptionCreateComponent implements OnInit {
       }
     });
   }
-    // Envoyer les données via HTTP
-    /*this.http.post('/api/inscriptions', formData).subscribe({
-      next: (response: any) => {
-        if (response.stripeCheckoutUrl) {
-          // Rediriger vers Stripe Checkout
-          window.location.href = response.stripeCheckoutUrl;
-        } else {
-          console.error('URL de redirection Stripe manquante');
-          this.isLoading = false;
-        }
-      },
-      error: (error) => {
-        console.error('Erreur lors de l\'inscription', error);
-        this.isLoading = false;
-      }
-    });*/
-  }
-
-  /*handleInscription(): void {
-    this.isLoading = true;
-
-    const user = this.currentUser();
-    if (!user) {
-      console.error('Utilisateur non trouvé');
-      this.isLoading = false;
-      return;
-    }
-
-    if (!this.stageDetails || !this.stageDetails.price) {
-      console.error('Prix du stage non défini');
-      this.isLoading = false;
-      return;
-    }
-
-
-
-    if (this.inscriptionCreationForm.invalid) {
-      console.warn('Formulaire invalide');
-      this.isLoading = false;
-      return;
-    }
-
-    const inscriptionData: InscriptionFormModel = {
-      userId: user.id,
-      stageId: this.stageId,
-      stageType: selectedValue,
-      inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
-      documents: [],
-      codePromo: this.inscriptionCreationForm.value.codePromo || null
-    };
-
-    const formData = new FormData();
-    formData.append('request', new Blob([JSON.stringify(inscriptionData)], { type: 'application/json' }));
-    Object.entries(this.uploadedFiles).forEach(([key, files]) => {
-      files.forEach(file => {
-        formData.append('files', file);
-      });
-    });
-
-    this._stageService.decrementStageCapacity(this.stageId).subscribe({
-      next: (updatedStage) => {
-        this.stageDetails = updatedStage;
-      },
-      error: (err) => {
-        console.error('Erreur lors de la mise à jour de la capacité :', err);
-        this.toastr.error("Une erreur est survenue lors de la mise à jour de la capacité.");
-        this.isLoading = false;
-      }
-    });
-
-    this._inscriptionService.createInscription(formData).subscribe({
-      next: (resp) => {
-        const inscriptionId = resp.id;
-        if (this.stageDetails && this.stageDetails.price) {
-          const amountInCents = this.stageDetails.price * 100;
-          this._stripeService.redirectToCheckout(inscriptionId, this.stageId, amountInCents, this.stageDetails).subscribe({
-            next: (stripeRedirectUrl: string) => {
-              window.location.href = stripeRedirectUrl;
-            },
-            error: (err) => {
-              console.error('Erreur Stripe :', err);
-              this.isLoading = false;
-            }
-          });
-        } else {
-          console.error("Les détails du stage ne sont pas disponibles ou le prix est invalide.");
-          this.isLoading = false;
-        }
-      },
-      error: (err) => {
-        console.error('Erreur lors de l’inscription', err);
-        this.isLoading = false;
-      }
-    });
-  }*/
-
+}
 

@@ -31,7 +31,6 @@ export class InscriptionAllComponent implements OnInit{
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _stageService = inject(StageService);
   private readonly _documentService = inject(DocumentService);
-  private readonly _router: Router = inject(Router);
 
   documentsPourModal: DocumentDTO[] = [];
   modalVisible: boolean = false;
@@ -43,8 +42,7 @@ export class InscriptionAllComponent implements OnInit{
   pageSize = 3;
   currentPage = 1;
 
-  constructor(private sanitizer: DomSanitizer,
-              private toastr: ToastrService,
+  constructor(private toastr: ToastrService,
               private router: Router,
               private route: ActivatedRoute) {}
 
@@ -86,7 +84,6 @@ export class InscriptionAllComponent implements OnInit{
     });
   }
 
-  // Correction de la méthode de tri pour utiliser uniquement les dates de début
   private sortInscriptionsByDate(inscriptions: InscriptionListResponse[]): InscriptionListResponse[] {
     return [...inscriptions].sort((a, b) => {
       const dateA = new Date(a.stageDateDebut).getTime();
@@ -101,19 +98,15 @@ export class InscriptionAllComponent implements OnInit{
       queryParams: { searchTerm: this.searchTerm },
       queryParamsHandling: 'merge',
     });
-    // Le reste sera géré par le subscription aux queryParams dans ngOnInit
   }
 
-  // Méthode pour appliquer tous les filtres actifs
   applyFilters(): void {
-    // Commencer avec tous les stages
     if (this.searchTerm.trim() === '') {
       this.filteredInscriptions = [...this.inscriptions];
     } else {
       const searchTermLower = this.searchTerm.toLowerCase().trim();
 
       this.filteredInscriptions = this.inscriptions.filter(inscription => {
-        // Recherche dans tous les champs pertinents
         return (
           (inscription.stageCity && inscription.stageCity.toLowerCase().includes(searchTermLower)) ||
           (inscription.stageArrondissement && inscription.stageArrondissement.toLowerCase().includes(searchTermLower)) ||
@@ -131,16 +124,11 @@ export class InscriptionAllComponent implements OnInit{
         );
       });
     }
-
-    // Trier les résultats par date
     this.filteredInscriptions = this.sortInscriptionsByDate(this.filteredInscriptions);
-
-    // Réinitialiser la pagination
     this.currentPage = 1;
     this.paginate();
   }
 
-  // Méthode pour réinitialiser les filtres
   resetFilters(): void {
     this.searchTerm = '';
     this.router.navigate([], {
@@ -154,7 +142,6 @@ export class InscriptionAllComponent implements OnInit{
     window.open(url, '_blank'); // ← c'est tout, plus besoin de `${API_URL}...`
   }
 
-  // Correction de la méthode paginate pour utiliser filteredInscriptions
   paginate(): void {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
@@ -174,7 +161,6 @@ export class InscriptionAllComponent implements OnInit{
     return this.currentPage > 1;
   }
 
-  // Mise à jour de totalPages pour utiliser filteredInscriptions
   totalPages(): number {
     return Math.ceil(this.filteredInscriptions.length / this.pageSize);
   }
@@ -216,7 +202,6 @@ export class InscriptionAllComponent implements OnInit{
           this.inscriptions[index].inscriptionStatut = updatedInscription.inscriptionStatut;
         }
 
-        // Mise à jour également dans la liste filtrée
         const filteredIndex = this.filteredInscriptions.findIndex(i => i.id === id);
         if (filteredIndex !== -1) {
           this.filteredInscriptions[filteredIndex].inscriptionStatut = updatedInscription.inscriptionStatut;
@@ -239,7 +224,6 @@ export class InscriptionAllComponent implements OnInit{
       next: () => {
         alert('Élément supprimé avec succès.');
 
-        // Supprimer l'inscription des deux listes
         this.inscriptions = this.inscriptions.filter(i => i.id !== id);
         this.filteredInscriptions = this.filteredInscriptions.filter(i => i.id !== id);
 

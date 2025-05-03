@@ -13,8 +13,6 @@ export class DemandeDevisService{
   private userRoles: string[] = [];
 
   private loadUserRoles(): void {
-    // Ici, tu devrais récupérer les rôles de l'utilisateur depuis le token ou l'API
-    // Simulons des rôles récupérés après connexion
     const storedRoles = localStorage.getItem('roles'); // Exemple avec localStorage
     this.userRoles = storedRoles ? JSON.parse(storedRoles) : [];
   }

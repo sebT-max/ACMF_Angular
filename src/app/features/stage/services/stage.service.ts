@@ -13,8 +13,6 @@ export class StageService{
   private userRoles: string[] = [];
 
   private loadUserRoles(): void {
-    // Ici, tu devrais récupérer les rôles de l'utilisateur depuis le token ou l'API
-    // Simulons des rôles récupérés après connexion
     const storedRoles = localStorage.getItem('roles'); // Exemple avec localStorage
     this.userRoles = storedRoles ? JSON.parse(storedRoles) : [];
   }
@@ -51,8 +49,5 @@ export class StageService{
 
   updateStage(id: number | undefined, updatedStage: StageDetailsModel): Observable<StageDetailsModel> {
     return this._httpClient.put<StageDetailsModel>(`${API_URL}stages/update/${id}`, updatedStage);
-  }
-  decrementStageCapacity(stageId: number) {
-    return this._httpClient.put<StageDetailsModel>(`${API_URL}stages/${stageId}/decrement-capacity`, {});
   }
 }

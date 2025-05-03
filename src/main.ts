@@ -7,7 +7,7 @@ import {registerLocaleData} from '@angular/common';
 import {importProvidersFrom, LOCALE_ID} from '@angular/core';
 import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';  // Importe la locale française
-import { frTranslation } from './app/primeng.locale';
+import { frTranslation } from './locales/primeng.locale';
 import localeFr from '@angular/common/locales/fr';
 
 

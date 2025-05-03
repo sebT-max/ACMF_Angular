@@ -12,7 +12,7 @@ import {Locale} from 'date-fns';
 import {fr} from 'date-fns/locale';
 import { Calendar } from 'primeng/calendar';
 import { Translation } from 'primeng/api';
-import { frTranslation } from '../../../../primeng.locale';
+import { frTranslation } from '../../../../../locales/primeng.locale';
 
 @Component({
   selector: 'app-stage-all',

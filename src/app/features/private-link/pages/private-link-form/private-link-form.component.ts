@@ -2,23 +2,21 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FileRemoveEvent, FileUpload } from 'primeng/fileupload';
 import { ToastrService } from 'ngx-toastr';
-import { StageService } from '../../../stage/services/stage.service';
 import { InscriptionService } from '../../../inscription/inscription-services';
 import { PrivateLinkService } from '../../services/private-link.services';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {CgvModalComponent} from '../../../cgv-modal/cgv-modal.component';
 
 
 @Component({
   selector: 'app-private-link-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FileUpload, NgOptimizedImage, CgvModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FileUpload,CgvModalComponent],
   templateUrl: './private-link-form.component.html',
   styleUrl: './private-link-form.component.scss'
 })
 export class PrivateLinkFormComponent implements OnInit {
-  private readonly _stageService = inject(StageService);
   private readonly _privateLinkService = inject(PrivateLinkService);
   private readonly _fb = inject(FormBuilder);
   private readonly _inscriptionService = inject(InscriptionService);
@@ -182,7 +180,7 @@ export class PrivateLinkFormComponent implements OnInit {
     formData.append('acceptTerms', this.privateLinkForm.value.acceptTerms);
     formData.append('roleId', this.privateLinkForm.value.roleId);
 
-    // Ajouter stageId et entrepriseId si présents
+    // Ajoute stageId et entrepriseId
     if (this.stageId) {
       formData.append('stageId', this.stageId.toString());
     }
@@ -190,7 +188,6 @@ export class PrivateLinkFormComponent implements OnInit {
       formData.append('entrepriseId', this.entrepriseId.toString());
     }
 
-    // Ajouter TOUS les fichiers sous la clé "files"
     [...this.uploadedFiles.permis, ...this.uploadedFiles.carteId].forEach(file => {
       formData.append('files', file, file.name); // clé unique "files" pour tous les documents
     });

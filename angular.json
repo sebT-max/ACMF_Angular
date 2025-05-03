@@ -7,7 +7,7 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
-          "fr-PR": "src/locales/messages.fr.xlf"
+          "fr": "src/locales/messages.fr.xlf"
         }
       },
       "projectType": "application",
@@ -23,7 +23,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize": ["fr-PR"],
             "outputPath": "dist/auto-ecole",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -33,6 +32,7 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "localize": ["fr"], 
             "assets": [
               {
                 "glob": "**/*",
@@ -56,8 +56,7 @@
               "node_modules/ngx-toastr/toastr.css",
               "mapbox-gl/dist/mapbox-gl.css",
               "src/styles.scss"
-            ]
-          ,
+            ],
             "scripts": []
           },
           "configurations": {
@@ -70,16 +69,18 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "1.1mb",
-                  "maximumError": "1.2mb"
+                  "maximumWarning": "1MB",
+                  "maximumError": "1.2MB"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": true
+              },
               "outputHashing": "all",
               "sourceMap": false,
-              "namedChunks": false,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "aot": true,
+              "extractLicenses": true
             },
             "development": {
               "optimization": false,

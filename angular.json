@@ -23,6 +23,15 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "canvg",
+              "rgbcolor",
+              "raf",
+              "core-js",
+              "html2canvas",
+              "mapbox-gl",
+              "@mapbox/mapbox-gl-geocoder"
+            ],
             "outputPath": "dist/auto-ecole",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -30,6 +39,7 @@
               "zone.js",
               "@angular/localize/init"
             ],
+            
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "localize": ["fr"], 
@@ -64,13 +74,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "1.1MB",
                   "maximumError": "1.2MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "1MB",
-                  "maximumError": "1.2MB"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
               "optimization": {

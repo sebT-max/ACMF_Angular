@@ -48,6 +48,7 @@
     "@angular/compiler-cli": "19.2.7",
     "@angular/localize": "^19.2.7",
     "@ngtools/webpack": "19.2.7",
+    "@ngx-env/builder": "^19.0.4",
     "@types/jasmine": "~5.1.0",
     "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",
     "@types/mapbox-gl": "^3.4.1",

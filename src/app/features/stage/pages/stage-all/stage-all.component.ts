@@ -86,7 +86,7 @@ export class StageAllComponent implements OnInit {
   }
 
   getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.NG_APP_MAPBOX_TOKEN}`;
 
     return fetch(url)
       .then(res => res.json())

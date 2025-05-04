@@ -3,16 +3,14 @@ import { StageService } from '../../services/stage.service';
 import { StageDetailsModel } from '../../models/stage-details-model';
 import {Router, ActivatedRoute, RouterLink} from '@angular/router';
 import { StageDetailsComponent } from '../stage-details/stage-details.component';
-import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {DatePipe, DecimalPipe, NgIf, NgOptimizedImage} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StageWithDistance} from '../../models/StageWithDistance';
 import {environment} from '../../../../../environments/environment';
 import { CalendarModule } from 'primeng/calendar';
-import {Locale} from 'date-fns';
 import {fr} from 'date-fns/locale';
 import { Calendar } from 'primeng/calendar';
-import { Translation } from 'primeng/api';
-import { frTranslation } from '../../../../../locales/primeng.locale';
+
 
 @Component({
   selector: 'app-stage-all',
@@ -309,5 +307,4 @@ export class StageAllComponent implements OnInit {
   }
 
   protected readonly fr = fr;
-  protected readonly frTranslation = frTranslation;
 }

@@ -1,13 +1,10 @@
-/// <reference types="@angular/localize" />
-
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import {registerLocaleData} from '@angular/common';
 import {importProvidersFrom, LOCALE_ID} from '@angular/core';
 import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-browser/animations';
-import {ToastrModule} from 'ngx-toastr';  // Importe la locale française
-import { frTranslation } from './locales/primeng.locale';
+import {ToastrModule} from 'ngx-toastr';
 import localeFr from '@angular/common/locales/fr';
 
 

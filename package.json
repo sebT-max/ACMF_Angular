@@ -5,12 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
-    "postbuild": "node postbuild.js",
     "deploy": "npm run build && netlify deploy --dir=dist/auto-ecole/browser --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prettier": "npx prettier --write ./src/**/*.{ts,scss,html,md} --ignore-unknown",
-    "generate-font": "node tools/convert-font.js"
+    "prettier": "npx prettier --write ./src/**/*.{ts,scss,html,md} --ignore-unknown"
   },
   "private": true,
   "dependencies": {

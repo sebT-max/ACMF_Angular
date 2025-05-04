@@ -4,12 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "auto-ecole": {
-      "i18n": {
-        "sourceLocale": "en-US",
-        "locales": {
-          "fr": "src/locales/messages.fr.xlf"
-        }
-      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -37,14 +31,10 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js",
-              "@angular/localize/init"
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "localize": [
-              "fr"
-            ],
             "assets": [
               "src/_redirects",
               {
@@ -56,11 +46,6 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
-              },
-              {
-                "glob": "*.js",
-                "input": "src/assets/fonts",
-                "output": "assets/fonts"
               }
             ],
             "styles": [
@@ -131,8 +116,7 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing",
-              "@angular/localize/init"
+              "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",

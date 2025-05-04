@@ -1,5 +1,5 @@
 export const environment = {
-  url:process.env['NG_APP_BASE_URL'],
-  mapboxToken:process.env['mapboxToken'],
-
+  production: false,
+  url:import.meta.env['NG_APP_BASE_URL'],
+  mapboxToken: import.meta.env['mapboxToken']
 };

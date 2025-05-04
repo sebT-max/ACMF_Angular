@@ -23,7 +23,7 @@
         "build": {
           "builder": "@ngx-env/builder:application",
           "options": {
-            "baseHref": "/fr/",
+            "baseHref": "/",
             "allowedCommonJsDependencies": [
               "canvg",
               "rgbcolor",

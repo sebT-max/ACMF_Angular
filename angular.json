@@ -23,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/fr/",
             "allowedCommonJsDependencies": [
               "canvg",
               "rgbcolor",
@@ -39,10 +40,10 @@
               "zone.js",
               "@angular/localize/init"
             ],
-            
+
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "localize": ["fr"], 
+            "localize": ["fr"],
             "assets": [
               {
                 "glob": "**/*",

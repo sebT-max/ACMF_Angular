@@ -1,0 +1,41 @@
+[build]
+publish = "dist/auto-ecole/browser"
+
+# Redirection de la racine vers /fr/
+[[redirects]]
+from = "/"
+to = "/fr/"
+status = 301
+force = true
+
+# Redirection SPA pour les routes dans /fr/
+[[redirects]]
+from = "/fr/*"
+to = "/fr/index.html"
+status = 200
+
+# En-têtes pour les différents types de fichiers
+[[headers]]
+for = "/*.js"
+[headers.values]
+Content-Type = "application/javascript"
+
+[[headers]]
+for = "/*.css"
+[headers.values]
+Content-Type = "text/css"
+
+[[headers]]
+for = "/*.ttf"
+[headers.values]
+Content-Type = "font/ttf"
+
+[[headers]]
+for = "/*.woff"
+[headers.values]
+Content-Type = "font/woff"
+
+[[headers]]
+for = "/*.woff2"
+[headers.values]
+Content-Type = "font/woff2"

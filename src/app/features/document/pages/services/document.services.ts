@@ -2,9 +2,8 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../../../auth/services/auth.service';
 import {DocumentDTO} from '../../../inscription/models/DocumentDTO';
-import {API_URL} from '../../../../core/constants/api-constant';
 import {Observable} from 'rxjs';
-import {InscriptionFormModel} from '../../../inscription/models/inscription-form.model';
+import {environment} from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,27 +18,27 @@ export class DocumentService {
 
   getMyDocuments(): Observable<DocumentDTO[]>{
     return this._httpClient.get<DocumentDTO[]>(
-      `${API_URL}documents/me`,
+      `${environment.apiUrl}documents/me`,
       this.getAuthHeaders()
     );
   }
   uploadDocuments(userId: number, formData: FormData): Observable<any> {
     const headers = new HttpHeaders(); // pas de 'Content-Type', Angular gère le boundary
-    return this._httpClient.post(`${API_URL}documents/upload/${userId}`, formData, { headers });
+    return this._httpClient.post(`${environment.apiUrl}documents/upload/${userId}`, formData, { headers });
   }
   uploadDocumentsFromDashboard(userId: number, formData: FormData): Observable<any> {
     const headers = new HttpHeaders(); // pas de 'Content-Type', Angular gère le boundary
-    return this._httpClient.post(`${API_URL}documents/uploadDocumentsFromDashboard/${userId}`, formData, { headers });
+    return this._httpClient.post(`${environment.apiUrl}documents/uploadDocumentsFromDashboard/${userId}`, formData, { headers });
   }
   deleteDocument(documentId: number): Observable<any> {
-    return this._httpClient.delete(`${API_URL}documents/${documentId}`);
+    return this._httpClient.delete(`${environment.apiUrl}documents/${documentId}`);
   }
   updateMyDocuments(formData: FormData): Observable<any> {
-    return this._httpClient.post(`${API_URL}documents/update`, formData);
+    return this._httpClient.post(`${environment.apiUrl}documents/update`, formData);
   }
 
   getDocumentsForUser(userId: number) {
-    return this._httpClient.get<any[]>(`${API_URL}documents/user/${userId}`);
+    return this._httpClient.get<any[]>(`${environment.apiUrl}documents/user/${userId}`);
   }
 }
 

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url: import.meta.env['NG_APP_BASE_URL'] || '',
+  apiUrl: "https://test-acf.netlify.app/",
   mapboxToken: import.meta.env['NG_APP_MAPBOX_TOKEN'] || ''
 };

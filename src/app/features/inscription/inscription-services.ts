@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {catchError, Observable, throwError} from 'rxjs';
-import { API_URL } from '../../core/constants/api-constant';
 import { InscriptionFormModel } from './models/inscription-form.model';
 import { CreateInscriptionResponseBody } from './models/CreateInscriptionResponseBody';
 import { AuthService } from '../auth/services/auth.service';
 import {InscriptionListResponse} from './models/InscriptionListResponse';
 import {StageDetailsModel} from '../stage/models/stage-details-model';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class InscriptionService {
 
   createInscription(formData: FormData): Observable<CreateInscriptionResponseBody> {
     return this._httpClient.post<CreateInscriptionResponseBody>(
-      `${API_URL}inscriptions/create`,
+      `${environment.apiUrl}inscriptions/create`,
       formData,
       this.getAuthHeaders()
     );
@@ -29,7 +29,7 @@ export class InscriptionService {
 
   getMyInscriptions(): Observable<InscriptionListResponse[]> {
     return this._httpClient.get<InscriptionListResponse[]>(
-      `${API_URL}inscriptions/me`,
+      `${environment.apiUrl}inscriptions/me`,
       this.getAuthHeaders()
     ).pipe(
       catchError(error => {
@@ -42,13 +42,13 @@ export class InscriptionService {
 
   getAllInscriptions(): Observable<InscriptionListResponse[]> {
     return this._httpClient.get<InscriptionListResponse[]>(
-      `${API_URL}inscriptions/all`,
+      `${environment.apiUrl}inscriptions/all`,
       this.getAuthHeaders()
     );
   }
   getMyEmployeeInscriptions(entrepriseId:number): Observable<InscriptionListResponse[]> {
     return this._httpClient.get<InscriptionListResponse[]>(
-      `${API_URL}inscriptions/myEmployees/${entrepriseId}`,
+      `${environment.apiUrl}inscriptions/myEmployees/${entrepriseId}`,
       this.getAuthHeaders()
     ).pipe(
       catchError(error => {
@@ -61,7 +61,7 @@ export class InscriptionService {
 
 getInscriptionById(id: number): Observable<InscriptionFormModel> {
     return this._httpClient.get<InscriptionFormModel>(
-      `${API_URL}inscriptions/${id}`,
+      `${environment.apiUrl}inscriptions/${id}`,
       this.getAuthHeaders()
     );
   }
@@ -69,21 +69,21 @@ getInscriptionById(id: number): Observable<InscriptionFormModel> {
   deleteInscription(id: number): Observable<void> {
     if (!id) throw new Error("ID requis pour supprimer une inscription");
     return this._httpClient.delete<void>(
-      `${API_URL}inscriptions/delete/${id}`,
+      `${environment.apiUrl}inscriptions/delete/${id}`,
       this.getAuthHeaders()
     );
   }
 
   validateInscription(id: number): Observable<InscriptionFormModel> {
     return this._httpClient.patch<InscriptionFormModel>(
-      `${API_URL}inscriptions/${id}/validate`,
+      `${environment.apiUrl}inscriptions/${id}/validate`,
       {},
       this.getAuthHeaders()
     );
   }
 
   getInscriptionPdfUrl(fileName: string): string {
-    return `${API_URL}inscriptions/file/${fileName}`;
+    return `${environment.apiUrl}inscriptions/file/${fileName}`;
   }
 }
 

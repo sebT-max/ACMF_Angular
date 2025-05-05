@@ -1,9 +1,9 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {TokenModel} from '../../../../auth/models/token.model';
-import {API_URL} from '../../../../../core/constants/api-constant';
 import {DemandeDevisModel} from '../models/DemandeDevisModel';
 import {Observable} from 'rxjs';
+import {environment} from '../../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +31,14 @@ export class DemandeDevisService{
     this.loadUserRoles();
   }
   createDemandeDevis(demandeDevis:DemandeDevisModel){
-    return this._httpClient.post<DemandeDevisModel>(`${API_URL}demandeDevis/create`,demandeDevis,
+    return this._httpClient.post<DemandeDevisModel>(`${environment.apiUrl}demandeDevis/create`,demandeDevis,
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       }
     );
   }
   getAllDemandeDevis(): Observable<DemandeDevisModel[]> {
-    return this._httpClient.get<DemandeDevisModel[]>(`${API_URL}demandeDevis/all`);
+    return this._httpClient.get<DemandeDevisModel[]>(`${environment.apiUrl}demandeDevis/all`);
   }
 }
 

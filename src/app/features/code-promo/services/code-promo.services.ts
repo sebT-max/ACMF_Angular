@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 import {CodePromoFormModel} from '../models/code-promo-Form.Model';
-import {environment} from '../../../../environments/environment';
+import {API_URL} from '../../../../core/constant';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,10 @@ export class CodePromoService{
   constructor(private _httpClient: HttpClient) {}
 
   createCodePromo(codePromo:CodePromoFormModel){
-    return this._httpClient.post<CodePromoFormModel>(`${environment.apiUrl}code-promos/create`,codePromo);
+    return this._httpClient.post<CodePromoFormModel>(`${API_URL}code-promos/create`,codePromo);
   }
   validateCode(code: string): Observable<CodePromoFormModel> {
-    return this._httpClient.get<CodePromoFormModel>(`${environment.apiUrl}code-promos/validate/${code}`).pipe(
+    return this._httpClient.get<CodePromoFormModel>(`${API_URL}code-promos/validate/${code}`).pipe(
       catchError((error) => {
         console.error('Erreur lors de la validation du code promo', error);
 

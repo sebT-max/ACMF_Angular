@@ -3,7 +3,7 @@ import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {TokenModel} from '../../auth/models/token.model';
 import {StageDetailsModel} from '../models/stage-details-model';
 import {Observable} from 'rxjs';
-import {environment} from '../../../../environments/environment';
+import {API_URL} from '../../../../core/constant';
 
 @Injectable({
   providedIn: 'root'
@@ -31,23 +31,23 @@ export class StageService{
     this.loadUserRoles();
 }
   createStage(stage:StageDetailsModel){
-      return this._httpClient.post<StageDetailsModel>(`${environment.apiUrl}stages/create`,stage);
+      return this._httpClient.post<StageDetailsModel>(`${API_URL}stages/create`,stage);
   }
   getAllStage(): Observable<StageDetailsModel[]> {
-    return this._httpClient.get<StageDetailsModel[]>(`${environment.apiUrl}stages/all`);
+    return this._httpClient.get<StageDetailsModel[]>(`${API_URL}stages/all`);
   }
   getStageById(stageId:number): Observable<StageDetailsModel> {
-    return this._httpClient.get<StageDetailsModel>(`${environment.apiUrl}stages/${stageId}`);
+    return this._httpClient.get<StageDetailsModel>(`${API_URL}stages/${stageId}`);
   }
   getFilteredStages(searchTerm: string): Observable<StageDetailsModel[]> {
     const params = new HttpParams().set('searchTerm', searchTerm);
-    return this._httpClient.get<StageDetailsModel[]>(`${environment.apiUrl}stages/search`, { params });
+    return this._httpClient.get<StageDetailsModel[]>(`${API_URL}stages/search`, { params });
   }
   deleteStage(id:number | undefined): Observable<void> {
-    return this._httpClient.delete<void>(`${environment.apiUrl}stages/delete/${id}`);
+    return this._httpClient.delete<void>(`${API_URL}stages/delete/${id}`);
   }
 
   updateStage(id: number | undefined, updatedStage: StageDetailsModel): Observable<StageDetailsModel> {
-    return this._httpClient.put<StageDetailsModel>(`${environment.apiUrl}stages/update/${id}`, updatedStage);
+    return this._httpClient.put<StageDetailsModel>(`${API_URL}stages/update/${id}`, updatedStage);
   }
 }

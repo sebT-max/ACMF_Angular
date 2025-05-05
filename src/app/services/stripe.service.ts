@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, Observable} from 'rxjs';
 import {StageDetailsModel} from '../features/stage/models/stage-details-model';
-import {environment} from '../../environments/environment';
+import {API_URL} from '../../core/constant';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class StripeService {
     };
 
     return this.http.post<{ url: string }>(
-      `${environment.apiUrl}payments/create-checkout-session`,
+      `${API_URL}payments/create-checkout-session`,
       checkoutData
     ).pipe(
       map(res => res.url),

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DemandeDevisModel} from '../../models/DemandeDevisModel';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {DemandeDevisService} from '../../services/demande-devis.services';
 
 @Component({

@@ -7,7 +7,7 @@ import { LoginFormModel } from '../models/login-form.model';
 import { UserResponseModel } from '../models/user-response.model';
 import { CompanyRegisterFormModel } from '../models/company-register-form-model';
 import { CompanyTokenModel } from '../models/CompanyTokenModel';
-import {environment} from '../../../../environments/environment';
+import {API_URL} from '../../../../core/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -53,14 +53,14 @@ export class AuthService {
   getCompanyByEmailPublic(email: string): Observable<CompanyTokenModel> {
     console.log('Appel API pour obtenir l\'entreprise avec l\'email:', email); // Affiche l'email utilisé
 
-    return this._httpClient.get<CompanyTokenModel>(`${environment.apiUrl}company/email/${email}`).pipe(
+    return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`).pipe(
       tap((resp: CompanyTokenModel) => {
         console.log('Réponse de l\'API:', resp); // Affiche la réponse de l'API
         this.currentCompany.set(resp);
         localStorage.setItem('currentCompany', JSON.stringify(resp));
       }),
       catchError(err => {
-        console.error('Erreur API:', err); // Affichez l'erreur dans la console si l'API échoue
+        console.error('Erreur API:', err);
         return throwError(() => new Error('Erreur lors de l\'appel API'));
       })
     );
@@ -79,7 +79,7 @@ export class AuthService {
     }
 
     if (this.currentCompany()) {
-      const companyRoles = ['company'];  // Rôle pour toute entreprise
+      const companyRoles = ['company'];
       if (companyRoles.includes(role)) {
         return true;
       }
@@ -91,14 +91,12 @@ export class AuthService {
   getToken(): string | null {
     const currentUserValue = this.currentUser();
     const currentCompanyValue = this.currentCompany();
-    // Si aucun token n'est trouvé, renvoie null
     return currentUserValue?.token ?? currentCompanyValue?.token ?? null;
   }
 
 
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
-    // Si un token existe, on ajoute l'en-tête Authorization
     return token
       ? new HttpHeaders().set('Authorization', `Bearer ${token}`)
       : new HttpHeaders();
@@ -113,18 +111,16 @@ export class AuthService {
 
   // PART Particulier
   register(user: RegisterFormModel) {
-    return this._httpClient.post<TokenModel>(`${environment.apiUrl}particulier/register`, user).pipe(
+    return this._httpClient.post<TokenModel>(`${API_URL}particulier/register`, user).pipe(
       tap((resp: TokenModel | null) => {
         if (resp) {
           this.currentUser.set(resp);
           localStorage.setItem('currentUser', JSON.stringify(resp));
-          this.loadUserRoles(resp); // Charger les rôles après enregistrement
+          this.loadUserRoles(resp);
         }
       }),
       catchError((error) => {
-        // Si l'email est déjà utilisé, vous pouvez gérer l'erreur ici
         if (error.status === 400 && error.error?.message === 'Email already used') {
-          // Lancer une erreur avec un message spécifique
           return throwError(() => new Error('L\'email est déjà utilisé.'));
         }
         return throwError(() => error);
@@ -133,7 +129,7 @@ export class AuthService {
   }
 
   login(user: LoginFormModel) {
-    return this._httpClient.post<TokenModel>(`${environment.apiUrl}users/login`, user).pipe(
+    return this._httpClient.post<TokenModel>(`${API_URL}users/login`, user).pipe(
       tap((resp: TokenModel | null): void => {
         if (resp) {
           this.currentUser.set(resp);
@@ -145,7 +141,7 @@ export class AuthService {
 
   // PART Entreprise
   entrepriseRegister(entreprise: CompanyRegisterFormModel) {
-    return this._httpClient.post<CompanyTokenModel>(`${environment.apiUrl}company/register`, entreprise).pipe(
+    return this._httpClient.post<CompanyTokenModel>(`${API_URL}company/register`, entreprise).pipe(
       tap((resp: CompanyTokenModel | null) => {
         if (resp) {
           const companyTokenModel: CompanyTokenModel = {
@@ -164,7 +160,7 @@ export class AuthService {
   }
 
   companyLogin(entreprise: LoginFormModel) {
-    return this._httpClient.post<CompanyTokenModel>(`${environment.apiUrl}company/login`, entreprise).pipe(
+    return this._httpClient.post<CompanyTokenModel>(`${API_URL}company/login`, entreprise).pipe(
       tap((resp: CompanyTokenModel | null): void => {
         if (resp) {
           const companyTokenModel: CompanyTokenModel = {
@@ -191,21 +187,21 @@ export class AuthService {
 
   getMe(): Observable<UserResponseModel> {
     return this._httpClient.get<UserResponseModel>(
-      `${environment.apiUrl}user/me`,
+      `${API_URL}user/me`,
       this.getAuthOptions(),
     );
   }
 
   getUserById(id: number): Observable<UserResponseModel> {
     return this._httpClient.get<UserResponseModel>(
-      `${environment.apiUrl}user/${id}`,
+      `${API_URL}user/${id}`,
       this.getAuthOptions(),
     );
   }
 
   getUsers(): Observable<UserResponseModel[]> {
     return this._httpClient.get<UserResponseModel[]>(
-      `${environment.apiUrl}user/all`,
+      `${API_URL}user/all`,
       this.getAuthOptions(),
     );
   }

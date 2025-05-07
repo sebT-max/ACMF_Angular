@@ -116,7 +116,7 @@
             readonly
             class="token-input"
           />
-          <a [href]="'http://localhost:4200/inscription/' + privateLink.token">Lien</a>
+          <a [href]="WEBSITE_URL+privateLink.entrepriseNom+'/inscription/employee/'+privateLink.token">Lien</a>
           <button (click)="toggleTokenVisibility()" class="eye-icon">
             <i [ngClass]="isTokenVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
           </button>

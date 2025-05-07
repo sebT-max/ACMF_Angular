@@ -12,6 +12,7 @@ import {
   PrivateLinkFormComponent
 } from '../../features/private-link/pages/private-link-form/private-link-form.component';
 import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
+import {WEBSITE_URL} from "../../../core/constant";
 
 @Component({
   selector: 'app-company-dashboard',
@@ -97,4 +98,6 @@ export class CompanyDashboardComponent implements OnInit {
   toggleTokenVisibility() {
     this.isTokenVisible = !this.isTokenVisible;
   }
+
+    protected readonly WEBSITE_URL = WEBSITE_URL;
 }

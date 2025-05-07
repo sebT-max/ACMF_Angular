@@ -34,6 +34,7 @@ export class StageAllComponent implements OnInit {
   @Input() limit: number | null = null;
 
   private readonly _router: Router = inject(Router);
+  private geocodeCache: { [key: string]: [number, number] } = {};
 
   stages: StageWithDistance[] = [];
   selectedStage: StageWithDistance | null = null;
@@ -75,8 +76,11 @@ export class StageAllComponent implements OnInit {
           this.loadStagesWithDistance();
         },
         (error) => {
-          console.error('Erreur de géolocalisation :', error);
-          this.loadStages();
+          console.error('Erreur de géolocalisation:', error);
+          this.userLatitude = null;
+          this.userLongitude = null;
+          this.loadStages(); // Charger sans géolocalisation
+          alert('La géolocalisation a été refusée. Les distances ne seront pas calculées.');
         }
       );
     } else {
@@ -86,7 +90,10 @@ export class StageAllComponent implements OnInit {
   }
 
   getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
-    console.log('Mapbox token:', environment.mapboxToken);
+    // Vérifier si l'adresse est déjà dans le cache
+    if (this.geocodeCache[address]) {
+      return Promise.resolve(this.geocodeCache[address]);
+    }
 
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
 
@@ -94,7 +101,12 @@ export class StageAllComponent implements OnInit {
       .then(res => res.json())
       .then(data => {
         if (data.features && data.features.length > 0) {
-          return data.features[0].center; // [lng, lat]
+          const coords = data.features[0].center; // [lng, lat]
+
+          // Ajouter les coordonnées dans le cache
+          this.geocodeCache[address] = coords;
+
+          return coords;
         } else {
           return null;
         }
@@ -115,63 +127,32 @@ export class StageAllComponent implements OnInit {
   }
 
   onDateFilter(): void {
-    // Réinitialiser la pagination lors du changement de filtre
+    // Réinitialiser la pagination et appliquer le filtre
     this.currentPage = 1;
-
-    // Si la date est sélectionnée
-    if (this.selectedDate) {
-      // Filtrer les stages en fonction de la date sélectionnée
-      this.filteredStages = this.stages.filter(stage => {
-        const stageDate = new Date(stage.dateDebut);
-        return stageDate.getFullYear() === this.selectedDate?.getFullYear() &&
-          stageDate.getMonth() === this.selectedDate?.getMonth() &&
-          stageDate.getDate() === this.selectedDate?.getDate();
-      });
-    } else {
-      // Si aucune date n'est sélectionnée, utiliser tous les stages
-      this.filteredStages = [...this.stages];
-    }
-
-    // Appliquer le tri par date
-    this.filteredStages = this.sortStagesByDate(this.filteredStages);
-
-    // Mettre à jour la pagination
-    this.paginate();
+    this.applyFilters();
   }
 
+
   loadStages(): void {
-    const now = new Date();
-
     const loadAndProcessStages = (stages: StageWithDistance[]) => {
-      // Filtrer les stages futurs uniquement
-      const futureStages = stages.filter(stage => {
-        const stageDate = new Date(stage.dateDebut);
-        return stageDate >= now;
-      });
-
-      // Trier par date
+      const futureStages = stages.filter(stage => new Date(stage.dateDebut) >= new Date());
       this.stages = this.sortStagesByDate(futureStages);
-
-      // Appliquer les filtres actifs
-      this.applyFilters();
+      this.applyFilters();  // Appliquer les filtres après avoir chargé les stages
     };
 
     if (this.searchTerm) {
       this._stageService.getFilteredStages(this.searchTerm).subscribe({
-        next: (stages: StageWithDistance[]) => {
-          loadAndProcessStages(stages);
-        },
+        next: loadAndProcessStages,
         error: (error: string) => console.error('Erreur de chargement:', error)
       });
     } else {
       this._stageService.getAllStage().subscribe({
-        next: (stages: StageWithDistance[]) => {
-          loadAndProcessStages(stages);
-        },
+        next: loadAndProcessStages,
         error: (error: string) => console.error('Erreur de chargement:', error)
       });
     }
   }
+
 
   private sortStagesByDate(stages: StageWithDistance[]): StageWithDistance[] {
     return [...stages].sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
@@ -224,12 +205,15 @@ export class StageAllComponent implements OnInit {
     }
   }
 
-  // Méthode pour appliquer tous les filtres actifs
   applyFilters(): void {
-    // Commencer avec tous les stages
     let filtered = [...this.stages];
 
-    // Appliquer le filtre de date si nécessaire
+    // Appliquer le filtre de géolocalisation
+    if (this.userLatitude && this.userLongitude) {
+      filtered = filtered.filter(stage => stage.distance !== Infinity);
+    }
+
+    // Appliquer le filtre de date
     if (this.selectedDate) {
       filtered = filtered.filter(stage => {
         const stageDate = new Date(stage.dateDebut);
@@ -239,16 +223,8 @@ export class StageAllComponent implements OnInit {
       });
     }
 
-    // Mettre à jour les stages filtrés
+    // Trier les stages par date
     this.filteredStages = this.sortStagesByDate(filtered);
-
-    // Si la limite est définie, appliquer la limite
-    if (this.limit !== null) {
-      this.filteredStages = this.filteredStages.slice(0, this.limit);
-    }
-
-    // Réinitialiser la pagination
-    this.currentPage = 1;
     this.paginate();
   }
 

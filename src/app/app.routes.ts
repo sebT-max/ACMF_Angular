@@ -40,7 +40,7 @@ export const routes: Routes = [
       ((c) => c.ConditionsGeneralesDeVenteComponent),
   },
   {
-    path: 'users/register',
+    path: 'particulier/register',
     loadComponent: () =>
       import('./features/auth/pages/register/register.component').then(
         (c) => c.RegisterComponent,

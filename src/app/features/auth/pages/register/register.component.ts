@@ -68,7 +68,6 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-
   // Soumission du formulaire
   handleRegisterFormSubmit(): void {
     console.log(this.registerForm.value);
@@ -78,7 +77,6 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = "Veuillez remplir tous les champs obligatoires.";
       return;
     }
-
 
     this.isLoading = true;
 

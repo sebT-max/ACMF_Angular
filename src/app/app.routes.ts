@@ -177,7 +177,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'inscription/:token',
+    path: ':entreprise/inscription/employee/:token',
     loadComponent: () =>
       import('./features/private-link/pages/private-link-form/private-link-form.component').then(
         (c) => c.PrivateLinkFormComponent

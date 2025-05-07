@@ -18,7 +18,7 @@
         <strong>Dates :</strong> {{ link.stageInfo.startDate | date:'d':'fr' }} & {{ link.stageInfo.endDate | date:'d MMMM yyyy':'fr' }}<br>
 
       </td>
-      <td><a [href]="'http://localhost:4200/inscription/' + link.token">Lien d'inscription</a></td>
+      <td><a [href]=" WEBSITE_URL+ link.entrepriseNom +'/inscription/employee/' + link.token">Lien d'inscription</a></td>
       <td>{{ link.expirationDate | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td>{{ link.id }}</td>
       <td>

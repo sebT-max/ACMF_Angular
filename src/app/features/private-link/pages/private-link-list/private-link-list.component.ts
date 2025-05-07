@@ -4,6 +4,7 @@ import {PrivateLinkService} from '../../services/private-link.services';
 import {PrivateLinkModel} from '../../Model/PrivateLinkModel';
 import {StageInfoResponse} from '../../../stage/models/stageInfoResponse';
 import {ToastrService} from 'ngx-toastr';
+import {WEBSITE_URL} from '../../../../../core/constant';
 
 @Component({
   selector: 'app-private-link-list',
@@ -78,4 +79,6 @@ export class PrivateLinkListComponent implements OnInit {
       }
     });
   }
+
+  protected readonly WEBSITE_URL = WEBSITE_URL;
 }

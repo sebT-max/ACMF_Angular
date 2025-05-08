@@ -128,18 +128,39 @@ nav a {
 
 // Burger icon (visible only on small devices)
 .burger {
-  display: none;
+  display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 20px;
+  justify-content: space-around;
+  align-items: center;
+  width: 30px;
+  height: 25px;
   cursor: pointer;
-  margin-right: 20px;
 
   span {
-    height: 3px;
-    background: white;
-    border-radius: 2px;
+    display: block;
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+    margin-right:25px;
+  }
+
+  &.open {  // Quand le menu est ouvert, appliquer ce style
+    span:nth-child(1) {
+      transform: rotate(45deg);
+      position: relative;
+      top: 8px;
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+    }
+
+    span:nth-child(3) {
+      transform: rotate(-45deg);
+      position: relative;
+      bottom: 8px;
+    }
   }
 }
 

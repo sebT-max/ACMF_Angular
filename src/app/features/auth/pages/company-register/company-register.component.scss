@@ -6,6 +6,21 @@
   flex-direction: row;
   align-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    font-size: 12px;
+    margin:15px auto 0;
+    margin-bottom:10px;
+    background-image: url(/pic20.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height:100vh;
+    h1{
+      color:white;
+      text-align: center;
+      font-size: 35px;
+    }
+  }
 }
 .register_form{
   border: 0.1px solid white;
@@ -15,6 +30,13 @@
   padding: 0px 30px;
   div{
     margin:20px;
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
+    width:80%;
+    border:none;
+    box-shadow: 0px 0px 0px white;
+    color:white;
   }
 }
 form{
@@ -66,6 +88,9 @@ form{
     width: 50%;
     #logo_register_form{
       margin-top:30vh;
+    }
+    @media (max-width: 768px) {
+      display:none;
     }
 
     p {

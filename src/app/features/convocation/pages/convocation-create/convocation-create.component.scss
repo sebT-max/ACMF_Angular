@@ -7,11 +7,22 @@ form{
     flex-wrap:wrap;
     justify-content: center;
     flex-direction: row;
+    @media(max-width:430px){
+      width:auto;
+    }
+  }
+  label{
+    @media(max-width:430px){
+      display:none;
+    }
   }
 }
 form div {
   width:40%;
   margin:20px;
+  @media(max-width:430px){
+    width:100%;
+  }
 }
 .facture-form{
   height:100vh;

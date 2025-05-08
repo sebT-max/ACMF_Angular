@@ -10,9 +10,17 @@ form{
   div {
     width:40%;
     margin: 0 auto 20px;
+    @media(max-width:430px){
+      width:80%;
+      margin: 0 auto 20px;
+    }
   }
   textarea{
     width: 100%;
     color:black;
   }
+}
+tbody, tr, td {
+  display: block;
+  width: 100%;
 }

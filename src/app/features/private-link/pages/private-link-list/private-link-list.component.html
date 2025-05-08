@@ -1,4 +1,4 @@
-<div class="container">
+<div class="private_link_container">
   <table class="table">
     <thead>
     <tr>
@@ -19,14 +19,13 @@
 
       </td>
       <td><a [href]="WEBSITE_URL+link.entrepriseNom+'/inscription/employee/'+link.token">Lien d'inscription</a></td>
-      <td>{{ link.expirationDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td>{{ link.id }}</td>
+      <td>Exp: {{ link.expirationDate | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td>
         <button
           class="btn"
-          [ngClass]="link.active ? 'btn-danger' : 'btn-success'"
+          [ngClass]="link.isActive ? 'btn-danger' : 'btn-success'"
           (click)="toggleLinkStatus(link)">
-          {{ link.active ? 'Désactiver' : 'Réactiver' }}
+          {{ link.isActive ? 'Désactiver' : 'Réactiver' }}
         </button>
       </td>
     </tr>

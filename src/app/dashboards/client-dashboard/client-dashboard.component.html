@@ -33,17 +33,16 @@
           <td>
             <div id="agencement_details" *ngIf="inscription.id; else loading">
               <div style="margin-right:40px;">
-                <h3> Stage à {{ inscription.stageCity }}</h3>
-                <br/>
-                <strong>Rue :</strong> {{ inscription.stageStreet }} <br>
-                <strong>Arrondissement :</strong> {{ inscription.stageArrondissement }} <br>
+               <p style="font-weight: 900;font-family: Poppins-Bold,sans-serif;">Stage à {{ inscription.stageCity }}</p>
+                <p>Rue : {{ inscription.stageStreet }}</p>
+                <p>Arrondissement : {{ inscription.stageArrondissement }}</p>
               </div>
 
 
               <div>
-                <strong>Date :</strong> {{ inscription.stageDateDebut | date:'d':'fr' }} & {{ inscription.stageDateFin | date:'d MMMM yyyy':'fr' }}<br>
-                <strong>Organisation :</strong> {{ inscription.stageOrganisation }}<br>
-                <strong>Prix :</strong> {{ inscription.stagePrice | currency:'EUR' }}
+                Date : {{ inscription.stageDateDebut | date:'d':'fr' }} & {{ inscription.stageDateFin | date:'d MMMM yyyy':'fr' }}<br>
+                Organisation : {{ inscription.stageOrganisation }}<br>
+                Prix : {{ inscription.stagePrice | currency:'EUR' }}
               </div>
             </div>
             <ng-template #loading>

@@ -18,13 +18,12 @@ export class DemandeDevisAllComponent implements OnInit {
     private _demandeDevisService: DemandeDevisService,
   ) {}
   ngOnInit() {
-
     this.loadDemandedevis();
   }
   loadDemandedevis(): void {
-
       this._demandeDevisService.getAllDemandeDevis().subscribe({
         next: (demandesDevis: DemandeDevisModel[]) => {
+          console.log(demandesDevis);
           this.demandesDevis = demandesDevis;
         },
         error: (error: string) => console.error('Erreur de chargement:', error)

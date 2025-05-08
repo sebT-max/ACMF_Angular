@@ -136,6 +136,10 @@ nav a {
   height: 25px;
   cursor: pointer;
 
+  @media(min-width:1441px){
+    display:none;
+  }
+
   span {
     display: block;
     width: 30px;
@@ -218,7 +222,7 @@ nav a {
 }
 
 // Responsive breakpoints
-@media (max-width: 1028px) {
+@media (max-width: 1440px) {
   .header_nav_links_container {
     display: none;
   }

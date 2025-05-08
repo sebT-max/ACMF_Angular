@@ -485,6 +485,45 @@ app-document-utilisateur {
   }
 }
 
+@media (max-width: 430px){
+
+  table{
+    th{
+      display:none;
+    }
+    tr {
+      margin-bottom: 20px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      position: relative;
+      text-align: left;
+      border: none;
+      margin-top: 10px;
+      font-size:16px !important;
+      h1{
+        color:black;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      &::before {
+        content: attr(data-label);
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 45%;
+        font-weight: bold;
+        color: #041a3a;
+        font-family: Poppins-SemiBold, serif;
+      }
+    }
+  }
+}
+
 
 
 

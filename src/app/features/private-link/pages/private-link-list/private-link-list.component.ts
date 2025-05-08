@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {DatePipe, NgClass, NgForOf} from '@angular/common';
 import {PrivateLinkService} from '../../services/private-link.services';
 import {PrivateLinkModel} from '../../Model/PrivateLinkModel';
-import {StageInfoResponse} from '../../../stage/models/stageInfoResponse';
 import {ToastrService} from 'ngx-toastr';
 import {WEBSITE_URL} from '../../../../../core/constant';
 
@@ -39,7 +38,8 @@ export class PrivateLinkListComponent implements OnInit {
       }
     });
   }
-  toggleLinkStatus(link: any): void {
+  toggleLinkStatus(link: PrivateLinkModel): void {
+
     if (link.isActive) {
       this.deactivateLink(link.id);
     } else {
@@ -54,7 +54,7 @@ export class PrivateLinkListComponent implements OnInit {
         console.log(privateLink);
         // Exemple de mise à jour locale du lien pour désactiver le bouton
         const link = this.privateLinks.find(l => l.id === linkId);
-        if (link) link.active = false;
+        if (link) link.isActive = false;
         this.toastr.success('Lien désactivé avec succès', 'Succès');
       },
       error: (err) => {
@@ -70,7 +70,7 @@ export class PrivateLinkListComponent implements OnInit {
         console.log(privateLink);
         // Exemple de mise à jour locale du lien pour désactiver le bouton
         const link = this.privateLinks.find(l => l.id === linkId);
-        if (link) link.active = true;
+        if (link) link.isActive = true;
         this.toastr.success('Lien réactivé avec succès', 'Succès');
       },
       error: (err:any) => {

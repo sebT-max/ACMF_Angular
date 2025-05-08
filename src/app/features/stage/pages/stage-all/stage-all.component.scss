@@ -2,18 +2,28 @@
   background: white;
   box-shadow: 3px 2px 15px 1px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
+  @media (max-width: 431px) {
+    width: 85%;
+    margin: 0 auto;
+  }
 }
 .card_stages{
   display: flex;
   justify-content: space-between;
   border-radius: 10px;
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
   color: #041a3a;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform: translate(0px, -20x);
   &:hover{
     border-left:1px solid white;
+  }
+  @media (max-width: 431px) {
+    flex-wrap:wrap;
+    padding: 10px;
+    font-size: 12px;
+    width:auto;
   }
 }
 .inscription_button{
@@ -26,6 +36,12 @@
   background-color: #b41c1b;
   color:white;
   height:70px;
+  @media (max-width: 431px) {
+    text-align: center;
+    margin-bottom:20px;
+    font-size:16px;
+    background-color: #b41c1b;
+  }
 }
 .details_button{
   width: 140px;
@@ -36,6 +52,11 @@
   padding: 8px;
   border-radius: 3px;
   background: white;
+  @media (max-width: 431px) {
+    text-align: center;
+    margin-bottom:20px;
+    font-size:16px;
+  }
 }
 .close_button {
   width: 140px;
@@ -55,6 +76,10 @@
   display: flex;
   flex-direction: column;
   padding:2% 10%;
+  @media (max-width: 430px) {
+    padding:2% 0;
+  }
+
 }
 
 .card_stages {
@@ -84,6 +109,11 @@ h1{
   color:white;
   border-radius: 10px;
   width: 160px;
+  @media (max-width: 431px) {
+    width: 30%;
+    font-size: 20px;
+    text-align: center;
+  }
 }
 
 .card_stages_remaining_places_and_distance{
@@ -100,12 +130,26 @@ h1{
   color:dimgrey;
   font-family: Poppins-Medium, serif;
   border-radius: 10px;
+  @media (max-width: 430px) {
+    width:60%;
+  }
 }
 .card_stages_all_datas{
   width: 80%;
   padding: 10px 20px;
   font-family: Poppins-Medium, serif;
   font-size:12px;
+  @media (max-width: 430px) {
+    width:100%;
+    text-align: center;
+    margin-top:20px;
+    h2{
+      font-size:24px;
+    }
+    hr{
+      margin:5px;
+    }
+  }
 }
 #stage_price{
   display: flex;
@@ -114,6 +158,12 @@ h1{
   align-items: center;
   padding:20px;
   font-family: Poppins-Medium, serif;
+  @media (max-width: 431px) {
+    width:100%;
+    text-align: center;
+    margin-bottom:20px;
+    font-size:20px;
+  }
 }
 
 #stage_filters{

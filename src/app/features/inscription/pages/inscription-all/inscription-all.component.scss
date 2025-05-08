@@ -24,6 +24,9 @@ td{
   div{
     margin:0px 20px;
     line-height: 30px;
+    @media(max-width: 430px){
+      margin:0;
+    }
   }
   button{
     margin:0 auto;
@@ -156,7 +159,9 @@ inscriptions_stages_datas_th{
 }
 .date-cell {
   width: 25%;
-
+  @media(max-width: 430px){
+    width:100%;
+  }
   .inscription_stagiaire {
     font-weight: 500;
     margin-bottom: 8px;
@@ -170,9 +175,16 @@ inscriptions_stages_datas_th{
 }
 .details-cell {
   width: 40%;
+  @media(max-width: 430px){
+    width:100%;
+  }
 
   .details-grid {
     gap: 20px;
+    @media(max-width: 430px){
+      width:100%;
+      gap:0;
+    }
 
     .location-details, .org-details {
       flex: 1;
@@ -185,6 +197,9 @@ inscriptions_stages_datas_th{
 }
 .actions-cell {
   width: 15%;
+  @media(max-width: 430px){
+    width:100%;
+  }
 
   .action-button {
     width: 100%;
@@ -367,6 +382,10 @@ inscriptions_stages_datas_th{
     color: #dc3545;
     font-weight: 500;
   }
+}
+tbody, tr, td {
+  display: block;
+  width: 100%;
 }
 
 

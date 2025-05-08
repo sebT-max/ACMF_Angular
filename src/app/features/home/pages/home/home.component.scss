@@ -171,6 +171,9 @@ margin-bottom:20px;
 }
 }
 .call_to_register_home_bottom_container{
+  display:flex;
+  justify-content: center;
+  flex-wrap:wrap;
   background-image: url(/pic6.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -202,20 +205,35 @@ margin-bottom:20px;
 }
 .second_home_container_division{
   padding: 5% 12%;
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 5% 0px;
+  }
   hr{
     height: 5px;
     background: #ffffff;
     width: 75%;
     margin: 30px 0px;
+    @media (max-width: 768px) {
+      font-size: 12px;
+      margin:15px auto 0;
+      margin-bottom:10px;
+    }
   }
   p{
     font-size:16px;
     color: white;
     padding: 10px;
     font-family: Poppins-Regular, serif;
-    font-weight: 900;  }
+    font-weight: 900;
+  }
   .logo_header{
     text-align: center;
+    img{
+      width:150px;
+      height:auto;
+      margin:20px 0px;
+    }
   }
   h1{
     width:100%;

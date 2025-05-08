@@ -3,11 +3,8 @@
   box-shadow: 3px 2px 15px 1px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   @media (max-width: 431px) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-    font-size: 12px;
-    width:auto;
+    width: 85%;
+    margin: 0 auto;
   }
 }
 .card_stages{
@@ -109,7 +106,9 @@ h1{
   border-radius: 10px;
   width: 160px;
   @media (max-width: 431px) {
-    width:30%;
+    width: 30%;
+    font-size: 20px;
+    text-align: center;
   }
 }
 
@@ -140,6 +139,12 @@ h1{
     width:100%;
     text-align: center;
     margin-top:20px;
+    h2{
+      font-size:24px;
+    }
+    hr{
+      margin:5px;
+    }
   }
 }
 #stage_price{
@@ -180,6 +185,10 @@ h1{
     box-shadow: 0px 0px 1px white;
     border:none;
   }
+}
+#stage_home_buttons{
+  display: flex;
+  margin:0 auto;
 }
 .app-stage-details {
   margin-top: 0px; /* Espacement entre la carte et les détails */

@@ -4,6 +4,39 @@
       <img src="/LOGO%20BLANC_small.png" alt="logo_acf">
     </div>
   </div>
+  <!-- Burger menu toggle -->
+  <div class="burger" (click)="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Menu mobile -->
+  <nav class="mobile-menu" [class.open]="mobileMenuOpen">
+    <button routerLink="stages/all" (click)="toggleMobileMenu()">Nos stages</button>
+    <button routerLink="stages-infos" (click)="toggleMobileMenu()">Infos stages</button>
+    <button routerLink="qui-sommes-nous ?" (click)="toggleMobileMenu()">Qui nous sommes nous ?</button>
+    <button routerLink="b2b" (click)="toggleMobileMenu()">Professionnels</button>
+    <button routerLink="statistiques-et-législation" (click)="toggleMobileMenu()">Statistiques et législation (SEO)</button>
+
+    <ng-container *ngIf="!userConnected() && !companyConnected()">
+      <div class="accordion-register">
+        <button (click)="toggleRegisterAccordion()" class="accordion-btn">S'inscrire</button>
+        <div class="panel" [class.open]="registerAccordionOpen">
+          <button routerLink="particulier/register" class="btn_register" (click)="toggleMobileMenu()">Particulier</button>
+          <button routerLink="company/register" class="btn_register" (click)="toggleMobileMenu()">Entreprise</button>
+        </div>
+      </div>
+      <button routerLink="users/login" class="btn_login" (click)="toggleMobileMenu()">Se connecter</button>
+    </ng-container>
+
+    <ng-container *ngIf="userConnected() || companyConnected()">
+      <button *ngIf="userConnected()?.role?.name === 'ADMIN'" routerLink="dashboard-admin" (click)="toggleMobileMenu()">Mon espace admin</button>
+      <button *ngIf="userConnected()?.role?.name === 'ENTREPRISE' || companyConnected()" routerLink="dashboard-company" (click)="toggleMobileMenu()">Mon espace professionnel</button>
+      <button *ngIf="userConnected()?.role?.name === 'PARTICULIER'" routerLink="dashboard-client" (click)="toggleMobileMenu()">Mes inscriptions</button>
+      <button (click)="logout()">Déconnexion</button>
+    </ng-container>
+  </nav>
   <div class="header_nav_links_container">
     <button routerLink="stages/all">Nos stages</button>
     <button routerLink="stages-infos">Infos stages</button>

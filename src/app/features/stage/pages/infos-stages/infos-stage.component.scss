@@ -11,6 +11,12 @@
     background: white;
     border-radius: 0px 0px 34px 0px;
     margin-bottom: 50px;
+    @media (max-width: 768px) {
+      padding: 40px;
+      background: white;
+      border-radius: 0px 0px 34px 0px;
+      margin-bottom: 50px;
+    }
 
   }
   ol{
@@ -21,6 +27,9 @@
     border-radius: 0px 0px 0px 80px;
     text-decoration: none;
     margin-top: 174px;
+    @media (max-width: 768px) {
+      display:none;
+    }
   }
   li a{
     color:#222730;
@@ -46,6 +55,19 @@
 #info_stages_content {
   margin-right: 30%; /* Décale le contenu pour qu'il ne soit pas caché par la navbar */
   padding-right: 10px; /* Espace pour éviter que le texte touche la barre latérale */
+  @media (max-width: 768px) {
+    background: white;
+    border-radius: 0px 0px 34px 0px;
+    margin-bottom: 50px;
+    margin-right: 0%;
+    padding-right: 0px;
+    h2{
+      padding: 21px;
+      background: #041a3a;
+      color: white;
+      border-radius: 0px 0px 0px 0px;
+    }
+  }
 }
 #logo_infos_stages{
   display: flex;

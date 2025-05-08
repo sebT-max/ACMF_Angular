@@ -12,6 +12,10 @@ header {
   align-items: center;
   background-color: #041a3a;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  @media (max-width: 768px) {
+    height:85px;
+  }
+
   img{
     width: 100px;
     padding:20px 0px 0px 20px;
@@ -121,5 +125,87 @@ nav a {
 .btn:hover {
   background-color: #1e7e34;
 }
+
+// Burger icon (visible only on small devices)
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+  margin-right: 20px;
+
+  span {
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+  }
+}
+
+// Mobile menu styles
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: #041a3a;
+  position: absolute;
+  top: 70px;
+  width: 100%;
+  z-index: 999;
+  padding: 10px;
+  transition: max-height 0.3s ease;
+  max-height: 0;
+  overflow: hidden;
+
+  button {
+    color: white;
+    background: none;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+  }
+
+  &.open {
+    display: flex;
+    max-height: 500px;
+  }
+
+  .accordion-register {
+    .accordion-btn {
+      background: black;
+      color: white;
+      padding: 10px;
+      text-align: left;
+      width: 100%;
+      border: none;
+    }
+
+    .panel {
+      display: none;
+      flex-direction: column;
+
+      button {
+        background-color: #222730;
+      }
+
+      &.open {
+        display: flex;
+      }
+    }
+  }
+}
+
+// Responsive breakpoints
+@media (max-width: 768px) {
+  .header_nav_links_container {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+}
+
 
 

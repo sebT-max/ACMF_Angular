@@ -28,7 +28,9 @@ export class HeaderComponent {
   showRegisterAnimation = false;
   showLoginModal = false;
   showLoginAnimation = false;
-  closeTimeout: any; // Variable pour stocker le timeout de fermeture
+  closeTimeout: any;
+  mobileMenuOpen = false;
+  registerAccordionOpen = false;
 
   openRegisterModal() {
     this.showRegisterModal = true;
@@ -75,6 +77,8 @@ export class HeaderComponent {
 
   // 🎯 Détection du scroll
   isScrolled = false;
+  lastScrollTop = 0;
+  hideHeader = false;
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isScrolled = window.scrollY > 100;
@@ -93,5 +97,16 @@ export class HeaderComponent {
   logout() {
     this.$_authService.logout();
     this._router.navigate(['/']);
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    if (!this.mobileMenuOpen) {
+      this.registerAccordionOpen = false;
+    }
+  }
+
+  toggleRegisterAccordion() {
+    this.registerAccordionOpen = !this.registerAccordionOpen;
   }
 }

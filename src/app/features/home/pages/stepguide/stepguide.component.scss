@@ -1,12 +1,25 @@
 .step_guide_main_container{
   width: 100%;
   padding:0 20%;
+  @media (max-width: 431px) {
+    width:100%;
+    text-align:center;
+    font-size: 20px;
+    margin-top:60px;
+    padding:10px 5px;
+  }
 }
 #steps_title{
   color:white;
   font-size:44px;
   padding:40px;
   border:none;
+  @media (max-width: 431px) {
+    width:100%;
+    text-align:center;
+    font-size: 20px;
+    padding:10px;
+  }
 }
 .stepper-wrapper {
   position: relative;
@@ -15,6 +28,12 @@
 }
 .stepper{
   border-radius:10px;
+  @media (max-width: 431px) {
+    width:100%;
+    text-align:center;
+    font-size: 16px;
+    padding:20px;
+  }
 }
 .btn-next{
   padding: 10px 5px;
@@ -25,6 +44,12 @@
   color: #292c32;
   font-weight: 600;
   border:none;
+  @media (max-width: 431px) {
+    width:100%;
+    text-align:center;
+    font-size: 12px;
+    margin:100px auto 0;
+  }
 }
 
 .progress-bar {
@@ -86,20 +111,35 @@
   border-radius: 10px;
   white-space: pre-line;
   line-height:40px;
+  @media (max-width: 431px) {
+    padding: 0px;
+  }
 
   h2{
     font-size: 44px;
     color: #ffffffd6;
+    @media (max-width: 768px) {
+      font-size: 32px;
+    }
   }
   p{
     font-size: 24px;
     height: 60px;
     color: white;
     font-weight: 600;
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
   }
   hr{
     height:3px;
     margin:10px 0px 40px 0px;
+    @media (max-width: 431px) {
+      width:40%;
+      margin:0 auto;
+      height:1px;
+      font-size:1px;
+    }
   }
   button{
     width: 180px;
@@ -119,7 +159,7 @@
 
 @media (max-width: 768px) {
   .stepper {
-    flex-direction: column;
+    flex-direction: flex;
     align-items: center;
     gap: 15px;
   }

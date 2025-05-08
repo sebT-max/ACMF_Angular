@@ -12,7 +12,6 @@
   ul{
     margin:10px;
     padding:20px;
-
   }
   ol{
     padding: 40px;
@@ -21,6 +20,9 @@
     background: #f8a733;
     border-radius: 0px 0px 0px 80px;
     text-underline: #33165b;
+    @media (max-width: 768px) {
+      display:none
+    }
   }
   li a{
     color:#222730;
@@ -54,6 +56,36 @@
     margin-bottom:60px;
     line-height:50px;
   }
+  @media (max-width: 430px) {
+    display:block;
+    flex-direction: column;
+    margin:0;
+    padding:10px;
+    border-radius: 0 80px 80px 0;
+    h2{
+      font-size:54px;
+      padding:20px;
+      font-family: Poppins-Medium,serif;
+      line-height:50px;
+      margin-bottom:20px;
+    }
+    p{
+      padding:20px;
+    }
+  }
+  @media (min-width: 431px) and (max-width: 768px) {
+    background: white;
+    border-radius: 0px 0px 34px 0px;
+    margin-bottom: 50px;
+    margin-right: 0%;
+    padding-right: 0px;
+    h2{
+      padding: 21px;
+      background: #041a3a;
+      color: white;
+      border-radius: 0px 0px 0px 0px;
+    }
+  }
   .card{
     width:40%;
     margin:5%;
@@ -62,7 +94,13 @@
     line-height:30px;
     font-size:20px;
     text-align:left;
-
+    @media (max-width: 430px) {
+      width:90%;
+      margin:30px auto 0;
+      h2{
+        font-size:36px;
+      }
+    }
   }
 }
 
@@ -78,5 +116,23 @@
   font-size: 78px;
   color: white;
   background: rgba(0, 0, 0, 0.5);
+  @media (max-width: 430px) {
+    font-size:60px;
+  }
 }
+
+#contact_and_team{
+  li {
+    @media (max-width: 430px) {
+      padding: 20px;
+    }
+  }
+  h2{
+    margin-top:40px;
+    @media (max-width: 430px) {
+      padding:20px;
+    }
+  }
+}
+
 

@@ -90,8 +90,18 @@ export class AdminStageAllComponent implements OnInit {
         }
       },
       error: (err) => {
-        if (err.status === 409 || (err.error?.message?.includes('foreign key'))) {
-          this.toastr.error("Ce stage ne peut pas être supprimé car des inscriptions y sont liées.");
+        if (err.status === 409) {
+          const message = err.error?.message || '';
+
+          if (message.includes('liens privés') && message.includes('inscriptions')) {
+            this.toastr.error("Ce stage ne peut pas être supprimé car il est lié à des inscriptions et à des liens privés.");
+          } else if (message.includes('liens privés')) {
+            this.toastr.error("Ce stage ne peut pas être supprimé car il est encore lié à un ou plusieurs liens privés.");
+          } else if (message.includes('inscriptions')) {
+            this.toastr.error("Ce stage ne peut pas être supprimé car des inscriptions y sont liées.");
+          } else {
+            this.toastr.error("Suppression impossible : ce stage est encore lié à d'autres données.");
+          }
         } else {
           this.toastr.error("Une erreur est survenue lors de la suppression.");
         }

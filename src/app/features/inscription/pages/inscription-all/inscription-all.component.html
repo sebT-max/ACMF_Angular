@@ -78,9 +78,9 @@
 
         <td style="text-align:center;">
           <ng-container *ngIf="(inscription.documents?.length || 0) > 0; else noDocuments">
-            <div *ngFor="let doc of inscription.documents">
+            <div id="inscription_documents_td" *ngFor="let doc of inscription.documents">
               <button class="text-primary" (click)="viewFile(doc.fileUrl)">
-                {{ doc.fileName }}
+                <p>{{ doc.fileName }}</p>
               </button>
             </div>
           </ng-container>

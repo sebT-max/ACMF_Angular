@@ -46,7 +46,7 @@
       <div id="inscription_form_files">
         <!-- Permis -->
         <div class="file-upload-section">
-          <label for="permis"><strong>Permis (recto+verso)</strong></label>
+          <label for="permis"><strong>Permis</strong></label>
           <p-fileUpload
             name="permis"
             [customUpload]="true"
@@ -65,7 +65,7 @@
 
         <!-- Carte d'identité -->
         <div class="file-upload-section">
-          <label for="carteId"><strong>Carte Id (recto+verso)</strong></label>
+          <label for="carteId"><strong>Carte Id</strong></label>
           <p-fileUpload
             name="carteId"
             [customUpload]="true"
@@ -84,7 +84,7 @@
 
         <!-- Lettre 48N -->
         <div *ngIf="selectedStageLabel === 'Tribunal'" class="file-upload-section">
-          <label for="lettre48n"><strong>Lettre 48N (pdf)</strong></label>
+          <label for="lettre48n"><strong>48N</strong></label>
           <p-fileUpload
             name="lettre48n"
             [customUpload]="true"
@@ -95,7 +95,7 @@
             [showUploadButton]="false"
             [showCancelButton]="false"
             accept=".pdf,image/*"
-            chooseLabel="Chargez lettre_48N"
+            chooseLabel="Choisir les fichiers"
             mode="advanced"
             [maxFileSize]="5000000"
           ></p-fileUpload>

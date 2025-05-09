@@ -383,10 +383,13 @@ inscriptions_stages_datas_th{
     font-weight: 500;
   }
 }
-tbody, tr, td {
-  display: block;
-  width: 100%;
+@media(max-width: 430px){
+  tbody, tr, td {
+    display: block;
+    width: 100%;
+  }
 }
+
 
 
 

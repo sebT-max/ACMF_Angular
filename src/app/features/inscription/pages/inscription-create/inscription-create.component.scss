@@ -8,6 +8,9 @@
   background-size: cover;
   background-position: center;
   height: 100%;
+  @media(max-width:767px) {
+    flex-direction: column;
+  }
 }
 
 #inscription_container_details {
@@ -17,6 +20,10 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 0px 0px 185px 0px;
   padding: 50px;
+  @media(max-width:767px) {
+    width: 100%;
+    padding:10px;
+  }
 }
 
 #inscription_container_form {
@@ -107,6 +114,9 @@ form {
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    @media(max-width:767px) {
+      flex-direction: column;
+    }
   }
 
   .file-upload-section {

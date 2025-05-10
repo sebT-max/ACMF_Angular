@@ -2,7 +2,7 @@
   background: white;
   box-shadow: 3px 2px 15px 1px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  @media (max-width: 431px) {
+  @media (max-width: 767px) {
     width: 85%;
     margin: 0 auto;
   }
@@ -22,7 +22,7 @@
   &:hover{
     border-left:1px solid white;
   }
-  @media (max-width: 431px) {
+  @media (max-width: 767px) {
     flex-wrap:wrap;
     padding: 10px;
     font-size: 12px;
@@ -41,7 +41,7 @@
   background-color: #b41c1b;
   color:white;
   height:70px;
-  @media (max-width: 431px) {
+  @media (max-width: 767px) {
     text-align: center;
     margin-bottom:20px;
     font-size:16px;
@@ -57,7 +57,7 @@
   padding: 8px;
   border-radius: 3px;
   background: white;
-  @media (max-width: 431px) {
+  @media (max-width: 767px) {
     text-align: center;
     margin-bottom:20px;
     font-size:16px;
@@ -86,9 +86,16 @@
 
 h1{
   font-family: Poppins-Medium, serif;
-  text-align: center;
+  text-align: left;
   font-size:40px;
   color: #0a0a1e;
+  @media (max-width: 767px) {
+    font-family: Poppins-Medium, serif;
+    text-align: center;
+    font-size: 30px;
+    color: #0a0a1e;
+    margin-top: 20px;
+  }
 }
 
 .card_stages_date{
@@ -105,7 +112,7 @@ h1{
   color:white;
   border-radius: 10px;
   width: 160px;
-  @media (max-width: 431px) {
+  @media (max-width: 767px) {
     width: 30%;
     font-size: 20px;
     text-align: center;
@@ -126,7 +133,7 @@ h1{
   color:dimgrey;
   font-family: Poppins-Medium, serif;
   border-radius: 10px;
-  @media (max-width: 430px) {
+  @media (max-width: 767px) {
     width:60%;
   }
 }
@@ -135,7 +142,7 @@ h1{
   padding: 10px 20px;
   font-family: Poppins-Medium, serif;
   font-size:12px;
-  @media (max-width: 430px) {
+  @media (max-width: 767px) {
     width:100%;
     text-align: center;
     margin-top:20px;
@@ -175,14 +182,14 @@ h1{
     padding: 10px;
     border-radius: 10px;
     width: 30%;
-    margin: 18px auto 0px;
+    margin: 18px auto 0;
     border: none;
-    box-shadow: 0px 0px 1px grey;
+    box-shadow: 0 0 1px grey;
     height: 28px;
   }
   h1{
     color:white;
-    box-shadow: 0px 0px 1px white;
+    box-shadow: 0 0 1px white;
     border:none;
   }
 }

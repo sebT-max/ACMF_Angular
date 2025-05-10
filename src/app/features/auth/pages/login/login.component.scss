@@ -5,19 +5,26 @@
   flex-direction: row;
   align-content: center;
   align-items: center;
+  span{
+    position: relative;
+    bottom:10px;
+    width:200px;
+    color:red;
+  }
   @media (max-width: 768px) {
-    font-size: 12px;
-    margin:15px auto 0;
-    margin-bottom:10px;
     background-image: url(/pic20.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height:100vh;
+    height: 100vh;
     h1{
       color:white;
       text-align: center;
       font-size: 35px;
+    }
+    span{
+      float:right;
+      color:red;
     }
   }
 }

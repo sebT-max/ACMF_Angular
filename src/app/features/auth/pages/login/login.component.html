@@ -6,17 +6,17 @@
   <h1>Connexion</h1>
   <p>Connectez-vous pour accéder à nos produits</p>
   <div>
-    <label for="email">Email : </label>
+    <label for="email">Email :* </label>
     <input id="email" name="email" placeholder="Email@mail.____" formControlName="email" required />
     <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
-      <span *ngIf="loginForm.get('email')?.errors?.['required']">Le mot de passe est requis.</span>
+      <span *ngIf="loginForm.get('email')?.errors?.['required']">* L'email est requis.</span>
     </div>
   </div>
   <div>
-    <label for="password">Mot de passe</label>
+    <label for="password">Mot de passe*</label>
     <input id="password" name="password" type="password" placeholder="Mot de passe" formControlName="password" required />
     <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
-      <span *ngIf="loginForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
+      <span *ngIf="loginForm.get('password')?.errors?.['required']">* Le mot de passe est requis.</span>
     </div>
   </div>
   <button type="submit">Se connecter</button>

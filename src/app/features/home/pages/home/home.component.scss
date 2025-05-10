@@ -202,7 +202,7 @@ margin-bottom:20px;
     font-family: Poppins-Regular,serif;
     border:none;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     font-size: 12px;
   }
 }
@@ -216,7 +216,7 @@ margin-bottom:20px;
     height: 3px;
     background: linear-gradient(67deg, white, #041a3a, #b41c1b);
     margin: 30px 0;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       margin: 15px auto 40px;
     }
   }

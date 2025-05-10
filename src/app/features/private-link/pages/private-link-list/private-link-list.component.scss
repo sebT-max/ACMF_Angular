@@ -24,10 +24,13 @@
     font-size: 16px;
   }
 }
-@media(max-width:767px){
+@media(max-width:900px){
   tbody, tr, td {
     display: block;
-    width: 100%;
+    width: 100vh;
+  }
+  th{
+    display:none;
   }
 }
 

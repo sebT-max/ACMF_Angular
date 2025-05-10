@@ -36,11 +36,13 @@
   background-color: #b41c1b;
   color:white;
   height:70px;
-  @media (max-width: 431px) {
+  @media (max-width: 767px) {
     text-align: center;
     margin-bottom:20px;
     font-size:16px;
     background-color: #b41c1b;
+    width: 120px;
+    padding: 6px;
   }
 }
 .details_button{
@@ -52,10 +54,11 @@
   padding: 8px;
   border-radius: 3px;
   background: white;
-  @media (max-width: 431px) {
+  @media (max-width: 767px) {
     text-align: center;
     margin-bottom:20px;
     font-size:16px;
+    width: 120px;
   }
 }
 .close_button {
@@ -67,6 +70,12 @@
   color: #2d333b;
   padding: 8px;
   border-radius: 3px;
+  @media (max-width: 767px) {
+    text-align: center;
+    margin-bottom:20px;
+    font-size:16px;
+    width: 120px;
+  }
 }
 
 .close_button:hover {

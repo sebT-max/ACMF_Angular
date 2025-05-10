@@ -159,7 +159,7 @@ inscriptions_stages_datas_th{
 }
 .date-cell {
   width: 25%;
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: block;
     width: 100%;
     font-size: 1.6rem;
@@ -177,7 +177,7 @@ inscriptions_stages_datas_th{
 }
 .details-cell {
   width: 40%;
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: block;
     width: 100%;
   }
@@ -285,7 +285,6 @@ inscriptions_stages_datas_th{
 
 .stages-container {
   padding: 20px;
-  width:80%;
   margin:0 auto;
 }
 .header-section {

@@ -342,6 +342,40 @@ table tr:nth-child(even) {
   background: #222730 !important;
   border-radius: 30px;
 }
+.p-datepicker-year {
+  width: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  padding: var(--p-datepicker-year-padding);
+  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), box-shadow var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
+  border-radius: var(--p-datepicker-year-border-radius);
+  outline-color: transparent;
+  color: var(--p-datepicker-date-color);
+  &:hover {
+    background:white !important;
+  }
+}
+.p-datepicker-month {
+  width: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  padding: var(--p-datepicker-year-padding);
+  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), box-shadow var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
+  border-radius: var(--p-datepicker-year-border-radius);
+  outline-color: transparent;
+  color: var(--p-datepicker-date-color);
+  &:hover {
+    background:white !important;
+  }
+}
 .p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
 
   color: grey !important;

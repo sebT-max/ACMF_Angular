@@ -20,7 +20,7 @@
     background: #f8a733;
     border-radius: 0px 0px 0px 80px;
     text-underline: #33165b;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       display:none
     }
   }
@@ -73,17 +73,17 @@
       padding:20px;
     }
   }
-  @media (min-width: 431px) and (max-width: 768px) {
+  @media (min-width: 431px) and (max-width: 767px) {
     background: white;
-    border-radius: 0px 0px 34px 0px;
+    border-radius: 0 0 34px 0;
     margin-bottom: 50px;
-    margin-right: 0%;
-    padding-right: 0px;
+    margin-right: 0;
+    padding-right: 0;
     h2{
       padding: 21px;
       background: #041a3a;
       color: white;
-      border-radius: 0px 0px 0px 0px;
+      border-radius: 0;
     }
   }
   .card{
@@ -113,7 +113,7 @@
   text-align: left;
   font-family: Poppins-SemiBold, serif;
   margin-top: 20px;
-  font-size: 78px;
+  font-size: 66px;
   color: white;
   background: rgba(0, 0, 0, 0.5);
   @media (max-width: 430px) {

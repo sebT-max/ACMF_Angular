@@ -114,13 +114,13 @@
   white-space: pre-line;
   line-height:40px;
   @media (max-width: 431px) {
-    padding: 0px;
+    padding: 0;
   }
 
   h2{
     font-size: 44px;
     color: #ffffffd6;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       font-size: 32px;
     }
   }
@@ -129,14 +129,14 @@
     height: 60px;
     color: white;
     font-weight: 600;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       font-size: 16px;
       margin-top: 10px;
     }
   }
   hr{
     height:3px;
-    margin:10px 0px 40px 0px;
+    margin:10px 0 40px 0;
     @media (max-width: 431px) {
       width: 40%;
       height: 1px;
@@ -160,9 +160,9 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .stepper {
-    flex-direction: flex;
+    flex-direction: row;
     align-items: center;
     gap: 15px;
   }
@@ -174,7 +174,7 @@
   }
 
   .progress-bar {
-    display: none; /* ou adapte-la verticalement si tu veux */
+    display: none;
   }
 }
 

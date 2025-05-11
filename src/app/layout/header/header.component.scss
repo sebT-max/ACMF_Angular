@@ -136,7 +136,7 @@ nav a {
   height: 25px;
   cursor: pointer;
 
-  @media(min-width:1441px){
+  @media(min-width:1176px){
     display:none;
   }
 
@@ -222,7 +222,7 @@ nav a {
 }
 
 // Responsive breakpoints
-@media (max-width: 1440px) {
+@media (max-width: 1175px) {
   .header_nav_links_container {
     display: none;
   }

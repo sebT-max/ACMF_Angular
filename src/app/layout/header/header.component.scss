@@ -172,7 +172,6 @@ nav a {
 .mobile-menu {
   display: none;
   flex-direction: column;
-  background: linear-gradient(47deg, #041a3a, white);
   position: absolute;
   top: 70px;
   width: 100%;
@@ -181,6 +180,8 @@ nav a {
   transition: max-height 0.3s ease;
   max-height: 0;
   overflow: hidden;
+  backdrop-filter: blur(36px);
+  background: rgba(0, 0, 0, 0.5);
 
   button {
     color: white;

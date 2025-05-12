@@ -101,11 +101,12 @@
   background: #041a3a;
 }
 #conditions_infos_stages{
-  text-align:center;
-  font-family: Poppins-SemiBold,serif;
-  font-size:60px;
-  padding:20px;
+  text-align: center;
+  font-family: Poppins-ExtraBold, serif;
+  font-size: 60px;
+  padding: 2%;
   background: transparent;
+  font-style: italic;
   @media (max-width: 430px) {
     font-size:30px;
   }

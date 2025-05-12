@@ -18,11 +18,12 @@
     color:white;
   }
   button{
-    margin-top:15%;
-    border:1px solid white;
-    border-radius:10px;
-    background:transparent;
-    padding:7px 60px
+    margin-top: 15%;
+    border: 1px solid white;
+    border-radius: 10px;
+    background: transparent;
+    padding: 7px 60px;
+    backdrop-filter: blur(20px);
   }
   button a{
     color:white;
@@ -370,6 +371,7 @@ width:100%;
   margin: 20px auto 0;
   padding: 36px 0;
   background: rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(1px);
   span{
     font-weight:900;
   }

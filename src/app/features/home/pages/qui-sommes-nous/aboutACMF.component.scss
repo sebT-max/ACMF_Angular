@@ -1,10 +1,10 @@
 .about_us_main_container{
-  /* padding: 2%; */
   background-image: url(/pic19.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   /* background-position: center; */
   background-size: cover;
+
   hr{
     width: 50%;
     height: 5px;
@@ -50,19 +50,26 @@
   overflow-y: auto; /* Permet de scroller si le contenu dépasse la hauteur de la fenêtre */
 }
 
+.blur{
+}
 #info_stages_content {
   margin-right: 18%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  background: white;
   padding: 5%;
-  border-radius: 0px 80px 0px 80px;
+  border-radius: 0 80px 80px 0;
+  color: white;
+  font-size: 20px;
+  background: rgba(0, 0, 0, 0.14);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(30px);
   h2{
-    font-size:54px;
-    font-family: Poppins-Medium,serif;
-    margin-bottom:60px;
-    line-height:50px;
+    font-size: 54px;
+    font-family: Poppins-Bold, serif;
+    margin-bottom: 60px;
+    line-height: 50px;
+    font-style: italic;
   }
   @media (max-width: 430px) {
     display:block;
@@ -82,27 +89,27 @@
     }
   }
   @media (min-width: 431px) and (max-width: 767px) {
-    margin-bottom: 50px;
     margin-right: 0;
     padding: 50px 20px;
-    color: #041a3a;
+    color: #ffffff;
+    p{
+      padding:0 20px;
+    }
   }
 
   @media (min-width: 1440px) {
     margin-right: 18%;
-    display: flex
-  ;
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    background: white;
     padding: 3%;
-    border-radius: 0px 80px 0px 80px;
+    border-radius: 0 80px 80px 0;
     width: 60%;
   }
   .card{
     width:40%;
     margin:5%;
-    background: linear-gradient(234deg, #041a3a, 85%, #b41c1b);
+    background:transparent;
     padding:20px;
     line-height:30px;
     font-size:20px;
@@ -114,7 +121,7 @@
         font-size:36px;
       }
     }
-    @media (min-width: 768px) and (max-width: 1439px) {
+    @media (min-width: 1024px) and (max-width: 1439px) {
       width:90%;
       border-radius: 0 0 34px 0;
       margin-bottom: 50px;
@@ -134,11 +141,12 @@
 }
 #about_main_title{
   text-align: left;
-  font-family: Poppins-SemiBold, serif;
+  font-family: Poppins-ExtraBold, serif;
   margin-top: 0;
   font-size: 66px;
   color: white;
-  padding: 10px;
+  padding: 3%;
+  font-style: italic;
   @media (max-width: 430px) {
     font-size:60px;
   }

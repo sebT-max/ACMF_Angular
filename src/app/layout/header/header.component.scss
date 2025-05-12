@@ -172,7 +172,7 @@ nav a {
 .mobile-menu {
   display: none;
   flex-direction: column;
-  background-color: #041a3a;
+  background: linear-gradient(47deg, #041a3a, white);
   position: absolute;
   top: 70px;
   width: 100%;
@@ -198,7 +198,6 @@ nav a {
 
   .accordion-register {
     .accordion-btn {
-      background: black;
       color: white;
       padding: 10px;
       text-align: left;
@@ -211,7 +210,10 @@ nav a {
       flex-direction: column;
 
       button {
-        background-color: #222730;
+        margin-left:20px;
+      }
+      button:hover {
+        margin-left:31px;
       }
 
       &.open {

@@ -136,9 +136,9 @@ inscriptions_stages_datas_th{
 }
 
 .stages-table {
-  width: 100%;
+  width: auto;
+  margin: 0 auto;
   border-collapse: collapse;
-  margin-bottom: 20px;
   th {
     border: 1px solid #ddd;
     padding: 12px;
@@ -157,10 +157,30 @@ inscriptions_stages_datas_th{
     background-color: #e9ecef;
   }
 }
+
+
 .date-cell {
   width: 50%;
-  @media(max-width: 430px){
-    width:100%;
+  @media (max-width: 767px) {
+    display: block;
+    width: 100%;
+    font-size: 1.6rem;
+    background-color: rgb(4 26 58);
+    color: white;
+  }
+  .dates{
+    @media (max-width: 767px) {
+      display: block;
+      width: 100%;
+      font-size: 1.2rem;
+    }
+  }
+  .location-details{
+    @media (max-width: 767px) {
+      display: block;
+      width: 100%;
+      font-size: 0.9rem;
+    }
   }
   .inscription_stagiaire {
     font-weight: 500;
@@ -326,6 +346,10 @@ inscriptions_stages_datas_th{
     .search-input-container {
       display: flex;
       gap: 10px;
+      @media(max-width: 430px){
+        flex-wrap: wrap;
+        justify-content: center;
+      }
 
       input {
         flex: 1;
@@ -358,6 +382,10 @@ inscriptions_stages_datas_th{
 
   &:hover {
     background-color: #0069d9;
+  }
+  @media(max-width: 430px){
+    width: 100%;
+    padding:20px;
   }
 }
 

@@ -45,14 +45,14 @@
       <tbody>
       <tr *ngFor="let inscription of paginatedInscriptions">
         <td class="date-cell">
-          <div>
+          <div class="dates">
             <p>{{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
               {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}</p>
-            <p><strong>Organisation:</strong> {{ inscription.stageOrganisation }}</p>
           </div>
           <div class="location-details">
             <p>Ville: {{ inscription.stageCity }}</p>
             <p>Rue: {{ inscription.stageStreet }}</p>
+            <p><strong>Organisation:</strong> {{ inscription.stageOrganisation }}</p>
           </div>
         </td>
 

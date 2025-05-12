@@ -163,6 +163,22 @@ inscriptions_stages_datas_th{
     display: block;
     width: 100%;
     font-size: 1.6rem;
+    background-color: rgb(4 26 58);
+    color: white;
+  }
+  .dates{
+    @media (max-width: 767px) {
+      display: block;
+      width: 100%;
+      font-size: 1.6rem;
+    }
+  }
+  .capacity{
+    @media (max-width: 767px) {
+      display: block;
+      width: 100%;
+      font-size: 1rem;
+    }
   }
   .inscription_stagiaire {
     font-weight: 500;

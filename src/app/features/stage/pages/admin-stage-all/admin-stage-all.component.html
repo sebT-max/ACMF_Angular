@@ -45,8 +45,9 @@
         @for(stage of paginatedStages; track stage.id) {
           <tr>
             <td class="date-cell">
+              <p class="dates"><strong>{{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</strong></p>
+
               <p class="capacity">Capacité restante : {{ stage?.capacity }}</p>
-              <p class="dates">{{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</p>
             </td>
             <td class="details-cell">
               <div class="details-grid">

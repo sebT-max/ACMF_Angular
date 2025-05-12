@@ -20,11 +20,13 @@
     padding:20px;
   }
   ol{
-    width:200px;
-    padding: 36px;
-    background: #f8a733;
+    width: 178px;
+    padding: 35px;
+    background: white;
     border-radius: 0 0 0 80px;
-    margin-top:83px;
+    margin-top: 83px;
+    line-height: 30px;
+    font-size: 12px;
     @media (max-width: 1023px) {
       display:none
     }
@@ -51,17 +53,19 @@
 }
 
 .blur{
+  @media(min-width:1024px){
+    padding:2%;
+  }
 }
 #info_stages_content {
   margin-right: 18%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 5%;
+  padding: 3%;
   border-radius: 0 80px 80px 0;
   color: white;
-  font-size: 20px;
-  background: rgba(0, 0, 0, 0.14);
+  font-size: 18px;
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(30px);
   h2{
@@ -122,13 +126,14 @@
       }
     }
     @media (min-width: 1024px) and (max-width: 1439px) {
-      width:90%;
       border-radius: 0 0 34px 0;
       margin-bottom: 50px;
-      margin-right: 0;
-      padding-right: 0;
+      padding:2%;
+      font-size:16px;
+      border: none;
       h2{
         font-size:48px;
+        text-shadow: 0 1px 10px black;
       }
     }
   }

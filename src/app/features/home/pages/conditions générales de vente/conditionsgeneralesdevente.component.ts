@@ -19,7 +19,7 @@ export class ConditionsGeneralesDeVenteComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   retour() {
-    const redirect = this.route.snapshot.queryParamMap.get('redirect') || 'users/register';
+    const redirect = this.route.snapshot.queryParamMap.get('redirect') || 'particulier/register';
     this.router.navigate([redirect], { queryParams: { accepted: true } });
   }
 }

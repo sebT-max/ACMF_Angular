@@ -70,9 +70,8 @@
       <p style="font-weight:100; font-size:10px;">
         Acceptez nos
         <a href="#" (click)="goToConditions($event)" style="text-decoration: underline;">
-          Conditions d'utilisation
+          Conditions d'utilisation et notre Politique de confidentialité
         </a>
-        et notre Politique de confidentialité
       </p>
     </div>
 
@@ -89,7 +88,7 @@
     <button [disabled]="isLoading || registerForm.invalid" style="margin-top: 1rem;">
       {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
     </button>
-    <p>Vous avez déjà un compte ?<a routerLink="/users/login">Connectez-vous</a></p>
+    <p>Vous avez déjà un compte ?<a routerLink="/users/login"> Connectez-vous</a></p>
 
   </form>
 </div>

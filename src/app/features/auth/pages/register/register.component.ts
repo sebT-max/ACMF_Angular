@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
     event.preventDefault(); // pour éviter la navigation par défaut
     localStorage.setItem('registerForm', JSON.stringify(this.registerForm.value));
 
-    const redirectPath = this.router.url.includes('company') ? 'company/register' : 'users/register';
+    const redirectPath = this.router.url.includes('company') ? 'company/register' : 'particulier/register';
     this.router.navigate(['/Conditions générales de vente'], {
       queryParams: { redirect: redirectPath }
     });

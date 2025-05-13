@@ -24,8 +24,8 @@ td{
   div{
     margin:0px 20px;
     line-height: 30px;
-    @media(max-width: 430px){
-      margin:0;
+    @media(max-width: 767px){
+     text-align:center;
     }
   }
   button{
@@ -40,7 +40,10 @@ th{
   font-family: Poppins-SemiBold,serif;
 }
 tr{
-  border-bottom:1px solid rgba(28, 28, 30, 1);
+  border:2px solid grey;
+  @media(min-width: 1023px){
+    border: 2px solid white;
+  }
 }
 
 button{
@@ -159,6 +162,8 @@ inscriptions_stages_datas_th{
 }
 .date-cell {
   width: 25%;
+  background-color: #041a3a;
+  color:white;
   @media (max-width: 767px) {
     display: block;
     width: 100%;
@@ -216,7 +221,7 @@ inscriptions_stages_datas_th{
 }
 .actions-cell {
   width: 15%;
-  @media(max-width: 430px){
+  @media(max-width: 767px){
     width:100%;
   }
 
@@ -232,7 +237,9 @@ inscriptions_stages_datas_th{
     justify-content: center;
     gap: 5px;
     font-weight: normal;
-
+    @media(max-width: 767px){
+      width:100%;
+    }
     &.edit {
       background-color: #041a3a;
       color: white;
@@ -302,6 +309,12 @@ inscriptions_stages_datas_th{
 .stages-container {
   padding: 20px;
   margin:0 auto;
+  @media(max-width: 767px){
+    padding:2%;
+  }
+  @media(min-width: 768px){
+    width:760px;
+  }
 }
 .header-section {
   display: flex;
@@ -346,6 +359,10 @@ inscriptions_stages_datas_th{
     .search-input-container {
       display: flex;
       gap: 10px;
+      @media(max-width: 767px){
+        flex-wrap: wrap;
+        justify-content: center;
+      }
 
       input {
         flex: 1;
@@ -379,6 +396,10 @@ inscriptions_stages_datas_th{
   &:hover {
     background-color: #0069d9;
   }
+  @media(max-width: 767px){
+    width: 100%;
+    padding:20px;
+  }
 }
 
 .reset-button {
@@ -408,6 +429,9 @@ inscriptions_stages_datas_th{
   tbody, tr, td {
     display: block;
     width: 100%;
+  }
+  thead{
+    display:none;
   }
 }
 

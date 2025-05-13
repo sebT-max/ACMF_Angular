@@ -139,6 +139,9 @@ inscriptions_stages_datas_th{
   width: auto;
   margin: 0 auto;
   border-collapse: collapse;
+  @media (max-width: 430px) {
+    width: 100%;
+  }
   th {
     border: 1px solid #ddd;
     padding: 12px;
@@ -303,6 +306,9 @@ inscriptions_stages_datas_th{
 .stages-container {
   padding: 20px;
   margin: 0 auto;
+  @media (max-width: 430px) {
+    padding:2%;
+  }
 }
 .header-section {
   display: flex;

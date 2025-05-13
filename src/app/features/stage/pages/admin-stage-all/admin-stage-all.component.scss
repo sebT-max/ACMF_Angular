@@ -136,12 +136,9 @@ inscriptions_stages_datas_th{
 }
 
 .stages-table {
-  width: auto;
+  width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  @media (max-width: 430px) {
-    width: 100%;
-  }
   th {
     border: 1px solid #ddd;
     padding: 12px;
@@ -305,9 +302,6 @@ inscriptions_stages_datas_th{
 .stages-container {
   padding: 20px;
   margin:0 auto;
-  @media (max-width: 430px) {
-    padding:2%;
-  }
 }
 .header-section {
   display: flex;
@@ -385,10 +379,6 @@ inscriptions_stages_datas_th{
   &:hover {
     background-color: #0069d9;
   }
-  @media(max-width: 430px){
-    width: 100%;
-    padding:20px;
-  }
 }
 
 .reset-button {
@@ -414,7 +404,7 @@ inscriptions_stages_datas_th{
   }
 }
 
-@media(max-width:430px){
+@media(max-width:767px){
   tbody, tr, td {
     display: block;
     width: 100%;

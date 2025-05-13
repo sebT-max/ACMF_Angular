@@ -20,15 +20,19 @@
               placeholder="Faites-nous part de vos besoins"
               formControlName="message">
   </textarea>
-    <small>
-      {{ demandeDevisCreationForm.get('message')?.value!.length || 0 }} / {{ maxMessageLength }} caractères
-    </small>
 
-    <br/>
-    <small *ngIf="demandeDevisCreationForm.get('message')?.errors?.['maxlength']"
-           class="text-danger">
-      Le message ne peut pas dépasser {{ maxMessageLength }} caractères
-    </small>
+
+
+    <div class="message-info">
+      <small class="char-counter">
+        {{ demandeDevisCreationForm.get('message')?.value!.length || 0 }} / {{ maxMessageLength }} caractères
+      </small>
+      <small *ngIf="demandeDevisCreationForm.get('message')?.errors?.['maxlength']"
+             class="char-error">
+        Le message ne peut pas dépasser {{ maxMessageLength }} caractères
+      </small>
+    </div>
+
   </div>
 
 

@@ -24,8 +24,20 @@ tbody, tr, td {
   display: block;
   width: 100%;
 }
-small{
-  color:white;
-  backdrop-filter: blur(10px);
-  padding:10px;
+.message-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  backdrop-filter: blur(20px);
+}
+
+.char-counter {
+  color: white;
+}
+
+.char-error {
+  color: red; // Rouge Bootstrap-like
+  font-weight: bold;
 }

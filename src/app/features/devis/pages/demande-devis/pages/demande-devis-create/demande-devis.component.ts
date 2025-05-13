@@ -26,7 +26,7 @@ export class DemandeDevisComponent {
       contactFirstName: ['', Validators.required],
       contactLastName: [null, Validators.required],
       numberOfInterns: ['', Validators.required],
-      message: [null, Validators.required]
+      message: ['', [Validators.required, Validators.maxLength(1000)]]
     });
   }
 

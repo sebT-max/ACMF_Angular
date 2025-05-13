@@ -14,15 +14,23 @@
   </div>
   <div>
     <label for="message"></label>
-    <textarea id="message" rows="5" cols="30" placeholder="Faites-nous part de vos besoins"
-              type="textArea" formControlName="message"></textarea>
-    <small *ngIf="form.get('message')?.value">
-      {{ form.get('message')?.value.length }} / {{ maxMessageLength }} caractères
+    <textarea id="message"
+              rows="5"
+              cols="30"
+              placeholder="Faites-nous part de vos besoins"
+              formControlName="message">
+  </textarea>
+    <small>
+      {{ demandeDevisCreationForm.get('message')?.value!.length || 0 }} / {{ maxMessageLength }} caractères
     </small>
-    <small *ngIf="form.get('message')?.errors?.['maxlength']" class="text-danger">
+
+    <br/>
+    <small *ngIf="demandeDevisCreationForm.get('message')?.errors?.['maxlength']"
+           class="text-danger">
       Le message ne peut pas dépasser {{ maxMessageLength }} caractères
     </small>
   </div>
+
 
   <button type="submit"> Demander devis</button>
 </form>

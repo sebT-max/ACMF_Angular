@@ -3,12 +3,14 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {Router, RouterLink} from "@angular/router";
 import {DemandeDevisService} from '../../services/demande-devis.services';
 import {DemandeDevisModel} from '../../models/DemandeDevisModel';
+import {NgIf} from '@angular/common';
 
 
 @Component({
   selector: 'app-demande-devis',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './demande-devis.component.html',
   styleUrl: './demande-devis.component.scss'
@@ -20,6 +22,8 @@ export class DemandeDevisComponent {
   private readonly _router: Router = inject(Router);
 
   demandeDevisCreationForm: FormGroup;
+  maxMessageLength = 1000;
+
 
   constructor(){
     this.demandeDevisCreationForm= this._fb.group({

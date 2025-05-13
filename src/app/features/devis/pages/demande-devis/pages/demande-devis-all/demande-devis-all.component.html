@@ -1,33 +1,79 @@
 <div class="demande_devis_container">
-  <table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-      <th>Entreprise</th>
-      <th>Contact</th>
-      <th>Nombre de Stagiaires</th>
-      <th>Message du contact de l'entreprise</th>
-    </tr>
-    </thead>
-    <tbody>
-      @for (demandeDevis of demandesDevis; track demandeDevis.id) {
-        <tr>
-          <td>
-            <strong>Nom: </strong>{{ demandeDevis.entrepriseName}}<br/>
-            <strong>Mail: </strong>
-            <a [href]="'mailto:' + demandeDevis.entrepriseMail">
-              {{ demandeDevis.entrepriseMail }}
-            </a><br/>
+  <div class="filters-section">
+    <div class="search-box">
+    <label for="city_filter">Filtre par mots-clés:</label>
+    <div class="search-input-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        id="city_filter"
+        placeholder="Nom, mail, entreprise..."
+        (keyup.enter)="onSearch()"
+      />
+      <button class="search-button" (click)="onSearch()">Rechercher</button>
+      <button class="reset-button" (click)="resetFilters()" *ngIf="searchTerm">Réinitialiser</button>
+    </div>
+    <p class="filter-hint">
+      Recherchez par nom, prénom, adresse, téléphone, entreprise ou date.
+    </p>
+  </div>
+  </div>
 
-            <strong>Téléphone: </strong>
-            <a [href]="'tel:' + demandeDevis.entrepriseTelephone">
-              {{ demandeDevis.entrepriseTelephone }}
-            </a>
-          </td>
-          <td>{{ demandeDevis.contactFirstName }} {{ demandeDevis?.contactLastName }}</td>
-          <td style="text-align: center"><span>Nombre de stagiaires: </span>{{ demandeDevis.numberOfInterns }}</td>
-          <td>{{ demandeDevis.message }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+  <div class="results-section">
+    @if(searchTerm && filteredDemands.length > 0){
+      <p class="results-count">
+        {{ filteredDemands.length }} résultat(s) trouvé(s) pour "{{ searchTerm }}"
+      </p>
+    }
+    @if(searchTerm && filteredDemands.length === 0){
+      <p class="no-results">Aucun résultat trouvé pour "{{ searchTerm }}"</p>
+    }
+  </div>
+
+  @if(paginatedDemandeDevis.length > 0){
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Entreprise</th>
+        <th>Contact</th>
+        <th>Stagiaires</th>
+        <th>Message</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for(demande of paginatedDemandeDevis; track demande.id){
+          <tr>
+            <td>
+              <strong>{{ demande.createdAt | date: 'dd/MM/yyyy':'':'fr' }}</strong>
+            <td>
+              <strong>Nom:</strong> {{ demande.entrepriseName }}<br/>
+              <strong>Mail:</strong> <a [href]="'mailto:' + demande.entrepriseMail"> {{ demande.entrepriseMail }}</a><br/>
+              <strong>Tél:</strong> <a [href]="'tel:' + demande.entrepriseTelephone"> {{ demande.entrepriseTelephone }}</a>
+            </td>
+            <td>{{ demande.contactFirstName }} {{ demande.contactLastName }}</td>
+            <td>{{ demande.numberOfInterns }}</td>
+            <td>{{ demande.message }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  @else{
+    <p>Aucune inscription trouvée.</p>
+  }
+
+  <div class="pagination-controls">
+    <button [disabled]="!canGoPrev()" (click)="changePage(currentPage - 1)" class="pagination-button">
+      Précédent
+    </button>
+
+    <span class="pagination-info">
+      Page {{ currentPage }} sur {{ totalPages() }}
+    </span>
+
+    <button [disabled]="!canGoNext()" (click)="changePage(currentPage + 1)" class="pagination-button">
+      Suivant
+    </button>
+  </div>
 </div>

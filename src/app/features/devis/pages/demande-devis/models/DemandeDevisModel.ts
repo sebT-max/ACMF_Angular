@@ -10,4 +10,5 @@ export interface DemandeDevisModel {
   contactLastName: string;
   numberOfInterns: number;
   message: string;
+  createdAt: string;
 }

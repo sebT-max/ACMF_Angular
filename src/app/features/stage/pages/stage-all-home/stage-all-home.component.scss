@@ -56,6 +56,15 @@
     width: 120px;
     padding: 6px;
   }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 100px;
+    font-size: 11px;
+    padding: 6px;
+    border-radius: 10px;
+    background-color: #b41c1b;
+    color: #fff;
+    height: 70px;
+  }
 }
 .details_button{
   width: 140px;
@@ -74,6 +83,13 @@
     font-size:16px;
     width: 120px;
     padding: 6px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 100px;
+    font-size: 11px;
+    padding: 6px;
+    border-radius: 10px;
+    height: 70px;
   }
 }
 .close_button {
@@ -157,6 +173,22 @@ h1{
   @media (max-width: 767px) {
     width:60%;
   }
+  @media (max-width: 768px) and (max-width: 1023px){
+    height: 70px;
+    align-items: baseline;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 7px;
+    width: 100%;
+    font-size: 11px;
+    gap: 10px;
+    color: #696969;
+    font-family: Poppins-Medium, serif;
+    border-radius: 10px;
+  }
+  }
 }
 .card_stages_all_datas{
   width: 80%;
@@ -175,8 +207,8 @@ h1{
     }
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 80%;
-    padding: 0 20px;
+    width: 100%;
+    padding: 10px 0;
     font-family: Poppins-Medium, serif;
     font-size: 12px;
   }

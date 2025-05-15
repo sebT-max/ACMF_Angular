@@ -1,6 +1,8 @@
 .card-container {
-
-  @media(min-width: 768px) {
+  @media(min-width: 768px) and (max-width: 1023px) {
+    padding: 2% 7%;
+  }
+  @media(min-width: 1024px) {
     padding: 2% 10%;
   }
 }
@@ -50,13 +52,10 @@ h1{
     margin-top: 20px;
   }
 }
-
-
 .card_stages_remaining_places_and_distance{
   @media (max-width: 767px) {
     color: #696969;
   }
-
 }
 .card_stages_all_datas{
   @media (max-width: 767px) {
@@ -68,31 +67,6 @@ h1{
     color:#041a3a;
   }
 }
-
-/*#stage_filters{
-  display:flex;
-  flex-wrap: wrap;
-  width:80%;
-  margin: 20px auto 0;
-  p{
-    font-family: Poppins-Medium, serif;
-    padding:20px;
-  }
-  input{
-    padding: 10px;
-    border-radius: 10px;
-    width: 30%;
-    margin: 18px auto 0px;
-    border: none;
-    box-shadow: 0px 0px 1px grey;
-    height: 28px;
-  }
-  h1{
-    color:white;
-    box-shadow: 0px 0px 1px white;
-    border:none;
-  }
-}*/
 .app-stage-details {
   margin-top: 0px; /* Espacement entre la carte et les détails */
   padding: 20px;
@@ -257,6 +231,12 @@ h1{
       flex: 1 1 100%;
       margin-top: 0.5rem;
     }
+  }
+}
+#stage_all_subscription_and_details_buttons{
+  display:flex;
+  @media(max-width:767px){
+    margin:0 auto;
   }
 }
 

@@ -285,6 +285,10 @@ export class StageAllComponent implements OnInit {
     this.currentPage = 1;
     this.onDateFilter();
   }
+  onDateSelected(date: Date | null): void {
+    this.selectedDate = date;
+    this.onDateFilter(); // réapplique le filtre de date
+  }
 
   protected readonly fr = fr;
 }

@@ -174,20 +174,12 @@ h1{
     width:60%;
   }
   @media (max-width: 768px) and (max-width: 1023px){
-    height: 70px;
-    align-items: baseline;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0px 7px;
+    padding: 0 7px;
     width: 100%;
-    font-size: 11px;
+    font-size: 9px;
     gap: 10px;
     color: #696969;
-    font-family: Poppins-Medium, serif;
-    border-radius: 10px;
-  }
+    text-align: center;
   }
 }
 .card_stages_all_datas{

@@ -147,8 +147,8 @@ h1{
     text-align: center;
   }
   @media (max-width: 768px) and (max-width: 1023px){
-    width: 30%;
-    font-size: 12px;
+    width: 40%;
+    font-size: 14px;
     text-align: center;
   }
 }
@@ -171,8 +171,11 @@ h1{
     width:60%;
   }
   @media (max-width: 768px) and (max-width: 1023px){
+    padding: 0 7px;
     width: 100%;
-    font-size: 11px;
+    font-size: 9px;
+    gap: 10px;
+    color: #696969;
     text-align: center;
   }
 }

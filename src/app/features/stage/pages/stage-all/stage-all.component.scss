@@ -172,10 +172,11 @@ h1{
   border-radius: 10px;
   @media (max-width: 767px) {
     width:60%;
+    backdrop-filter: blur(50px);
   }
   @media (min-width: 768px) and (max-width: 1023px){
     padding: 0 7px;
-    width: 100%;
+    width: 80%;
     font-size: 9px;
     gap: 10px;
     color: #696969;
@@ -217,7 +218,8 @@ h1{
     width:100%;
     text-align: center;
     margin-bottom:20px;
-    font-size:20px;
+    font-size:36px;
+    color:white;
   }
   @media(min-width: 431px) and (max-width: 767px) {
     padding: 28px;

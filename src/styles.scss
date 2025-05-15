@@ -605,10 +605,6 @@ app-document-utilisateur {
 }
 .p-fileupload-header{
 }
-.p-button {
-  color: white !important;
-}
-
 .cards_stages_and_details{
   background: white;
   box-shadow: 3px 2px 15px 1px rgba(0, 0, 0, 0.1);
@@ -838,5 +834,10 @@ h1{
     width: 100%;
     font-size: 50px;
   }
+}
+
+.p-button {
+  height: var(--p-button-sm-icon-only-width);
+  color: black !important;
 }
 

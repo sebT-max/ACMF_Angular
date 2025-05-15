@@ -149,7 +149,7 @@ h1{
     font-size: 20px;
     text-align: center;
   }
-  @media (max-width: 768px) and (max-width: 1023px){
+  @media (min-width: 768px) and (max-width: 1023px){
     width: 30%;
     font-size: 12px;
     text-align: center;

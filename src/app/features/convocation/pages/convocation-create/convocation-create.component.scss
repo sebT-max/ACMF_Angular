@@ -6,14 +6,19 @@ form{
     flex-wrap: wrap;
     justify-content: center;
     flex-direction: row;
-    gap:10px;
+    gap:20px;
+    button{
+      margin-top: 40px;
+    }
     div {
       width: 45%;
+      margin-top: 25px;
     }
     @media(max-width: 767px){
       width: 100%;
       div {
-        width:100%;
+        width:85%;
+        margin-top: 5px;
       }
     }
   }

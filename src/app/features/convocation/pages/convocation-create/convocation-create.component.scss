@@ -1,27 +1,27 @@
 form{
-  width:100%;
-  #form_convocation{
-    width:600px;
-    margin:auto;
-    display:flex;
-    flex-wrap:wrap;
+  #form_convocation {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     flex-direction: row;
-    @media(max-width:430px){
-      width:auto;
+    gap:10px;
+    div {
+      width: 45%;
     }
-  }
-  label{
-    @media(max-width:430px){
-      display:none;
+    @media(max-width: 767px){
+      width: 100%;
+      div {
+        width:100%;
+      }
     }
   }
 }
-form div {
-  width:40%;
-  margin:20px;
+
+label{
   @media(max-width:430px){
-    width:100%;
+    display:none;
   }
 }
 .facture-form{

@@ -609,3 +609,234 @@ app-document-utilisateur {
   color: white !important;
 }
 
+.cards_stages_and_details{
+  background: white;
+  box-shadow: 3px 2px 15px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  @media (max-width: 767px) {
+    background: rgba(255, 255, 255, 0.2);
+    width: 85%;
+    margin: 0 auto;
+    h2,p,h3{
+      color:white;
+    }
+    p{
+      font-size:16px;
+    }
+  }
+}
+.card_stages{
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  color: #041a3a;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translate(0px, -20x);
+  padding: 12px;
+  font-size: 16px;
+  margin: 0 auto;
+  &:hover{
+    border-left:1px solid white;
+  }
+  @media (max-width: 767px) {
+    flex-wrap:wrap;
+    padding: 10px;
+    font-size: 12px;
+    width:auto;
+  }
+}
+
+
+.inscription_button{
+  width: 140px;
+  font-size: 20px;
+  align-items: center;
+  border: 1px solid white;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #b41c1b;
+  color:white;
+  height:70px;
+  @media (max-width: 767px) {
+    text-align: center;
+    margin-bottom:20px;
+    font-size:16px;
+    background-color: #b41c1b;
+    width: 120px;
+    padding: 6px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 100px;
+    font-size: 11px;
+    padding: 6px;
+    border-radius: 10px;
+    background-color: #b41c1b;
+    color: #fff;
+    height: 70px;
+  }
+}
+.details_button{
+  width: 140px;
+  font-size: 20px;
+  align-items: center;
+  border: none;
+  box-shadow: 1px 2px 15px 1px rgba(0, 0, 0, 0.1);
+  color: #2d333b;
+  padding: 8px;
+  border-radius: 10px;
+  background: white;
+  margin:0 5px;
+  @media (max-width: 767px) {
+    text-align: center;
+    margin-bottom:20px;
+    font-size:16px;
+    width: 120px;
+    padding: 6px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 100px;
+    font-size: 11px;
+    padding: 6px;
+    border-radius: 10px;
+    height: 70px;
+  }
+}
+.close_button {
+  width: 140px;
+  font-size: 20px;
+  align-items: center;
+  background-color: #e0e4e9;
+  border: 1px solid white;
+  color: #2d333b;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+.close_button:hover {
+  background-color: darkred;
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+  padding:2% 0;
+  @media (max-width: 430px) {
+    padding:2% 0;
+  }
+}
+
+
+h1{
+  font-family: Poppins-Medium, serif;
+  text-align: left;
+  font-size:40px;
+  color: #0a0a1e;
+  @media (max-width: 767px) {
+    font-family: Poppins-Medium, serif;
+    text-align: center;
+    font-size: 30px;
+    color: #0a0a1e;
+    margin-top: 20px;
+  }
+}
+
+.card_stages_date{
+  height: 70px;
+  border: 1px solid #ccc;
+  align-items: baseline;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  font-family: Poppins-Medium, serif;
+  background: #041a3a;
+  color:white;
+  border-radius: 10px;
+  width: 160px;
+  @media (max-width: 767px) {
+    width: 112px;
+    font-size: 20px;
+    text-align: center;
+  }
+  @media (min-width: 768px) and (max-width: 1023px){
+    width: 30%;
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.card_stages_remaining_places_and_distance{
+  height: 70px;
+  align-items: baseline;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  width:60%;
+  font-size: 12px;
+  gap:10px;
+  color:dimgrey;
+  font-family: Poppins-Medium, serif;
+  border-radius: 10px;
+  @media (max-width: 767px) {
+    width:60%;
+    backdrop-filter: blur(50px);
+  }
+  @media (min-width: 768px) and (max-width: 1023px){
+    padding: 0 7px;
+    width: 80%;
+    font-size: 9px;
+    gap: 10px;
+    color: #696969;
+    text-align: center;
+  }
+}
+.card_stages_all_datas{
+  width: 80%;
+  padding: 10px 20px;
+  font-family: Poppins-Medium, serif;
+  font-size:12px;
+  @media (max-width: 767px) {
+    width:100%;
+    text-align: center;
+    margin-top:20px;
+    h2{
+      font-size:24px;
+    }
+    hr{
+      margin:5px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 100%;
+    padding: 10px 0;
+    font-family: Poppins-Medium, serif;
+    font-size: 12px;
+  }
+}
+#stage_price{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:20px;
+  font-family: Poppins-Medium, serif;
+  font-size: 20px;
+  @media (max-width: 430px) {
+    width:100%;
+    text-align: center;
+    margin-bottom:20px;
+    font-size:36px;
+    color:white;
+  }
+  @media(min-width: 431px) and (max-width: 767px) {
+    padding: 28px;
+    font-family: Poppins-Medium, serif;
+    width: 100%;
+    font-size: 50px;
+  }
+}
+

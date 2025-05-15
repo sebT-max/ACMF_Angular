@@ -10,6 +10,7 @@ import {environment} from '../../../../../environments/environment';
 import { CalendarModule } from 'primeng/calendar';
 import {fr} from 'date-fns/locale';
 import { Calendar } from 'primeng/calendar';
+import {DatePicker} from 'primeng/datepicker';
 
 
 @Component({
@@ -25,7 +26,8 @@ import { Calendar } from 'primeng/calendar';
     ReactiveFormsModule,
     Calendar,
     NgOptimizedImage,
-    CalendarModule
+    CalendarModule,
+    DatePicker
   ],
   styleUrls: ['./stage-all.component.scss']
 })

@@ -7,9 +7,6 @@ form{
     justify-content: center;
     flex-direction: row;
     gap:20px;
-    button{
-      margin-top: 40px;
-    }
     div {
       width: 45%;
       margin-top: 25px;
@@ -22,6 +19,10 @@ form{
       }
     }
   }
+}
+
+button{
+  margin-top: 40px;
 }
 
 label{

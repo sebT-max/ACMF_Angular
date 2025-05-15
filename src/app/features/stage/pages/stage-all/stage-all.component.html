@@ -8,6 +8,7 @@
   <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" id="city_filter" placeholder="Rechercher par ville">
   <p>Filtre par date</p>
 
+
   <p-calendar
     [(ngModel)]="selectedDate"
     (onSelect)="onDateFilter()"

@@ -16,8 +16,8 @@
     <button routerLink="stages/all" (click)="toggleMobileMenu()">Nos stages</button>
     <button routerLink="stages-infos" (click)="toggleMobileMenu()">Infos stages</button>
     <button routerLink="qui-sommes-nous ?" (click)="toggleMobileMenu()">Qui nous sommes nous ?</button>
-    <button routerLink="b2b" (click)="toggleMobileMenu()">Professionnels</button>
-    <button routerLink="statistiques-et-législation" (click)="toggleMobileMenu()">Statistiques et législation (SEO)</button>
+    <!--<button routerLink="b2b" (click)="toggleMobileMenu()">Professionnels</button>
+    <button routerLink="statistiques-et-législation" (click)="toggleMobileMenu()">Statistiques et législation (SEO)</button>-->
 
     <ng-container *ngIf="!userConnected() && !companyConnected()">
       <div class="accordion-register">
@@ -65,12 +65,12 @@
     <button routerLink="users/login" class="btn_login">
       Se connecter
     </button>
-      <button routerLink="users/login" class="btn_login" style="width:30px;">
+      <!--<button routerLink="users/login" class="btn_login" style="width:30px;">
         <img src="/fb_nav.png" style="width:60px;transform:translate(10px,-12px)">
       </button>
       <button routerLink="users/login" class="btn_login" style="width:80px;">
         <img src="/insta_nav.png" style="width:60px;transform:translate(10px,-11px)">
-      </button>
+      </button>-->
 
   }
     @else{

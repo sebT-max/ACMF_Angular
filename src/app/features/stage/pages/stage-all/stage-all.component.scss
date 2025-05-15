@@ -12,6 +12,55 @@ h1{
   }
 }
 
+.cards_stages_and_details{
+  @media (max-width: 767px) {
+    h2,p,h3{
+      color:black;
+    }
+    p{
+      font-size:16px;
+      color:black;
+    }
+  }
+}
+.card_stages{
+  color: #041a3a;
+  &:hover{
+    border-left:1px solid white;
+  }
+}
+
+h1{
+  font-family: Poppins-Medium, serif;
+  text-align: left;
+  font-size:40px;
+  color: #0a0a1e;
+  @media (max-width: 767px) {
+    font-family: Poppins-Medium, serif;
+    text-align: center;
+    font-size: 30px;
+    color: #0a0a1e;
+    margin-top: 20px;
+  }
+}
+
+
+.card_stages_remaining_places_and_distance{
+  @media (max-width: 767px) {
+    color: #696969;
+  }
+
+}
+.card_stages_all_datas{
+  @media (max-width: 767px) {
+   color:#041a3a
+  }
+}
+#stage_price{
+  @media (max-width: 767px) {
+    color:#041a3a;
+  }
+}
 
 #stage_filters{
   display:flex;

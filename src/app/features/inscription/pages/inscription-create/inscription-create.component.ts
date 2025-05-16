@@ -83,7 +83,19 @@ export class InscriptionCreateComponent implements OnInit {
     }
 
     this.inscriptionCreationForm = this._fb.group({
-      userId: [this.currentUser()?.id ?? null, Validators.required],
+     /* userId: [this.currentUser()?.id ?? null, Validators.required],*/
+      user: this._fb.group({
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        birthdate: ['', Validators.required],
+        birthplace: [''],
+        streetAndNumber: [''],
+        zipCode: [''],
+        city: [''],
+        email: ['', [Validators.required, Validators.email]],
+        telephone: ['', Validators.required],
+        password:['', Validators.required]
+      }),
       stageId: [this.stageId, Validators.required],
       stageType: ['', Validators.required],
       inscriptionStatut: ['EN_ATTENTE', Validators.required],
@@ -156,12 +168,12 @@ export class InscriptionCreateComponent implements OnInit {
 
   handleInscription(): void {
     this.isLoading = true;
-    const user = this.currentUser();
+    /*const user = this.currentUser();
     if (!user) {
       console.error('Utilisateur non trouvé');
       this.isLoading = false;
       return;
-    }
+    }*/
 
     if (!this.stageDetails || !this.stageDetails.price) {
       console.error('Prix du stage non défini');
@@ -170,14 +182,13 @@ export class InscriptionCreateComponent implements OnInit {
     }
     this.inscriptionCreationForm.patchValue({
       stageId: this.stageId,
-      userId: user.id
     });
 
     const selectedValue = this.inscriptionCreationForm.get('stageType')?.value;
     const selected = this.stageTypes.find(type => type.value === selectedValue);
     const selectedLabel = selected ? selected.label : null;
 
-    if (selectedLabel === 'Tribunal' && this.uploadedFiles.lettre48n.length === 0) {
+    if (selectedLabel === 'Probatoire' && this.uploadedFiles.lettre48n.length === 0) {
       this.lettre48nError = 'Vous devez nous fournir la lettre 48_N du tribunal.';
       this.isLoading = false;
       return;
@@ -219,7 +230,7 @@ export class InscriptionCreateComponent implements OnInit {
 
   private proceedWithInscription(finalPrice: number): void {
     const inscriptionData: InscriptionFormModel = {
-      userId: this.currentUser()?.id ?? null,
+      user: this.inscriptionCreationForm.value.user,
       stageId: this.stageId,
       stageType: this.inscriptionCreationForm.value.stageType,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
@@ -237,6 +248,10 @@ export class InscriptionCreateComponent implements OnInit {
     files.forEach(file => {
       formData.append('files', file, file.name);
     });
+    console.log(this.inscriptionCreationForm.value);
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
         const inscriptionId = resp.id;

@@ -44,23 +44,23 @@
    <!-- <button routerLink="b2b">Professionnels</button>
     <button routerLink="statistiques-et-législation">Statistiques et législation (SEO)</button>-->
     @if(!userConnected() && !companyConnected()){
-    <div class="register-container" (mouseover)="openRegisterModal()" (mouseleave)="startCloseRegisterModal()">
-      <button class="btn-register">S'inscrire</button>
-      <div
-        *ngIf="showRegisterModal"
-        class="modal-container"
-        [class.show]="showRegisterAnimation"
-        (mouseover)="cancelCloseRegisterModal()"
-        (mouseleave)="startCloseRegisterModal()"
-      >
+      <div class="register-container" (mouseover)="openRegisterModal()" (mouseleave)="startCloseRegisterModal()">
+        <button routerLink="company/register" class="btn-register">Professionnel</button>
+        <!--<div
+          *ngIf="showRegisterModal"
+          class="modal-container"
+          [class.show]="showRegisterAnimation"
+          (mouseover)="cancelCloseRegisterModal()"
+          (mouseleave)="startCloseRegisterModal()"
+        >
         <button (click)="selectType('PARTICULIER', $event)" routerLink="particulier/register" class="btn_register">
           Particulier
         </button>
         <button (click)="selectType('ENTREPRISE', $event)" routerLink="company/register" class="btn_register">
           Entreprise
-        </button>
+        </button>-->
       </div>
-    </div>
+
 
     <button routerLink="users/login" class="btn_login">
       Se connecter

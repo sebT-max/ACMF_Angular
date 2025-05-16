@@ -9,8 +9,8 @@ import {StageWithDistance} from '../../models/StageWithDistance';
 import {environment} from '../../../../../environments/environment';
 import { CalendarModule } from 'primeng/calendar';
 import {fr} from 'date-fns/locale';
-import { Calendar } from 'primeng/calendar';
 import {DatePicker} from 'primeng/datepicker';
+
 
 
 @Component({
@@ -24,7 +24,6 @@ import {DatePicker} from 'primeng/datepicker';
     NgIf,
     DecimalPipe,
     ReactiveFormsModule,
-    Calendar,
     NgOptimizedImage,
     CalendarModule,
     DatePicker
@@ -289,6 +288,7 @@ export class StageAllComponent implements OnInit {
     this.selectedDate = date;
     this.onDateFilter(); // réapplique le filtre de date
   }
+
 
   protected readonly fr = fr;
 }

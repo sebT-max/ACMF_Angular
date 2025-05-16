@@ -1,15 +1,17 @@
 import {StageDetailsModel} from '../../stage/models/stage-details-model';
 import {UserFormModel} from '../../auth/models/user-form.model';
+import {DocumentDTO} from './DocumentDTO';
+import {ParticulierDTO} from './ParticulierDTO';
 
 export interface CreateInscriptionResponseBody {
-  message: string;
   id: number;
-  userId: number | null;
-  stageId: number | null;
-  stageType: string | null;
-  stageCapacity: number | null;
-  inscriptionStatut: string;
-  stage?: StageDetailsModel;
-  user?: UserFormModel;
-  lettrePdf?: string;
+  user: ParticulierDTO;
+  stageId: number;
+  stageType: 'VOLONTAIRE' | 'PROBATOIRE' | 'TRIBUNAL' | string; // adapte selon ton Enum
+  stageCapacity: number;
+  inscriptionStatut: 'EN_ATTENTE' | 'CONFIRMEE' | 'ANNULEE' | string; // adapte selon ton Enum
+  documents: DocumentDTO[];
+  // codePromo?: CodePromoDTO; // décommente si tu veux l'ajouter plus tard
 }
+
+

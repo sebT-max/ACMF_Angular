@@ -6,45 +6,105 @@
       <p>{{ stageDetails.arrondissement }} arrondissement</p>
       <p>{{ stageDetails.street }}</p>
       <p>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
-      <p>Prix: {{ stageDetails.price }}€</p>
+      <p><strong>Prix :</strong> {{ stageDetails.price }}€</p>
     </div>
-    <div class="consignes_container">
-      <h3><span class="icon">⚠️ </span>  <strong> &nbsp; &nbsp;Consignes à respecter !</strong></h3>
 
+    <div class="consignes_container">
+      <h3><span class="icon">⚠️</span> <strong>Consignes à respecter !</strong></h3>
       <div class="form-text text-muted format">
         <ul>
-          <li>Formats acceptés pour les images : JPEG, PNG.</li>
+          <li>Formats acceptés : JPEG, PNG pour les images.</li>
           <li>La lettre 48N doit être en PDF.</li>
         </ul>
       </div>
-      <h4>Veuillez intituler vos fichiers de la manière suivante:</h4>
+
+      <h4>Nom des fichiers attendus :</h4>
       <ul>
-        <h4>-> Permis de conduire:</h4>
-        <li>recto: "(nom_prénom)_permis_recto"</li>
-        <li>verso: "(nom_prénom)_permis_verso"</li>
-      </ul>
-      <ul>
-        <h4>-> Papiers d'identité:</h4>
-        <li>recto: "(nom_prénom)_identité_recto"</li>
-        <li>verso: "(nom_prénom)_identité_verso"</li>
+        <li><strong>Permis :</strong></li>
+        <ul>
+          <li>Recto : <code>(nom_prénom)_permis_recto</code></li>
+          <li>Verso : <code>(nom_prénom)_permis_verso</code></li>
+        </ul>
+        <li><strong>Carte d'identité :</strong></li>
+        <ul>
+          <li>Recto : <code>(nom_prénom)_identité_recto</code></li>
+          <li>Verso : <code>(nom_prénom)_identité_verso</code></li>
+        </ul>
       </ul>
     </div>
   </div>
 
-  <!-- Formulaire d'inscription -->
+  <!-- Formulaire -->
   <div id="inscription_container_form">
     <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
-      <label for="stageType">Type de Stage*</label>
-      <select id="stageType" formControlName="stageType">
-        <option value="" disabled selected>Sélectionner un type de stage</option>
-        <option *ngFor="let type of stageTypes" [value]="type.value">
-          {{ type.label }}
-        </option>
-      </select>
-      <br>
+      <div formGroupName="user">
+      <!-- Informations personnelles -->
+      <section class="form-section">
+        <h3>Informations personnelles</h3>
 
-      <div id="inscription_form_files">
-        <!-- Permis -->
+        <label for="firstName">Prénom*</label>
+        <input id="firstName" formControlName="firstName" type="text" placeholder="Prénom" />
+
+        <label for="lastName">Nom*</label>
+        <input id="lastName" formControlName="lastName" type="text" placeholder="Nom" />
+
+        <label for="birthdate">Autre(s) prénom(s)</label>
+        <input id="birthdate" formControlName="birthdate" type="date" placeholder="Date de naissance" />
+
+        <label for="birthplace">Lieu de naissance*</label>
+        <input id="birthplace" formControlName="birthplace" type="text" placeholder="Lieu de naissance" />
+      </section>
+
+      <!-- Adresse -->
+      <section class="form-section">
+        <h3>Adresse</h3>
+
+        <label for="streetAndNumber">Rue et numéro*</label>
+        <input id="streetAndNumber" formControlName="streetAndNumber" type="text" placeholder="Rue et numéro" />
+
+        <label for="zipCode">Code Postal*</label>
+        <input id="zipCode" formControlName="zipCode" type="number" placeholder="Code postal" />
+
+        <label for="city">Ville*</label>
+        <input id="city" formControlName="city" type="text" placeholder="Ville" />
+      </section>
+
+      <!-- Contact -->
+      <section class="form-section">
+        <h3>Contact</h3>
+
+        <label for="telephone">Téléphone*</label>
+        <input id="telephone" formControlName="telephone" type="tel" placeholder="Téléphone" />
+
+        <label for="email">Email*</label>
+        <input id="email" formControlName="email" type="email" placeholder="Email" />
+      </section>
+
+      <!-- Mot de passe -->
+      <section class="form-section">
+        <label for="password">Mot de passe*</label>
+        <input id="password" type="password" placeholder="Mot de passe" formControlName="password" />
+        <div *ngIf="inscriptionCreationForm.get('password')?.invalid && inscriptionCreationForm.get('password')?.touched" class="error-message">
+          <span *ngIf="inscriptionCreationForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
+          <span *ngIf="inscriptionCreationForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>
+        </div>
+      </section>
+      </div>
+      <!-- Type de stage -->
+      <section class="form-section">
+        <label for="stageType">Type de Stage*</label>
+        <select id="stageType" formControlName="stageType">
+          <option value="" disabled selected>Sélectionner un type de stage</option>
+          <option *ngFor="let type of stageTypes" [value]="type.value">
+            {{ type.label }}
+          </option>
+        </select>
+      </section>
+
+      <!-- Fichiers -->
+      <section id="inscription_form_files" class="form-section">
+        <h3>Documents à fournir</h3>
+
         <div class="file-upload-section">
           <label for="permis"><strong>Permis</strong></label>
           <p-fileUpload
@@ -63,9 +123,8 @@
           ></p-fileUpload>
         </div>
 
-        <!-- Carte d'identité -->
         <div class="file-upload-section">
-          <label for="carteId"><strong>Carte Id</strong></label>
+          <label for="carteId"><strong>Carte d'identité</strong></label>
           <p-fileUpload
             name="carteId"
             [customUpload]="true"
@@ -82,9 +141,8 @@
           ></p-fileUpload>
         </div>
 
-        <!-- Lettre 48N -->
         <div *ngIf="selectedStageLabel === 'Tribunal'" class="file-upload-section">
-          <label for="lettre48n"><strong>48N</strong></label>
+          <label for="lettre48n"><strong>Lettre 48N</strong></label>
           <p-fileUpload
             name="lettre48n"
             [customUpload]="true"
@@ -100,29 +158,31 @@
             [maxFileSize]="5000000"
           ></p-fileUpload>
         </div>
-      </div>
+      </section>
 
-      <br>
+      <!-- Code promo -->
+      <section class="form-section">
+        <label for="codePromo">Code Promo (optionnel)</label>
+        <input id="codePromo" formControlName="codePromo" placeholder="Code Promo" />
+      </section>
 
-      <!-- Affichage des erreurs -->
+      <!-- Erreurs -->
       <div *ngIf="lettre48nError" class="error-message">
         {{ lettre48nError }}
       </div>
 
-      <!-- Champ Code Promo -->
-      <input id="codePromo" formControlName="codePromo" placeholder="Code Promo (optionnel)" />
-      <br>
+      <!-- Soumission -->
+      <div class="submit-wrapper">
+        <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
+          <ng-container *ngIf="isLoading">
+            <span class="spinner-inline"></span> Chargement...
+          </ng-container>
+          <ng-container *ngIf="!isLoading">
+            Valider l'inscription
+          </ng-container>
+        </button>
+      </div>
 
-      <!-- Bouton de soumission -->
-      <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
-        <ng-container *ngIf="isLoading">
-          <span class="spinner-inline"></span>
-          <span>Chargement...</span>
-        </ng-container>
-        <ng-container *ngIf="!isLoading">
-          Valider l'inscription
-        </ng-container>
-      </button>
     </form>
   </div>
 </div>

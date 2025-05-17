@@ -12,6 +12,7 @@ import {StripeService} from '../../../../services/stripe.service';
 import {ToastrService} from 'ngx-toastr';
 import { FileRemoveEvent } from 'primeng/fileupload';
 import {CodePromoService} from '../../../code-promo/services/code-promo.services';
+import { PrimeNG } from 'primeng/config';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class InscriptionCreateComponent implements OnInit {
   private readonly _stripeService = inject(StripeService);
   private readonly _codePromoService = inject(CodePromoService);
 
-  constructor(private toastr: ToastrService) {
+  constructor(private toastr: ToastrService,private primengConfig: PrimeNG) {
   }
 
   inscriptionCreationForm!: FormGroup;
@@ -63,6 +64,17 @@ export class InscriptionCreateComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.primengConfig.setTranslation({
+      dayNames: ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"],
+      dayNamesShort: ["dim","lun","mar","mer","jeu","ven","sam"],
+      dayNamesMin: ["D","L","M","M","J","V","S"],
+      monthNames: ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"],
+      monthNamesShort: ["janv","févr","mars","avr","mai","juin","juil","août","sept","oct","nov","déc"],
+      today: 'Aujourd\'hui',
+      clear: 'Effacer',
+      dateFormat: 'dd/mm/yy',
+      firstDayOfWeek: 1
+    });
     const localStorageUser = localStorage.getItem('currentUser');
     if (localStorageUser) {
       try {

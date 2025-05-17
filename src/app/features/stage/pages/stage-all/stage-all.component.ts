@@ -11,6 +11,7 @@ import { CalendarModule } from 'primeng/calendar';
 import {fr} from 'date-fns/locale';
 import {DatePicker} from 'primeng/datepicker';
 import {map, Observable} from 'rxjs';
+import {PrimeNG} from 'primeng/config';
 
 
 
@@ -53,6 +54,7 @@ export class StageAllComponent implements OnInit {
     private _stageService: StageService,
     private router: Router,
     private route: ActivatedRoute,
+    private primengConfig: PrimeNG
   ) {}
 
   ngOnInit() {
@@ -60,6 +62,17 @@ export class StageAllComponent implements OnInit {
       this.searchTerm = params['searchTerm'] || '';
       this.getUserLocation();
       this.loadStagesWithDistance();
+    });
+    this.primengConfig.setTranslation({
+      dayNames: ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"],
+      dayNamesShort: ["dim","lun","mar","mer","jeu","ven","sam"],
+      dayNamesMin: ["D","L","M","M","J","V","S"],
+      monthNames: ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"],
+      monthNamesShort: ["janv","févr","mars","avr","mai","juin","juil","août","sept","oct","nov","déc"],
+      today: 'Aujourd\'hui',
+      clear: 'Effacer',
+      dateFormat: 'dd/mm/yy',
+      firstDayOfWeek: 1
     });
   }
 
@@ -89,6 +102,11 @@ export class StageAllComponent implements OnInit {
       console.error("La géolocalisation n'est pas disponible dans ce navigateur.");
       this.loadStages();
     }
+  }
+  onDateSelected(date: Date | null): void {
+    console.log('Date sélectionnée:', date);
+    this.selectedDate = date;
+    this.onDateFilter(); // réapplique le filtre de date
   }
 
 
@@ -235,11 +253,12 @@ export class StageAllComponent implements OnInit {
 
     // Appliquer le filtre de date
     if (this.selectedDate) {
+      const selectedTime = this.selectedDate.getTime();
+      const twoWeeksInMs = 14 * 24 * 60 * 60 * 1000; // 14 jours en millisecondes
+
       filtered = filtered.filter(stage => {
-        const stageDate = new Date(stage.dateDebut);
-        return stageDate.getFullYear() === this.selectedDate?.getFullYear() &&
-          stageDate.getMonth() === this.selectedDate?.getMonth() &&
-          stageDate.getDate() === this.selectedDate?.getDate();
+        const stageDate = new Date(stage.dateDebut).getTime();
+        return stageDate >= (selectedTime - twoWeeksInMs) && stageDate <= (selectedTime + twoWeeksInMs);
       });
     }
 
@@ -289,10 +308,7 @@ export class StageAllComponent implements OnInit {
     this.currentPage = 1;
     this.onDateFilter();
   }
-  onDateSelected(date: Date | null): void {
-    this.selectedDate = date;
-    this.onDateFilter(); // réapplique le filtre de date
-  }
+
 
 
   protected readonly fr = fr;

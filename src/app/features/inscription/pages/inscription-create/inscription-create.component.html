@@ -3,7 +3,7 @@
   <div id="inscription_container_details" class="stage-details" *ngIf="stageDetails">
     <div class="details-wrapper">
       <h2>Stage à {{ stageDetails.city }}</h2>
-      <p>{{ stageDetails.arrondissement }} arrondissement</p>
+      <p>{{ stageDetails.number }} n° stage</p>
       <p>{{ stageDetails.street }}</p>
       <p>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
       <p><strong>Prix :</strong> {{ stageDetails.price }}€</p>

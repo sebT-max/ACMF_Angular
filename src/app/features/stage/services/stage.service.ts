@@ -4,6 +4,7 @@ import {TokenModel} from '../../auth/models/token.model';
 import {StageDetailsModel} from '../models/stage-details-model';
 import {Observable} from 'rxjs';
 import {API_URL} from '../../../../core/constant';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,18 @@ export class StageService{
   deleteStage(id:number | undefined): Observable<void> {
     return this._httpClient.delete<void>(`${API_URL}stages/delete/${id}`);
   }
-
+  getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
+    return fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        if (data.features?.length > 0) {
+          return data.features[0].center; // [lng, lat]
+        }
+        return null;
+      })
+      .catch(() => null);
+  }
   updateStage(id: number | undefined, updatedStage: StageDetailsModel): Observable<StageDetailsModel> {
     return this._httpClient.put<StageDetailsModel>(`${API_URL}stages/update/${id}`, updatedStage);
   }

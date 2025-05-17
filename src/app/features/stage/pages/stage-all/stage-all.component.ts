@@ -10,6 +10,7 @@ import {environment} from '../../../../../environments/environment';
 import { CalendarModule } from 'primeng/calendar';
 import {fr} from 'date-fns/locale';
 import {DatePicker} from 'primeng/datepicker';
+import {map, Observable} from 'rxjs';
 
 
 
@@ -90,30 +91,6 @@ export class StageAllComponent implements OnInit {
     }
   }
 
-  getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
-    // Vérifier si l'adresse est déjà dans le cache
-    if (this.geocodeCache[address]) {
-      return Promise.resolve(this.geocodeCache[address]);
-    }
-
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
-
-    return fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        if (data.features && data.features.length > 0) {
-          const coords = data.features[0].center; // [lng, lat]
-
-          // Ajouter les coordonnées dans le cache
-          this.geocodeCache[address] = coords;
-
-          return coords;
-        } else {
-          return null;
-        }
-      })
-      .catch(() => null);
-  }
 
   calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371; // Rayon de la Terre en km
@@ -131,6 +108,18 @@ export class StageAllComponent implements OnInit {
     // Réinitialiser la pagination et appliquer le filtre
     this.currentPage = 1;
     this.applyFilters();
+  }
+  getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
+    return fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        if (data.features?.length > 0) {
+          return data.features[0].center; // [lng, lat]
+        }
+        return null;
+      })
+      .catch(() => null);
   }
 
 
@@ -153,58 +142,88 @@ export class StageAllComponent implements OnInit {
       });
     }
   }
+  async applySearchTermAsLocationFilter() {
+    const coords = await this.getCoordinatesFromAddress(this.searchTerm);
+    if (!coords) return;
 
+    const [lng, lat] = coords;
+    this.stages = this.stages.filter(stage => {
+      const stageCoords = this.geocodeCache[`${stage.street}, ${stage.city}`];
+      if (!stageCoords) return false;
+      const [stageLng, stageLat] = stageCoords;
+      const distance = this.calculateDistance(lat, lng, stageLat, stageLng);
+      return distance <= 20; // par ex. rayon de 20 km
+    });
+
+    this.applyFilters(); // relancer la pagination et autres filtres
+  }
 
   private sortStagesByDate(stages: StageWithDistance[]): StageWithDistance[] {
     return [...stages].sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
   }
 
-  loadStagesWithDistance(): void {
+  async loadStagesWithDistance(): Promise<void> {
     const now = new Date();
 
     const processStages = async (stages: StageWithDistance[]) => {
-      // Filtrer pour n'avoir que les stages futurs
-      const futureStages = stages.filter(stage => {
-        const stageDate = new Date(stage.dateDebut);
-        return stageDate >= now;
-      });
+      const futureStages = stages.filter(stage => new Date(stage.dateDebut) >= now);
 
-      // Calculer les distances pour chaque stage
       for (const stage of futureStages) {
-        const fullAddress = `${stage.street}, ${stage.city}`;
-        const coords = await this.getCoordinatesFromAddress(fullAddress);
-
-        if (coords && this.userLatitude !== null && this.userLongitude !== null) {
-          const [lng, lat] = coords;
-          stage.distance = this.calculateDistance(this.userLatitude, this.userLongitude, lat, lng);
+        if (
+          stage.latitude !== undefined &&
+          stage.longitude !== undefined &&
+          this.userLatitude !== null &&
+          this.userLongitude !== null
+        ) {
+          stage.distance = this.calculateDistance(
+            this.userLatitude,
+            this.userLongitude,
+            stage.latitude,
+            stage.longitude
+          );
         } else {
-          stage.distance = Infinity; // On cache ceux qu'on n'a pas pu géocoder
+          stage.distance = Infinity;
         }
       }
 
-      // Stocker tous les stages triés par date
-      this.stages = this.sortStagesByDate(futureStages);
 
-      // Appliquer les filtres actifs
+      // ✅ Tri par distance (du plus proche au plus lointain)
+      futureStages.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
+
+      this.stages = futureStages;
+
+      // Appliquer d'autres filtres si tu en as
       this.applyFilters();
     };
 
+    // 🧭 Si l'utilisateur a saisi une ville
     if (this.searchTerm) {
-      this._stageService.getFilteredStages(this.searchTerm).subscribe({
-        next: (stages: StageDetailsModel[]) => {
-          processStages(stages);
-        },
-        error: (error: string) => console.error('Erreur de chargement:', error)
-      });
+      const coords = await this._stageService.getCoordinatesFromAddress(this.searchTerm);
+
+      if (coords) {
+        const [lon, lat] = coords;
+        this.userLongitude = lon;
+        this.userLatitude = lat;
+
+        this._stageService.getAllStage().subscribe({
+          next: (stages) => processStages(stages),
+          error: (err) => console.error('Erreur de chargement des stages', err),
+        });
+      } else {
+        console.warn('Ville non trouvée');
+        this.stages = [];
+      }
     } else {
+      // Pas de filtre ville → on récupère tout
       this._stageService.getAllStage().subscribe({
-        next: (stages: StageDetailsModel[]) => {
-          processStages(stages);
-        },
-        error: (error: string) => console.error('Erreur de chargement:', error)
+        next: (stages) => processStages(stages),
+        error: (err) => console.error('Erreur de chargement des stages', err),
       });
     }
   }
+
+
+
 
   applyFilters(): void {
     let filtered = [...this.stages];
@@ -236,22 +255,8 @@ export class StageAllComponent implements OnInit {
   closeDetails() {
     this.selectedStage = null;
   }
-
   onSearch(): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { searchTerm: this.searchTerm },
-      queryParamsHandling: 'merge',
-    });
-
-    // Réinitialiser la pagination
-    this.currentPage = 1;
-
-    if (this.userLatitude !== null && this.userLongitude !== null) {
-      this.loadStagesWithDistance();
-    } else {
-      this.loadStages();
-    }
+    this.loadStagesWithDistance();
   }
 
   paginate(): void {

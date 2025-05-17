@@ -40,7 +40,7 @@ export class StageCreateComponent {
       price: [null, Validators.required],
       city: ['', Validators.required],
       street: ['', Validators.required],
-      arrondissement: ['', Validators.required],
+      number: ['', Validators.required],
       capacity: ['', Validators.required],
       organisation: ['', Validators.required],
     });

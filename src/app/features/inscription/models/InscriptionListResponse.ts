@@ -8,7 +8,7 @@ export interface InscriptionListResponse {
   stageId: number;
   stageCity: string;
   stageStreet: string;
-  stageArrondissement: string;
+  stageNumber: string;
   stageOrganisation: string;
   stageDateDebut: string;
   stageDateFin: string;

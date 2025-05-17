@@ -109,7 +109,7 @@ export class InscriptionAllComponent implements OnInit{
       this.filteredInscriptions = this.inscriptions.filter(inscription => {
         return (
           (inscription.stageCity && inscription.stageCity.toLowerCase().includes(searchTermLower)) ||
-          (inscription.stageArrondissement && inscription.stageArrondissement.toLowerCase().includes(searchTermLower)) ||
+          (inscription.stageNumber && inscription.stageNumber.toLowerCase().includes(searchTermLower)) ||
           (inscription.stageStreet && inscription.stageStreet.toLowerCase().includes(searchTermLower)) ||
           (inscription.stageOrganisation && inscription.stageOrganisation.toLowerCase().includes(searchTermLower)) ||
           (inscription.stagePrice && inscription.stagePrice.toString().includes(searchTermLower)) ||

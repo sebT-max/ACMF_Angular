@@ -5,7 +5,9 @@ export interface StageDetailsModel {
   price: number;
   city: string;
   street: string;
-  arrondissement: string;
+  number: string;
   capacity: number;
   organisation: string;
+  latitude:number;
+  longitude:number;
 }

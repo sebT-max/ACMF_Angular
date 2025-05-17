@@ -29,7 +29,7 @@ export class StageUpdateComponent implements OnInit {
       dateDeStage: [[], Validators.required],
       city: ['', Validators.required],
       street: ['', Validators.required],
-      arrondissement: ['', Validators.required],
+      number: ['', Validators.required],
       capacity: [0, [Validators.required, Validators.min(1)]],
       price: [0, [Validators.required, Validators.min(0)]],
       organisation: [0, [Validators.required]]

@@ -18,7 +18,7 @@
         <button class="search-button" (click)="onSearch()">Rechercher</button>
         <button class="reset-button" (click)="resetFilters()" *ngIf="searchTerm">Réinitialiser</button>
       </div>
-      <p class="filter-hint">Recherchez par ville, arrondissement, rue, organisation ou prix</p>
+      <p class="filter-hint">Recherchez par ville, numéro de stage, rue, organisation ou prix</p>
     </div>
   </div>
 
@@ -53,7 +53,7 @@
               <div class="details-grid">
                 <div class="location-details">
                   <p><strong>Ville :</strong> {{ stage.city }}</p>
-                  <p><strong>Arrondissement :</strong> {{ stage.arrondissement }}</p>
+                  <p><strong>Numéro de stage :</strong> {{ stage.number }}</p>
                   <p><strong>Rue :</strong> {{ stage.street }}</p>
                 </div>
                 <div class="org-details">

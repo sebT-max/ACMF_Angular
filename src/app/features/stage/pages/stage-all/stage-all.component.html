@@ -7,13 +7,13 @@
   <p>Filtre par ville </p>
   <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" id="city_filter" placeholder="Rechercher par ville">
   <p>Filtre par date</p>
-  <p-datepicker>
+  <p-datepicker
     [(ngModel)]="selectedDate"
     (onSelect)="onDateSelected($event)"
     [showIcon]="true"
     [showButtonBar]="true"
     [readonlyInput]="true"
-    dateFormat="dd/mm/yyyy"
+    dateFormat="dd/mm/yy"
     placeholder="Sélectionnez une date">
   </p-datepicker>
   <button class="invisible_button" (click)="clearDate()">Effacer date</button>

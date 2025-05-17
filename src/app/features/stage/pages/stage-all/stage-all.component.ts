@@ -10,7 +10,6 @@ import {environment} from '../../../../../environments/environment';
 import { CalendarModule } from 'primeng/calendar';
 import {fr} from 'date-fns/locale';
 import {DatePicker} from 'primeng/datepicker';
-import {map, Observable} from 'rxjs';
 import {PrimeNG} from 'primeng/config';
 
 
@@ -108,6 +107,11 @@ export class StageAllComponent implements OnInit {
     this.selectedDate = date;
     this.onDateFilter(); // réapplique le filtre de date
   }
+  onDateFilter(): void {
+    // Réinitialiser la pagination et appliquer le filtre
+    this.currentPage = 1;
+    this.applyFilters();
+  }
 
 
   calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -122,11 +126,6 @@ export class StageAllComponent implements OnInit {
     return R * c; // Distance en km
   }
 
-  onDateFilter(): void {
-    // Réinitialiser la pagination et appliquer le filtre
-    this.currentPage = 1;
-    this.applyFilters();
-  }
   getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
     return fetch(url)
@@ -239,9 +238,6 @@ export class StageAllComponent implements OnInit {
       });
     }
   }
-
-
-
 
   applyFilters(): void {
     let filtered = [...this.stages];

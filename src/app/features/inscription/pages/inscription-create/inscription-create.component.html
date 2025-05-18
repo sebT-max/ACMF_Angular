@@ -3,9 +3,9 @@
   <div id="inscription_container_details" class="stage-details" *ngIf="stageDetails">
     <div class="details-wrapper">
       <h2>Stage à {{ stageDetails.city }}</h2>
-      <p>{{ stageDetails.number }} n° stage</p>
-      <p>{{ stageDetails.street }}</p>
-      <p>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</p>
+      <p><strong>Numéro de stage:</strong> {{ stageDetails.number }}</p>
+      <p><strong>{{ stageDetails.street }}</strong></p>
+      <p><strong>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</strong></p>
       <p><strong>Prix :</strong> {{ stageDetails.price }}€</p>
     </div>
 

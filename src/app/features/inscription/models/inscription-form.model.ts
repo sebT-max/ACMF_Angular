@@ -5,7 +5,7 @@ import {ParticulierDTO} from './ParticulierDTO';
 
 export interface InscriptionFormModel {
   id?: number;
-  user: ParticulierDTO; // ✅ ici
+  user: ParticulierDTO;
   stageId: number | null;
   stageType: string | null;
   inscriptionStatut: 'EN_ATTENTE' | 'CONFIRMEE' | 'ANNULEE' | string; // adapte selon ton Enum

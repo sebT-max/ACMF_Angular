@@ -840,4 +840,58 @@ h1{
   height: var(--p-button-sm-icon-only-width);
   color: black !important;
 }
+.p-button-label{
+  color: white;
+}
+
+form #birthdate{
+  width: 100%;
+  display: inline-block;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+  }
+}
+form #birthdate input{
+  width: 100% !important;
+  height: 43.5px !important;
+  box-sizing: border-box !important;
+  margin:0 !important;
+  border-radius:8px !important;
+  padding:1px !important;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+  }
+}
+form #birthdate span{
+  width: 80% !important;
+  height:45px !important;
+  padding:1px !important;
+  @media(min-width: 431px){
+    width:100%  !important;
+    margin:0 !important;
+    transform:translate(0px,-17px);
+  }
+}
+form #birthdate .p-button{
+  width: 100% !important;
+  height: 43.5px !important;
+  box-sizing: border-box !important;
+  margin:0 !important;
+  border-radius:8px !important;
+  padding:1px !important;
+  color:black !important;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+    color:black !important;
+  }
+}
+form .p-datepicker-buttonbar {
+  color:black !important;
+}
 

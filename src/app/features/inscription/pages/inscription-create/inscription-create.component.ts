@@ -13,6 +13,7 @@ import {ToastrService} from 'ngx-toastr';
 import { FileRemoveEvent } from 'primeng/fileupload';
 import {CodePromoService} from '../../../code-promo/services/code-promo.services';
 import { PrimeNG } from 'primeng/config';
+import {DatePicker} from 'primeng/datepicker';
 
 
 @Component({
@@ -22,7 +23,8 @@ import { PrimeNG } from 'primeng/config';
     NgIf,
     NgForOf,
     DatePipe,
-    FileUpload
+    FileUpload,
+    DatePicker
   ],
   templateUrl: './inscription-create.component.html',
   styleUrls: ['./inscription-create.component.scss']
@@ -46,11 +48,13 @@ export class InscriptionCreateComponent implements OnInit {
   uploadedFiles: {
     permis: File[];             // max 2
     carteId: File[];            // max 2
-    lettre48n: File[];          // max 1
+    lettre48n: File[]; // max 1
+    decisionJustice:File[];
   } = {
     permis: [],
     carteId: [],
-    lettre48n: []
+    lettre48n: [],
+    decisionJustice:[]
   };
 
   isLoading: boolean = false;
@@ -58,9 +62,9 @@ export class InscriptionCreateComponent implements OnInit {
 
 
   stageTypes = [
-    {value: 'VOLONTAIRE', label: 'Volontaire'},
-    {value: 'PROBATOIRE', label: 'Probatoire'},
-    {value: 'TRIBUNAL', label: 'Tribunal'}
+    {value: 'VOLONTAIRE', label: 'Stage volontaire'},
+    {value: 'PROBATOIRE', label: 'Stage obligatoire permis probatoire'},
+    {value: 'TRIBUNAL', label: 'Stage obligatoire imposé par le tribunal'}
   ];
 
   ngOnInit(): void {
@@ -99,6 +103,7 @@ export class InscriptionCreateComponent implements OnInit {
       user: this._fb.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
+        otherNames: [''],
         birthdate: ['', Validators.required],
         birthplace: [''],
         streetAndNumber: [''],
@@ -149,7 +154,8 @@ export class InscriptionCreateComponent implements OnInit {
     if (
       this.uploadedFiles.permis.length === 0 &&
       this.uploadedFiles.carteId.length === 0 &&
-      this.uploadedFiles.lettre48n.length === 0
+      this.uploadedFiles.lettre48n.length === 0 &&
+      this.uploadedFiles.decisionJustice.length === 0
     ) {
       console.warn('Aucun fichier à envoyer.');
       return;
@@ -201,7 +207,7 @@ export class InscriptionCreateComponent implements OnInit {
     const selectedLabel = selected ? selected.label : null;
 
     if (selectedLabel === 'Probatoire' && this.uploadedFiles.lettre48n.length === 0) {
-      this.lettre48nError = 'Vous devez nous fournir la lettre 48_N du tribunal.';
+      this.lettre48nError = 'Vous devez nous fournir la lettre 48_N.';
       this.isLoading = false;
       return;
     } else {

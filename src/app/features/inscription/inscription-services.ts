@@ -23,7 +23,7 @@ export class InscriptionService {
       `${API_URL}inscriptions/create`,
       formData,
       this.getAuthHeaders()
-    );
+    )
   }
 
   getMyInscriptions(): Observable<InscriptionListResponse[]> {

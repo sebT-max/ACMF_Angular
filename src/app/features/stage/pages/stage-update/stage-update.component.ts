@@ -3,6 +3,7 @@ import {StageService} from '../../services/stage.service';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {DatePicker} from 'primeng/datepicker';
+import {PrimeNG} from 'primeng/config';
 
 @Component({
   selector: 'app-stage-update',
@@ -23,13 +24,14 @@ export class StageUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private stageService: StageService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private primengConfig: PrimeNG
   ) {
     this.stageUpdateCreationForm = this.fb.group({
       dateDeStage: [[], Validators.required],
       city: ['', Validators.required],
       street: ['', Validators.required],
-      arrondissement: ['', Validators.required],
+      number: ['', Validators.required],
       capacity: [0, [Validators.required, Validators.min(1)]],
       price: [0, [Validators.required, Validators.min(0)]],
       organisation: [0, [Validators.required]]
@@ -38,6 +40,17 @@ export class StageUpdateComponent implements OnInit {
   ngOnInit(): void {
     // Récupère l'ID depuis l'URL
     this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.primengConfig.setTranslation({
+      dayNames: ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"],
+      dayNamesShort: ["dim","lun","mar","mer","jeu","ven","sam"],
+      dayNamesMin: ["D","L","M","M","J","V","S"],
+      monthNames: ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"],
+      monthNamesShort: ["janv","févr","mars","avr","mai","juin","juil","août","sept","oct","nov","déc"],
+      today: 'Aujourd\'hui',
+      clear: 'Effacer',
+      dateFormat: 'dd/mm/yy',
+      firstDayOfWeek: 1
+    });
 
     if (this.id !== undefined) {
       // Charge les détails du stage

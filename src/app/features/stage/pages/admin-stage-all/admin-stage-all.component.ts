@@ -132,7 +132,7 @@ export class AdminStageAllComponent implements OnInit {
         // Recherche dans tous les champs pertinents
         return (
           (stage.city && stage.city.toLowerCase().includes(searchTermLower)) ||
-          (stage.arrondissement && stage.arrondissement.toLowerCase().includes(searchTermLower)) ||
+          (stage.number && stage.number.toLowerCase().includes(searchTermLower)) ||
           (stage.street && stage.street.toLowerCase().includes(searchTermLower)) ||
           (stage.organisation && stage.organisation.toLowerCase().includes(searchTermLower)) ||
           (stage.price && stage.price.toString().includes(searchTermLower))

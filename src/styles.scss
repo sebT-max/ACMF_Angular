@@ -258,176 +258,6 @@ table tr:nth-child(even) {
   border-radius: 0px;
 }
 
-.p-ripple {
-  overflow: hidden;
-  position: relative;
-  padding: 10px !important;
-  background:white;
-  border:none !important;
-  &:hover{
-    overflow: hidden;
-    position: relative;
-    padding: 10px !important;
-    background:white;
-    border:none !important;
-  }
-}
-.p-datepicker .p-datepicker-panel {
-  min-width: 100%;
-  background: transparent !important;
-  height:20px;
-  border-radius: 15px;
-}
-.p-datepicker-buttonbar {
-  display: flex;
-  padding:10px !important;
-  border-top: 1px solid var(--p-datepicker-buttonbar-border-color);
-  flex-direction: row;
-  background:white !important;
-  color: #292c32;
-}
-.p-datepicker-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--p-datepicker-header-background);
-  color:black !important;
-  border-top: 3px solid grey !important;
-  border-bottom: 3px solid grey !important;
-  flex-direction: row;
-  padding:20px !important;
-  background:white !important;
-}
-.p-inputtext {
-  font-feature-settings: inherit;
-  font-size: 16px !important;
-  padding: 2px !important;
-  color:black !important;
-  background: white !important;
-  padding-block: var(--p-inputtext-padding-y);
-  border: none !important;
-  transition: background var(--p-inputtext-transition-duration), color var(--p-inputtext-transition-duration), border-color var(--p-inputtext-transition-duration), outline-color var(--p-inputtext-transition-duration), box-shadow var(--p-inputtext-transition-duration);
-  appearance: none;
-  border-radius: 10px !important;
-  outline-color: white !important;
-  height:30px !important;
-  margin-right:20px !important;
-  transform:translate(0px,17px);
-  box-shadow: 0 0 1px grey !important;
-}
-.p-datepicker-day {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-  width: var(--p-datepicker-date-width);
-  height: var(--p-datepicker-date-height);
-  border-radius: var(--p-datepicker-date-border-radius);
-  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), box-shadow var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
-  border: 1px solid transparent;
-  outline-color: transparent;
-  color: #222730 !important;
-}
-.p-datepicker-day-selected {
-  background: #222730 !important;
-  color: white !important;
-  border-radius: 25px !important;
-}
-.p-datepicker-day-selected {
-  background: var(--p-datepicker-date-selected-background);
-  color: white;
-  background: #222730 !important;
-  border-radius: 30px;
-}
-.p-datepicker-year {
-  width: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  padding: var(--p-datepicker-year-padding);
-  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), box-shadow var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
-  border-radius: var(--p-datepicker-year-border-radius);
-  outline-color: transparent;
-  color: var(--p-datepicker-date-color);
-  &:hover {
-    background:white !important;
-  }
-}
-.p-datepicker-month {
-  width: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  padding: var(--p-datepicker-year-padding);
-  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), box-shadow var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
-  border-radius: var(--p-datepicker-year-border-radius);
-  outline-color: transparent;
-  color: var(--p-datepicker-date-color);
-  &:hover {
-    background:white !important;
-  }
-}
-.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
-
-  color: grey !important;
-  font-size: 14px !important;
-  margin-left:2px !important;
-  width:270px !important;
-  box-shadow: 0 0 1px grey !important;
-  border-radius: 10px !important;
-}
-.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input:hover {
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
-  background:transparent !important;
-  box-shadow: 0 0 1px grey !important;
-  border-radius: 10px;
-}
-.p-datepicker-dropdown {
-  cursor: pointer;
-  display: inline-flex;
-  user-select: none;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-  border-start-end-radius: var(--p-datepicker-dropdown-border-radius);
-  border-end-end-radius: var(--p-datepicker-dropdown-border-radius);
-  border: 1px solid var(--p-datepicker-dropdown-border-color);
-  border-inline-start: 0 none;
-  color: white !important;
-  transition: background var(--p-datepicker-transition-duration), color var(--p-datepicker-transition-duration), border-color var(--p-datepicker-transition-duration), outline-color var(--p-datepicker-transition-duration);
-  outline-color: #000;
-  border-radius: 50px !important;;
-  background:red!important;
-  width:50px !important;
-  margin-bottom:20px !important;
-  height:50px !important;
-  &:hover{
-    background:red!important;
-    opacity:0.9;
-  }
-}
-.p-datepicker-dropdown:not(:disabled):hover {
-  background: red !important;
-  border-color: var(--p-datepicker-dropdown-hover-border-color);
-  color: var(--p-datepicker-dropdown-hover-color);
-  border-radius: 30px;
-}
-.p-datepicker {
-  position: relative;
-  max-width: 100%;
-  display: inline-flex !important;
-}
 
 app-document-utilisateur {
   position: fixed !important;
@@ -836,8 +666,147 @@ h1{
   }
 }
 
-.p-button {
-  height: var(--p-button-sm-icon-only-width);
+
+/* Cible l'overlay du calendrier */
+.p-datepicker {
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  height: 44px;
+  font-size: 1rem;
+  background-color: white;
+}
+
+/* Agrandit les cellules de jour */
+.p-datepicker .p-datepicker-calendar td,th {
+  padding: 0.75rem;
+  color:black;
+}
+
+/* Agrandit le champ de saisie */
+p-calendar .p-inputtext,
+p-datepicker .p-inputtext {
+  width: 100%;
+  max-width: 320px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+/* Ajuste la barre de navigation (mois/année) */
+.p-datepicker .p-datepicker-header {
+  padding: 0srem;
+  font-size: 1.1rem;
+  justify-content: space-between;
   color: black !important;
 }
 
+/* Boutons de navigation plus grands */
+.p-datepicker .p-datepicker-prev,
+.p-datepicker .p-datepicker-next {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.25rem;
+}
+
+/* Pour éviter qu'il soit trop étroit sur mobile */
+@media (max-width: 480px) {
+  .p-datepicker {
+    min-width: 90% !important;
+    margin-top:10px !important;
+  }
+}
+.p-datepicker-year-view {
+
+  background: white;
+}
+.p-datepicker-month-view {
+  background: white;
+  gap: 10px;
+}
+.p-datepicker-calendar-container .p-datepicker-calendar:last-child {
+  background: white;
+}
+.p-datepicker-buttonbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background:#0a0a1e;
+  color:white !important;
+  padding:25px !important;
+  height:50px;
+}
+.p-datepicker-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size:20px !important;
+}
+.p-datepicker-select-month {
+  font-size: 20px !important;
+  margin-right:3px !important;
+  color:black !important;
+}
+.p-datepicker-month {
+  padding: 20px !important;
+  color:black !important;
+}
+
+
+.p-datepicker-select-year {
+  font-size: 20px !important;
+  margin-left:1px !important;
+  color:black !important;
+}
+
+.p-datepicker-year {
+  padding: 20px !important;
+  font-size: 18px !important;
+  color:black !important;
+}
+ p-datepicker .p-inputtext {
+  width: 100%;
+  max-width: 300px;
+  padding: 0;
+  font-size: 1rem;
+  border-radius: 6px;
+  color: grey;
+}
+.p-datepicker .p-datepicker-panel {
+  min-width: 100%;
+  line-height: 20px;
+}
+
+
+form #birthdate{
+  width: 280px !important;
+  display: inline-block;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+  }
+}
+
+form #stage_create{
+  width: 80%;
+  display: inline-block;
+
+  @media(min-width: 431px){
+    width:48%  !important;
+    margin:0 !important;
+  }
+}
+form #stage_update{
+  width: 80%;
+  display: inline-block;
+
+  @media(min-width: 431px){
+    width:48%  !important;
+    margin:0 !important;
+  }
+}

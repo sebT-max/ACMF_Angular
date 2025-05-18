@@ -12,6 +12,8 @@ import {StripeService} from '../../../../services/stripe.service';
 import {ToastrService} from 'ngx-toastr';
 import { FileRemoveEvent } from 'primeng/fileupload';
 import {CodePromoService} from '../../../code-promo/services/code-promo.services';
+import { PrimeNG } from 'primeng/config';
+import {DatePicker} from 'primeng/datepicker';
 
 
 @Component({
@@ -21,7 +23,8 @@ import {CodePromoService} from '../../../code-promo/services/code-promo.services
     NgIf,
     NgForOf,
     DatePipe,
-    FileUpload
+    FileUpload,
+    DatePicker
   ],
   templateUrl: './inscription-create.component.html',
   styleUrls: ['./inscription-create.component.scss']
@@ -34,7 +37,7 @@ export class InscriptionCreateComponent implements OnInit {
   private readonly _stripeService = inject(StripeService);
   private readonly _codePromoService = inject(CodePromoService);
 
-  constructor(private toastr: ToastrService) {
+  constructor(private toastr: ToastrService,private primengConfig: PrimeNG) {
   }
 
   inscriptionCreationForm!: FormGroup;
@@ -45,11 +48,13 @@ export class InscriptionCreateComponent implements OnInit {
   uploadedFiles: {
     permis: File[];             // max 2
     carteId: File[];            // max 2
-    lettre48n: File[];          // max 1
+    lettre48n: File[]; // max 1
+    decisionJustice:File[];
   } = {
     permis: [],
     carteId: [],
-    lettre48n: []
+    lettre48n: [],
+    decisionJustice:[]
   };
 
   isLoading: boolean = false;
@@ -57,12 +62,23 @@ export class InscriptionCreateComponent implements OnInit {
 
 
   stageTypes = [
-    {value: 'VOLONTAIRE', label: 'Volontaire'},
-    {value: 'PROBATOIRE', label: 'Probatoire'},
-    {value: 'TRIBUNAL', label: 'Tribunal'}
+    {value: 'VOLONTAIRE', label: 'Stage volontaire'},
+    {value: 'PROBATOIRE', label: 'Stage obligatoire permis probatoire'},
+    {value: 'TRIBUNAL', label: 'Stage obligatoire imposé par le tribunal'}
   ];
 
   ngOnInit(): void {
+    this.primengConfig.setTranslation({
+      dayNames: ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"],
+      dayNamesShort: ["dim","lun","mar","mer","jeu","ven","sam"],
+      dayNamesMin: ["D","L","M","M","J","V","S"],
+      monthNames: ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"],
+      monthNamesShort: ["janv","févr","mars","avr","mai","juin","juil","août","sept","oct","nov","déc"],
+      today: 'Aujourd\'hui',
+      clear: 'Effacer',
+      dateFormat: 'dd/mm/yy',
+      firstDayOfWeek: 1
+    });
     const localStorageUser = localStorage.getItem('currentUser');
     if (localStorageUser) {
       try {
@@ -83,7 +99,20 @@ export class InscriptionCreateComponent implements OnInit {
     }
 
     this.inscriptionCreationForm = this._fb.group({
-      userId: [this.currentUser()?.id ?? null, Validators.required],
+     /* userId: [this.currentUser()?.id ?? null, Validators.required],*/
+      user: this._fb.group({
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        otherNames: [''],
+        birthdate: ['', Validators.required],
+        birthplace: [''],
+        streetAndNumber: [''],
+        zipCode: [''],
+        city: [''],
+        email: ['', [Validators.required, Validators.email]],
+        telephone: ['', Validators.required],
+        password:['', Validators.required]
+      }),
       stageId: [this.stageId, Validators.required],
       stageType: ['', Validators.required],
       inscriptionStatut: ['EN_ATTENTE', Validators.required],
@@ -97,7 +126,7 @@ export class InscriptionCreateComponent implements OnInit {
     return selected ? selected.label : null;
   }
 
-  onFilesChange(event: any, type: 'permis' | 'carteId' | 'lettre48n') {
+  onFilesChange(event: any, type: 'permis' | 'carteId' | 'lettre48n' | 'decisionJustice') {
     const files: File[] = event.files || event.target?.files || [];
     for (let file of files) {
       if (!this.isValidFileType(file)) {
@@ -125,7 +154,8 @@ export class InscriptionCreateComponent implements OnInit {
     if (
       this.uploadedFiles.permis.length === 0 &&
       this.uploadedFiles.carteId.length === 0 &&
-      this.uploadedFiles.lettre48n.length === 0
+      this.uploadedFiles.lettre48n.length === 0 &&
+      this.uploadedFiles.decisionJustice.length === 0
     ) {
       console.warn('Aucun fichier à envoyer.');
       return;
@@ -156,12 +186,12 @@ export class InscriptionCreateComponent implements OnInit {
 
   handleInscription(): void {
     this.isLoading = true;
-    const user = this.currentUser();
+    /*const user = this.currentUser();
     if (!user) {
       console.error('Utilisateur non trouvé');
       this.isLoading = false;
       return;
-    }
+    }*/
 
     if (!this.stageDetails || !this.stageDetails.price) {
       console.error('Prix du stage non défini');
@@ -170,15 +200,14 @@ export class InscriptionCreateComponent implements OnInit {
     }
     this.inscriptionCreationForm.patchValue({
       stageId: this.stageId,
-      userId: user.id
     });
 
     const selectedValue = this.inscriptionCreationForm.get('stageType')?.value;
     const selected = this.stageTypes.find(type => type.value === selectedValue);
     const selectedLabel = selected ? selected.label : null;
 
-    if (selectedLabel === 'Tribunal' && this.uploadedFiles.lettre48n.length === 0) {
-      this.lettre48nError = 'Vous devez nous fournir la lettre 48_N du tribunal.';
+    if (selectedLabel === 'Probatoire' && this.uploadedFiles.lettre48n.length === 0) {
+      this.lettre48nError = 'Vous devez nous fournir la lettre 48_N.';
       this.isLoading = false;
       return;
     } else {
@@ -219,7 +248,7 @@ export class InscriptionCreateComponent implements OnInit {
 
   private proceedWithInscription(finalPrice: number): void {
     const inscriptionData: InscriptionFormModel = {
-      userId: this.currentUser()?.id ?? null,
+      user: this.inscriptionCreationForm.value.user,
       stageId: this.stageId,
       stageType: this.inscriptionCreationForm.value.stageType,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
@@ -237,6 +266,10 @@ export class InscriptionCreateComponent implements OnInit {
     files.forEach(file => {
       formData.append('files', file, file.name);
     });
+    console.log(this.inscriptionCreationForm.value);
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
     this._inscriptionService.createInscription(formData).subscribe({
       next: (resp) => {
         const inscriptionId = resp.id;

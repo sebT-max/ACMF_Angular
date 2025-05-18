@@ -1,105 +1,106 @@
 <div routerLink="/" id="logo_stage_all">
-  <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf"  priority width="208" height="160"/>
+  <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf" priority width="208" height="160" />
 </div>
 
-<h1 style="text-align:left;width:80%;margin:0 auto;">Nos stages à venir</h1>
+<h1 style="text-align:left;width:80%;margin:0 auto;">Chercher un stage</h1>
+
 <div id="stage_filters">
-  <p>Filtre par ville </p>
-  <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" id="city_filter" placeholder="Rechercher par ville">
-  <p>Filtre par date</p>
-  <p-datepicker
-    [(ngModel)]="selectedDate"
-    (ngModelChange)="onDateSelected($event)"
-    [showIcon]="true"
-    [showButtonBar]="true"
-    [readonlyInput]="true"
-    dateFormat="dd/mm/yy"
-    placeholder="Sélectionnez une date">
-  </p-datepicker>
-  <!--<p-datepicker
-    selectionMode="range"
-    [(ngModel)]="selectedDate"
-    id="dateDeStage"
-    formControlName="dateDeStage"
-    [showIcon]="true"
-    [showButtonBar]="true"
-    [readonlyInput]="true"
-    dateFormat="dd/mm/yy"
-    placeholder="Sélectionnez les dates"
-    [required]="true">
-  </p-datepicker>
+  <div>
+    <p><strong>Filtre par lieu</strong></p>
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+      id="city_filter"
+      placeholder="Rechercher par ville"
+    />
+    <button class="invisible_button" (click)="clearSearchTerm()">Effacer lieu</button>
 
-  <p-calendar
-    [(ngModel)]="selectedDate"
-    (onSelect)="onDateFilter()"
-    [showIcon]="true"
-    dateFormat="dd/mm/yy"
-    [appendTo]="'body'"
-    [firstDayOfWeek]="1"
-    placeholder="Sélectionner une date"
-    inputId="calendarInput">
-  </p-calendar>-->
-  <button class="invisible_button" (click)="clearDate()">Effacer date</button>
+
+    <small>
+      <p>* La distance des stages est calculée selon votre localisation (si vous l'avez activée) ou selon le lieu choisi.</p>
+      <p>* Seulement les stages avoisinants(<100km) sont affichés</p>
+    </small>
+
+  </div>
+  <div>
+    <p><strong>Filtre par date</strong></p>
+
+    <p-datepicker
+      [(ngModel)]="selectedDate"
+      (onSelect)="onDateSelected($event)"
+      [showIcon]="false"
+      [showButtonBar]="true"
+      [readonlyInput]="true"
+      id="date_filter_stage_all"
+      dateFormat="dd/mm/yy"
+      placeholder="Sélectionnez une date"
+    ></p-datepicker>
+
+    <button class="invisible_button" (click)="clearDate()">Effacer date</button>
+    <small>
+      <p>* Affiche les stages dont la date de début est à deux semaines près de la date choisie</p>
+    </small>
+  </div>
+
+  <button (click)="resetFilters()" class="invisible_button">
+    Réinitialiser les filtres
+  </button>
 </div>
 
-<br>
-
+<!-- Message si aucun résultat -->
 <div *ngIf="paginatedStages.length === 0" class="no-results">
   <p>Aucun stage ne correspond à votre recherche.</p>
 </div>
 
+<!-- Liste des stages -->
 <div class="card-container">
-  @for (stage of paginatedStages; track stage.id) {
-    <div class="cards_stages_and_details">
-      <div class="card_stages">
+  <div *ngFor="let stage of paginatedStages" class="cards_stages_and_details">
+    <div class="card_stages">
+      <div class="card_stages_date">
+        {{ stage.dateDebut | date:'d':'fr' }} & {{ stage.dateFin | date:'d MMMM':'fr' }}
+      </div>
 
-        <div class="card_stages_date">
-          {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM':'fr' }}
-        </div>
-        <div class="card_stages_remaining_places_and_distance">
-          <h3>Places restantes:
-            <strong>{{ stage?.capacity === 0 ? "Complet" : stage?.capacity }}</strong>
-          </h3>
-          <h3> Distance: {{ stage.distance | number:'1.1-1' }} km
-          </h3>
-        </div>
-
-
-        <div class="card_stages_all_datas">
-          <h2> STAGE {{ stage.city }}</h2>
-          <hr>
-          <p>{{ stage!.street }}</p>
-        </div>
-        <div id="stage_price">
-          <h4>{{ stage.price }}€
-          </h4>
-        </div>
-
-        <div id="stage_all_subscription_and_details_buttons">
-          <!-- Bouton "Je m'inscris" -->
-          <button class="inscription_button" [routerLink]="['/inscriptions/create',stage.id]" >Je m'inscris</button>
-          <!-- Bouton Détails pour afficher les informations -->
-          <button class="details_button" (click)="selectStage(stage)">
-            {{ selectedStage?.id === stage.id ? 'Fermer' : 'Détails' }}
-          </button>
+      <div class="card_stages_remaining_places_and_distance">
+        <h3>
+          Places restantes :
+          <strong>{{ stage.capacity === 0 ? 'Complet' : stage.capacity }}</strong>
+        </h3>
+        <div *ngIf="stage.distance !== undefined">
+          <h3>Distance : {{ stage.distance | number:'1.0-1' }} km</h3>
         </div>
       </div>
 
-      <!-- Affichage des détails en dehors de la carte, sous la carte sélectionnée -->
-      <div *ngIf="selectedStage?.id === stage.id">
-        <app-stage-details [stage]="selectedStage" (close)="closeDetails()"></app-stage-details>
+      <div class="card_stages_all_datas">
+        <h2>STAGE {{ stage.city }}</h2>
+        <hr />
+        <p>{{ stage.street }}</p>
+      </div>
+
+      <div id="stage_price">
+        <h4>{{ stage.price }}€</h4>
+      </div>
+
+      <div id="stage_all_subscription_and_details_buttons">
+        <button class="inscription_button" [routerLink]="['/inscriptions/create', stage.id]">
+          Je m'inscris
+        </button>
+        <button class="details_button" (click)="selectStage(stage)">
+          {{ selectedStage?.id === stage.id ? 'Fermer' : 'Détails' }}
+        </button>
       </div>
     </div>
-  }
+
+    <!-- Détails affichés sous la carte -->
+    <div *ngIf="selectedStage?.id === stage.id">
+      <app-stage-details [stage]="selectedStage" (close)="closeDetails()"></app-stage-details>
+    </div>
+  </div>
 </div>
 
-<!-- Ajout des contrôles de pagination -->
+<!-- Pagination -->
 <div class="pagination-controls" *ngIf="filteredStages.length > pageSize">
-  <button
-    [disabled]="!canGoPrev()"
-    (click)="changePage(currentPage - 1)"
-    class="pagination-button"
-  >
+  <button [disabled]="!canGoPrev()" (click)="changePage(currentPage - 1)" class="pagination-button">
     Précédent
   </button>
 
@@ -107,11 +108,7 @@
     Page {{ currentPage }} sur {{ totalPages() }}
   </span>
 
-  <button
-    [disabled]="!canGoNext()"
-    (click)="changePage(currentPage + 1)"
-    class="pagination-button"
-  >
+  <button [disabled]="!canGoNext()" (click)="changePage(currentPage + 1)" class="pagination-button">
     Suivant
   </button>
 </div>

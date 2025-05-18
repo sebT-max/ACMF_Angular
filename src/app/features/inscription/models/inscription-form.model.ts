@@ -1,15 +1,15 @@
 import {StageDetailsModel} from '../../stage/models/stage-details-model';
 import {UserFormModel} from '../../auth/models/user-form.model';
 import {DocumentDTO} from './DocumentDTO';
+import {ParticulierDTO} from './ParticulierDTO';
 
 export interface InscriptionFormModel {
   id?: number;
-  userId: number | null;
+  user: ParticulierDTO;
   stageId: number | null;
   stageType: string | null;
-  inscriptionStatut: string;
+  inscriptionStatut: 'EN_ATTENTE' | 'CONFIRMEE' | 'ANNULEE' | string; // adapte selon ton Enum
   stage?: StageDetailsModel;
-  user?: UserFormModel;
   documents?: DocumentDTO[];
   codePromo?:string// <-- à ajouter
 }

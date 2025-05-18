@@ -34,61 +34,6 @@ h1{
   color: #b41c1b;
 }
 
-.p-ripple {
-  overflow: hidden;
-  position: relative;
-  padding: 10px;
-}
-.p-datepicker .p-datepicker-panel {
-  min-width: 100%;
-  background: #222730;
-}
-.p-datepicker-buttonbar {
-  display: flex;
-  padding: var(--p-datepicker-buttonbar-padding);
-  border-top: 1px solid var(--p-datepicker-buttonbar-border-color);
-  flex-direction: row;
-}
-.p-datepicker-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--p-datepicker-header-padding);
-  background: var(--p-datepicker-header-background);
-  color: var(--p-datepicker-header-color);
-  border-bottom: 1px solid var(--p-datepicker-header-border-color);
-  flex-direction: row;
-}
-.p-inputtext {
-  /*font-family: inherit;*/
-  font-feature-settings: inherit;
-  font-size: 20px;
-  color: black !important;
-  background: var(--p-inputtext-background);
-  padding-block: var(--p-inputtext-padding-y);
-  /* padding-inline: var(--p-inputtext-padding-x); */
-  border: 1px solid var(--p-inputtext-border-color);
-  transition: background var(--p-inputtext-transition-duration), color var(--p-inputtext-transition-duration), border-color var(--p-inputtext-transition-duration), outline-color var(--p-inputtext-transition-duration), box-shadow var(--p-inputtext-transition-duration);
-  appearance: none;
-  border-radius: var(--p-inputtext-border-radius);
-  outline-color: black !important;
-  box-shadow: var(--p-inputtext-shadow);
-}
-
-.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
-  color: #fff !important;
-  font-size: 20px;
-  width:270px !important;
-  transform:translate(0px,20px);
-  /* display: none; */
-}
-.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input:hover {
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
-  background:transparent !important;
-}
 
 
 

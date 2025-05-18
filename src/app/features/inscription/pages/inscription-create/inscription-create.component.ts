@@ -126,7 +126,7 @@ export class InscriptionCreateComponent implements OnInit {
     return selected ? selected.label : null;
   }
 
-  onFilesChange(event: any, type: 'permis' | 'carteId' | 'lettre48n') {
+  onFilesChange(event: any, type: 'permis' | 'carteId' | 'lettre48n' | 'decisionJustice') {
     const files: File[] = event.files || event.target?.files || [];
     for (let file of files) {
       if (!this.isValidFileType(file)) {

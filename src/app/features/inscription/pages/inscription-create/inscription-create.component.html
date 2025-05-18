@@ -122,7 +122,7 @@
         <div class="file-upload-section">
           <!-- <label for="permis"><strong>Permis ou Avis de suspension</strong></label> -->
           <p-fileUpload
-            name="permis"
+            name="Permis de conduire"
             [customUpload]="true"
             (uploadHandler)="uploadFiles($event)"
             (onSelect)="onFilesChange($event, 'permis')"
@@ -131,16 +131,17 @@
             [showUploadButton]="false"
             [showCancelButton]="false"
             accept=".pdf,image/*"
-            chooseLabel="Permis"
+            chooseLabel=" Permis de conduire"
             mode="advanced"
             [maxFileSize]="5000000"
+            id="driving_license"
           ></p-fileUpload>
         </div>
 
         <div class="file-upload-section">
           <!-- <label for="carteId"><strong>Carte d'identité</strong></label> -->
           <p-fileUpload
-            name="carteId"
+            name="Carte d'identité"
             [customUpload]="true"
             (uploadHandler)="uploadFiles($event)"
             (onSelect)="onFilesChange($event, 'carteId')"
@@ -149,9 +150,10 @@
             [showUploadButton]="false"
             [showCancelButton]="false"
             accept=".pdf,image/*"
-            chooseLabel="Carte d'identité"
+            chooseLabel=" Carte d'identité"
             mode="advanced"
             [maxFileSize]="5000000"
+            id="carteId"
           ></p-fileUpload>
         </div>
 
@@ -167,26 +169,28 @@
             [showUploadButton]="false"
             [showCancelButton]="false"
             accept=".pdf,image/*"
-            chooseLabel="48N"
+            chooseLabel=" Lettre 48N"
             mode="advanced"
             [maxFileSize]="5000000"
+            id="lettre48n"
           ></p-fileUpload>
         </div>
         <div *ngIf="selectedStageLabel === 'Stage obligatoire imposé par le tribunal'" class="file-upload-section">
           <!-- <label for="décision de justice"><strong>Décision de justice</strong></label> -->
           <p-fileUpload
-            name="décision de justice"
+            name="Décision de justice"
             [customUpload]="true"
             (uploadHandler)="uploadFiles($event)"
-            (onSelect)="onFilesChange($event, 'lettre48n')"
-            (onRemove)="onRemoveFile($event, 'lettre48n')"
+            (onSelect)="onFilesChange($event, 'decisionJustice')"
+            (onRemove)="onRemoveFile($event, 'décision de justice')"
             [multiple]="true"
             [showUploadButton]="false"
             [showCancelButton]="false"
             accept=".pdf,image/*"
-            chooseLabel="Décision"
+            chooseLabel=" Décision de justice"
             mode="advanced"
             [maxFileSize]="5000000"
+            id="court_letter"
           ></p-fileUpload>
         </div>
       </section>

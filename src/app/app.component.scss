@@ -14,3 +14,224 @@ body {
 main {
   flex: 1;
 }
+.p-ripple {
+  padding: 10px !important;
+  border:none !important;
+  &:hover{
+    padding: 10px !important;
+    border:none !important;
+  }
+}
+.p-datepicker .p-datepicker-panel {
+  background: transparent !important;
+}
+.p-datepicker-buttonbar {
+  padding:10px !important;
+  background:white !important;
+}
+.p-datepicker-header {
+  color:black !important;
+  border-top: 3px solid grey !important;
+  border-bottom: 3px solid grey !important;
+  padding:20px !important;
+  background:white !important;
+}
+.p-inputtext {
+  font-feature-settings: inherit;
+  font-size: 16px !important;
+  padding: 2px !important;
+  color:black !important;
+  background: white !important;
+  border: none !important;
+  border-radius: 10px !important;
+  outline-color: white !important;
+  height:30px !important;
+  margin-right:20px !important;
+  transform:translate(0px,17px);
+  box-shadow: 0 0 1px grey !important;
+}
+.p-datepicker-day {
+  color: #222730 !important;
+}
+.p-datepicker-day-selected {
+  background: #222730 !important;
+  color: white !important;
+  border-radius: 25px !important;
+}
+.p-datepicker-day-selected {
+  background: #222730 !important;
+}
+.p-datepicker-year {
+  &:hover {
+    background:white !important;
+  }
+}
+.p-datepicker-month {
+  &:hover {
+    background:white !important;
+  }
+}
+.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
+
+  color: grey !important;
+  font-size: 14px !important;
+  margin-left:2px !important;
+  width:270px !important;
+  box-shadow: 0 0 1px grey !important;
+  border-radius: 10px !important;
+}
+.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input:hover {
+  background:transparent !important;
+  box-shadow: 0 0 1px grey !important;
+}
+.p-datepicker-dropdown {
+  color: white !important;
+  outline-color: #000;
+  border-radius: 50px !important;;
+  background:red!important;
+  width:50px !important;
+  margin-bottom:20px !important;
+  height:50px !important;
+  &:hover{
+    background:red!important;
+    opacity:0.9;
+  }
+}
+.p-datepicker-dropdown:not(:disabled):hover {
+  background: red !important;
+  border-radius: 30px;
+}
+.p-datepicker {
+  position: relative;
+  max-width: 100%;
+  display: inline-flex !important;
+}
+
+.p-button {
+  color: black !important;
+}
+.p-button-label{
+  color: white;
+}
+
+form #birthdate{
+  width: 100%;
+  display: inline-block;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+  }
+}
+form #birthdate input{
+  width: 100% !important;
+  height: 43.5px !important;
+  box-sizing: border-box !important;
+  margin:0 !important;
+  border-radius:8px !important;
+  padding:1px !important;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+  }
+}
+form #birthdate span{
+  width: 80% !important;
+  height:45px !important;
+  padding:1px !important;
+  @media(min-width: 431px){
+    width:100%  !important;
+    margin:0 !important;
+    transform:translate(0px,-17px);
+  }
+}
+form #birthdate .p-button{
+  width: 100% !important;
+  height: 43.5px !important;
+  box-sizing: border-box !important;
+  margin:0 !important;
+  border-radius:8px !important;
+  padding:1px !important;
+  color:black !important;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+    color:black !important;
+  }
+}
+form .p-datepicker-buttonbar {
+  color:black !important;
+}
+
+#date_filter_stage_all{
+  width: 100%;
+  display: inline-block;
+  transform:translate(0px,-17px);
+
+  @media(min-width: 431px){
+    width:100%  !important;
+    margin:0 !important;
+  }
+}
+#date_filter_stage_all input{
+  width: 100% !important;
+  height: 43.5px !important;
+  box-sizing: border-box !important;
+  margin:0 !important;
+  border-radius:8px !important;
+  padding:1px !important;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+  }
+}
+#date_filter_stage_all span{
+  width: 80% !important;
+  height:45px !important;
+  padding:1px !important;
+  @media(min-width: 431px){
+    width:100%  !important;
+    margin:0 !important;
+  }
+}
+#date_filter_stage_all .p-button{
+  width: 100% !important;
+  height: 43.5px !important;
+  box-sizing: border-box !important;
+  margin:0 !important;
+  border-radius:8px !important;
+  padding:1px !important;
+  color:black !important;
+
+  @media(min-width: 431px){
+    width:40%  !important;
+    margin:0 !important;
+    color:black !important;
+  }
+}
+form .p-datepicker-buttonbar {
+  color:black !important;
+}
+
+.p-button-text.p-button-danger {
+  color: #ffffff !important;
+}
+
+
+
+.p-inputtext {
+  color: black !important;
+}
+
+.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
+  color: #fff !important;
+  font-size: 20px;
+  width:270px !important;
+  transform:translate(0px,20px);
+}
+.p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input:hover {
+  background:transparent !important;
+}

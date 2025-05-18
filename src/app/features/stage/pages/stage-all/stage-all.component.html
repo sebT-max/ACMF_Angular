@@ -2,49 +2,51 @@
   <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf" priority width="208" height="160" />
 </div>
 
-<h1 style="text-align:left;width:80%;margin:0 auto;">Nos stages à venir</h1>
+<h1 style="text-align:left;width:80%;margin:0 auto;">Chercher un stage</h1>
 
 <div id="stage_filters">
-  <p><strong>Filtre par lieu</strong></p>
-  <input
-    type="text"
-    [(ngModel)]="searchTerm"
-    (input)="onSearch()"
-    id="city_filter"
-    placeholder="Rechercher par ville"
-  />
-  <button class="invisible_button" (click)="clearSearchTerm()">Effacer lieu</button>
+  <div>
+    <p><strong>Filtre par lieu</strong></p>
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+      id="city_filter"
+      placeholder="Rechercher par ville"
+    />
+    <button class="invisible_button" (click)="clearSearchTerm()">Effacer lieu</button>
 
 
-  <small>
-    <p>* La distance des stages est calculée selon votre localisation (si vous l'avez activée) ou selon le lieu choisi.</p>
-    <p>* Seulement les stages avoisinants(<100km) sont affichés</p>
+    <small>
+      <p>* La distance des stages est calculée selon votre localisation (si vous l'avez activée) ou selon le lieu choisi.</p>
+      <p>* Seulement les stages avoisinants(<100km) sont affichés</p>
+    </small>
 
-  </small>
+  </div>
+  <div>
+    <p><strong>Filtre par date</strong></p>
 
-  <p><strong><br/>Filtre par date</strong></p>
-  <small>
-    <p>* Affiche les stages dont la date de début est à deux semaines près de la date choisie</p>
-  </small>
+    <p-datepicker
+      [(ngModel)]="selectedDate"
+      (onSelect)="onDateSelected($event)"
+      [showIcon]="false"
+      [showButtonBar]="true"
+      [readonlyInput]="true"
+      id="date_filter_stage_all"
+      dateFormat="dd/mm/yy"
+      placeholder="Sélectionnez une date"
+    ></p-datepicker>
 
-  <p-datepicker
-    [(ngModel)]="selectedDate"
-    (onSelect)="onDateSelected($event)"
-    [showIcon]="true"
-    [showButtonBar]="true"
-    [readonlyInput]="true"
-    dateFormat="dd/mm/yy"
-    placeholder="Sélectionnez une date"
-  ></p-datepicker>
-
-  <button class="invisible_button" (click)="clearDate()">Effacer date</button>
+    <button class="invisible_button" (click)="clearDate()">Effacer date</button>
+    <small>
+      <p>* Affiche les stages dont la date de début est à deux semaines près de la date choisie</p>
+    </small>
+  </div>
 
   <button (click)="resetFilters()" class="invisible_button">
     Réinitialiser les filtres
   </button>
 </div>
-
-<br />
 
 <!-- Message si aucun résultat -->
 <div *ngIf="paginatedStages.length === 0" class="no-results">

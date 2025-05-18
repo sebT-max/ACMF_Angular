@@ -77,7 +77,7 @@ form {
   input, select{
     box-shadow: 0 0 1px grey;
     border: none;
-    width: 75%;
+    width: 280px;
     padding: 10px;
     font-size: 16px;
     border-radius: 7px;
@@ -138,12 +138,26 @@ form {
     @media(max-width:767px) {
       gap: 20px 80px;
     }
+    h3{
+      width:100%;
+    }
   }
 
   .file-upload-section {
     width: 30%;
+    #driving_license,#carteId,#lettre48n,#court_letter{
+      backdrop-filter:blur(10px) !important;
+      display:block;
+      width:200px !important;
+      margin:0 auto;
+    }
+    @media(max-width:767px) {
+      width:300px;
+    }
+    @media(min-width:768px) and (max-width:1439px) {
+      width:100%;
+    }
   }
-
 }
 
 .consignes_container {
@@ -173,5 +187,9 @@ form {
     padding:0px;
     font-size:22px;
   }
+}
+
+#codePromo{
+  margin-top:60px;
 }
 

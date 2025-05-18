@@ -1,22 +1,23 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { StageService } from '../../services/stage.service';
 import { StageDetailsModel } from '../../models/stage-details-model';
-import {Router, ActivatedRoute, RouterLink} from '@angular/router';
+import { StageWithDistance } from '../../models/StageWithDistance';
+import { environment } from '../../../../../environments/environment';
+
 import { StageDetailsComponent } from '../stage-details/stage-details.component';
-import {DatePipe, DecimalPipe, NgIf, NgOptimizedImage} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {StageWithDistance} from '../../models/StageWithDistance';
-import {environment} from '../../../../../environments/environment';
+
+import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { CalendarModule } from 'primeng/calendar';
-import {fr} from 'date-fns/locale';
-import {DatePicker} from 'primeng/datepicker';
-import {PrimeNG} from 'primeng/config';
-
-
+import { DatePicker } from 'primeng/datepicker';
+import { PrimeNG } from 'primeng/config';
 
 @Component({
   selector: 'app-stage-all',
   templateUrl: './stage-all.component.html',
+  styleUrls: ['./stage-all.component.scss'],
   imports: [
     StageDetailsComponent,
     DatePipe,
@@ -27,9 +28,9 @@ import {PrimeNG} from 'primeng/config';
     ReactiveFormsModule,
     NgOptimizedImage,
     CalendarModule,
-    DatePicker
-  ],
-  styleUrls: ['./stage-all.component.scss']
+    DatePicker,
+    NgForOf
+  ]
 })
 export class StageAllComponent implements OnInit {
 
@@ -39,13 +40,16 @@ export class StageAllComponent implements OnInit {
   private geocodeCache: { [key: string]: [number, number] } = {};
 
   stages: StageWithDistance[] = [];
+  filteredStages: StageWithDistance[] = [];
+  paginatedStages: StageWithDistance[] = [];
   selectedStage: StageWithDistance | null = null;
+
   searchTerm: string = '';
   selectedDate: Date | null = null;
+
   userLatitude: number | null = null;
   userLongitude: number | null = null;
-  paginatedStages: StageWithDistance[] = [];
-  filteredStages: StageWithDistance[] = [];  // Stages filtrés selon la date
+
   pageSize = 3;
   currentPage = 1;
 
@@ -56,18 +60,24 @@ export class StageAllComponent implements OnInit {
     private primengConfig: PrimeNG
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.searchTerm = params['searchTerm'] || '';
-      this.getUserLocation();
-      this.loadStagesWithDistance();
+
+      this._stageService.getAllStage().subscribe(stages => {
+        console.log('Stages reçus :', stages);
+        this.stages = stages;
+        this.filteredStages = [...stages];
+        this.getUserLocation();  // va appliquer filtre 50km si géolocalisation ok, sinon affiche tout
+      });
     });
+
     this.primengConfig.setTranslation({
-      dayNames: ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"],
-      dayNamesShort: ["dim","lun","mar","mer","jeu","ven","sam"],
-      dayNamesMin: ["D","L","M","M","J","V","S"],
-      monthNames: ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"],
-      monthNamesShort: ["janv","févr","mars","avr","mai","juin","juil","août","sept","oct","nov","déc"],
+      dayNames: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+      dayNamesShort: ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
+      dayNamesMin: ["D", "L", "M", "M", "J", "V", "S"],
+      monthNames: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+      monthNamesShort: ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"],
       today: 'Aujourd\'hui',
       clear: 'Effacer',
       dateFormat: 'dd/mm/yy',
@@ -79,106 +89,58 @@ export class StageAllComponent implements OnInit {
     return this.limit !== null && this.stages.length === this.limit;
   }
 
-  getUserLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.userLatitude = position.coords.latitude;
-          this.userLongitude = position.coords.longitude;
-
-          // Une fois la position récupérée, recalculer les distances
-          this.loadStagesWithDistance();
-        },
-        (error) => {
-          console.error('Erreur de géolocalisation:', error);
-          this.userLatitude = null;
-          this.userLongitude = null;
-          this.loadStages(); // Charger sans géolocalisation
-          alert('La géolocalisation a été refusée. Les distances ne seront pas calculées.');
-        }
-      );
-    } else {
-      console.error("La géolocalisation n'est pas disponible dans ce navigateur.");
-      this.loadStages();
+  /** ===============================
+   *          Géolocalisation
+   *  =============================== */
+  getUserLocation(): void {
+    if (!navigator.geolocation) {
+      console.warn('Géolocalisation non supportée');
+      this.displayStagesWithoutDistance(); // fallback si pas supporté
+      return;
     }
-  }
-  onDateSelected(date: Date | null): void {
-    console.log('Date sélectionnée:', date);
-    this.selectedDate = date;
-    this.onDateFilter(); // réapplique le filtre de date
-  }
-  onDateFilter(): void {
-    // Réinitialiser la pagination et appliquer le filtre
-    this.currentPage = 1;
-    this.applyFilters();
-  }
 
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        console.log('Position utilisateur :', position.coords);
 
-  calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-    const R = 6371; // Rayon de la Terre en km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distance en km
-  }
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+        this.userLatitude = userLat;
+        this.userLongitude = userLon;
 
-  getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${environment.mapboxToken}`;
-    return fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        if (data.features?.length > 0) {
-          return data.features[0].center; // [lng, lat]
+        // Étape 1 : calcul de la distance pour chaque stage
+        let nearbyStages = this.stages
+          .map(stage => ({
+            ...stage,
+            distance: this.calculateDistance(stage.latitude, stage.longitude, userLat, userLon)
+          }))
+          .filter(stage => stage.distance !== undefined && stage.distance <= 100); // filtre 50 km
+
+        // Étape 2 : filtrage date si une date est sélectionnée
+        if (this.selectedDate) {
+          nearbyStages = nearbyStages.filter(stage =>
+            this.isWithinTwoWeeks(stage.dateDebut, this.selectedDate!)
+          );
         }
-        return null;
-      })
-      .catch(() => null);
+
+        // Étape 3 : mise à jour de l'affichage
+        this.filteredStages = nearbyStages;
+        console.log('Stages proches (≤50 km) :', this.filteredStages);
+
+        this.currentPage = 1;
+        this.paginate();
+      },
+      error => {
+        console.error('Erreur de géolocalisation', error);
+        this.displayStagesWithoutDistance(); // fallback si refus ou erreur
+      }
+    );
   }
 
 
-  loadStages(): void {
-    const loadAndProcessStages = (stages: StageWithDistance[]) => {
-      const futureStages = stages.filter(stage => new Date(stage.dateDebut) >= new Date());
-      this.stages = this.sortStagesByDate(futureStages);
-      this.applyFilters();  // Appliquer les filtres après avoir chargé les stages
-    };
-
-    if (this.searchTerm) {
-      this._stageService.getFilteredStages(this.searchTerm).subscribe({
-        next: loadAndProcessStages,
-        error: (error: string) => console.error('Erreur de chargement:', error)
-      });
-    } else {
-      this._stageService.getAllStage().subscribe({
-        next: loadAndProcessStages,
-        error: (error: string) => console.error('Erreur de chargement:', error)
-      });
-    }
-  }
-  async applySearchTermAsLocationFilter() {
-    const coords = await this.getCoordinatesFromAddress(this.searchTerm);
-    if (!coords) return;
-
-    const [lng, lat] = coords;
-    this.stages = this.stages.filter(stage => {
-      const stageCoords = this.geocodeCache[`${stage.street}, ${stage.city}`];
-      if (!stageCoords) return false;
-      const [stageLng, stageLat] = stageCoords;
-      const distance = this.calculateDistance(lat, lng, stageLat, stageLng);
-      return distance <= 20; // par ex. rayon de 20 km
-    });
-
-    this.applyFilters(); // relancer la pagination et autres filtres
-  }
-
-  private sortStagesByDate(stages: StageWithDistance[]): StageWithDistance[] {
-    return [...stages].sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
-  }
-
+  /** ===============================
+   *          Chargement des stages
+   *  =============================== */
   async loadStagesWithDistance(): Promise<void> {
     const now = new Date();
 
@@ -203,84 +165,185 @@ export class StageAllComponent implements OnInit {
         }
       }
 
-
-      // ✅ Tri par distance (du plus proche au plus lointain)
       futureStages.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
-
       this.stages = futureStages;
-
-      // Appliquer d'autres filtres si tu en as
-      this.applyFilters();
     };
 
-    // 🧭 Si l'utilisateur a saisi une ville
     if (this.searchTerm) {
       const coords = await this._stageService.getCoordinatesFromAddress(this.searchTerm);
-
       if (coords) {
         const [lon, lat] = coords;
         this.userLongitude = lon;
         this.userLatitude = lat;
-
         this._stageService.getAllStage().subscribe({
-          next: (stages) => processStages(stages),
-          error: (err) => console.error('Erreur de chargement des stages', err),
+          next: stages => processStages(stages),
+          error: err => console.error('Erreur de chargement des stages', err)
         });
       } else {
         console.warn('Ville non trouvée');
         this.stages = [];
       }
     } else {
-      // Pas de filtre ville → on récupère tout
       this._stageService.getAllStage().subscribe({
-        next: (stages) => processStages(stages),
-        error: (err) => console.error('Erreur de chargement des stages', err),
+        next: stages => processStages(stages),
+        error: err => console.error('Erreur de chargement des stages', err)
       });
     }
   }
 
-  applyFilters(): void {
-    let filtered = [...this.stages];
+  loadStages(): void {
+    this._stageService.getAllStage().subscribe({
+      next: stages => {
+        const futureStages = stages.filter(stage => new Date(stage.dateDebut) >= new Date());
+        this.stages = this.sortStagesByDate(futureStages);
+      },
+      error: err => console.error('Erreur de chargement des stages', err)
+    });
+  }
 
-    // Appliquer le filtre de géolocalisation
-    if (this.userLatitude && this.userLongitude) {
-      filtered = filtered.filter(stage => stage.distance !== Infinity);
+  sortStagesByDate(stages: StageWithDistance[]): StageWithDistance[] {
+    return [...stages].sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
+  }
+
+  /** ===============================
+   *         Calcul de distance
+   *  =============================== */
+  calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  /** ===============================
+   *             Recherche
+   *  =============================== */
+  async onSearch(): Promise<void> {
+    // Si l'input est vide → on tente de filtrer par géoloc utilisateur
+    if (this.searchTerm.trim() === '') {
+      this.getUserLocation();
+      return;
     }
 
-    // Appliquer le filtre de date
-    if (this.selectedDate) {
-      const selectedTime = this.selectedDate.getTime();
-      const twoWeeksInMs = 14 * 24 * 60 * 60 * 1000; // 14 jours en millisecondes
-
-      filtered = filtered.filter(stage => {
-        const stageDate = new Date(stage.dateDebut).getTime();
-        return stageDate >= (selectedTime - twoWeeksInMs) && stageDate <= (selectedTime + twoWeeksInMs);
-      });
+    // Pas assez de caractères → on affiche sans filtre
+    if (this.searchTerm.length < 4) {
+      this.displayStagesWithoutDistance();
+      return;
     }
 
-    // Trier les stages par date
-    this.filteredStages = this.sortStagesByDate(filtered);
+    const validPlace = await this._stageService.getCoordinatesFromAddress(this.searchTerm);
+
+    if (validPlace) {
+      const [lon, lat] = validPlace;
+
+      // Calcul des distances et filtrage à 50 km
+      this.filteredStages = this.stages
+        .map(stage => ({
+          ...stage,
+          distance: this.calculateDistance(stage.latitude, stage.longitude, lat, lon)
+        }))
+        .filter(stage => stage.distance <= 50);
+
+      // Filtrage par date (si applicable)
+      if (this.selectedDate) {
+        this.filteredStages = this.filteredStages.filter(stage =>
+          this.isWithinTwoWeeks(stage.dateDebut, this.selectedDate!)
+        );
+      }
+
+      this.currentPage = 1;
+      this.paginate();
+    } else {
+      // Si pas de ville trouvée, fallback
+      this.displayStagesWithoutDistance();
+    }
+  }
+
+  isWithinTwoWeeks(dateStr: string, selected: Date): boolean {
+    const stageDate = new Date(dateStr);
+    const twoWeeksBefore = new Date(selected);
+    const twoWeeksAfter = new Date(selected);
+    twoWeeksBefore.setDate(selected.getDate() - 14);
+    twoWeeksAfter.setDate(selected.getDate() + 14);
+    return stageDate >= twoWeeksBefore && stageDate <= twoWeeksAfter;
+  }
+
+
+
+  private filterStagesByUserLocation(): void {
+    if (this.userLatitude !== null && this.userLongitude !== null) {
+      this.filteredStages = this.stages.map(stage => ({
+        ...stage,
+        distance: this.calculateDistance(stage.latitude, stage.longitude, this.userLatitude!, this.userLongitude!)
+      }));
+      this.paginate();
+    }
+  }
+
+  displayStagesWithoutDistance(): void {
+    this.filteredStages = this.selectedDate
+      ? this.stages.filter(stage =>
+        this.isWithinTwoWeeks(stage.dateDebut, this.selectedDate!)
+      )
+      : [...this.stages];
+
+    this.currentPage = 1;
     this.paginate();
   }
 
-  selectStage(stage: StageDetailsModel) {
-    this.selectedStage = this.selectedStage?.id === stage.id ? null : stage;
+  private calculateAndDisplayDistances(lat: number, lon: number): void {
+    this.filteredStages = this.stages.map(stage => ({
+      ...stage,
+      distance: this.calculateDistance(stage.latitude, stage.longitude, lat, lon)
+    }));
+    this.paginate();
   }
 
-  closeDetails() {
-    this.selectedStage = null;
-  }
-  onSearch(): void {
-    this.loadStagesWithDistance();
+  /** ===============================
+   *         Filtrage par date
+   *  =============================== */
+  onDateSelected(date: Date | null): void {
+    this.selectedDate = date;
+    if (!date) return;
+
+    const selectedTime = date.getTime();
+    const twoWeeks = 14 * 24 * 60 * 60 * 1000;
+
+    this.filteredStages = this.stages.filter(stage => {
+      const stageTime = new Date(stage.dateDebut).getTime();
+      return stageTime >= selectedTime - twoWeeks && stageTime <= selectedTime + twoWeeks;
+    });
+
+    this.paginate();
   }
 
-  paginate(): void {
+  /** ===============================
+   *         Pagination
+   *  =============================== */
+  /*paginate(): void {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    // Utiliser les stages filtrés pour la pagination
     this.paginatedStages = this.filteredStages.slice(start, end);
+  }*/
+  paginate(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedStages = this.filteredStages.slice(startIndex, endIndex);
+    console.log('Paginate -> paginatedStages:', this.paginatedStages);
   }
 
+
+  /** ===============================
+   *       Détails d’un stage
+   *  =============================== */
+  selectStage(stage: StageDetailsModel): void {
+    this.selectedStage = this.selectedStage?.id === stage.id ? null : stage;
+  }
   changePage(page: number): void {
     this.currentPage = page;
     this.paginate();
@@ -300,12 +363,34 @@ export class StageAllComponent implements OnInit {
 
   clearDate() {
     this.selectedDate = null;
+    if (this.searchTerm.trim() !== '' && this.searchTerm.length >= 4) {
+      this.onSearch(); // ça relance getCoordinatesFromAddress + filtrage distance
+    } else {
+      // Sinon on revient à la position de l'utilisateur
+      this.getUserLocation(); // contient maintenant le filtre à 50 km
+    }
     // Réinitialiser la pagination
     this.currentPage = 1;
-    this.onDateFilter();
+    this.paginate();
   }
-
-
-
-  protected readonly fr = fr;
+  closeDetails(): void {
+    this.selectedStage = null;
+  }
+  resetFilters(): void {
+    this.searchTerm = '';
+    this.selectedDate = null;
+    this.userLatitude = null;
+    this.userLongitude = null;
+    this.getUserLocation();
+    this.filteredStages = [...this.stages];
+    this.currentPage = 1;
+    this.paginate();
+  }
+  clearSearchTerm(): void {
+    this.searchTerm = '';
+    this.getUserLocation();
+    this.filteredStages = [...this.stages];
+    this.currentPage = 1;
+    this.paginate();
+  }
 }

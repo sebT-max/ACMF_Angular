@@ -560,7 +560,7 @@ h1{
   color: #0a0a1e;
   @media (max-width: 767px) {
     font-family: Poppins-Medium, serif;
-    text-align: center;
+    text-align: left;
     font-size: 30px;
     color: #0a0a1e;
     margin-top: 20px;
@@ -698,10 +698,11 @@ p-datepicker .p-inputtext {
 
 /* Ajuste la barre de navigation (mois/année) */
 .p-datepicker .p-datepicker-header {
-  padding: 0srem;
   font-size: 1.1rem;
   justify-content: space-between;
   color: black !important;
+  height: 86px;
+  padding: 30px;
 }
 
 /* Boutons de navigation plus grands */
@@ -734,7 +735,7 @@ p-datepicker .p-inputtext {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background:#0a0a1e;
+  background: #041a3a;
   color:white !important;
   padding:25px !important;
   height:50px;

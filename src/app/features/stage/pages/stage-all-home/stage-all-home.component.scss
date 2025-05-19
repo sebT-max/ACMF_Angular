@@ -1,6 +1,6 @@
 h1{
   font-family: Poppins-Medium, serif;
-  text-align: left;
+  text-align: center;
   font-size:40px;
   color: #0a0a1e;
   @media (max-width: 767px) {
@@ -27,11 +27,15 @@ h1{
 }
 .see_all_stages_button{
   margin: 20px auto 0;
-  background: #041a3a;
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 10px 30px;
-  font-size: 18px;
+  font-size: 24px;
   color: #b41c1b;
+  box-shadow: 0px 0px 7px 0px white;
+  border: none;
+  /* opacity: 0.9; */
+  backdrop-filter: blur(43px);
 }
 
 

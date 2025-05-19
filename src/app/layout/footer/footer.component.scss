@@ -1,9 +1,10 @@
+/*
 footer {
-  background-color: #041a3a;
+  background: linear-gradient(67deg,#b41c1b 40%,white 10%,#041a3a 40%);
   text-align: center;
-  padding: 20px;
+  padding: 30px 10%;
   color: #ffffff;
-  font-family: Poppins-SemiBold,serif;
+  font-family: Poppins-SemiBold, serif;
 
   hr{
     height: 0.1px;
@@ -13,9 +14,8 @@ footer {
 
 }
 .footer_part1{
-  display:flex;
+  display: flex;
   justify-content: space-between;
-  padding: 20px;
   align-items: center;
   @media (max-width: 431px) {
     width:100%;
@@ -24,8 +24,8 @@ footer {
     font-size: 20px;
   }
   div{
-    width:30%;
-    padding:20px;
+    !* width: 30%; *!
+    padding: 20px 0px;
     @media (max-width: 767px) {
       width:100%;
       padding:10px;
@@ -39,9 +39,10 @@ footer {
 
 
 .footer_part2{
-  display:flex;
+  display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  padding-top: 20px;
   @media(max-width:767px) {
     font-size:10px;
   }
@@ -77,22 +78,172 @@ footer {
   }
   .footer_part2_copyright-and_conditions{
     display: flex;
-    justify-content: center;
-    gap: 8px;
-    width: 50%;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    gap:10px;
+    a{
+      color:white;
+    }
     @media(min-width:768px) {
-      padding-left: 20px;
-      width: 30%;
+      width: 20%;
       gap: 20px;
       div {
         width: 100%;
         padding: 20px;
       }
-      a{
-        color:white;
-      }
+    }
+  }
+}
+#marianne_img{
+  height:100px;
+  @media(max-width:767px) {
+    height:50px;
+  }
+
+}
+
+*/
+
+footer {
+  /*background: linear-gradient(222deg, #041a3a 0%, #0d3377 35%, #b41c1b 65%, #d93231 100%);*/
+  background-color: #041a3a;
+  text-align: center;
+  padding: 40px 8%;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+
+  hr {
+    height: 1px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 20px 0;
+  }
+}
+
+.footer_part1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+
+  div {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    flex: 1;
+    margin: 0 10px;
+    line-height: 1.6;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+
+    div {
+      width: 100%;
+      margin: 10px 0;
+      padding: 15px;
+      font-size: 14px;
     }
   }
 }
 
+.footer_part2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    font-size: 12px;
+  }
+
+  #footer_links_to_social_medias {
+    display: flex;
+    align-items: center;
+
+    div {
+      padding: 10px;
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    img {
+      width: 40px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    @media (max-width: 767px) {
+      justify-content: center;
+      margin: 15px 0;
+
+      img {
+        width: 35px;
+      }
+    }
+  }
+
+  .footer_part2_copyright-and_conditions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    a {
+      color: white;
+      text-decoration: none;
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background-color: white;
+        transition: width 0.3s ease;
+      }
+
+      &:hover:after {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+#marianne_img {
+  height: 80px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 767px) {
+    height: 50px;
+    margin: 15px 0;
+  }
+}

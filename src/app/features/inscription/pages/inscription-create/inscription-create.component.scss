@@ -6,7 +6,8 @@
   background-image: url("/pic6.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-attachment: fixed;
+  background-position: right;
   height: 100%;
   @media(max-width:767px) {
     flex-direction: column;

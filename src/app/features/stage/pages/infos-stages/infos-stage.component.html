@@ -4,72 +4,74 @@
 
 <h1 id="conditions_infos_stages">Informations sur les stages</h1>
 <div id="resume" class="infos_stages_container" style="display:flex;">
+  <div class="blur">
   <div id="info_stages_aside_navbar">
-    <nav>
-      <ol>
-        <li><a [routerLink]="['/stages-infos']" fragment="resume">Un stage de récupération de points en résumé</a></li>
-        <li><a [routerLink]="['/stages-infos']" fragment="objectifs">Objectifs d’un stage de récupération de points</a></li>
-        <li><a [routerLink]="['/stages-infos']" fragment="inscription">Qui peut s’inscrire à un stage ?</a></li>
-        <li><a [routerLink]="[]" fragment="documents">Quels documents rassembler ?</a></li>
-        <li><a [routerLink]="[]" fragment="programme">Programme type d’un stage</a></li>
-        <li><a [routerLink]="[]" fragment="types">Quels sont les différents types de stages ?</a></li>
-      </ol>
-    </nav>
+      <nav>
+        <ol>
+          <li><a [routerLink]="['/stages-infos']" fragment="resume">Un stage de récupération de points en résumé</a></li>
+          <li><a [routerLink]="['/stages-infos']" fragment="objectifs">Objectifs d’un stage de récupération de points</a></li>
+          <li><a [routerLink]="['/stages-infos']" fragment="inscription">Qui peut s’inscrire à un stage ?</a></li>
+          <li><a [routerLink]="[]" fragment="documents">Quels documents rassembler ?</a></li>
+          <li><a [routerLink]="[]" fragment="programme">Programme type d’un stage</a></li>
+          <li><a [routerLink]="[]" fragment="types">Quels sont les différents types de stages ?</a></li>
+        </ol>
+      </nav>
+    </div>
+    <div id="info_stages_content">
+      <h2>Un stage de récupération de points en résumé</h2>
+        <ul>
+          <li>Durée : deux jours consécutifs obligatoires, soit 14 heures</li>
+          <li>Format : en groupe de 6 à 20 personnes</li>
+          <li id="objectifs">Animateurs : formateurs agréés, spécialisés en sécurité routière et en psychologie de la conduite</li>
+          <li>Coût : 260 € chez ACF</li>
+          <li>Nombre de points récupérables : 4 points maximum + attestation de suivi</li>
+          <li>Inscription : auprès d’un centre de stage agréé par la préfecture (comme ACF Formation)</li>
+        </ul>
+      <h2>Objectifs d’un stage de récupération de points ?</h2>
+        <ul id="inscription">
+          <li>La prise de conscience : sensibiliser les participants sur les dangers liés à la conduite et des conséquences de comportements à risque, tels que l’excès de vitesse, l’alcool au volant, l’utilisation du téléphone, etc.
+          </li>
+          <li>Changer les comportements : encourager une conduite plus responsable et sécuritaire
+          </li>
+        </ul>
+      <h2>Qui peut s’inscrire à un stage de récupération de points ?</h2>
+        <ul>
+          <li>Tout titulaire d’un permis de conduire valide peut participer à un stage de récupération de points, à certaines conditions :</li>
+
+          <li>Le permis de conduire doit être valide : il doit rester au moins un point sur le permis. Si le solde de points est à zéro, le conducteur ne peut pas s’inscrire à un stage
+            Un conducteur peut participer à un stage une fois par an maximum (12 mois révolus)</li>
+          <li>Les jeunes conducteurs en période probatoire peuvent suivre un stage de récupération de points, surtout s’ils ont perdu trois points ou plus à la suite d’une infraction. Dans certains cas, le stage devient même obligatoire, notamment après réception de la lettre 48N
+          </li>
+          <li id="documents">Si un conducteur a commis une infraction grave, il peut recevoir une invitation à suivre un stage de sensibilisation à la sécurité routière, notamment dans le cadre d’une peine alternative. Ce stage, qui peut être obligatoire, ne permet pas de récupérer des points de permis
+          </li>
+          <li>Tout conducteur (jeune ou expérimenté) peut volontairement s’inscrire à un stage pour récupérer des points, à condition de respecter le délai d’un an entre deux stages
+          </li>
+        </ul>
+      <h2>Quels documents rassembler pour s’inscrire à un stage ?</h2>
+        <ul>
+          <li id="programme">Un permis de conduire valide</li>
+          <li>Une pièce d’identité</li>
+          <li>La convocation au stage (si reçue)</li>
+
+        </ul>
+      <h2>Programme type d’un stage</h2>
+        <ul>
+          <li>Exposés et échanges : le stage inclut des exposés sur les accidents de la route, les facteurs de risque, et les lois en matière de sécurité routière. Des tours de table permettent aux participants d’échanger sur leurs expériences et d’auto-évaluer leurs comportements
+          </li>
+          <li>Exercices pratiques : des exercices ou des jeux de rôle sont utilisés pour illustrer les dangers de certains comportements et faciliter la prise de recul
+          </li>
+          <li id="types">Études de cas : des cas d’accidents réels sont étudiés pour analyser les causes et les conséquences, et évoquer les moyens de les éviter
+          </li>
+          <li>Évaluation des comportements : les participants sont amenés à évaluer leurs propres comportements de conduite et à exprimer des moyens d’améliorer leur sécurité et celle des autres usagers
+          </li>
+        </ul>
+      <h2>Quels sont les différents types de stages ?</h2>
+        <ul>
+          <li>Cas 1 : stage volontaire de récupération de points</li>
+          <li>Cas 2 : stage obligatoire pour jeunes conducteurs</li>
+          <li>Cas 3 : stage en alternative ou composition pénale</li>
+          <li>Cas 4 : stage dans le cadre d’une peine complémentaire, du sursis avec mis à l’épreuve ou d’une ordonnance pénale</li>
+        </ul>
+    </div>
   </div>
-<div id="info_stages_content">
-  <h2>Un stage de récupération de points en résumé</h2>
-    <ul>
-      <li>Durée : deux jours consécutifs obligatoires, soit 14 heures</li>
-      <li>Format : en groupe de 6 à 20 personnes</li>
-      <li id="objectifs">Animateurs : formateurs agréés, spécialisés en sécurité routière et en psychologie de la conduite</li>
-      <li>Coût : 260 € chez ACF</li>
-      <li>Nombre de points récupérables : 4 points maximum + attestation de suivi</li>
-      <li>Inscription : auprès d’un centre de stage agréé par la préfecture (comme ACF Formation)</li>
-    </ul>
-  <h2>Objectifs d’un stage de récupération de points ?</h2>
-    <ul id="inscription">
-      <li>La prise de conscience : sensibiliser les participants sur les dangers liés à la conduite et des conséquences de comportements à risque, tels que l’excès de vitesse, l’alcool au volant, l’utilisation du téléphone, etc.
-      </li>
-      <li>Changer les comportements : encourager une conduite plus responsable et sécuritaire
-      </li>
-    </ul>
-  <h2>Qui peut s’inscrire à un stage de récupération de points ?</h2>
-    <ul>
-      <li>Tout titulaire d’un permis de conduire valide peut participer à un stage de récupération de points, à certaines conditions :</li>
-
-      <li>Le permis de conduire doit être valide : il doit rester au moins un point sur le permis. Si le solde de points est à zéro, le conducteur ne peut pas s’inscrire à un stage
-        Un conducteur peut participer à un stage une fois par an maximum (12 mois révolus)</li>
-      <li>Les jeunes conducteurs en période probatoire peuvent suivre un stage de récupération de points, surtout s’ils ont perdu trois points ou plus à la suite d’une infraction. Dans certains cas, le stage devient même obligatoire, notamment après réception de la lettre 48N
-      </li>
-      <li id="documents">Si un conducteur a commis une infraction grave, il peut recevoir une invitation à suivre un stage de sensibilisation à la sécurité routière, notamment dans le cadre d’une peine alternative. Ce stage, qui peut être obligatoire, ne permet pas de récupérer des points de permis
-      </li>
-      <li>Tout conducteur (jeune ou expérimenté) peut volontairement s’inscrire à un stage pour récupérer des points, à condition de respecter le délai d’un an entre deux stages
-      </li>
-    </ul>
-  <h2>Quels documents rassembler pour s’inscrire à un stage ?</h2>
-    <ul>
-      <li id="programme">Un permis de conduire valide</li>
-      <li>Une pièce d’identité</li>
-      <li>La convocation au stage (si reçue)</li>
-
-    </ul>
-  <h2>Programme type d’un stage</h2>
-    <ul>
-      <li>Exposés et échanges : le stage inclut des exposés sur les accidents de la route, les facteurs de risque, et les lois en matière de sécurité routière. Des tours de table permettent aux participants d’échanger sur leurs expériences et d’auto-évaluer leurs comportements
-      </li>
-      <li>Exercices pratiques : des exercices ou des jeux de rôle sont utilisés pour illustrer les dangers de certains comportements et faciliter la prise de recul
-      </li>
-      <li id="types">Études de cas : des cas d’accidents réels sont étudiés pour analyser les causes et les conséquences, et évoquer les moyens de les éviter
-      </li>
-      <li>Évaluation des comportements : les participants sont amenés à évaluer leurs propres comportements de conduite et à exprimer des moyens d’améliorer leur sécurité et celle des autres usagers
-      </li>
-    </ul>
-  <h2>Quels sont les différents types de stages ?</h2>
-    <ul>
-      <li>Cas 1 : stage volontaire de récupération de points</li>
-      <li>Cas 2 : stage obligatoire pour jeunes conducteurs</li>
-      <li>Cas 3 : stage en alternative ou composition pénale</li>
-      <li>Cas 4 : stage dans le cadre d’une peine complémentaire, du sursis avec mis à l’épreuve ou d’une ordonnance pénale</li>
-    </ul>
-</div>
 </div>

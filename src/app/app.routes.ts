@@ -62,14 +62,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'auth/:id',
-    canActivate: [isConnectedGuard],
-    loadComponent: () =>
-      import('./features/auth/pages/user-detail/user-detail.component').then(
-        (c) => c.UserDetailComponent,
-      ),
-  },
-  {
     path: 'users/login',
     loadComponent: () =>
       import('./features/auth/pages/login/login.component').then(

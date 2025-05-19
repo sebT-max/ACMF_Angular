@@ -1,12 +1,9 @@
+<h1 class="conditions_infos_stages">Qui sommes-nous ?</h1>
 <div class="about_us_main_container">
-  <!--<div routerLink="/" id="logo_about">
-    <img src="/LOGO%20BLANC_small.png" alt="logo_acf" width="208" height="160">
-  </div>-->
   <div class="blur">
-    <h1 id="about_main_title">Qui sommes-nous ?</h1>
-    <hr>
-    <div id="resumé" class="infos_stages_container" style="display:flex;">
-      <div id="info_stages_aside_navbar">
+    <div class="infos_stages_container">
+      <!-- Barre de navigation -->
+      <aside id="info_stages_aside_navbar">
         <nav>
           <ol id="philo">
             <li><a [routerLink]="[]" fragment="resumé">ACF en résumé</a></li>
@@ -16,46 +13,66 @@
             <li><a [routerLink]="[]" fragment="contact">Nous contacter</a></li>
           </ol>
         </nav>
-      </div>
-    </div>
-    <div id="info_stages_content">
-      <h2>ACF en résumé</h2>
-      <p>ACF Actions Conduite France organise des stages de sensibilisation à la sécurité routière. Agréé par la préfecture du Finistère depuis 2012, ce centre, dont le siège social se situe à Hanvec (29460), propose des stages de récupération de points et des stages à effectuer à la demande du Tribunal (composition pénale et ordonnance pénale) sur l'ensemble du département: Quimper, Le Faou, Landerneau et le Relecq Kehuon. Ces stages sont animés par deux animateurs agréés par l'Etat.</p>
+      </aside>
 
+      <!-- Contenu principal -->
+      <section id="info_stages_content">
+        <h2 id="resumé">ACF en résumé</h2>
+        <p>
+          ACF Actions Conduite France organise des stages de sensibilisation à la sécurité routière.
+          Agréé par la préfecture du Finistère depuis 2012, ce centre, dont le siège social se situe à Hanvec (29460),
+          propose des stages de récupération de points et des stages à effectuer à la demande du Tribunal
+          (composition pénale et ordonnance pénale) sur l'ensemble du département : Quimper, Le Faou, Landerneau et le Relecq-Kerhuon.
+          Ces stages sont animés par deux animateurs agréés par l'État.
+        </p>
 
-      <div class="card">
-        <h2 id="results">Notre but</h2>
-        <ul>
-          <li>Apporter la prise de conscience : sensibiliser les participants sur les dangers liés à la conduite et des conséquences de comportements à risque, tels que l’excès de vitesse, l’alcool au volant, l’utilisation du téléphone, etc.
-          </li>
-          <li>Changer les comportements : encourager une conduite plus responsable et sécuritaire
-          </li>
-        </ul>
-      </div>
-      <div class="card longer">
-        <h2>Nos résultats</h2>
-        <p>Tout titulaire d’un permis de conduire valide peut participer à un stage de récupération de points, à certaines conditions :</p>
+        <!-- Cartes -->
+        <div class="cards">
+          <div class="card">
+            <h3>Notre but</h3>
+            <ul>
+              <li>
+                Apporter la prise de conscience : sensibiliser les participants sur les dangers liés à la conduite
+                et aux conséquences des comportements à risque (excès de vitesse, alcool, téléphone au volant…).
+              </li>
+              <li>
+                Changer les comportements : encourager une conduite plus responsable et sécuritaire.
+              </li>
+            </ul>
+          </div>
 
-        <ul>
-          <li>Le permis de conduire doit être valide : il doit rester au moins un point sur le permis. Si le solde de points est à zéro, le conducteur ne peut pas s’inscrire à un stage
-            Un conducteur peut participer à un stage une fois par an maximum (12 mois révolus)</li>
-        </ul>
-      </div>
+          <div class="card longer">
+            <h3 id="results">Nos résultats</h3>
+            <ul>
+              <li>Diminution moyenne des infractions de 30%</li>
+              <li>Baisse drastique des récidives</li>
+              <li>Remerciement de Gérald Darmanin, ministre de l'Intérieur, pour la qualité de notre travail</li>
+            </ul>
+          </div>
+        </div>
 
+        <!-- Équipe et contact -->
+        <div id="contact_and_team">
+          <h2>Notre psychologue</h2>
+          <!--<div>
+            <img ngSrc="Yveline2.png" alt="Yveline Le Nivès" width="260" height="240">
+          </div>-->
+          <p>
+            Yveline Le Nivès, psychologue spécialisée en sécurité routière, travaille dans ce domaine depuis 1992.
+            Elle fait passer des tests psychotechniques pour la récupération du permis de conduire à la CCI et anime depuis des stages pour la prévention routière.
+          </p>
 
-    <div id="contact_and_team">
-      <h2 id="team">Notre équipe</h2>
-        <ul>
-          <li id="contact">Un permis de conduire valide</li>
-          <li>Une pièce d’identité</li>
-          <li>La convocation au stage (si reçue)</li>
-        </ul>
-      <h2>Nous contacter</h2>
-        <ul>
-          <li>06 99 74 52 20
-          <li>acf-contact&#64;gmail.com</li>
-        </ul>
-      </div>
+          <h2 id="contact">Nous contacter</h2>
+          <p>
+          <i class="far fa-envelope"></i> <a style="text-decoration: none;color:#041a3a;" href="mailto:acf-contact@gmail.com"> acf-contact&#64;gmail.com</a>
+          <br><br>
+          <i class="fas fa-phone-alt"></i> <a style="text-decoration: none;color:#041a3a;" href="tel:+33699745220"> 06 99 74 52 20</a>
+          </p>
+        </div>
+      </section>
     </div>
   </div>
 </div>
+
+
+

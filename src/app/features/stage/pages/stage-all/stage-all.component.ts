@@ -52,6 +52,7 @@ export class StageAllComponent implements OnInit {
 
   pageSize = 3;
   currentPage = 1;
+  showFilters = false;
 
   constructor(
     private _stageService: StageService,
@@ -87,6 +88,9 @@ export class StageAllComponent implements OnInit {
 
   get hasMoreStages(): boolean {
     return this.limit !== null && this.stages.length === this.limit;
+  }
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
   }
 
   /** ===============================

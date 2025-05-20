@@ -1,3 +1,26 @@
+.toggle-button {
+  background-color: transparent;
+  border: none;
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 0;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    text-align: left;
+    padding: 2% 10%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: #333;;
+  }
+
+}
+
 .card-container {
   @media(min-width: 768px) and (max-width: 1023px) {
     padding: 2% 7%;
@@ -7,17 +30,83 @@
   }
 }
 
-h1{
-  font-family: Poppins-Medium, serif;
-  text-align: left;
-  font-size:40px;
-  color: #0a0a1e;
-  @media (max-width: 767px) {
-    font-family: Poppins-Medium, serif;
-    text-align: center;
+// h1{
+//   text-align:left;
+//   width:80%;
+//   margin:0 auto;
+//   font-family: Poppins-Medium, serif;
+//   font-size:40px;
+//   color: #0a0a1e;
+//   @media (max-width: 767px) {
+//     font-family: Poppins-Medium, serif;
+//     text-align: center;
+//     font-size: 30px;
+//     color: #0a0a1e;
+//     padding:10px;
+//     font-style:italic;
+//     text-decoration: underline;
+//   }
+// }
+h1 {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 60px;
+  padding: 30px;
+  background: transparent;
+  font-style: italic;
+  color: #041a3a;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  opacity: 0;
+  animation: zoomIn 1s ease forwards;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: #f8a733;
+    // animation: lineExpand 1.2s ease forwards 0.8s;
+  }
+
+  @media (max-width: 430px) {
     font-size: 30px;
-    color: #0a0a1e;
-    margin-top: 20px;
+  }
+
+  @media (min-width: 431px) and (max-width: 1023px) {
+    font-size: 44px;
+  }
+
+  @media (min-width: 1440px) {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 60px;
+    background: transparent;
+    font-style: italic;
+  }
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes lineExpand {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100px;
   }
 }
 
@@ -49,7 +138,7 @@ h1{
     text-align: center;
     font-size: 30px;
     color: #0a0a1e;
-    margin-top: 20px;
+    margin-top: 0px;
   }
 }
 .card_stages_remaining_places_and_distance{
@@ -77,6 +166,9 @@ h1{
 #logo_stage_all{
   display: flex;
   justify-content: center;
+  @media (max-width: 767px) {
+    display:none;
+  }
 }
 .custom-date-picker {
   font-size: 16px;
@@ -171,6 +263,12 @@ h1{
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 430px) {
+    width:100%;
+  }
+ 
+
   div{
     @media(min-width: 768px) {
       width: 40%;

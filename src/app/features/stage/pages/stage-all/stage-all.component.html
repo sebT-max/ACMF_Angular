@@ -2,9 +2,17 @@
   <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf" priority width="208" height="160" />
 </div>
 
-<h1 style="text-align:left;width:80%;margin:0 auto;">Chercher un stage</h1>
+<h1>Nos stages</h1>
+<button (click)="toggleFilters()" class="toggle-button">
+  {{ showFilters ? 'Fermer les filtres' : '> Filtrer par date et lieu' }}
+</button>
 
-<div id="stage_filters">
+
+<div
+  id="stage_filters"
+  [@accordion]="showFilters ? 'open' : 'closed'"
+  *ngIf="showFilters"
+>
   <div>
     <p><strong>Filtre par lieu</strong></p>
     <input

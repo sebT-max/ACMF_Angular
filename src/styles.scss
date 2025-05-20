@@ -585,6 +585,9 @@ h1{
     width: 112px;
     font-size: 20px;
     text-align: center;
+    background: #041a3a;
+    color:white;
+    border:1 px solid #041a3a;
   }
   @media (min-width: 768px) and (max-width: 1023px){
     width: 30%;
@@ -662,7 +665,8 @@ h1{
     padding: 28px;
     font-family: Poppins-Medium, serif;
     width: 100%;
-    font-size: 50px;
+    font-size: 40px;
+    color:white;
   }
 }
 
@@ -780,6 +784,7 @@ p-datepicker .p-inputtext {
 .p-datepicker .p-datepicker-panel {
   min-width: 100%;
   line-height: 20px;
+  top: 40px !important;
 }
 
 
@@ -833,9 +838,15 @@ form #stage_update{
   width: 80%;
   display: inline-block;
 
-  @media(min-width: 431px){
+  @media(min-width: 431px) and (max-width:767px){
+    width:84%  !important;
+    margin:0 !important;
+    border-radius:15px;
+  }
+  @media(min-width: 768px){
     width:48%  !important;
     margin:0 !important;
+    border-radius:15px;
   }
   
 }

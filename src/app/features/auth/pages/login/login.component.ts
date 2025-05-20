@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TokenModel } from '../../models/token.model';
 import {NgIf, NgOptimizedImage} from "@angular/common";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null; // Ajout de la gestion d'erreur
 
-  constructor() {
+  constructor( private toastr: ToastrService) {
     this.loginForm = this._formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
@@ -42,8 +43,14 @@ export class LoginComponent {
         this.errorMessage = null;
         this._router.navigate(['/']);
       },
-      error: (error): void => {
-        console.log('Error', error);
+      error: (error): void => {      
+        if (error.status === 404) {
+          this.toastr.error("Adresse email inconnue", "Erreur de connexion");
+        } else if (error.status === 401) {
+          this.toastr.error("Mot de passe incorrect", "Erreur de connexion");
+        } else {
+          this.toastr.error("Une erreur inattendue est survenue", "Erreur");
+        }
       },
     });
   }

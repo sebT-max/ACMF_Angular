@@ -37,10 +37,10 @@
   <!-- Formulaire -->
   <div id="inscription_container_form">
     <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
-      <div formGroupName="user">
+      <div formGroupName="user" id="inscription_user_datas_form">
         <!-- Informations personnelles -->
         <section class="form-section">
-          <h3>Informations personnelles</h3>
+          <h2>Informations personnelles</h2>
 
           <!-- <label for="firstName">Prénom*</label> -->
           <input id="firstName" formControlName="firstName" type="text" placeholder="Prénom" />
@@ -51,10 +51,6 @@
           <!-- <label for="lastName">Nom*</label> -->
           <input id="otherNames" formControlName="otherNames" type="text" placeholder="Autres noms" />
 
-          <!-- <label for="birthdate">Autre(s) prénom(s)</label> -->
-<!--
-          <input id="birthdate" formControlName="birthdate" type="date" placeholder="Date de naissance" />
--->
           <p-datepicker
             [showIcon]="false"
             [showButtonBar]="true"
@@ -70,7 +66,7 @@
 
         <!-- Adresse -->
         <section class="form-section">
-          <h3>Adresse</h3>
+          <!-- <h3>Adresse</h3> -->
 
           <!-- <label for="streetAndNumber">Rue et numéro*</label> -->
           <input id="streetAndNumber" formControlName="streetAndNumber" type="text" placeholder="Rue et numéro" />
@@ -84,7 +80,7 @@
 
         <!-- Contact -->
         <section class="form-section">
-          <h3>Contact</h3>
+          <!-- <h3>Contact</h3> -->
 
           <!-- <label for="telephone">Téléphone*</label> -->
           <input id="telephone" formControlName="telephone" type="tel" placeholder="Téléphone" />
@@ -103,9 +99,11 @@
           </div>
         </section>
       </div>
+      <br/>
+      <br>
       <!-- Type de stage -->
       <section class="form-section">
-        <!-- <label for="stageType">Type de Stage*</label> -->
+        <label for="stageType">Type de Stage*</label><br/>
         <select id="stageType" formControlName="stageType">
           <option value="" disabled selected>Sélectionner un type de stage</option>
           <option *ngFor="let type of stageTypes" [value]="type.value">
@@ -116,7 +114,8 @@
 
       <!-- Fichiers -->
       <section id="inscription_form_files" class="form-section">
-        <h3>Documents à fournir</h3>
+        <h3>Documents à fournir<br>(<small>Si le permis vous a été retiré, veuillez nous envoyer l'avis de suspension</small>)
+        </h3>
 
         <div class="file-upload-section">
           <!-- <label for="permis"><strong>Permis ou Avis de suspension</strong></label> -->

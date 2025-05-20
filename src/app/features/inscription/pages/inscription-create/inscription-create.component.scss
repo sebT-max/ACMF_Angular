@@ -31,12 +31,21 @@
 #inscription_container_form {
   font-family: Poppins-Medium, serif;
   width: 100%;
-  padding:100px;
   @media(max-width:767px) {
     height: auto;
-    padding:0;
+  }
+  h2{
+    font-size:30px;
+    padding:20px;
+    @media(max-width:767px) {
+      padding:30px;
+    }
   }
 }
+
+// #inscription_user_datas_form{
+//   backdrop-filter: blur(10px);
+// }
 
 .stage-details {
   padding: 10px 30px;
@@ -58,7 +67,6 @@
 }
 
 form {
-  gap: 10px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -67,15 +75,8 @@ form {
     padding:0;
   }
 
-  label {
-    font-weight: 900;
-    font-size: 24px;
-    color: white;
-    font-family: Poppins-Medium, serif;
-    height: 50px;
-  }
 
-  input, select{
+  input{
     box-shadow: 0 0 1px grey;
     border: none;
     width: 280px;
@@ -83,14 +84,85 @@ form {
     font-size: 16px;
     border-radius: 7px;
     margin: 10px auto 0;
-    @media(min-width:431px) {
+
+
+    @media(max-width:430px) {
+      width: 81%;
+      border-radius: 7px;
+    }
+    @media(min-width:431px) and (max-width:767px) {
       width: 40%;
-      margin:2px;
+      border-radius: 7px;
+      margin: 0.5%;
+    }
+    @media(min-width:768px) and (max-width:1023px) {
+      width: 40%;
+      border-radius: 7px;
+      margin: 0.5%;
+    }
+
+    @media(min-width:1024px) {
+      width: 40%;
+      margin: 0.5%;
     }
   }
-  #streetAndNumber,#otherNames,#password,#stageType{
-    width: 80%;
+
+  #streetAndNumber,#otherNames,#password{
+    @media(max-width:767px) {
+      width: 81%;
+      border-radius: 7px;
+    }
+
+    @media(min-width:768px) and (max-width:1023px) {
+      width: 81%;
+      border-radius: 7px;
+    }
+    @media(min-width:1024px) {
+      width: 81%;
+      border-radius: 7px;
+    }
   }
+  #stageType{
+    width:280px;
+    border:1px solid red;
+    padding:20px;
+    backdrop-filter: blur(10px);
+    background:white;
+    font-size:20px;
+    text-align:center;
+
+    @media(min-width:431px) and (max-width:767px) {
+      width: 81%;
+      border-radius: 7px;
+      font-size:18px;
+    }
+    @media(min-width:768px) and (max-width:1023px) {
+      width: 81%;
+      border-radius: 7px;
+      font-size:18px;
+    }
+    @media(min-width:1024px) {
+      width: 81%;
+      border-radius: 7px;
+    }
+  }
+
+  select{
+    box-shadow: 0 0 1px grey;
+    border: none;
+    width: 280px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 7px;
+    margin: 10px auto 0;
+
+
+    @media(min-width:768px) {
+      width: 40%;
+      margin: 0.5%;
+    }
+  }
+
   h3{
     margin-bottom: 20px;
     margin-top:20px;

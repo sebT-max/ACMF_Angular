@@ -18,13 +18,19 @@
 #inscription_container_details {
   font-family: Poppins-Medium, serif;
   background: white;
-  width: 40%;
+  width: 600px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 0px 0px 185px 0px;
-  padding: 50px;
+  padding: 30px 50px;
+  @media(min-width:768px) and (max-width:1023px) {
+    padding:24px;
+    width:40%;
+    background: rgba(0, 0, 0, 0.6);
+  }
   @media(max-width:767px) {
-    width: 100%;
-    padding:30px;
+    border-radius: 0px;
+    width:100%;
+    background: rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -52,10 +58,20 @@
   line-height: 48px;
   color: grey;
   font-family: Poppins-SemiBold, serif;
+  
+  @media(min-width:768px) and (max-width:1023px) {
+    width: 60%;
+    padding:20px;
+   color:white;
+  }
 
   p {
     color: #041a3a;
     font-size: 18px;
+    @media(max-width:1023px) {
+      padding:0 20px;
+      color:white;
+    }
   }
 
   h2 {
@@ -63,6 +79,16 @@
     font-size: 48px;
     font-family: Poppins-Bold, serif;
     margin-bottom: 20px;
+    padding:20px;
+    @media(max-width:767px) {
+      border-radius: 0px;
+      width:100%;
+      color:white;
+      padding:20px;
+    }
+    @media(min-width:768px) and (max-width:1023px) {
+     color:white;
+    }
   }
 }
 
@@ -123,13 +149,14 @@ form {
     }
   }
   #stageType{
-    width:280px;
-    border:1px solid red;
-    padding:20px;
+    width: 80%;
+    border: 2px solid #b41c1b;
+    padding: 10px 0;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    background:white;
-    font-size:20px;
-    text-align:center;
+    background: white;
+    font-size: 16px;
+    text-align: left;
 
     @media(min-width:431px) and (max-width:767px) {
       width: 81%;
@@ -238,6 +265,10 @@ form {
   padding:20px 0;
   line-height: 30px;
   color:#09192f;
+  @media(max-width:1023px) {
+   display:none;
+  }
+
   .format{
     padding:10px 0;
   }

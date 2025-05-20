@@ -11,6 +11,7 @@
   position: relative;
   opacity: 0;
   animation: zoomIn 1s ease forwards;
+  margin-top:0px !important;
 
   &:after {
     content: '';

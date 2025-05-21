@@ -13,6 +13,7 @@
     will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
+
   }
 
   p{
@@ -20,6 +21,10 @@
     font-size:80px;
     color:#ffffff;
     backdrop-filter: blur(7px);
+    @media(max-width:431px){
+      backdrop-filter: blur(4px);
+      font-family: Poppins-ExtraLight,serif;
+    }
   }
   button{
     margin-top: 15%;
@@ -283,37 +288,126 @@ h4{
   }
 }
 
+@media (max-width: 430px) {
+  .image_overlap_container {
+    width: 100%;
+    height: auto;
+    background: transparent;
+    padding:2%;
+  }
 
-@media(min-width:768px){
+  .image_overlap_container aside p {
+    font-family: 'CormorantGaramond-Light', serif;
+    font-size: 36px;
+
+  }
+
+  .image_overlap_container aside button {
+    margin-top: 40px;
+  }
+
+  #avis_acf_img {
+    width: 100%;
+    z-index: 10;
+    border-radius: 15px;
+    box-shadow: 0px 0px 1px #041a3a;
+  }
+}
+
+@media (min-width: 430px) and (max-width: 767px) {
+  .image_overlap_container {
+    position: relative;
+    height: 70vh;
+    background: transparent;
+  }
+
+  .image_overlap_container aside {
+    padding: 30px;
+    float: left;
+  }
+
+  .image_overlap_container aside p {
+    font-family: 'CormorantGaramond-Light', serif;
+    font-size: 40px;
+  }
+
+  .image_overlap_container aside button {
+    margin-top: 40px;
+  }
+
+  #avis_acf_img {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50px);
+    width: 400px;
+    z-index: 10;
+    border-radius: 15px;
+    box-shadow: 0px 0px 1px #041a3a;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
   .image_overlap_container {
     position: relative;
     height: 98vh;
-    background:transparent;
-    aside{
-      padding:30px;
-      float:left;
-      p{
-        font-family: CormorantGaramond-Light,serif;
-        font-size:60px;
-      } 
-      button{
-        margin-top:40px;
-      }
+    background: transparent;
+  }
+
+  .image_overlap_container aside {
+    padding: 30px;
+    float: left;
+  }
+
+  .image_overlap_container aside p {
+    font-family: 'CormorantGaramond-Light', serif;
+    font-size: 60px;
+  }
+
+  .image_overlap_container aside button {
+    margin-top: 40px;
+  }
+
+  #avis_acf_img {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -41px);
+    width: 686px;
+    z-index: 10;
+    border-radius: 15px;
+    box-shadow: 0px 0px 1px #041a3a;
+  }
+}
+@media(min-width:1025px){
+  .image_overlap_container {
+    position: relative;
+    height: 70%;
+    background:transparent; /* Important : on ne veut pas qu'elle prenne de place dans le flux */
+  }
+
+  .image_overlap_container aside{
+    margin-bottom: 40px;
+    padding: 5%;
+    p{
+      font-family: 'CormorantGaramond-Light', serif;
+      font-size: 60px;
     }
-  
+    button{
+      margin-top:40px;
+    }
   }
   
   #avis_acf_img {
     position: relative;
     left: 50%;
-    transform: translate(-50%,-100px);
-    height: 600px; /* Ajuste selon ton image */
+    transform: translate(-50%,-50px);
+    height: 800px; /* Ajuste selon ton image */
     z-index: 10;
     border-radius: 15px;
     box-shadow:0px 0px 1px #041a3a;
-    
   }
 }
+
 .fade-in-on-scroll {
   opacity: 0;
   transform: translateY(20px);
@@ -323,24 +417,6 @@ h4{
 .fade-in-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-@media(max-width:1024px){
-  .image_overlap_container {
-    position: relative;
-    height: 70%;
-    background:transparent; /* Important : on ne veut pas qu'elle prenne de place dans le flux */
-  }
-  
-  #avis_acf_img {
-    position: relative;
-    left: 50%;
-    transform: translate(-50%,-50px);
-    height: 500px; /* Ajuste selon ton image */
-    z-index: 10;
-    border-radius: 15px;
-    box-shadow:0px 0px 1px #041a3a;
-  }
 }
 
 

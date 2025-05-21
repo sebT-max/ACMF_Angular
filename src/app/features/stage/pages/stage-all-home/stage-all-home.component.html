@@ -6,7 +6,7 @@
   <div class="geolocation-container">
     <button class="geolocation-button" (click)="triggerGeolocation()" [disabled]="isGeolocating">
       <span *ngIf="!isGeolocating">
-        <i class="geo-icon">📍</i> Trouver les stages près de chez moi
+        <i class="geo-icon">📍</i> Trouver les stages par localisation
       </span>
       <span *ngIf="isGeolocating">
         <i class="geo-icon spin">⟳</i> Localisation en cours...

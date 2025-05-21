@@ -9,15 +9,10 @@
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
-  
-  /* Optimisation pour les appareils mobiles tout en gardant le background fixe */
-  @media(max-width: 1023px) {
-    background-position: bottom;
-    background-attachment: fixed;
-    will-change: transform;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+  @media(max-width: 1024px) {
+    background-position: center;
   }
+   /* ou remove entirely */
 
   p{
     font-family: CormorantGaramond-Light,serif;
@@ -184,26 +179,15 @@ border: 3px solid whitesmoke;
   display:flex;
   justify-content: center;
   flex-wrap:wrap;
-  background-image: url(/pic6.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: right;
-  background-attachment: fixed;
   color: white;
   font-family: Poppins-Medium, sans-serif;
 
-  /* Optimisation pour les appareils mobiles tout en gardant le background fixe */
   @media (max-width: 768px) {
-    background-attachment: fixed;
-    will-change: transform;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+    background-attachment: scroll;
+     /* ou remove entirely */
+
   }
   
-  .blur{
-    background: linear-gradient(135deg, rgba(4, 26, 58, 0.4) 0%, rgba(4, 26, 58, 0.2) 100%);
-    width: 100%;
-  }
   button{
   color:white;
   }
@@ -212,7 +196,6 @@ border: 3px solid whitesmoke;
 .call_to_register_home_bottom_container_button{
   display:flex;
   justify-content: center;
-  padding:10% 10%;
   gap:10px;
   h2{
     font-family: Poppins-Medium,serif;
@@ -227,16 +210,26 @@ border: 3px solid whitesmoke;
   }
 }
 .second_home_container_division{
-  padding: 5% 12%;
   font-size:24px;
+  background-image: url(/pic6.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right;
+  background-attachment: fixed;
+  .blur{
+    padding: 20px 12%;
+    background: linear-gradient(135deg, rgba(4, 26, 58, 0.4) 0%, rgba(4, 26, 58, 0.2) 100%);
+    width: 100%;
+ 
   @media (max-width: 767px) {
     font-size: 12px;
-    padding: 5% 0;
+    padding: 0;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     font-size: 12px;
-    padding: 5% 2%;
+    padding: 0;
   }
+
   @media (min-width: 1024px) and (max-width: 1439px) {
     font-size: 12px;
     padding: 5%;
@@ -252,9 +245,9 @@ border: 3px solid whitesmoke;
       width:50%;
     }
   }
+}
 
   p{
-    margin-top:20px;
     font-size: 20px;
     color: white;
     padding: 30px;
@@ -272,27 +265,27 @@ border: 3px solid whitesmoke;
   .logo_header{
     text-align: center;
     img{
-      width:300px;
+      width:260px;
       height:auto;
-      margin:20px 0;
+      margin:0px 0;
     }
     @media (max-width: 767px) {
       img{
-        width: 150px;
+        width: 130px;
         height: auto;
         margin: 20px 0;
       }
     }
     @media(min-width:768px) and (max-width: 1023px) {
       img{
-        width: 180px;
+        width: 160px;
         height: auto;
         margin: 20px 0;
       }
     }
     @media(min-width:1024px) and (max-width: 1439px) {
       img{
-        width: 220px;
+        width: 200px;
         height: auto;
         margin: 20px 0;
       }
@@ -303,7 +296,7 @@ border: 3px solid whitesmoke;
     padding:0 2%;
   }
   span{
-    font-size: 40px;
+    font-size: 36px;
     color: white;
     padding: 10px;
     font-style: italic;
@@ -312,12 +305,12 @@ border: 3px solid whitesmoke;
     @media (max-width: 767px) {
       width:100%;
       text-align:center;
-      font-size: 20px;
+      font-size: 18px;
     }
     @media(min-width:768px) and (max-width: 1023px) {
       width:100%;
       text-align:center;
-      font-size: 30px;
+      font-size: 24px;
     }
     @media(min-width:1024px) and (max-width: 1439px) {
         width:100%;
@@ -381,13 +374,15 @@ border: 3px solid whitesmoke;
   }
 }
 
-#stage_all_home{
-padding: 18px;
-border-radius: 20px;
-}
 
-#step_guide{
-  width:50%;
+.step_guide{
+  background-image: url(/pic19.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:right;
+  padding:10%;
+
   @media (min-width:768px) and (max-width: 1023px) {
     text-align:center;
     font-size: 20px;
@@ -401,10 +396,12 @@ border-radius: 20px;
     }
   }
 }
+
 #step_guide_home{
   background: white;
   border-radius: 20px;
   transform: translate(38%, -20%);
+  background: rgb(4 26 58);
   width:100%;
   margin-top:40px;
   @media (max-width: 767px) {
@@ -420,6 +417,7 @@ border-radius: 20px;
   margin: 20px auto 0;
   padding: 36px 50px;
   opacity:0.9;
+  color:white;
 
   @media(max-width:767px){
     border:none;
@@ -543,31 +541,35 @@ p button {
   }
 }
 
+
 #home_account_registration{
-width:40%;
+width:100%;
 display:flex;
 flex-direction:column;
 justify-content: center;
 text-align:center;
 font-size:36px;
-margin: 10% 5%;
-padding:1% 0;
-border-radius: 10px;
-  @media (min-width: 1024px) and (max-width: 1439px) {
+background:#b41c1b;
+padding:3% 0;
+color:white;
+
+  @media (min-width: 1025px) and (max-width: 1439px) {
     text-align:center;
     justify-content: center;
-    width:30%;
   }
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
     text-align: center;
     font-size: 28px;
-    width: 40%;
     justify-content: center;
   }
   @media (max-width: 767px) {
-  width:100%;
-  text-align:center;
-  font-size:28px;
+    width:100%;
+    text-align:center;
+    font-size:28px;
+    background-image: url(/pic20.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
   }
 }
 .height_40{

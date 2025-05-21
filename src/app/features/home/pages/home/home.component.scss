@@ -10,7 +10,9 @@
   background-repeat: no-repeat;
   height: 100vh;
   @media(max-width: 1024px) {
-    background-position: center;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
    /* ou remove entirely */
 
@@ -216,6 +218,11 @@ border: 3px solid whitesmoke;
   background-size: cover;
   background-position: right;
   background-attachment: fixed;
+  @media(max-width:1024px){
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  }
   .blur{
     padding: 20px 12%;
     background: linear-gradient(135deg, rgba(4, 26, 58, 0.4) 0%, rgba(4, 26, 58, 0.2) 100%);
@@ -382,6 +389,12 @@ border: 3px solid whitesmoke;
   background-repeat: no-repeat;
   background-position:right;
   padding:10%;
+  @media(max-width: 1024px) {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
 
   @media (min-width:768px) and (max-width: 1023px) {
     text-align:center;

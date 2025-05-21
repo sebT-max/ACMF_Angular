@@ -9,11 +9,15 @@
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
-  @media(max-width: 1024px) {
+  
+  /* Optimisation pour les appareils mobiles tout en gardant le background fixe */
+  @media(max-width: 1023px) {
     background-position: bottom;
-    background-attachment: scroll;
+    background-attachment: fixed;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
-   /* ou remove entirely */
 
   p{
     font-family: CormorantGaramond-Light,serif;
@@ -188,8 +192,12 @@ border: 3px solid whitesmoke;
   color: white;
   font-family: Poppins-Medium, sans-serif;
 
+  /* Optimisation pour les appareils mobiles tout en gardant le background fixe */
   @media (max-width: 768px) {
-    background-attachment: scroll; /* ou remove entirely */
+    background-attachment: fixed;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
   
   .blur{

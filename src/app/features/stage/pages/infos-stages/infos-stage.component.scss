@@ -10,6 +10,11 @@
   transition: all 0.5s ease;
   position: relative;
   overflow: hidden;
+  @media(max-width: 1024px) {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
 
   &::before {
     content: '';
@@ -406,7 +411,7 @@ ol li:nth-child(6) { --i: 6; }
 }
 
 /* Solution pour les appareils mobiles avec background fixe */
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   /* On garde le background fixe mais on ajoute ces optimisations */
   .infos_stages_container {
     /* Garde l'image fixe */

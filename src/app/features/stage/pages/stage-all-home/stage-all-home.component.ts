@@ -1,6 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { StageService } from '../../services/stage.service';
-import { StageDetailsModel } from '../../models/stage-details-model';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { StageDetailsComponent } from '../stage-details/stage-details.component';
 import { DatePipe, DecimalPipe, NgForOf, NgIf } from '@angular/common';
@@ -18,7 +17,8 @@ import { environment } from '../../../../../environments/environment';
     FormsModule,
     RouterLink,
     NgIf,
-    DecimalPipe
+    DecimalPipe,
+    NgForOf // Ajout de NgForOf qui pourrait être nécessaire
   ],
   styleUrls: ['./stage-all-home.component.scss']
 })
@@ -27,10 +27,15 @@ export class StageAllHomeComponent implements OnInit {
   @Input() limit: number | null = null;
 
   private readonly _router: Router = inject(Router);
+  
   stageHomes: StageWithDistance[] = [];
   selectedStage: StageWithDistance | null = null;
   userLatitude: number | null = null;
   userLongitude: number | null = null;
+  
+  // Propriétés pour le bouton de géolocalisation
+  isGeolocating: boolean = false;
+  geoError: string | null = null;
 
   pageSize = 3;
   currentPage = 1;
@@ -43,14 +48,20 @@ export class StageAllHomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getUserLocation();
+    // On charge les stages d'abord sans géolocalisation
+    this.loadStages();
+    
+    // On peut ensuite tenter une géolocalisation automatique si souhaité
+    // Commenté pour permettre l'utilisation du bouton explicite
+    // this.tryAutomaticGeolocation();
   }
 
   get hasMoreStages(): boolean {
     return this.limit !== null && this.stageHomes.length === this.limit;
   }
 
-  getUserLocation() {
+  // Méthode pour tenter une géolocalisation automatique au chargement
+  tryAutomaticGeolocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -59,12 +70,52 @@ export class StageAllHomeComponent implements OnInit {
           this.loadStagesWithDistance();
         },
         () => {
-          this.loadStages();
+          // Continuer sans géolocalisation
+          console.log("Géolocalisation automatique refusée ou non disponible");
         }
       );
-    } else {
-      this.loadStages();
     }
+  }
+
+  // Nouvelle méthode pour le bouton de géolocalisation
+  triggerGeolocation() {
+    if (!('geolocation' in navigator)) {
+      this.geoError = "La géolocalisation n'est pas supportée par votre navigateur";
+      return;
+    }
+
+    this.isGeolocating = true;
+    this.geoError = null;
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.userLatitude = position.coords.latitude;
+        this.userLongitude = position.coords.longitude;
+        this.loadStagesWithDistance();
+        this.isGeolocating = false;
+      },
+      (error) => {
+        this.isGeolocating = false;
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            this.geoError = "Vous avez refusé l'accès à votre position";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            this.geoError = "Votre position n'a pas pu être déterminée";
+            break;
+          case error.TIMEOUT:
+            this.geoError = "La demande de localisation a expiré";
+            break;
+          default:
+            this.geoError = "Une erreur inconnue est survenue";
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000, // 10 secondes
+        maximumAge: 0
+      }
+    );
   }
 
   getCoordinatesFromAddress(address: string): Promise<[number, number] | null> {
@@ -106,12 +157,14 @@ export class StageAllHomeComponent implements OnInit {
           const [lng, lat] = coords;
           stage.distance = this.calculateDistance(this.userLatitude, this.userLongitude, lat, lng);
         } else {
-          stage.distance = Infinity;
+          stage.distance = Number.POSITIVE_INFINITY;
         }
       }
 
-      const sorted = this.sortStagesByDate(filtered);
+      // Trier d'abord par distance, puis par date
+      const sorted = this.sortStagesByDistanceAndDate(filtered);
       this.stageHomes = this.limit ? sorted.slice(0, this.limit) : sorted;
+      this.currentPage = 1; // Réinitialiser à la première page après le tri
       this.paginate();
     };
 
@@ -139,6 +192,31 @@ export class StageAllHomeComponent implements OnInit {
     return stages.sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime());
   }
 
+  // Méthode pour vérifier si une distance est infinie
+  isInfiniteDistance(distance: number): boolean {
+    return !isFinite(distance);
+  }
+
+  // Nouvelle méthode pour trier par distance, puis par date
+  private sortStagesByDistanceAndDate(stages: StageWithDistance[]): StageWithDistance[] {
+    return stages.sort((a, b) => {
+      // Gérer les cas où distance est null ou undefined
+      const distanceA = a.distance ?? Number.POSITIVE_INFINITY;
+      const distanceB = b.distance ?? Number.POSITIVE_INFINITY;
+      
+      // Priorité à la distance
+      if (distanceA !== distanceB) {
+        // Mettre les distances infinies (non calculables) à la fin
+        if (!isFinite(distanceA)) return 1;
+        if (!isFinite(distanceB)) return -1;
+        
+        return distanceA - distanceB;
+      }
+      
+      // Si les distances sont égales, trier par date
+      return new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime();
+    });
+  }
 
   selectStage(stage: StageWithDistance) {
     this.selectedStage = this.selectedStage?.id === stage.id ? null : stage;

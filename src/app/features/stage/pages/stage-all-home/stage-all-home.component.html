@@ -1,7 +1,24 @@
+<!-- Modification du template HTML (stage-all-home.component.html) -->
 <div class="card-container">
   <h1>Des points de permis à récupérer ?</h1>
+  
+  <!-- Bouton de géolocalisation -->
+  <div class="geolocation-container">
+    <button class="geolocation-button" (click)="triggerGeolocation()" [disabled]="isGeolocating">
+      <span *ngIf="!isGeolocating">
+        <i class="geo-icon">📍</i> Trouver les stages près de chez moi
+      </span>
+      <span *ngIf="isGeolocating">
+        <i class="geo-icon spin">⟳</i> Localisation en cours...
+      </span>
+    </button>
+    <div *ngIf="geoError" class="geo-error">
+      {{ geoError }}
+    </div>
+  </div>
+
   <br/>
-  @for (stage of stageHomes; track stage.id) {
+  @for (stage of paginatedStages; track stage.id) {
     <div class="cards_stages_and_details">
       <div class="card_stages">
 
@@ -12,7 +29,12 @@
           <h3>Places restantes:
             <strong>{{ stage?.capacity === 0 ? "Complet" : stage?.capacity }}</strong>
           </h3>
-          <h3> Distance: {{ stage.distance | number:'1.1-1' }} km
+          <h3> 
+            @if (stage.distance !== null && stage.distance !== undefined && typeof stage.distance === 'number' && !isInfiniteDistance(stage.distance)) {
+              Distance: {{ stage.distance | number:'1.1-1' }} km
+            } @else {
+              Distance: Non disponible
+            }
           </h3>
         </div>
 
@@ -43,10 +65,19 @@
       </div>
     </div>
   }
+
+  <!-- Pagination controls -->
+  <div class="pagination" *ngIf="stageHomes.length > pageSize">
+    <button [disabled]="!canGoPrev()" (click)="changePage(currentPage - 1)" class="page-button">
+      Précédent
+    </button>
+    <span class="page-info">Page {{ currentPage }} sur {{ totalPages() }}</span>
+    <button [disabled]="!canGoNext()" (click)="changePage(currentPage + 1)" class="page-button">
+      Suivant
+    </button>
+  </div>
+
   <button class="see_all_stages_button">
     <a routerLink="/stages/all">Voir tous les stages</a>
   </button>
 </div>
-
-
-

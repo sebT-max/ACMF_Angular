@@ -5,18 +5,19 @@
   margin-bottom: 10px;
   cursor: pointer;
   font-weight: bold;
-  margin: 0;
+  margin: 0 auto;
+  width: 100%;
+  font-size:16px;
+  color: #333;
 
   @media (max-width: 767px) {
     width: 100%;
     text-align: left;
     padding: 2% 10%;
-    font-size: 16px;
     margin-bottom: 10px;
     background: #f9f9f9;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    color: #333;;
   }
 
 }
@@ -130,7 +131,7 @@ h1 {
 
 h1{
   font-family: Poppins-Medium, serif;
-  text-align: left;
+  text-align: center;
   font-size:40px;
   color: #0a0a1e;
   @media (max-width: 767px) {

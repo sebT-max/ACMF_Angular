@@ -1,13 +1,103 @@
-.card-container{
-  padding:2%;
+/* Ajoutez ces styles à votre fichier stage-all-home.component.scss */
 
-  @media(min-width:1440px){
-    width:1100px;
-    margin:0 auto;
+.card-container {
+  padding: 2%;
+  @media(min-width: 1440px) {
+    width: 1100px;
+    margin: 0 auto;
   }
 }
 
-h1{
+/* Styles pour le conteneur de géolocalisation */
+.geolocation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.geolocation-button {
+  background-color: #041a3a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.geolocation-button:hover {
+  background-color: #0a2b5a;
+  transform: translateY(-2px);
+}
+
+.geolocation-button:active {
+  transform: translateY(0);
+}
+
+.geolocation-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.geo-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.spin {
+  display: inline-block;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.geo-error {
+  color: #b41c1b;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Styles pour la pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.page-button {
+  background-color: #041a3a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.page-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Styles existants */
+h1 {
   font-family: Poppins-Medium, serif;
   text-align: center;
   font-size: 36px;
@@ -21,23 +111,27 @@ h1{
     margin-top: 20px;
   }
 }
-#stage_home_buttons{
+
+#stage_home_buttons {
   display: flex;
-  margin:0 auto;
+  margin: 0 auto;
 }
+
 .app-stage-details {
   margin-top: 0px; /* Espacement entre la carte et les détails */
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
 }
-#logo_stage_all{
+
+#logo_stage_all {
   display: flex;
   justify-content: center;
 }
-.see_all_stages_button{
+
+.see_all_stages_button {
   margin: 20px auto 0;
-  margin-bottom:40px;
+  margin-bottom: 40px;
   background: #041a3a;
   border-radius: 10px;
   padding: 10px 30px;
@@ -45,24 +139,37 @@ h1{
   color: #b41c1b;
   box-shadow: 0px 0px 7px 0px white;
   border: none;
-
+  display: block;
 }
-#stage_price{
-  font-size:24px;
-  color:black;
-  padding:10px;
+
+.see_all_stages_button a {
+  color: white;
+  text-decoration: none;
+}
+
+#stage_price {
+  font-size: 24px;
+  color: black;
+  padding: 10px;
 }
 
 @media (max-width: 767px) {
-  .inscription_button,.details_button {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 16px;
-      width: 120px;
-      padding: 2px ! important;
-      height:50px;
-      margin-top:10px;
+  .inscription_button, .details_button {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    width: 120px;
+    padding: 2px !important;
+    height: 50px;
+    margin-top: 10px;
+  }
+  
+  .geolocation-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
+  .geo-icon {
+    font-size: 16px;
   }
 }
-
-

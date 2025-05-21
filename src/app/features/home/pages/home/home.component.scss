@@ -1,12 +1,12 @@
 .home_container{
   display: flex;
-  justify-content: center;
   align-items: center;
   text-align: center;
-  flex-direction: column;
-  background-image: url(/pic14.jpg);
+  flex-direction: row-reverse;
+  background-image: url(/pic19.jpg);
   background-attachment: fixed;
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
   @media(max-width: 1024px) {
@@ -14,12 +14,12 @@
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
   }
-   /* ou remove entirely */
 
   p{
-    font-family: CormorantGaramond-Light,serif;
-    font-size:60px;
-    color:white;
+    font-family: Poppins-Thin,serif;
+    font-size:80px;
+    color:#ffffff;
+    backdrop-filter: blur(7px);
   }
   button{
     margin-top: 15%;
@@ -62,55 +62,34 @@ h4{
   }
 }
 
-.planet-icons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 20px;
-
+.first_home_container_division{
+  color: white;
+  padding:2%;
+  line-height:60px;
+  background:transparent;
   div {
-    text-align: center;
-    margin:20px 30px;
+    display: flex;
+    justify-content: center;
+
+    span {
+      font-size: 36px;
+      height: 200px;
+      font-style: italic;
+      font-weight: 900;
+      margin: 30px;
+    }
   }
-
-  img{
-     margin:0px;
-  }
-
-  p{
-    color:white;
-    font-size:36px;
-  }
-}
-
-.text-red {
-  color: #ff4d4d;
-}
-
-.text-yellow {
-  color: #ffcc00;
-}
-
-.text-lightblue {
-  color: #80dfff;
-}
-.home_journeys_catalogue{
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.37);
-  hr{
-    width:50%;
-    background-color: #ffb606;
-    height:2px;
-    margin:0 auto;
-    margin-bottom:20px;
-  }
-  p{
-    color:white;
-    font-size:36px;
-    text-transform: uppercase;
-    font-style:italic;
-    text-align:center;
-    margin:10px;
+  p {
+    font-size: 60px;
+    margin-top: 30px;
+    @media(max-width: 1023px) {
+      font-size: 40px;
+      margin-top: 0;
+    }
+    @media(min-width:1024px) and (max-width:1440px) {
+      font-size: 50px;
+      margin-top: 0;
+    }
   }
 }
 
@@ -129,54 +108,6 @@ h4{
 }
 }
 
-#main_title{
-background:transparent;
-width:100%;
-text-align:center;
-font-size:80px;
-transform: rotate(-10deg);
-display: inline-block;
-border:none;
-}
-
-.booking_button {
-width: 30%;
-background: rgba(0, 0, 0, 0.1215686275);
-color: white;
-font-size: 30px;
-border: 3px solid whitesmoke;
-  &:hover {
-    background: rgba(0, 0, 0, 0.37);
-    border: 3px solid white;
-  }
-}
-
-#infos-home-aside{
-  background-color: #f8a733;
-  color: #383f4e;
-  text-align:left;
-  width:100%;
-
-  p{
-    margin:20px;
-    line-height: 30px;
-    font-size: 20px;
-    text-align:left;
-  }
-}
-
-#home_contact_datas{
-  padding:20px;
-  width:100%;
-  text-align:center;
-  margin: 0 auto 20px;
-
-  h2{
-    background:transparent;
-    border:1px solid white;
-    margin-bottom:20px;
-  }
-}
 .call_to_register_home_bottom_container{
   display:flex;
   justify-content: center;
@@ -213,15 +144,13 @@ border: 3px solid whitesmoke;
 }
 .second_home_container_division{
   font-size:24px;
-  background-image: url(/pic6.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: right;
-  background-attachment: fixed;
+  background:#041a3a;
   @media(max-width:1024px){
   will-change: transform;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+  color:white;
+  
   }
   .blur{
     padding: 20px 12%;
@@ -332,36 +261,9 @@ border: 3px solid whitesmoke;
   }
 
 }
-.first_home_container_division{
-  color: white;
-  padding:2%;
-  line-height:60px;
-  background:transparent;
-  div {
-    display: flex;
-    justify-content: center;
 
-    span {
-      font-size: 36px;
-      height: 200px;
-      font-style: italic;
-      font-weight: 900;
-      margin: 30px;
-    }
-  }
-  p {
-    font-size: 60px;
-    margin-top: 30px;
-    @media(max-width: 1023px) {
-      font-size: 40px;
-      margin-top: 0;
-    }
-    @media(min-width:1024px) and (max-width:1440px) {
-      font-size: 50px;
-      margin-top: 0;
-    }
-  }
-}
+
+
 
 .second_home_container{
   margin-top:200px;
@@ -382,13 +284,73 @@ border: 3px solid whitesmoke;
 }
 
 
+@media(min-width:768px){
+  .image_overlap_container {
+    position: relative;
+    height: 98vh;
+    background:transparent;
+    aside{
+      padding:30px;
+      float:left;
+      p{
+        font-family: CormorantGaramond-Light,serif;
+        font-size:60px;
+      } 
+      button{
+        margin-top:40px;
+      }
+    }
+  
+  }
+  
+  #avis_acf_img {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,-100px);
+    height: 600px; /* Ajuste selon ton image */
+    z-index: 10;
+    border-radius: 15px;
+    box-shadow:0px 0px 1px #041a3a;
+    
+  }
+}
+.fade-in-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media(max-width:1024px){
+  .image_overlap_container {
+    position: relative;
+    height: 70%;
+    background:transparent; /* Important : on ne veut pas qu'elle prenne de place dans le flux */
+  }
+  
+  #avis_acf_img {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,-50px);
+    height: 500px; /* Ajuste selon ton image */
+    z-index: 10;
+    border-radius: 15px;
+    box-shadow:0px 0px 1px #041a3a;
+  }
+}
+
+
 .step_guide{
-  background-image: url(/pic19.jpg);
+  background-image: url(/pic6.jpg);
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
   background-position:right;
-  padding:10%;
+  padding: 10% 3% 10% 3%;
   @media(max-width: 1024px) {
     will-change: transform;
     transform: translateZ(0);
@@ -415,8 +377,8 @@ border: 3px solid whitesmoke;
   border-radius: 20px;
   transform: translate(38%, -20%);
   background: rgb(4 26 58);
-  width:100%;
   margin-top:40px;
+  width:30%;
   @media (max-width: 767px) {
     width:100%;
     text-align:center;
@@ -563,12 +525,14 @@ justify-content: center;
 text-align:center;
 font-size:36px;
 background:#b41c1b;
-padding:3% 0;
+padding:10% 0 2% 0;
 color:white;
+
 
   @media (min-width: 1025px) and (max-width: 1439px) {
     text-align:center;
     justify-content: center;
+    padding:10% 0;
   }
   @media (min-width: 768px) and (max-width: 1024px) {
     text-align: center;

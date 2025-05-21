@@ -1,4 +1,4 @@
-import {Component, inject, ViewChild} from '@angular/core';
+import {AfterViewInit,Component, inject, ViewChild,ElementRef} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {AuthService} from '../../../auth/services/auth.service';
 import {NgOptimizedImage} from '@angular/common';
@@ -20,5 +20,23 @@ import {StageAllHomeComponent} from '../../../stage/pages/stage-all-home/stage-a
 export class HomeComponent {
   private _authService :AuthService = inject(AuthService);
   userConnected = this._authService.currentUser;
+  constructor(private el: ElementRef) {}
 
+  ngAfterViewInit(): void {
+    const elements = this.el.nativeElement.querySelectorAll('.fade-in-on-scroll') as NodeListOf<HTMLElement>;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('fade-in-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    elements.forEach(el => observer.observe(el));
+  }
 }

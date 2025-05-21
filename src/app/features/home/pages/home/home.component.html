@@ -7,9 +7,6 @@
   </div>
 </section>
 
-<app-stage-all-home [limit]="4"></app-stage-all-home>
-
-
 <section class="second_home_container_division">
   <div class="blur">
     
@@ -60,11 +57,26 @@
     </div>
   </div>
 </section>
+<app-stage-all-home [limit]="4" class="fade-in-on-scroll"></app-stage-all-home>
+
 
 <section class="step_guide">
-  <app-stepguide id="step_guide_home">
+  <app-stepguide id="step_guide_home" class="fade-in-on-scroll">
   </app-stepguide>
 </section>  
+
+<div class="image_overlap_container">
+  <aside>
+    <p>Vous êtes un particulier?</p>
+    <p> Vous êtes inspiré ?</p>
+    <p> Inscrivez-vous à un stage sans vous enregistrer</p>
+
+    <button style="color:white;font-weight:600;background:#041a3a;" class ="see_all_button journey_catalogue_button"  routerLink="stages/all">
+      Voir nos stages
+    </button>
+</aside>
+  <img src="/AvisACF.png" id="avis_acf_img" alt="avis_acf" priority class="fade-in-on-scroll">
+</div>
 
 <section id="home_account_registration">
   <div class="blurred_bg">

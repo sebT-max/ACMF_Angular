@@ -405,11 +405,20 @@ ol li:nth-child(6) { --i: 6; }
   transform: translateY(0);
 }
 
-@media (max-width: 1024px) {
+/* Solution pour les appareils mobiles avec background fixe */
+@media (max-width: 1023px) {
+  /* On garde le background fixe mais on ajoute ces optimisations */
   .infos_stages_container {
-    background-attachment: scroll;
+    /* Garde l'image fixe */
+    background-attachment: fixed;
+    /* Améliore les performances */
+    will-change: transform;
+    /* Force le rendu matériel */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 }
+
 li a:focus {
   outline: 2px solid #f8a733;
   outline-offset: 4px;

@@ -44,13 +44,14 @@
 }
 .about_us_main_container {
   font-family: 'Poppins', system-ui, sans-serif;
-  position: relative;
-  overflow: hidden;
   background-image: url(/pic4.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow: hidden;
 
   &::before {
     content: '';
@@ -87,6 +88,7 @@
 
     @media (max-width: 1023px) {
       flex-direction: column;
+      background-attachment: scroll;
     }
     @media (max-width: 767px) {
       width: 100%;

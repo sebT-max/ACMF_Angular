@@ -4,6 +4,7 @@ export interface DocumentDTO {
   type: string;
   fileUrl: string;
   userId?: number;
+  destinataireId?: number;
   inscriptionId?: number;
   uploadedAt: string;
 }

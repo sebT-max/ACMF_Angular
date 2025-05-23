@@ -137,3 +137,30 @@
     <button type="button" (click)="generatePDF()" class="generate-btn">Générer la facture PDF</button>
   </div>
 </div>
+<div class="form_convocation_sending">
+  <h2>Envoyer la facture à l'utilisateur</h2>
+
+  <form [formGroup]="factureSendingForm" (ngSubmit)="handleFactureSending()" enctype="multipart/form-data">
+    <p-fileUpload
+      name="Convocation"
+      [customUpload]="true"
+      (onSelect)="onFilesChange($event)"
+      (onRemove)="onRemoveFile($event)"
+      [multiple]="true"
+      [showUploadButton]="false"
+      [showCancelButton]="false"
+      accept=".pdf,image/*"
+      chooseLabel="Charger la convocation"
+      mode="advanced"
+      [maxFileSize]="5000000"
+      id="Convocation"
+    ></p-fileUpload>
+    <br>
+    <label for="destinataireEmail">Email du destinataire :</label>
+    <input type="email" formControlName="destinataireEmail" placeholder="Écrire email" required />
+
+    <button type="submit" [disabled]="factureSendingForm.invalid">Envoyer</button>
+  </form>
+  <pre>Form value: {{ factureSendingForm.value | json }}</pre>
+  <pre>Form valid: {{ factureSendingForm.valid }}</pre>
+</div>

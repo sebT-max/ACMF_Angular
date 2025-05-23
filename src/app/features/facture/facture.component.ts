@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import jsPDF from 'jspdf';
-import { FormsModule } from '@angular/forms';
-import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {DecimalPipe, JsonPipe, NgForOf, NgIf} from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
+import {FileUpload} from 'primeng/fileupload';
+import {TokenModel} from '../auth/models/token.model';
+import {DocumentService} from '../document/pages/services/document.services';
+import {ToastrService} from 'ngx-toastr';
 
 
 interface LigneFacture {
@@ -19,18 +23,120 @@ interface LigneFacture {
     FormsModule,
     DecimalPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    FileUpload,
+    JsonPipe,
+    ReactiveFormsModule
   ],
   styleUrls: ['./facture.component.scss']
 })
 export class FactureComponent implements OnInit {
+  private readonly _fb = inject(FormBuilder);
+  private readonly documentService = inject(DocumentService);
+
+  factureSendingForm!: FormGroup;
+  currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
+
+  uploadedFiles: { [key: string]: File[] } = {
+    Facture: []
+  };
+  fontsLoaded = false;
+
+  async ngOnInit(): Promise<void> {
+    try {
+      await this.loadScript('assets/fonts/Poppins-Regular-normal.js');
+      this.fontsLoaded = true;
+    } catch (error) {
+      console.error('Erreur chargement police', error);
+    }
+
+    const localStorageUser = localStorage.getItem('currentUser');
+    if (localStorageUser) {
+      try {
+        this.currentUser.set(JSON.parse(localStorageUser));
+      } catch (error) {
+        console.error("Erreur lors du parsing du token :", error);
+        localStorage.removeItem('currentUser');
+      }
+    }
+
+    this.factureSendingForm = this._fb.group({
+      userId: [this.currentUser()?.id ?? null, Validators.required],
+      documentType: ['FACTURE', Validators.required],
+      destinataireEmail: ['', [Validators.required, Validators.email]],
+    });
+  }
+  onFilesChange(event: any): void {
+    const files: File[] = event.files || [];
+
+    for (let file of files) {
+      if (!this.isValidFileType(file)) {
+        this.toastr.warning(`Fichier non autorisé : ${file.name}`);
+        continue;
+      }
+      this.uploadedFiles["Facture"].push(file);
+    }
+  }
+
+  onRemoveFile(event: any): void {
+    const file = event.file;
+    const index = this.uploadedFiles["Facture"].indexOf(file);
+    if (index !== -1) {
+      this.uploadedFiles["Facture"].splice(index, 1);
+    }
+  }
+
+  isValidFileType(file: File): boolean {
+    return ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg'].includes(file.type);
+  }
+
+  loadScript(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve();
+      script.onerror = () => reject(`Erreur script : ${src}`);
+      document.body.appendChild(script);
+    });
+  }
+  handleFactureSending(): void {
+    const formData = new FormData();
+    const email = this.factureSendingForm.get('destinataireEmail')?.value;
+
+    if (!email) {
+      this.toastr.error('Veuillez remplir l’email du destinataire.');
+      return;
+    }
+
+    formData.append('type', 'FACTURE');
+    formData.append('destinataireEmail', email);
+
+    const files = this.uploadedFiles["Facture"];
+    if (!files || files.length === 0) {
+      this.toastr.error('Veuillez charger au moins un fichier.');
+      return;
+    }
+
+    formData.append('file', files[0]);
+
+    this.documentService.sendDocumentFromAdminToParticular(formData).subscribe({
+      next: () => this.toastr.success('Document envoyé avec succès'),
+      error: err => {
+        console.error('Erreur d’envoi :', err);
+        this.toastr.error('Erreur lors de l’envoi du document');
+      }
+    });
+  }
+
+
+
   entreprise = {
     nom: 'ACF Actions Conduite France',
     adresse: '17 Chemin de Kerohan, 29460 Hanvec',
     tva: 'BE0123.456.789',
     email: 'contact@acf-formation.fr',
     telephone: '06 99 74 52 20',
-    logo: '/logo_facture.png' // à convertir en base64
+    logo: '/logo_facture.png'
   };
 
   facture = {
@@ -49,10 +155,8 @@ export class FactureComponent implements OnInit {
   lignes = [
     { description: 'Stage de récupération de points', quantite: 1, prixUnitaire: 250 }
   ];
-  fontData: { [key: string]: string } = {}; // Pour stocker les polices en base64
-  fontsLoaded: boolean = false;
 
-  constructor() {
+  constructor(private toastr: ToastrService) {
     // Générer un numéro de facture au format "FACT-YYYYMMDD-XXXX"
     const today = new Date();
     const year = today.getFullYear();
@@ -98,26 +202,7 @@ export class FactureComponent implements OnInit {
       year: 'numeric'
     });
   }
-  async loadScript(src: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.onload = () => resolve();
-      script.onerror = () => reject(`Erreur de chargement du script ${src}`);
-      document.body.appendChild(script);
-    });
-  }
 
-  async ngOnInit(): Promise<void> {
-    try {
-      // Charger la police Poppins
-      await this.loadScript('assets/fonts/Poppins-Regular-normal.js');
-      this.fontsLoaded = true;
-      console.log('Police Poppins chargée avec succès');
-    } catch (error) {
-      console.error('Font loading error:', error);
-    }
-  }
 
   async generatePDF() {
     if (!this.fontsLoaded) {

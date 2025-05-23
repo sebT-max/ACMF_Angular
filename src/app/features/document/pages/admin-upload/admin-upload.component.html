@@ -1,0 +1,28 @@
+<h2>Envoi de document</h2>
+
+<form (ngSubmit)="upload()" #form="ngForm">
+  <!-- Sélection de l'utilisateur -->
+  <label for="user">Utilisateur :</label>
+  <select [(ngModel)]="selectedUserId" name="user" required>
+    <option *ngFor="let user of users" [value]="user.id">{{ user.firstname }} {{ user.lastname }}</option>
+  </select>
+
+  <!-- Type de document -->
+  <label for="type">Type de document :</label>
+  <select [(ngModel)]="documentType" name="type" required>
+    <option value="CONVOCATION">Convocation</option>
+    <option value="FACTURE">Facture</option>
+    <option value="AUTRE">Autre</option>
+  </select>
+
+  <!-- Upload du fichier -->
+  <label for="file">Fichier :</label>
+  <input type="file" (change)="onFileSelected($event)" required />
+
+  <!-- Bouton -->
+  <button type="submit" [disabled]="!selectedFile || !selectedUserId || !documentType">Envoyer</button>
+</form>
+
+<div *ngIf="successMessage" class="success">
+  {{ successMessage }}
+</div>

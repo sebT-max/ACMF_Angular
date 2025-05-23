@@ -9,21 +9,22 @@
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
+
   @media(max-width: 1024px) {
     will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
-
   }
 
   p{
     font-family: Poppins-Thin,serif;
     font-size:80px;
     color:#ffffff;
-    backdrop-filter: blur(7px);
+    backdrop-filter: blur(2px) brightness(0.95);
+-webkit-backdrop-filter: blur(2px) brightness(0.95);
+background-color: rgba(0, 0, 0, 0.2);
     @media(max-width:431px){
-      backdrop-filter: blur(4px);
-      font-family: Poppins-ExtraLight,serif;
+      font-family: Poppins-Thin,serif;
     }
   }
   button{

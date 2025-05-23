@@ -124,4 +124,33 @@ tfoot button:hover {
   background-color: #5a6268;
 }
 
+.form_convocation_sending{
+  width: 600px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  gap:20px;
+  div {
+    width: 45%;
+    margin-top: 25px;
+  }
+  h2{
+    text-align: center;
+    padding: 10px;
+    background: transparent;
+    color: white;
+    font-size: 30px;
+    font-family: Poppins-SemiBold, serif;
+  }
+  @media(max-width: 767px){
+    width: 100%;
+    div {
+      width:85%;
+      margin-top: 5px;
+    }
+  }
+}
+
 

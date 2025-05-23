@@ -183,6 +183,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'documents/admin-upload',
+    loadComponent: () =>
+      import('./features/document/pages/admin-upload/admin-upload.component').then(
+        (c) => c.AdminUploadComponent
+      ),
+  },
+  {
     path: 'devis/create',
     loadComponent: () =>
       import('./features/devis/pages/creation-devis/creation-devis.component').then(

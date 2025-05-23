@@ -38,25 +38,20 @@
       (click)="activeTab = 'Factures'"
       [class.active]="activeTab === 'Factures'"
     >
-      Créer Facture
+      Facture
     </button>
     <button
-      (click)="activeTab = 'privateLinksCreate'"
-      [class.active]="activeTab === 'privateLinksCreate'"
+      (click)="activeTab = 'privateLinks'"
+      [class.active]="activeTab === 'privateLinks'"
     >
-      Créer Liens privés
+      Lien privé
     </button>
-    <button
-      (click)="activeTab = 'privateLinksList'"
-      [class.active]="activeTab === 'privateLinksList'"
-    >
-      Liens privés
-    </button>
+
     <button
       (click)="activeTab = 'convocations'"
       [class.active]="activeTab === 'convocations'"
     >
-      Créer Convocation
+      Convocation
     </button>
 
   </div>
@@ -86,12 +81,9 @@
     <h2>Factures</h2>
     <app-facture></app-facture>
   </div>
-  <div *ngIf="activeTab === 'privateLinksCreate'" class="tab-content">
+  <div *ngIf="activeTab === 'privateLinks'" class="tab-content">
     <h2>Créer un lien privé</h2>
     <app-private-link-create></app-private-link-create>
-  </div>
-
-  <div *ngIf="activeTab === 'privateLinksList'" class="tab-content">
     <h2>Liens privés</h2>
     <app-private-link-list></app-private-link-list>
   </div>

@@ -34,9 +34,9 @@
     </ng-container>
 
     <ng-container *ngIf="userConnected() || companyConnected()">
-      <button *ngIf="userConnected()?.role?.name === 'ADMIN'" routerLink="dashboard-admin" (click)="toggleMobileMenu()">Mon espace admin</button>
-      <button *ngIf="userConnected()?.role?.name === 'ENTREPRISE' || companyConnected()" routerLink="dashboard-company" (click)="toggleMobileMenu()">Mon espace professionnel</button>
-      <button *ngIf="userConnected()?.role?.name === 'PARTICULIER'" routerLink="dashboard-client" (click)="toggleMobileMenu()">Mes inscriptions</button>
+      <button *ngIf="userConnected()?.role?.name === 'ADMIN'" routerLink="dashboard-admin" (click)="toggleMobileMenu()">Mon</button>
+      <button *ngIf="userConnected()?.role?.name === 'ENTREPRISE' || companyConnected()" routerLink="dashboard-company" (click)="toggleMobileMenu()">Mon espace</button>
+      <button *ngIf="userConnected()?.role?.name === 'PARTICULIER'" routerLink="dashboard-client" (click)="toggleMobileMenu()">Mon espace</button>
       <button (click)="logout()">Déconnexion</button>
     </ng-container>
   </nav>
@@ -79,13 +79,13 @@
   }
     @else{
     @if(userConnected()?.role?.name === 'ADMIN'){
-      <button routerLink="dashboard-admin">Mon espace admin</button>
+      <button routerLink="dashboard-admin">Mon espace</button>
     }
     @if(userConnected()?.role?.name === 'ENTREPRISE' || companyConnected()){
-      <button routerLink="dashboard-company">Mon espace professionnel</button>
+      <button routerLink="dashboard-company">Mon espace</button>
     }
     @if(userConnected()?.role?.name === 'PARTICULIER'){
-      <button routerLink="dashboard-client">Mes inscriptions</button>
+      <button routerLink="dashboard-client">Mon espace</button>
     }
       <button (click)="logout()">DÉCONNEXION</button>
   }

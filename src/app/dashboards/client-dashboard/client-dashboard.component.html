@@ -1,7 +1,7 @@
 <div class="dashboard_client">
-<!--  <h1>Bienvenue sur votre espace client</h1>-->
+  <h1>Bienvenue sur votre espace client</h1>
 
-<!--  <div class="tabs">
+  <div class="tabs">
     <button
       (click)="activeTab = 'inscription'"
       [class.active]="activeTab === 'inscription'"
@@ -9,13 +9,13 @@
       Inscriptions
     </button>
 
-    &lt;!&ndash;<button
+    <button
       (click)="activeTab = 'documents'"
       [class.active]="activeTab === 'documents'"
     >
       Documents
-    </button>&ndash;&gt;
-  </div>-->
+    </button>
+  </div>
 
   <div *ngIf="activeTab === 'inscription'" class="tab-content">
     <h2>Mes inscriptions</h2>
@@ -70,8 +70,7 @@
       </ng-template>
     }
   </div>
-  <!--<div *ngIf="activeTab === 'documents'" class="tab-content">
-    <h2>Mes documents</h2>
+  <div *ngIf="activeTab === 'documents'" class="tab-content">
     <app-document-me></app-document-me>
-  </div>-->
+  </div>
 </div>

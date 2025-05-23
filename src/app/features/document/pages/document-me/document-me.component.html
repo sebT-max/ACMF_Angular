@@ -1,42 +1,283 @@
-<div class="client_doc_container">
-  <div *ngFor="let document of documents; trackBy: trackDocument" class="document-card">
-
-    <h1>{{ document.fileName }}</h1>
-
-    <div *ngIf="isImage(document.fileUrl)">
-      <img
-        [ngSrc]="document.fileUrl"
-        width="300"
-        height="200"
-        alt="{{ document.fileName }}"
-        class="image"
-        id="image-{{ document.id }}"
-      >
-      <button
-        class="rotate-button"
-        (click)="rotateImage(document.id)"
-      >
-        🔄 Pivoter
-      </button>
-    </div>
-
-    <div *ngIf="!isImage(document.fileUrl)">
-      <img alt ="" src="icon.png" style="height:100px;margin-bottom:20px;"/>
-      <a [href]="document.fileUrl" target="_blank" rel="noopener noreferrer">
-        <p>Voir le fichier {{ document.fileName }} (PDF)</p>
-      </a>
-    </div>
-
+<!-- En-tête avec actions -->
+<div class="header-section">
+  <div class="header-content">
+    <h1 class="page-title">Mes Documents</h1>
+    <button
+      class="refresh-button"
+      (click)="refreshDocuments()"
+      [disabled]="isLoading()"
+      aria-label="Actualiser les documents">
+      <span class="refresh-icon" [class.spinning]="isLoading()">🔄</span>
+      Actualiser
+    </button>
   </div>
 </div>
 
-<div class="documents-container">
-  <div *ngFor="let type of objectKeys(groupedDocuments)">
-    <h3>{{ getDocumentTypeLabel(type) }}</h3>
-    <ul>
-      <li *ngFor="let doc of groupedDocuments[type]">
-        <a [href]="doc.fileUrl" target="_blank">{{ doc.fileName }}</a> - Téléchargé le {{ doc.uploadedAt | date:'dd/MM/yyyy' }}
-      </li>
-    </ul>
+<!-- Message d'erreur -->
+<div class="error-message" *ngIf="error()" role="alert">
+  <span class="error-icon">⚠️</span>
+  {{ error() }}
+  <button class="retry-button" (click)="refreshDocuments()">Réessayer</button>
+</div>
+
+<!-- Indicateur de chargement -->
+<div class="loading-container" *ngIf="isLoading()">
+  <div class="loading-spinner"></div>
+  <p class="loading-text">Chargement des documents...</p>
+</div>
+
+<!-- Contenu principal -->
+<div class="main-content" *ngIf="!isLoading()">
+
+  <!-- Documents récents (vue individuelle) -->
+  <section class="documents-section" *ngIf="(documents$ | async)?.length">
+    <h2 class="section-title">Documents récents</h2>
+    <div class="documents-grid">
+      <article
+        *ngFor="let document of (documents$ | async)?.slice(0, 6); trackBy: trackDocument"
+        class="document-card individual-card"
+        [attr.data-document-type]="document.type">
+
+        <div class="card-header">
+          <h3 class="document-title">{{ document.fileName }}</h3>
+          <span class="document-date">
+            {{ document.uploadedAt | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+
+        <div class="card-content">
+          <!-- Image -->
+          <div class="media-container" *ngIf="isImage(document.fileUrl); else nonImageContent">
+            <img
+              [ngSrc]="document.fileUrl"
+              [attr.id]="'image-' + document.id"
+              [class.rotated]="isImageRotated(document.id)"
+              class="document-image"
+              [alt]="document.fileName"
+              fill
+              priority="false">
+
+            <div class="image-overlay">
+              <button
+                class="overlay-button rotate-button"
+                (click)="rotateImage(document.id)"
+                aria-label="Pivoter l'image"
+                title="Pivoter">
+                🔄
+              </button>
+              <button
+                class="overlay-button download-button"
+                (click)="downloadDocument(document)"
+                aria-label="Télécharger le document"
+                title="Télécharger">
+                ⬇️
+              </button>
+            </div>
+          </div>
+
+          <!-- Contenu non-image -->
+          <ng-template #nonImageContent>
+            <div class="file-preview">
+              <div class="file-icon">📄</div>
+              <span class="file-type">{{ getDocumentTypeLabel(document.type) }}</span>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="card-actions">
+          <button
+            class="action-button primary"
+            (click)="openModal(document.id)"
+            [attr.aria-label]="'Prévisualiser ' + document.fileName">
+            <span class="button-icon">👁️</span>
+            Prévisualiser
+          </button>
+          <button
+            class="action-button secondary"
+            (click)="downloadDocument(document)"
+            [attr.aria-label]="'Télécharger ' + document.fileName">
+            <span class="button-icon">⬇️</span>
+            Télécharger
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Documents groupés par type -->
+  <section class="documents-section" *ngIf="groupedDocuments().length">
+    <h2 class="section-title">Documents par catégorie</h2>
+
+    <div class="groups-container">
+      <div
+        *ngFor="let group of groupedDocuments(); trackBy: trackGroup"
+        class="document-group">
+
+        <div class="group-header">
+          <h3 class="group-title">{{ group.label }}</h3>
+          <span class="group-count">{{ group.documents.length }} document(s)</span>
+        </div>
+
+        <div class="group-documents">
+          <article
+            *ngFor="let doc of group.documents; trackBy: trackDocument"
+            class="document-card grouped-card"
+            [attr.data-document-type]="doc.type">
+
+            <div class="card-mini-header">
+              <h4 class="mini-title">{{ doc.fileName }}</h4>
+              <time class="mini-date">{{ doc.uploadedAt | date:'dd/MM/yyyy à HH:mm' }}</time>
+            </div>
+
+            <div class="card-content">
+              <!-- Image -->
+              <div class="media-container" *ngIf="isImage(doc.fileUrl); else groupedNonImage">
+                <img
+                  [ngSrc]="doc.fileUrl"
+                  [attr.id]="'image-' + doc.id"
+                  [class.rotated]="isImageRotated(doc.id)"
+                  class="document-image grouped-image"
+                  [alt]="doc.fileName"
+                  fill
+                  priority="false">
+
+                <div class="image-overlay">
+                  <button
+                    class="overlay-button rotate-button"
+                    (click)="rotateImage(doc.id)"
+                    aria-label="Pivoter l'image"
+                    title="Pivoter">
+                    🔄
+                  </button>
+                </div>
+              </div>
+
+              <!-- Contenu non-image groupé -->
+              <ng-template #groupedNonImage>
+                <div class="file-preview compact">
+                  <div class="file-icon small">📄</div>
+                </div>
+              </ng-template>
+            </div>
+
+            <div class="card-actions compact">
+              <button
+                class="action-button secondary small"
+                (click)="openModal(doc.id)"
+                [attr.aria-label]="'Prévisualiser ' + doc.fileName"
+                title="Prévisualiser">
+                👁️
+              </button>
+              <button
+                class="action-button secondary small"
+                (click)="downloadDocument(doc)"
+                [attr.aria-label]="'Télécharger ' + doc.fileName"
+                title="Télécharger">
+                ⬇️
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Message si aucun document -->
+  <div class="empty-state" *ngIf="!(documents$ | async)?.length && !isLoading()">
+    <div class="empty-icon">📁</div>
+    <h3 class="empty-title">Aucun document trouvé</h3>
+    <p class="empty-description">Vous n'avez pas encore téléchargé de documents.</p>
+  </div>
+</div>
+
+<!-- Modal de prévisualisation -->
+<div class="modal-overlay"
+     *ngIf="modalState().isOpen"
+     (click)="closeModal()"
+     role="dialog"
+     aria-modal="true"
+     [attr.aria-label]="'Prévisualisation de ' + modalState().documentName">
+
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2 class="modal-title">{{ modalState().documentName }}</h2>
+      <button
+        class="modal-close"
+        (click)="closeModal()"
+        aria-label="Fermer la prévisualisation"
+        title="Fermer">
+        ✖️
+      </button>
+    </header>
+
+    <div class="modal-content">
+      <!-- Affichage pour les images -->
+      <div class="image-viewer" *ngIf="modalState().documentUrl && isImage(modalState().documentUrl!)">
+        <img
+          [src]="modalState().documentUrl!"
+          [alt]="modalState().documentName!"
+          class="modal-image">
+      </div>
+
+      <!-- Affichage pour les PDFs -->
+      <div class="pdf-viewer" *ngIf="modalState().documentUrl && isPdf(modalState().documentUrl!)">
+        <iframe
+          [src]="getSafeUrl(getPdfViewerUrl(modalState().documentUrl!))"
+          class="document-frame"
+          title="Prévisualisation PDF"
+          frameborder="0">
+        </iframe>
+
+        <!-- Message si l'iframe ne fonctionne pas -->
+        <div class="pdf-fallback">
+          <p>Impossible d'afficher le PDF dans cette fenêtre ?</p>
+          <button
+            [disabled]="!getCurrentDocument()"
+            (click)="getCurrentDocument() && openInNewTab(getCurrentDocument()!)">
+            Ouvrir dans un nouvel onglet
+          </button>
+        </div>
+      </div>
+
+      <!-- Affichage pour les autres types de fichiers -->
+      <div class="unsupported-viewer"
+           *ngIf="modalState().documentUrl && !isImage(modalState().documentUrl!) && !isPdf(modalState().documentUrl!)">
+        <div class="unsupported-content">
+          <div class="file-icon-large">📄</div>
+          <h3>Aperçu non disponible</h3>
+          <p>Ce type de fichier ne peut pas être prévisualisé dans le navigateur.</p>
+          <div class="fallback-actions">
+            <button
+              (click)="getCurrentDocument() && openInNewTab(getCurrentDocument()!)">
+              Ouvrir dans un onglet
+            </button>
+            <button
+              (click)="getCurrentDocument() && downloadDocument(getCurrentDocument()!)">
+              Télécharger
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="modal-footer">
+      <div class="modal-actions">
+        <button
+          [disabled]="!getCurrentDocument()"
+          (click)="getCurrentDocument() && openInNewTab(getCurrentDocument()!)">
+          Ouvrir dans un nouvel onglet
+        </button>
+        <a
+          [href]="modalState().documentUrl"
+          target="_blank"
+          download
+          class="download-link"
+          *ngIf="modalState().documentUrl">
+          <span class="download-icon">⬇️</span>
+          Télécharger le document
+        </a>
+      </div>
+    </footer>
   </div>
 </div>

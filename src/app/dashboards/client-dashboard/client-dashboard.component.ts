@@ -3,13 +3,15 @@ import {InscriptionService} from '../../features/inscription/inscription-service
 import {CommonModule, DatePipe} from '@angular/common';
 import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
 import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
+import {DocumentMeComponent} from '../../features/document/pages/document-me/document-me.component';
 
 @Component({
   selector: 'app-client-dashboard',
   imports: [
     DatePipe,
     CommonModule,
-    InscriptionStatutPipe
+    InscriptionStatutPipe,
+    DocumentMeComponent
   ],
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.scss'

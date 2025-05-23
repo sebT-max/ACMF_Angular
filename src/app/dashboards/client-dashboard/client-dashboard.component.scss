@@ -2,11 +2,17 @@
   margin: 0 auto;
   padding: 2% 10%;
   font-family: Poppins-SemiBold, serif;
-  background-image: url(/pic20.jpg);
+  background-image: url(/pic19.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: auto;
+  h1 {
+    color: white !important;
+    text-align: center;
+    font-size: 35px;
+    margin-bottom: 3%;
+  }
 
   @media (max-width: 430px) {
     font-size: 12px;
@@ -15,7 +21,7 @@
     padding: 2% 0%;
 
     h1 {
-      color: white;
+      color: white !important;
       text-align: center;
       font-size: 35px;
     }

@@ -1,18 +1,132 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import jsPDF from 'jspdf';
+import {RouterLink} from '@angular/router';
+import {JsonPipe, NgForOf} from '@angular/common';
+import {TokenModel} from '../../../auth/models/token.model';
+import {ToastrService} from 'ngx-toastr';
+import {InscriptionService} from '../../../inscription/inscription-services';
+import {DocumentService} from '../../../document/pages/services/document.services';
+import {async} from 'rxjs';
+import {InscriptionFormModel} from '../../../inscription/models/inscription-form.model';
+import {DocumentDTO} from '../../../inscription/models/DocumentDTO';
+import {FileRemoveEvent, FileUpload} from 'primeng/fileupload';
+import {ConvocationDTO} from '../../models/ConvocationDTO';
+import {ConvocationFormDTO} from '../models/ConvocationFormDTO';
+import {ConvocationService} from '../../Services/convocation.service';
 
 @Component({
   selector: 'app-convocation-create',
   standalone: true,
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink,
+    NgForOf,
+    FileUpload,
+    JsonPipe
   ],
   templateUrl: './convocation-create.component.html',
   styleUrls: ['./convocation-create.component.scss']
 })
 export class ConvocationCreateComponent implements OnInit {
+  private readonly _fb = inject(FormBuilder);
+  private readonly documentService = inject(DocumentService);
+
+  constructor(private toastr: ToastrService) {}
+
+  convocationSendingForm!: FormGroup;
+  currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
+
+  uploadedFiles: { [key: string]: File[] } = {
+    Convocation: []
+  };
+  fontsLoaded = false;
+
+  ngOnInit(): void {
+    this.loadScript('assets/fonts/Poppins-Regular-normal.js')
+      .then(() => this.fontsLoaded = true)
+      .catch(error => console.error('Erreur chargement police', error));
+
+    const localStorageUser = localStorage.getItem('currentUser');
+    if (localStorageUser) {
+      try {
+        this.currentUser.set(JSON.parse(localStorageUser));
+      } catch (error) {
+        console.error("Erreur lors du parsing du token :", error);
+        localStorage.removeItem('currentUser');
+      }
+    }
+
+    this.convocationSendingForm = this._fb.group({
+      userId: [this.currentUser()?.id ?? null, Validators.required],
+      documentType: ['CONVOCATION', Validators.required], // fixé
+      destinataireEmail: ['', [Validators.required, Validators.email]],
+    });
+  }
+  onFilesChange(event: any): void {
+    const files: File[] = event.files || [];
+
+    for (let file of files) {
+      if (!this.isValidFileType(file)) {
+        this.toastr.warning(`Fichier non autorisé : ${file.name}`);
+        continue;
+      }
+      this.uploadedFiles["Convocation"].push(file);
+    }
+  }
+
+  onRemoveFile(event: any): void {
+    const file = event.file;
+    const index = this.uploadedFiles["Convocation"].indexOf(file);
+    if (index !== -1) {
+      this.uploadedFiles["Convocation"].splice(index, 1);
+    }
+  }
+
+  isValidFileType(file: File): boolean {
+    return ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg'].includes(file.type);
+  }
+
+  loadScript(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve();
+      script.onerror = () => reject(`Erreur script : ${src}`);
+      document.body.appendChild(script);
+    });
+  }
+  handleConvocationSending(): void {
+    const formData = new FormData();
+    const email = this.convocationSendingForm.get('destinataireEmail')?.value;
+
+    if (!email) {
+      this.toastr.error('Veuillez remplir l’email du destinataire.');
+      return;
+    }
+
+    formData.append('type', 'CONVOCATION');
+    formData.append('destinataireEmail', email);
+
+    const files = this.uploadedFiles["Convocation"];
+    if (!files || files.length === 0) {
+      this.toastr.error('Veuillez charger au moins un fichier.');
+      return;
+    }
+
+    formData.append('file', files[0]);
+
+    this.documentService.sendDocumentFromAdminToParticular(formData).subscribe({
+      next: () => this.toastr.success('Document envoyé avec succès'),
+      error: err => {
+        console.error('Erreur d’envoi :', err);
+        this.toastr.error('Erreur lors de l’envoi du document');
+      }
+    });
+  }
+
+
   entreprise = {
     nom: 'ACF Actions Conduite France',
     adresse: '17 Chemin de Kerohan, 29460 Hanvec',
@@ -20,8 +134,7 @@ export class ConvocationCreateComponent implements OnInit {
     telephone: '06 99 74 52 20',
     logo: '/logo_facture.png' // Chemin relatif vers le logo
   };
-
-  facture = {
+  convocation = {
     nom: '',
     adresse: '',
     permis: '',
@@ -29,32 +142,6 @@ export class ConvocationCreateComponent implements OnInit {
     horaires: '',
     lieu: ''
   };
-
-  fontData: { [key: string]: string } = {}; // Pour stocker les polices en base64
-  fontsLoaded: boolean = false;
-
-  constructor() {}
-
-  async loadScript(src: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.onload = () => resolve();
-      script.onerror = () => reject(`Erreur de chargement du script ${src}`);
-      document.body.appendChild(script);
-    });
-  }
-
-  async ngOnInit(): Promise<void> {
-    try {
-      // Charger la police Poppins
-      await this.loadScript('assets/fonts/Poppins-Regular-normal.js');
-      this.fontsLoaded = true;
-      console.log('Police Poppins chargée avec succès');
-    } catch (error) {
-      console.error('Font loading error:', error);
-    }
-  }
 
   async generatePDF() {
     if (!this.fontsLoaded) {
@@ -134,14 +221,14 @@ export class ConvocationCreateComponent implements OnInit {
     doc.setFontSize(14);
     doc.text('Stage de récupération de points (cas n°1)', margin, y); y += 10;
     doc.setFontSize(12);
-    doc.text(`Nom du stagiaire: ${this.facture.nom}`, margin, y); y += 8;
-    doc.text(`Adresse du stagiaire: ${this.facture.adresse}`, margin, y); y += 8;
-    doc.text(`Numéro de permis : ${this.facture.permis}`, margin, y); y += 12;
+    doc.text(`Nom du stagiaire: ${this.convocation.nom}`, margin, y); y += 8;
+    doc.text(`Adresse du stagiaire: ${this.convocation.adresse}`, margin, y); y += 8;
+    doc.text(`Numéro de permis : ${this.convocation.permis}`, margin, y); y += 12;
 
     doc.text('Votre rendez-vous :', margin, y); y += 8;
-    doc.text(this.facture.lieu, margin, y); y += 8;
-    doc.text(this.facture.dateStage, margin, y); y += 8;
-    doc.text(this.facture.horaires, margin, y); y += 8;
+    doc.text(this.convocation.lieu, margin, y); y += 8;
+    doc.text(this.convocation.dateStage, margin, y); y += 8;
+    doc.text(this.convocation.horaires, margin, y); y += 8;
     // On garde la même police Poppins, pas besoin de la redéfinir
     doc.text('(Il est recommandé de se présenter 1/4 h avant l\heure du Rdv)', margin, y);
 
@@ -180,6 +267,6 @@ export class ConvocationCreateComponent implements OnInit {
       { align: 'center' }
     );
 
-    doc.save('convocation-stage.pdf');
+    doc.save(`${this.convocation.nom} + convocation-stage.pdf`);
   }
 }

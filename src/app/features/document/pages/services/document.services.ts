@@ -37,6 +37,10 @@ export class DocumentService {
     return this._httpClient.post(`${API_URL}documents/update`, formData);
   }
 
+  sendDocumentFromAdminToParticular(formData: FormData): Observable<any> {
+    return this._httpClient.post(`${API_URL}documents/admin-upload`, formData);
+  }
+
   getDocumentsForUser(userId: number) {
     return this._httpClient.get<any[]>(`${API_URL}documents/user/${userId}`);
   }

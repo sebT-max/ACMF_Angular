@@ -2,34 +2,62 @@
   <div id="form_convocation">
     <div>
       <label>Nom du stagiaire:</label>
-      <input type="text" name="nom" placeholder="Nom complet" [(ngModel)]="facture.nom" required>
+      <input type="text" name="nom" placeholder="Nom complet" [(ngModel)]="convocation.nom" required>
     </div>
 
     <div>
       <label>Adresse :</label>
-      <input type="text" name="adresse" placeholder="Adresse postale" [(ngModel)]="facture.adresse" required>
+      <input type="text" name="adresse" placeholder="Adresse postale" [(ngModel)]="convocation.adresse" required>
     </div>
 
     <div>
       <label>Numéro de permis :</label>
-      <input type="text" name="permis" placeholder="Ex: 061195100070" [(ngModel)]="facture.permis" required>
+      <input type="text" name="permis" placeholder="Ex: 061195100070" [(ngModel)]="convocation.permis" required>
     </div>
 
     <div>
       <label>Date du stage :</label>
-      <input type="text" name="dateStage" placeholder="Ex: Vendredi 07 Février 2025" [(ngModel)]="facture.dateStage" required>
+      <input type="text" name="dateStage" placeholder="Ex: Vendredi 07 Février 2025" [(ngModel)]="convocation.dateStage" required>
     </div>
 
     <div>
       <label>Horaires :</label>
-      <input type="text" name="horaires" placeholder="Ex: 08h30 à 12h30 et 13h30 à 16h30" [(ngModel)]="facture.horaires" required>
+      <input type="text" name="horaires" placeholder="Ex: 08h30 à 12h30 et 13h30 à 16h30" [(ngModel)]="convocation.horaires" required>
     </div>
 
     <div>
       <label>Lieu du stage :</label>
-      <input type="text" name="lieu" placeholder="Adresse du lieu" [(ngModel)]="facture.lieu" required>
+      <input type="text" name="lieu" placeholder="Adresse du lieu" [(ngModel)]="convocation.lieu" required>
     </div>
   </div>
   <button type="button" (click)="generatePDF()">📄 Générer convocation PDF</button>
-
 </form>
+
+<div class="form_convocation_sending">
+  <h2>Envoyer le document à l'utilisateur</h2>
+
+  <form [formGroup]="convocationSendingForm" (ngSubmit)="handleConvocationSending()" enctype="multipart/form-data">
+    <p-fileUpload
+      name="Convocation"
+      [customUpload]="true"
+      (onSelect)="onFilesChange($event)"
+      (onRemove)="onRemoveFile($event)"
+      [multiple]="true"
+      [showUploadButton]="false"
+      [showCancelButton]="false"
+      accept=".pdf,image/*"
+      chooseLabel="Charger la convocation"
+      mode="advanced"
+      [maxFileSize]="5000000"
+      id="Convocation"
+    ></p-fileUpload>
+<br>
+    <label for="destinataireEmail">Email du destinataire :</label>
+    <input type="email" formControlName="destinataireEmail" placeholder="Écrire email" required />
+
+    <button type="submit" [disabled]="convocationSendingForm.invalid">Envoyer</button>
+  </form>
+</div>
+
+
+

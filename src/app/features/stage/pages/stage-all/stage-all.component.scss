@@ -224,7 +224,7 @@ h1{
 
 .pagination-button {
   padding: 8px 16px;
-  background-color: #1976d2;
+  background-color: #041a3a;
   color: white;
   border: none;
   border-radius: 4px;
@@ -232,7 +232,8 @@ h1{
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #1565c0;
+    background-color: #041a3a;
+    opacity: 0.9;
   }
 
   &:disabled {
@@ -244,6 +245,7 @@ h1{
 .pagination-info {
   font-size: 16px;
   font-weight: 500;
+  color:black;
 }
 
 /* Ajustement pour le message "pas de résultat" */
@@ -264,11 +266,11 @@ h1{
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
+
   @media (max-width: 430px) {
     width:100%;
   }
- 
+
 
   div{
     @media(min-width: 768px) {

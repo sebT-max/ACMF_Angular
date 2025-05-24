@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {InscriptionService} from '../../features/inscription/inscription-services';
 import {CommonModule, DatePipe} from '@angular/common';
-import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
+import {InscriptionStatutPipe} from '../../shared/pipes/inscription-statut/inscription-statut.pipe';
 import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
 import {DocumentMeComponent} from '../../features/document/pages/document-me/document-me.component';
 

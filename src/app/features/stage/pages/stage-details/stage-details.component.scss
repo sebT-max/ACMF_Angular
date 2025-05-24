@@ -76,13 +76,16 @@
       color:black;
     }
   }
-  /*@media (min-width: 431px) and (max-width: 767px) {
-    width: 50%;
-    font-size: 12px;
-    border-radius: 0;
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 20px;
+    background: white;
+    color: #292c32;
+    line-height: 36px;
     height: 302px;
-    padding-top: 76px;
-    text-align: left;
+    width: 30%;
+    font-family: "Poppins-Regular", serif;
+    border-radius: 0 0 0 15px;
+    font-size: 12px;
 
     h2{
       display: none;
@@ -90,7 +93,7 @@
     hr{
       display: none;
     }
-  }*/
+  }
 }
 #infos-stage-details{
   background-color: #041a3a;

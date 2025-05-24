@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DatePicker } from 'primeng/datepicker';
 import { PrimeNG } from 'primeng/config';
+import {DateRangePipe} from '../../../../shared/pipes/date-range/date-range.pipe';
 
 @Component({
   selector: 'app-stage-all',
@@ -29,7 +30,8 @@ import { PrimeNG } from 'primeng/config';
     NgOptimizedImage,
     CalendarModule,
     DatePicker,
-    NgForOf
+    NgForOf,
+    DateRangePipe
   ]
 })
 export class StageAllComponent implements OnInit {

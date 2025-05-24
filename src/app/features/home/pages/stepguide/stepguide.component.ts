@@ -16,7 +16,7 @@ export class StepGuideComponent implements OnInit {
   steps = [
     { title: 'Étape 1', content: 'Cliquez sur "Nos stages" dans la barre de navigation et faites votre choix !' },
     { title: 'Étape 2', content: 'Remplissez le formulaire d\inscription et téléversez vos fichiers !' },
-    { title: 'Étape 3', content: 'Allez dans "Espace client" dans la barre de navigation' }
+    { title: 'Étape 3', content: 'Allez dans "Mon espace" dans la barre de navigation' }
   ];
 
   ngOnInit() {

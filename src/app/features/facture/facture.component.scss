@@ -95,10 +95,11 @@ button {
   cursor: pointer;
   font-family: inherit;
   margin-right: 10px;
+  margin-top:20px;
 }
 
 button:hover {
-  background-color: #45a049;
+  opacity:  0.9;
 }
 
 .generate-btn {

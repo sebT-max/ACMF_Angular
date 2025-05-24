@@ -1,13 +1,13 @@
 <div class="stage-details">
   <div class="stage_details_container1">
-    <h2>Stage {{ stage!.city }}</h2>
+    <h2>{{ stage!.city }}</h2>
     <hr>
 <!--
     <p>📆 Le {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</p>
 -->
     <p>{{ stage!.organisation }}</p>
     <p>{{ stage!.street }}</p>
-    <p>{{ stage!.number }} n° stage</p>
+    <p>n° stage: {{ stage!.number }}</p>
 <!--
     <p><strong>Prix: {{ stage!.price }}€</strong></p>
 -->

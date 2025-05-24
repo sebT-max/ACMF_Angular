@@ -3,7 +3,7 @@ import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {
   DocumentUtilisateurComponent
 } from '../../../document/pages/document-utilisateur/document-utilisateur.component';
-import {InscriptionStatutPipe} from '../../../../pipes/inscription-statut.pipe';
+import {InscriptionStatutPipe} from '../../../../shared/pipes/inscription-statut/inscription-statut.pipe';
 import {InscriptionService} from '../../inscription-services';
 import {InscriptionListResponse} from '../../models/InscriptionListResponse';
 import {StageDetailsModel} from '../../../stage/models/stage-details-model';

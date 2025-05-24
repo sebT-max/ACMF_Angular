@@ -5,7 +5,7 @@ import {StageDetailsModel} from '../../features/stage/models/stage-details-model
 import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {DemandeDevisComponent} from '../../features/devis/pages/demande-devis/pages/demande-devis-create/demande-devis.component';
 import {Router} from '@angular/router';
-import {InscriptionStatutPipe} from '../../pipes/inscription-statut.pipe';
+import {InscriptionStatutPipe} from '../../shared/pipes/inscription-statut/inscription-statut.pipe';
 import {PrivateLinkService} from '../../features/private-link/services/private-link.services';
 import {PrivateLinkModel} from '../../features/private-link/Model/PrivateLinkModel';
 import {

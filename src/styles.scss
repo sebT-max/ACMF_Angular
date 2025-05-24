@@ -499,7 +499,7 @@ app-document-utilisateur {
     padding: 6px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 100px;
+    width: 90px;
     font-size: 11px;
     padding: 6px;
     border-radius: 10px;
@@ -527,7 +527,7 @@ app-document-utilisateur {
     padding: 6px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 100px;
+    width: 90px;
     font-size: 11px;
     padding: 6px;
     border-radius: 10px;
@@ -575,7 +575,6 @@ h1{
 .card_stages_date{
   height: 70px;
   border: 1px solid #ccc;
-  align-items: baseline;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -592,12 +591,15 @@ h1{
     text-align: center;
     background: #041a3a;
     color:white;
-    border:1 px solid #041a3a;
+    border:1px solid #041a3a;
   }
   @media (min-width: 768px) and (max-width: 1023px){
-    width: 30%;
+    width: 240px;
     font-size: 12px;
     text-align: center;
+  }
+  @media(min-width:1024px){
+    width: 240px;
   }
 }
 
@@ -621,7 +623,7 @@ h1{
   }
   @media (min-width: 768px) and (max-width: 1023px){
     padding: 0 7px;
-    width: 80%;
+    width: 55%;
     font-size: 9px;
     gap: 10px;
     color: #696969;
@@ -648,7 +650,7 @@ h1{
     width: 100%;
     padding: 10px 0;
     font-family: Poppins-Medium, serif;
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 #stage_price{
@@ -887,7 +889,7 @@ form #stage_update{
 
   .pagination-button {
     padding: 8px 15px;
-    background-color: #007bff !important;
+    background-color: #041a3a !important;
     color: white;
     border: none;
     border-radius: 4px;

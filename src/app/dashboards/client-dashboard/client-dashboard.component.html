@@ -1,5 +1,5 @@
 <div class="dashboard_client">
-  <h1>Bienvenue sur votre espace client</h1>
+  <h1>Mon espace</h1>
 
   <div class="tabs">
     <button
@@ -33,8 +33,8 @@
           <td>
             <div id="agencement_details" *ngIf="inscription.id; else loading">
               <div style="margin-right:40px;">
-               <p style="font-weight: 900;font-family: Poppins-Bold,sans-serif;">Stage à {{ inscription.stageCity }}</p>
-                <p>Rue : {{ inscription.stageStreet }}</p>
+               <p id="stageCity">Stage à {{ inscription.stageCity }}</p>
+                <p>{{ inscription.stageStreet }}</p>
                 <p>Numéro de stage : {{ inscription.stageNumber }}</p>
               </div>
 
@@ -49,8 +49,42 @@
               <span>Chargement...</span>
             </ng-template>
           </td>
-          <td>{{ inscription.stageType }}</td>
-          <td>{{ inscription.inscriptionStatut | inscriptionStatut}}</td>
+          <td>
+            <div *ngIf="inscription.stageType === 'TRIBUNAL'; else checkProbatoire">
+              Stage imposé par le tribunal
+            </div>
+
+            <ng-template #checkProbatoire>
+              <div *ngIf="inscription.stageType === 'PROBATOIRE'; else volontaire">
+                Stage probatoire
+              </div>
+            </ng-template>
+
+            <ng-template #volontaire>
+              <div>
+                Stage volontaire
+              </div>
+            </ng-template>
+
+
+          </td>
+          <td>
+            <div *ngIf="inscription.inscriptionStatut === 'EN_ATTENTE'; else checkConfirme">
+              En attente de confirmation
+            </div>
+
+            <ng-template #checkConfirme>
+              <div *ngIf="inscription.inscriptionStatut === 'CONFIRME'; else checkAnnule">
+                Inscription validée
+              </div>
+            </ng-template>
+
+            <ng-template #checkAnnule>
+              <div>
+                Votre inscription a été annulée. Veuillez nous contacter pour un report.
+              </div>
+            </ng-template>
+
           <!--<td>
             <button
               (click)="onDeleteInscription(inscription.id)"

@@ -4,6 +4,7 @@ import {PrivateLinkService} from '../../services/private-link.services';
 import {PrivateLinkModel} from '../../Model/PrivateLinkModel';
 import {ToastrService} from 'ngx-toastr';
 import {WEBSITE_URL} from '../../../../../core/constant';
+import {InscriptionListResponse} from '../../../inscription/models/InscriptionListResponse';
 
 @Component({
   selector: 'app-private-link-list',
@@ -18,6 +19,9 @@ import {WEBSITE_URL} from '../../../../../core/constant';
 export class PrivateLinkListComponent implements OnInit {
   privateLinks: PrivateLinkModel[] = [];
   privateLink: PrivateLinkModel | null = null;
+  pageSize = 3;
+  currentPage = 1;
+  paginatedPrivateLinks: PrivateLinkModel[] = [];
 
 
   constructor(private privateLinkService: PrivateLinkService,
@@ -29,9 +33,10 @@ export class PrivateLinkListComponent implements OnInit {
 
   loadPrivateLinks(): void {
     this.privateLinkService.getPrivateLinks().subscribe({
-      next: (data:PrivateLinkModel[]) => {
+      next: (data: PrivateLinkModel[]) => {
         console.log(data);
         this.privateLinks = data;
+        this.paginate(); // Ajout nécessaire
       },
       error: (err) => {
         console.error('Erreur lors du chargement des liens privés', err);
@@ -78,6 +83,29 @@ export class PrivateLinkListComponent implements OnInit {
         this.toastr.error('Échec de la réactivation du lien', 'Erreur');
       }
     });
+  }
+  paginate(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedPrivateLinks = this.privateLinks.slice(start, end);
+  }
+
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.paginate();
+  }
+
+  canGoNext(): boolean {
+    return this.currentPage < this.totalPages();
+  }
+
+  canGoPrev(): boolean {
+    return this.currentPage > 1;
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.paginatedPrivateLinks.length / this.pageSize);
   }
 
   protected readonly WEBSITE_URL = WEBSITE_URL;

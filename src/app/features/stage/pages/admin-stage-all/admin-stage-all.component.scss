@@ -309,6 +309,8 @@ inscriptions_stages_datas_th{
 .stages-container {
   padding: 20px;
   margin:0 auto;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 5px;
   @media(max-width: 767px){
     padding:2%;
   }

@@ -38,7 +38,7 @@ import {CreationDevisComponent} from '../../features/devis/pages/creation-devis/
 export class AdminDashboardComponent {
   private readonly _stageService = inject(StageService);
   faEdit = faEdit;
-  activeTab: 'inscriptions' | 'stages' | 'codePromo' |'demandeDevisAll'|'creationDevis'| 'Factures' | 'privateLinks' | 'convocations' = 'inscriptions';
+  activeTab: 'inscriptions' | 'stages' | 'codePromo' |'demandeDevis'| 'Factures' | 'privateLinks' | 'convocations' = 'inscriptions';
   stages: StageDetailsModel[] = [];
   stagesDetails: { [key: number]: StageDetailsModel } = {};
   stageCapacity: number = 0;

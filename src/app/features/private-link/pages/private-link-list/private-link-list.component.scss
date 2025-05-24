@@ -1,7 +1,8 @@
 .private_link_container {
   height: auto;
-  width: 50%;
+  width: 80%;
   margin:0 auto;
+
   .table {
     margin-top: 20px;
 
@@ -27,14 +28,16 @@
     font-size: 16px;
   }
 }
-@media(max-width:900px){
+
+@media(max-width: 1023px){
   tbody, tr, td {
     display: block;
-    width: 100vh;
+    width: 100%;
   }
-  th{
+  thead{
     display:none;
   }
 }
+
 
 

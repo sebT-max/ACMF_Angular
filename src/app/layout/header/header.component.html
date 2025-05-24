@@ -34,7 +34,7 @@
     </ng-container>
 
     <ng-container *ngIf="userConnected() || companyConnected()">
-      <button *ngIf="userConnected()?.role?.name === 'ADMIN'" routerLink="dashboard-admin" (click)="toggleMobileMenu()">Mon</button>
+      <button *ngIf="userConnected()?.role?.name === 'ADMIN'" routerLink="dashboard-admin" (click)="toggleMobileMenu()">Mon espace</button>
       <button *ngIf="userConnected()?.role?.name === 'ENTREPRISE' || companyConnected()" routerLink="dashboard-company" (click)="toggleMobileMenu()">Mon espace</button>
       <button *ngIf="userConnected()?.role?.name === 'PARTICULIER'" routerLink="dashboard-client" (click)="toggleMobileMenu()">Mon espace</button>
       <button (click)="logout()">Déconnexion</button>

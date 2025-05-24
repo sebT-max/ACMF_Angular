@@ -22,16 +22,10 @@
       Code Promo
     </button>
     <button
-      (click)="activeTab = 'demandeDevisAll'"
-      [class.active]="activeTab === 'demandeDevisAll'"
+      (click)="activeTab = 'demandeDevis'"
+      [class.active]="activeTab === 'demandeDevis'"
     >
-      Demandes de Devis
-    </button>
-    <button
-      (click)="activeTab = 'creationDevis'"
-      [class.active]="activeTab === 'creationDevis'"
-    >
-      Créer un devis
+      Devis
     </button>
 
     <button
@@ -69,14 +63,13 @@
     <app-code-promo-create></app-code-promo-create>
   </div>
 
-  <div *ngIf="activeTab === 'demandeDevisAll'" class="tab-content">
+  <div *ngIf="activeTab === 'demandeDevis'" class="tab-content">
     <h2>Demandes de devis</h2>
     <app-demande-devis-all></app-demande-devis-all>
-  </div>
-  <div *ngIf="activeTab === 'creationDevis'" class="tab-content">
     <h2>Créer un devis</h2>
     <app-creation-devis></app-creation-devis>
   </div>
+
   <div *ngIf="activeTab === 'Factures'" class="tab-content">
     <h2>Factures</h2>
     <app-facture></app-facture>

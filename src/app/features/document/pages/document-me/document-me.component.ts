@@ -143,26 +143,45 @@ export class DocumentMeComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  /**
-   * Vérifie si un fichier est une image
-   */
-  public isImage(url: string): boolean {
-    return /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(url);
+  isPdf(fileOrName: DocumentDTO | string): boolean {
+    const fileName = typeof fileOrName === 'string' ? fileOrName : fileOrName.fileName;
+    return fileName.toLowerCase().endsWith('.pdf');
   }
 
-  /**
-   * Vérifie si un fichier est un PDF
-   */
-  public isPdf(url: string): boolean {
-    return /\.pdf$/i.test(url);
+
+  isImage(fileName: string): boolean {
+    return /\.(jpg|jpeg|png|gif)$/i.test(fileName);
   }
+
+  isFactureOrConvocation(file: DocumentDTO): boolean {
+    return file.type === 'FACTURE' || file.type === 'CONVOCATION';
+  }
+
+  canPreview(file: DocumentDTO): boolean {
+    // On passe bien file.fileName à isImage (qui attend un string)
+    return !this.isPdf(file) && (this.isImage(file.fileName) || this.isFactureOrConvocation(file));
+  }
+
+  canDownload(file: DocumentDTO): boolean {
+    // On peut télécharger les PDF ou les documents de type facture / convocation
+    return this.isPdf(file) || this.isFactureOrConvocation(file);
+  }
+  getViewablePdfUrl(url: string): string {
+    const uploadSegment = '/upload/';
+    if (!url.includes(uploadSegment)) return url;
+
+    // Si 'fl_inline' est déjà dans l'URL, on ne touche pas
+    if (url.includes('/fl_inline/')) return url;
+
+    // Insérer 'fl_inline/' juste après '/upload/'
+    return url.replace(uploadSegment, uploadSegment + 'fl_inline/');
+  }
+
 
   /**
    * Vérifie si un fichier peut être prévisualisé dans le navigateur
    */
-  public canPreview(url: string): boolean {
-    return this.isImage(url) || this.isPdf(url);
-  }
+
 
   /**
    * Génère l'URL de prévisualisation pour les PDFs

@@ -21,14 +21,22 @@ export class StepGuideComponent implements OnInit {
 
   ngOnInit() {
     const savedStep = localStorage.getItem('currentStep');
-    if (savedStep) {
-      this.currentStep = parseInt(savedStep, 10);
+    const parsedStep = savedStep ? parseInt(savedStep, 10) : 0;
+
+    // Vérifie que c'est un nombre et qu'il est dans les bornes
+    if (!isNaN(parsedStep) && parsedStep >= 0 && parsedStep < this.steps.length) {
+      this.currentStep = parsedStep;
+    } else {
+      this.currentStep = 0; // Valeur par défaut
+      localStorage.removeItem('currentStep');
     }
   }
 
   goToStep(index: number) {
-    this.currentStep = index;
-    localStorage.setItem('currentStep', index.toString());
+    if (index >= 0 && index < this.steps.length) {
+      this.currentStep = index;
+      localStorage.setItem('currentStep', index.toString());
+    }
   }
 
   isCompleted(index: number): boolean {

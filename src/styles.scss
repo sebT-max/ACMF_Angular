@@ -912,3 +912,39 @@ form #stage_update{
   }
 }
 
+.blur{
+  padding: 5% 10%;
+  background: linear-gradient(150deg, #041a3a 48%, rgba(0, 0, 0, 0.03) 100%);
+  width: 100%;
+  height: auto;
+  opacity: 0.9;
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+    padding: 0;
+    height: auto;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    font-size: 12px;
+    padding: 0;
+    height: auto;
+  }
+
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    font-size: 12px;
+    padding: 5%;
+    height: auto;
+  }
+  #hr_1{
+    margin:0 auto;
+    height: 3px;
+    width: 50%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    float:left;
+    @media (max-width: 767px) {
+      margin: 15px auto 40px;
+      width:50%;
+    }
+  }
+}
+

@@ -18,11 +18,9 @@
       </div>
     </div>
   </div>
-  <div class="step-content animate">
+  <div class="step-content animate" *ngIf="steps[currentStep]">
     <h2>{{ steps[currentStep].title }}</h2>
-
     <hr>
-
     <p>{{ steps[currentStep].content }}</p><br/>
 
     <div style="display:flex">
@@ -30,8 +28,8 @@
         {{ currentStep === steps.length - 1 ? 'Recommencer' : 'Valider cette étape' }}
       </button>
     </div>
-
-  </div>s
+  </div>
 </div>
+
 
 

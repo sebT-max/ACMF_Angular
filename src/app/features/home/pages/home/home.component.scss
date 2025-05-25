@@ -34,119 +34,119 @@
   }
 
 
-p{
-  font-family: Poppins-Thin,serif;
-  font-size:80px;
-  color:#ffffff;
--webkit-backdrop-filter: blur(2px) brightness(0.95);
-  @media(max-width:1024px){
-    font-family: 'CormorantGaramond-Light', serif;
-    background:transparent;
+  p{
+    font-family: Poppins-Thin,serif;
+    font-size:80px;
+    color:#ffffff;
+    -webkit-backdrop-filter: blur(2px) brightness(0.95);
+    @media(max-width:1024px){
+      font-family: 'CormorantGaramond-Light', serif;
+      background:transparent;
 
+    }
   }
-}
-button{
-  margin-top: 15%;
-  border: 1px solid white;
-  border-radius: 10px;
-  background: transparent;
-  padding: 7px 60px;
-  backdrop-filter: blur(20px);
-}
-button a{
-  color:white;
-  font-family: Poppins-ExtraLight, sans-serif;
-}
+  button{
+    margin-top: 15%;
+    border: 1px solid white;
+    border-radius: 10px;
+    background: transparent;
+    padding: 7px 60px;
+    backdrop-filter: blur(20px);
+  }
+  button a{
+    color:white;
+    font-family: Poppins-ExtraLight, sans-serif;
+  }
 
-ul,li{
-  padding: 10px 0px;
-  font-size: 24px;
-  line-height: 66px;
-  text-align:center;
-  margin:40px;
-  color:white;
+  ul,li{
+    padding: 10px 0px;
+    font-size: 24px;
+    line-height: 66px;
+    text-align:center;
+    margin:40px;
+    color:white;
   }
-h1{
-  text-align: center;
-  height: auto;
-  padding: 20px 15px;
-  font-size: 48px;
-}
-h2,h3,h4{
-font-size:24px;
-background: rgba(0, 0, 0, 0.16);
-text-align: center;
-height: auto;
-padding: 10px 0px;
-}
-h4{
-margin:40px;
-background: rgba(0, 0, 0, 0);
-font-size:30px;
-}
+  h1{
+    text-align: center;
+    height: auto;
+    padding: 20px 15px;
+    font-size: 48px;
+  }
+  h2,h3,h4{
+    font-size:24px;
+    background: rgba(0, 0, 0, 0.16);
+    text-align: center;
+    height: auto;
+    padding: 10px 0px;
+  }
+  h4{
+    margin:40px;
+    background: rgba(0, 0, 0, 0);
+    font-size:30px;
+  }
 }
 
 .first_home_container_division{
-color: white;
-padding:2%;
-line-height:60px;
-background:transparent;
-div {
-  display: flex;
-  justify-content: center;
+  color: white;
+  padding:2%;
+  line-height:60px;
+  background:transparent;
+  div {
+    display: flex;
+    justify-content: center;
 
-  span {
-    font-size: 36px;
-    height: 200px;
-    font-style: italic;
-    font-weight: 900;
-    margin: 30px;
+    span {
+      font-size: 36px;
+      height: 200px;
+      font-style: italic;
+      font-weight: 900;
+      margin: 30px;
+    }
   }
-}
-p {
-  font-size: 60px;
-  margin-top: 30px;
-  @media(max-width: 1023px) {
-    font-size: 40px;
-    margin-top: 0;
+  p {
+    font-size: 60px;
+    margin-top: 30px;
+    @media(max-width: 1023px) {
+      font-size: 40px;
+      margin-top: 0;
+    }
+    @media(min-width:1024px) and (max-width:1440px) {
+      font-size: 50px;
+      margin-top: 0;
+    }
   }
-  @media(min-width:1024px) and (max-width:1440px) {
-    font-size: 50px;
-    margin-top: 0;
-  }
-}
 }
 
 .journey_catalogue_button{
-font-size: 16px;
-padding: 10px;
-text-transform: uppercase;
-border: 5px double rgba(0, 0, 0, 0.1);
-width: auto;
-margin: 0 auto;
-margin-bottom: 50px;
-background: white;
-border-radius: 10px;
-&:hover{
-border: 5px double rgba(0, 0, 0, 0.2);
-}
+  font-size: 16px;
+  padding: 10px;
+  text-transform: uppercase;
+  border: 5px double rgba(0, 0, 0, 0.1);
+  width: auto;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  background: white;
+  border-radius: 10px;
+  &:hover{
+    border: 5px double rgba(0, 0, 0, 0.2);
+  }
 }
 
 .call_to_register_home_bottom_container{
-display:flex;
-justify-content: center;
-flex-wrap:wrap;
-color: white;
-font-family: Poppins-Medium, sans-serif;
+  display:flex;
+  justify-content: center;
+  flex-wrap:wrap;
+  color: white;
+  font-family: Poppins-Medium, sans-serif;
 
-@media (max-width: 768px) {
-  background-attachment: scroll;
-   /* ou remove entirely */
+  @media (max-width: 768px) {
+    background-attachment: scroll;
+    /* ou remove entirely */
 
   }
 
   button{
-  color:white;
+    color:white;
   }
 }
 
@@ -168,44 +168,25 @@ font-family: Poppins-Medium, sans-serif;
 }
 .second_home_container_division{
   font-size:24px;
-  background:#041a3a;
+  background-image: url(/pic6.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   @media(max-width:1024px){
-  will-change: transform;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  color:white;
+    background-image: url(/pic14.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    color:white;
 
   }
-  .blur{
-    padding: 20px 12%;
-    background: linear-gradient(135deg, rgba(4, 26, 58, 0.4) 0%, rgba(4, 26, 58, 0.2) 100%);
-    width: 100%;
 
-  @media (max-width: 767px) {
-    font-size: 12px;
-    padding: 0;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    font-size: 12px;
-    padding: 0;
-  }
-
-  @media (min-width: 1024px) and (max-width: 1439px) {
-    font-size: 12px;
-    padding: 5%;
-  }
-  #hr_1{
-    margin:0 auto;
-    height: 3px;
-    width: 50%;
-    background: linear-gradient(67deg, white, #041a3a, #b41c1b);
-    float:left;
-    @media (max-width: 767px) {
-      margin: 15px auto 40px;
-      width:50%;
-    }
-  }
-}
 
   p{
     font-size: 20px;
@@ -260,7 +241,7 @@ font-family: Poppins-Medium, sans-serif;
     color: white;
     padding: 10px;
     font-style: italic;
-    font-family: Poppins-Regular, serif;
+    font-family: 'CormorantGaramond-Light';
     font-weight: 900;
     @media (max-width: 767px) {
       width:100%;
@@ -273,9 +254,9 @@ font-family: Poppins-Medium, sans-serif;
       font-size: 24px;
     }
     @media(min-width:1024px) and (max-width: 1439px) {
-        width:100%;
-        text-align:center;
-        font-size: 30px;
+      width:100%;
+      text-align:center;
+      font-size: 30px;
     }
   }
   @media (max-width: 431px) {
@@ -439,12 +420,11 @@ font-family: Poppins-Medium, sans-serif;
 
 
 .step_guide{
-  background-image: url(/pic19.jpg);
+  background-image: url(/pic4.jpg);
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
   background-position:right;
-  padding: 10% 3% 10% 3%;
   @media(max-width: 1024px) {
     will-change: transform;
     transform: translateZ(0);
@@ -458,8 +438,6 @@ font-family: Poppins-Medium, sans-serif;
   }
   @media (max-width: 767px) {
     width: 100%;
-    background: rgb(4 26 58);
-    padding: 3% 7%;
     .btn-next{
       margin:140px 0;
     }
@@ -484,102 +462,102 @@ font-family: Poppins-Medium, sans-serif;
   border-left: double 5px white;
   width: 90%;
   margin: 20px auto 0;
-  padding: 36px 50px;
-  opacity:0.9;
-  color:white;
+  padding: 5% 50px;
+  opacity: 0.9;
+  color: white;
 
   @media(max-width:767px){
     border:none;
-      /* width: 100%; */
-      /* margin: 20px auto 0; */
-      padding: 26px 0;
+    /* width: 100%; */
+    /* margin: 20px auto 0; */
+    padding: 26px 0;
 
-      h4{
-        text-align:left;
-        padding:5px;
-        font-size:14px;
-      }
-      img{
-        width:20px;
-        padding:1px;
-      }
-      p{
-        padding: 5px;
-        font-size:16px;
-      }
-      ul{
-        margin-top:10px;
-      }
-      li{
-        text-align:left;
-        font-size:14px;
-      }
+    h4{
+      text-align:left;
+      padding:5px;
+      font-size:14px;
+    }
+    img{
+      width:20px;
+      padding:1px;
+    }
+    p{
+      padding: 5px;
+      font-size:16px;
+    }
+    ul{
+      margin-top:10px;
+    }
+    li{
+      text-align:left;
+      font-size:14px;
+    }
   }
   @media(min-width:768px) and (max-width:1023px){
     border:none;
-      /* width: 100%; */
-      /* margin: 20px auto 0; */
-      padding: 26px 0;
+    /* width: 100%; */
+    /* margin: 20px auto 0; */
+    padding: 26px 0;
 
-      h3{
-        text-align:left;
-        padding:5px;
-        font-size:20px;
-      }
+    h3{
+      text-align:left;
+      padding:5px;
+      font-size:20px;
+    }
 
-      h4{
-        text-align:left;
-        padding:5px;
-        font-size:18px;
-      }
-      img{
-        width:20px;
-        padding:1px;
-      }
-      p{
-        padding: 5px;
-        font-size:20px;
-      }
-      ul{
-        margin-top:10px;
-      }
-      li{
-        text-align:left;
-        font-size:18px;
-      }
+    h4{
+      text-align:left;
+      padding:5px;
+      font-size:18px;
+    }
+    img{
+      width:20px;
+      padding:1px;
+    }
+    p{
+      padding: 5px;
+      font-size:20px;
+    }
+    ul{
+      margin-top:10px;
+    }
+    li{
+      text-align:left;
+      font-size:18px;
+    }
   }
 
   @media(min-width:1024px) and (max-width:1440px){
-      width: 90%;
-      margin: 40px auto 0;
-      padding: 20px 5%;
+    width: 90%;
+    margin: 40px auto 0;
+    padding: 20px 5%;
 
-      h3{
-        text-align:left;
-        padding:5px;
-        font-size:24px;
-      }
+    h3{
+      text-align:left;
+      padding:5px;
+      font-size:24px;
+    }
 
-      h4{
-        text-align:left;
-        padding:5px;
-        font-size:22px;
-      }
-      img{
-        width:20px;
-        padding:1px;
-      }
-      p{
-        padding: 5px;
-        font-size:24px;
-      }
-      ul{
-        margin-top:10px;
-      }
-      li{
-        text-align:left;
-        font-size:22px;
-      }
+    h4{
+      text-align:left;
+      padding:5px;
+      font-size:22px;
+    }
+    img{
+      width:20px;
+      padding:1px;
+    }
+    p{
+      padding: 5px;
+      font-size:24px;
+    }
+    ul{
+      margin-top:10px;
+    }
+    li{
+      text-align:left;
+      font-size:22px;
+    }
   }
 
   span{
@@ -612,15 +590,15 @@ p button {
 
 
 #home_account_registration{
-width:100%;
-display:flex;
-flex-direction:column;
-justify-content: center;
-text-align:center;
-font-size:36px;
-background:#b41c1b;
-padding:10% 0 2% 0;
-color:white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 36px;
+  background: linear-gradient(180deg, #0f2b46 10%, #041a3a 100%);
+  padding: 4% 0 2% 0;
+  color: white;
 
 
   @media (min-width: 1025px) and (max-width: 1439px) {

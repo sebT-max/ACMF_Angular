@@ -65,7 +65,9 @@
                 title="Pivoter">
                 🔄
               </button>
+              <!-- Bouton Télécharger dans l'image si téléchargement autorisé -->
               <button
+                *ngIf="canDownload(document)"
                 class="overlay-button download-button"
                 (click)="downloadDocument(document)"
                 aria-label="Télécharger le document"
@@ -85,14 +87,23 @@
         </div>
 
         <div class="card-actions">
+          <!-- Bouton prévisualiser : uniquement si ce n'est PAS un PDF -->
           <button
+            *ngIf="canPreview(document) && !isPdf(document)"
             class="action-button primary"
             (click)="openModal(document.id)"
             [attr.aria-label]="'Prévisualiser ' + document.fileName">
             <span class="button-icon">👁️</span>
             Prévisualiser
           </button>
+
+          <!-- Pour les PDFs, bouton Ouvrir dans un nouvel onglet -->
+
+
+
+          <!-- Bouton télécharger : affiché uniquement si téléchargement autorisé -->
           <button
+            *ngIf="canDownload(document)"
             class="action-button secondary"
             (click)="downloadDocument(document)"
             [attr.aria-label]="'Télécharger ' + document.fileName">
@@ -149,6 +160,15 @@
                     title="Pivoter">
                     🔄
                   </button>
+                  <!-- Bouton télécharger (dans l'image) si téléchargement autorisé -->
+                  <button
+                    *ngIf="canDownload(doc)"
+                    class="overlay-button download-button"
+                    (click)="downloadDocument(doc)"
+                    aria-label="Télécharger le document"
+                    title="Télécharger">
+                    ⬇️
+                  </button>
                 </div>
               </div>
 
@@ -161,14 +181,31 @@
             </div>
 
             <div class="card-actions compact">
+              <!-- Bouton prévisualiser pour les documents groupés (pas pour PDF) -->
               <button
+                *ngIf="canPreview(doc) && !isPdf(doc)"
                 class="action-button secondary small"
                 (click)="openModal(doc.id)"
                 [attr.aria-label]="'Prévisualiser ' + doc.fileName"
                 title="Prévisualiser">
                 👁️
               </button>
+
+              <!-- Pour PDF, lien d'ouverture -->
+              <a
+                *ngIf="isPdf(doc)"
+                class="action-button secondary small"
+                [href]="doc.fileUrl"
+                target="_blank"
+                rel="noopener"
+                [attr.aria-label]="'Ouvrir ' + doc.fileName + ' dans un nouvel onglet'"
+                title="Ouvrir PDF">
+                📄
+              </a>
+
+              <!-- Bouton télécharger pour les documents groupés -->
               <button
+                *ngIf="canDownload(doc)"
                 class="action-button secondary small"
                 (click)="downloadDocument(doc)"
                 [attr.aria-label]="'Télécharger ' + doc.fileName"
@@ -211,7 +248,7 @@
     </header>
 
     <div class="modal-content">
-      <!-- Affichage pour les images -->
+      <!-- Affichage pour les images uniquement -->
       <div class="image-viewer" *ngIf="modalState().documentUrl && isImage(modalState().documentUrl!)">
         <img
           [src]="modalState().documentUrl!"
@@ -219,65 +256,20 @@
           class="modal-image">
       </div>
 
-      <!-- Affichage pour les PDFs -->
-      <div class="pdf-viewer" *ngIf="modalState().documentUrl && isPdf(modalState().documentUrl!)">
-        <iframe
-          [src]="getSafeUrl(getPdfViewerUrl(modalState().documentUrl!))"
-          class="document-frame"
-          title="Prévisualisation PDF"
-          frameborder="0">
-        </iframe>
-
-        <!-- Message si l'iframe ne fonctionne pas -->
-        <div class="pdf-fallback">
-          <p>Impossible d'afficher le PDF dans cette fenêtre ?</p>
-          <button
-            [disabled]="!getCurrentDocument()"
-            (click)="getCurrentDocument() && openInNewTab(getCurrentDocument()!)">
-            Ouvrir dans un nouvel onglet
-          </button>
-        </div>
-      </div>
-
-      <!-- Affichage pour les autres types de fichiers -->
+      <!-- Affichage pour les autres types de fichiers non PDF -->
       <div class="unsupported-viewer"
-           *ngIf="modalState().documentUrl && !isImage(modalState().documentUrl!) && !isPdf(modalState().documentUrl!)">
-        <div class="unsupported-content">
-          <div class="file-icon-large">📄</div>
-          <h3>Aperçu non disponible</h3>
-          <p>Ce type de fichier ne peut pas être prévisualisé dans le navigateur.</p>
-          <div class="fallback-actions">
-            <button
-              (click)="getCurrentDocument() && openInNewTab(getCurrentDocument()!)">
-              Ouvrir dans un onglet
-            </button>
-            <button
-              (click)="getCurrentDocument() && downloadDocument(getCurrentDocument()!)">
-              Télécharger
-            </button>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <footer class="modal-footer">
-      <div class="modal-actions">
-        <button
-          [disabled]="!getCurrentDocument()"
-          (click)="getCurrentDocument() && openInNewTab(getCurrentDocument()!)">
-          Ouvrir dans un nouvel onglet
-        </button>
+           *ngIf="modalState().documentUrl
+                  && !isImage(modalState().documentUrl!)
+                  && !isPdf(modalState().documentName!)">
+        <p>Prévisualisation non disponible pour ce type de fichier.</p>
         <a
-          [href]="modalState().documentUrl"
+          [href]="modalState().documentUrl!"
           target="_blank"
-          download
-          class="download-link"
-          *ngIf="modalState().documentUrl">
-          <span class="download-icon">⬇️</span>
-          Télécharger le document
+          rel="noopener"
+          class="open-new-tab-link">
+          Ouvrir dans un nouvel onglet
         </a>
       </div>
-    </footer>
+    </div>
   </div>
 </div>

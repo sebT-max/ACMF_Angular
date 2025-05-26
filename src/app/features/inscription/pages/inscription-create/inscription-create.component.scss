@@ -27,19 +27,63 @@
   padding: 30px 50px;
   border: 1px solid #ccc;
   margin: 3%;
+  height: 800px;
+  #inscription_stage_price{
+    font-family: Poppins-Bold, serif;
+    font-size:40px;
+    background:#041a3a;;
+    color: white;
+    padding:20px;
+    width:300px;
+    margin: 20% auto 0;
+    border-radius:10px;
+  }
   h1{
     text-align: center;
     margin-bottom:20px;
+    font-family: Poppins-Bold, serif;
   }
-  @media(min-width:768px) and (max-width:1023px) {
-    padding:24px;
-    width:40%;
-    background: rgba(0, 0, 0, 0.6);
-  }
+
   @media(max-width:767px) {
     border-radius: 0;
-    width:100%;
-    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.1);
+    height:auto;
+    line-height:30px;
+    p{
+      padding:5px!important;
+    }
+    #inscription_stage_price{
+      font-family: Poppins-Bold, serif;
+      font-size:24px;
+      background:#041a3a;;
+      color: white;
+      padding:10px;
+      width:150px;
+      margin: 20% auto 0;
+      border-radius:10px;
+    }
+  }
+  @media(min-width:768px) and (max-width:1023px) {
+    padding: 24px;
+    width: 80%;
+    margin: 5% auto 0;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.1);
+    height:auto;
+    #inscription_stage_price{
+      background:#041a3a;;
+      color: white;
+      width: 40%;
+      margin-top:80px;
+      margin-bottom: 40px;
+      border-radius:10px;
+    }
+  }
+  @media(min-width:1024px) and (max-width:1439px) {
+    padding: 24px;
+    width: 60%;
+    margin: 2% auto 0;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.1);
+    height:800px;
   }
 }
 
@@ -47,8 +91,14 @@
   font-family: Poppins-Medium, serif;
   width: 100%;
   display:flex;
-  @media(max-width:767px) {
-    height: auto;
+  @media(max-width:1439px) {
+    font-family: Poppins-Medium, serif;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    margin: 0%;
   }
   p{
     color:black;
@@ -233,7 +283,7 @@ form {
   }
 
   .submit-button:disabled {
-    opacity: 0.6;
+    opacity: 0.9;
     cursor: not-allowed;
   }
 
@@ -259,7 +309,8 @@ form {
   }
 
   .file-upload-section {
-    width: 25%;
+    width: 30%;
+    padding: 1%;
     #driving_license,#carteId,#lettre48n,#court_letter{
       backdrop-filter:blur(10px) !important;
       display:block;
@@ -471,7 +522,7 @@ $transition: all 0.3s ease;
       }
 
       .radio-label {
-        font-size: 0.95rem;
+        font-size: 0.6rem;
       }
     }
   }
@@ -488,11 +539,24 @@ $transition: all 0.3s ease;
 h1{
   text-align: center;
 }
-form label{
-  text-transform: lowercase;
-}
+
 #infos_persos label{
   text-align:left;
   padding:5% 10% 3% 10%;
   font-family: 'Poppins-Bold', serif;
+}
+
+.submit-wrapper{
+
+}
+.checkbox_register {
+#checkbox {
+  width: 15px;
+  border: none;
+  color: white;
+  box-shadow: 0 0 0;
+}
+  p {
+    padding: 5px 0;
+  }
 }

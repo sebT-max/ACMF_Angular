@@ -59,12 +59,10 @@
   <br/>
   <p>* À cocher pendant le processus d'inscription</p>
   <br/>
-  <label>
-    <input type="checkbox" [(ngModel)]="accepted" />
-    J'ai lu et j'accepte les conditions
-  </label>
+
 
   <br />
-  <button [disabled]="!accepted" (click)="goBackFromQueryParams()" class="see_all_button">Retour à l'inscription</button>
+  <button class="see_all_button journey_catalogue_button" (click)="returnWithConsent()">J'accepte</button>
+  <button  class="see_all_button journey_catalogue_button" (click)="returnWithoutConsent()">🚫 Retour sans accord</button>
 </div>
 

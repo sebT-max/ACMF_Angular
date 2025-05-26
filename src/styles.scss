@@ -28,6 +28,22 @@ form{
   color: white;
   background: rgba(0, 0, 0, 0.16);
   border-radius: 10px;
+  #acceptTerms{
+    box-shadow:0px 0px 0px white;
+    width:10px;
+  }
+  .checkbox_register{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    @media(max-width:767px){
+      padding: 2% 10%;
+    }
+    @media(min-width:768px) and (max-width:1439px){
+      padding: 2% 10%;
+    }
+  }
+
 }
 form label{
   text-transform:uppercase;
@@ -679,7 +695,6 @@ p-datepicker .p-inputtext {
 @media (max-width: 480px) {
   .p-datepicker {
     min-width: 90% !important;
-    margin-top:10px !important;
   }
 }
 .p-datepicker-year-view {
@@ -1054,13 +1069,12 @@ form #stage_update{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
     border: 2px dashed #e0e0e0;
     border-radius: 16px;
     background-color: #fafafa;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-height: 120px;
+    min-height: 160px;
 
     &:hover {
       border-color: #d0d0d0;
@@ -1100,6 +1114,7 @@ form #stage_update{
         font-size: 14px;
         color: #666;
         font-weight: 400;
+        height: 40px;
       }
     }
   }

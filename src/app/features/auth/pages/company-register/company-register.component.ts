@@ -42,9 +42,13 @@ export class CompanyRegisterComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required,Validators.minLength(6)]],
       telephone: [null, [Validators.required]],
-      acceptTerms:[null, [Validators.required]],
+      acceptTerms: [this.getAcceptTermsFromLocalStorage(), Validators.requiredTrue],
       roleId: [3, [Validators.required]]
     });
+  }
+  getAcceptTermsFromLocalStorage(): boolean {
+    const value = localStorage.getItem('acceptTerms');
+    return value === 'true';
   }
   ngOnInit() {
     const savedForm = localStorage.getItem('registerForm');
@@ -60,12 +64,12 @@ export class CompanyRegisterComponent implements OnInit {
     });
   }
   goToConditions(event: Event) {
-    event.preventDefault(); // pour éviter la navigation par défaut
+    event.preventDefault();
     localStorage.setItem('registerForm', JSON.stringify(this.companyRegisterForm.value));
 
-    const redirectPath = this.router.url.includes('company') ? 'company/register' : 'particulier/register';
-    this.router.navigate(['/Conditions générales de vente'], {
-      queryParams: { redirect: redirectPath }
+    const currentUrl = this.router.url;
+    this.router.navigate(['/conditions-generales-vente'], {
+      queryParams: { redirect: encodeURIComponent(currentUrl) }
     });
   }
 

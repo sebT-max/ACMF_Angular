@@ -10,14 +10,28 @@ import {DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {FileUpload, FileUploadEvent} from 'primeng/fileupload';
 import {StripeService} from '../../../../services/stripe.service';
 import {ToastrService} from 'ngx-toastr';
-import { FileRemoveEvent } from 'primeng/fileupload';
 import {CodePromoService} from '../../../code-promo/services/code-promo.services';
 import { PrimeNG } from 'primeng/config';
 import {DatePicker} from 'primeng/datepicker';
 import {Toast} from 'primeng/toast';
-import {FileUploadCard} from '../../../../file-upload/models/FileUploadCard';
 import {MessageService} from 'primeng/api';
 import {HttpClient} from '@angular/common/http';
+
+interface FileUploadCard {
+  type: string;
+  title: string;
+  subtitle: string;
+  disabled: boolean;
+  file?: File;
+  status?: string;
+  isUploaded?: boolean;
+  isError?: boolean;
+  isUploading?: boolean;
+}
+interface FileRemoveEvent {
+  file: File;
+  index: number; // Ajout de la propriété index
+}
 
 
 @Component({
@@ -35,6 +49,7 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./inscription-create.component.scss'],
   providers: [MessageService]
 })
+
 export class InscriptionCreateComponent implements OnInit {
 
   @Input() uploadUrl: string = '/api/upload';
@@ -79,6 +94,7 @@ export class InscriptionCreateComponent implements OnInit {
 
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
+
   uploadedFiles: {
     permis: File[];             // max 2
     carteId: File[];            // max 2
@@ -134,7 +150,7 @@ export class InscriptionCreateComponent implements OnInit {
     }
 
     this.inscriptionCreationForm = this._fb.group({
-     /* userId: [this.currentUser()?.id ?? null, Validators.required],*/
+      /* userId: [this.currentUser()?.id ?? null, Validators.required],*/
       user: this._fb.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -380,11 +396,6 @@ export class InscriptionCreateComponent implements OnInit {
     }
   }
 
-
-
-
-
-
   get selectedStageLabel(): string | null {
     const selectedValue = this.inscriptionCreationForm.get('stageType')?.value;
     const selected = this.stageTypes.find(type => type.value === selectedValue);
@@ -571,6 +582,21 @@ export class InscriptionCreateComponent implements OnInit {
     this.stageTypeControl?.setValue(value);
     this.stageTypeControl?.markAsTouched();
   }
+  // Méthode pour déclencher l'input file
+  triggerFileInput(inputId: string) {
+    const inputElement = document.getElementById(inputId) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.click();
+    }
+  }
+
+// Méthode pour récupérer les fichiers sélectionnés (tu dois l'adapter selon ta logique)
+  getSelectedFiles(type: string): File[] {
+    // Retourne les fichiers selon le type (permis, carteId, lettre48n, decisionJustice)
+    // Tu dois adapter cette méthode selon ton système de stockage des fichiers
+    return this.uploadedFiles[type as keyof typeof this.uploadedFiles] || [];
+  }
+
 
   goToConditions(event: Event) {
     event.preventDefault();
@@ -592,4 +618,3 @@ export class InscriptionCreateComponent implements OnInit {
     });
   }
 }
-

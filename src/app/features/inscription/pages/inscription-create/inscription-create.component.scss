@@ -69,7 +69,7 @@
   @media(min-width:768px) and (max-width:1023px) {
     width: 60%;
     padding:20px;
-   color:white;
+    color:white;
   }
 
   p {
@@ -94,7 +94,7 @@
       padding:20px;
     }
     @media(min-width:768px) and (max-width:1023px) {
-     color:white;
+      color:white;
     }
   }
 }
@@ -259,7 +259,7 @@ form {
   }
 
   .file-upload-section {
-    width: 30%;
+    width: 25%;
     #driving_license,#carteId,#lettre48n,#court_letter{
       backdrop-filter:blur(10px) !important;
       display:block;
@@ -286,7 +286,7 @@ form {
   line-height: 30px;
   color:#09192f;
   @media(max-width:1023px) {
-   display:none;
+    display:none;
   }
 
   .format{

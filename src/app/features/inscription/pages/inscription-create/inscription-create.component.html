@@ -117,14 +117,14 @@
         </div>
       </section>
 
-      <div class="cards-container">
+      <!--<div class="cards-container">
         <div
-          *ngFor="let card of cards; let i = index"
-          [class]="getCardClasses(card)"
-          [attr.data-type]="card.type">
+          *ngFor="let FileUploadCard of FileUploadCards; let i = index"
+          [class]="getCardClasses(FileUploadCard)"
+          [attr.data-type]="FileUploadCard.type">
 
-          <!-- Upload PrimeNG caché avec design personnalisé -->
-          <div class="custom-upload-wrapper" *ngIf="!card.disabled">
+          &lt;!&ndash; Upload PrimeNG caché avec design personnalisé &ndash;&gt;
+          <div class="custom-upload-wrapper" *ngIf="!FileUploadCard.disabled">
             <p-fileUpload
               #fileUpload
               [url]="uploadUrl"
@@ -137,12 +137,12 @@
               [showCancelButton]="false"
               [chooseLabel]="''"
               [chooseIcon]="''"
-              (onSelect)="onFileSelected($event, card)"
-              (onRemove)="onFileRemoved($event, card)"
-              (uploadHandler)="uPloadFiles($event,card)"
+              (onSelect)="onFileSelected($event, FileUploadCard)"
+              (onRemove)="onFileRemoved($event, FileUploadCard)"
+              (uploadHandler)="uPloadFiles($event,FileUploadCard)"
               class="custom-file-upload">
 
-              <!-- Template personnalisé pour le contenu -->
+              &lt;!&ndash; Template personnalisé pour le contenu &ndash;&gt;
               <ng-template pTemplate="content">
                 <div class="upload-content" (click)="triggerFileSelect(i)">
                   <div class="card-icon">
@@ -152,22 +152,22 @@
                     </svg>
                   </div>
 
-                  <h3 class="card-title">{{ card.title }}</h3>
-                  <p class="card-subtitle">{{ card.subtitle }}</p>
+                  <h3 class="card-title">{{ FileUploadCard.title }}</h3>
+                  <p class="card-subtitle">{{ FileUploadCard.subtitle }}</p>
 
-                  <div [class]="getStatusClasses(card)" *ngIf="card.status">
-                    {{ card.status }}
+                  <div [class]="getStatusClasses(FileUploadCard)" *ngIf="FileUploadCard.status">
+                    {{ FileUploadCard.status }}
                   </div>
 
-                  <!-- Aperçu du fichier sélectionné -->
-                  <div class="file-preview" *ngIf="card.file && !card.isUploaded">
+                  &lt;!&ndash; Aperçu du fichier sélectionné &ndash;&gt;
+                  <div class="file-preview" *ngIf="FileUploadCard.file && !FileUploadCard.isUploaded">
                     <div class="file-info">
                       <i class="pi pi-file"></i>
-                      <span class="file-name">{{ card.file.name }}</span>
+                      <span class="file-name">{{ FileUploadCard.file.name }}</span>
                       <button
                         type="button"
                         class="remove-file-btn"
-                        (click)="removeFile(card, $event)">
+                        (click)="removeFile(FileUploadCard, $event)">
                         <i class="pi pi-times"></i>
                       </button>
                     </div>
@@ -175,8 +175,8 @@
                     <button
                       type="button"
                       class="upload-btn"
-                      (click)="startUpload(card, $event)"
-                      [disabled]="card.isUploading">
+                      (click)="startUpload(FileUploadCard, $event)"
+                      [disabled]="FileUploadCard.isUploading">
                     <span *ngIf="!card.isUploading">
                       <i class="pi pi-upload"></i> Uploader
                     </span>
@@ -188,14 +188,14 @@
                 </div>
               </ng-template>
 
-              <!-- Template vide pour masquer l'interface par défaut -->
+              &lt;!&ndash; Template vide pour masquer l'interface par défaut &ndash;&gt;
               <ng-template pTemplate="toolbar">
                 <div></div>
               </ng-template>
             </p-fileUpload>
           </div>
 
-          <!-- Carte désactivée -->
+          &lt;!&ndash; Carte désactivée &ndash;&gt;
           <div class="disabled-content" *ngIf="card.disabled">
             <div class="card-icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -214,15 +214,163 @@
         </div>
       </div>
 
-      <p-toast></p-toast>
+      <p-toast></p-toast>-->
 
 
-      <!--
+
             <section id="inscription_form_files" class="form-section">
               <h3>Documents à fournir<br>(<small>Si le permis vous a été retiré, veuillez nous envoyer l'avis de suspension</small>)
               </h3>
+              <!-- HTML Template -->
+              <div class="file-upload-section">
+                <div class="custom-file-upload" (click)="triggerFileInput('driving_license')">
+                  <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M9 19l3 3 3-3M12 22V10"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="upload-text">
+                    <div class="upload-title">Parcourir les fichiers</div>
+                    <div class="upload-label">Permis de conduire</div>
+                  </div>
+                  <input
+                    type="file"
+                    #drivingLicenseInput
+                    id="driving_license"
+                    name="Permis de conduire"
+                    multiple="true"
+                    accept=".pdf,image/*"
+                    (change)="onFilesChange($event, 'permis')"
+                    style="display: none;">
+                </div>
+
+                <!-- Zone d'affichage des fichiers sélectionnés -->
+                <div class="selected-files" *ngIf="getSelectedFiles('permis').length > 0">
+                  <div class="file-item" *ngFor="let file of getSelectedFiles('permis'); let i = index">
+                    <span class="file-name">{{ file.name }}</span>
+                    <button type="button" class="remove-btn" (click)="onRemoveFile({file: file, index: i}, 'permis')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               <div class="file-upload-section">
+                <div class="custom-file-upload" (click)="triggerFileInput('carteId')">
+                  <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M9 19l3 3 3-3M12 22V10"
+                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="upload-text">
+                    <div class="upload-title">Parcourir les fichiers</div>
+                    <div class="upload-label">Carte d'identité</div>
+                  </div>
+                  <input
+                    type="file"
+                    #carteIdInput
+                    id="carteId"
+                    name="Carte d'identité"
+                    multiple="true"
+                    accept=".pdf,image/*"
+                    (change)="onFilesChange($event, 'carteId')"
+                    style="display: none;">
+                </div>
+
+                <!-- Zone d'affichage des fichiers sélectionnés -->
+                <div class="selected-files" *ngIf="getSelectedFiles('carteId').length > 0">
+                  <div class="file-item" *ngFor="let file of getSelectedFiles('carteId'); let i = index">
+                    <span class="file-name">{{ file.name }}</span>
+                    <button type="button" class="remove-btn" (click)="onRemoveFile({file: file, index: i}, 'carteId')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="selectedStageLabel === 'Stage obligatoire permis probatoire'" class="file-upload-section">
+                <div class="custom-file-upload" (click)="triggerFileInput('lettre48')">
+                  <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M9 19l3 3 3-3M12 22V10"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="upload-text">
+                    <div class="upload-title">Parcourir les fichiers</div>
+                    <div class="upload-label">Lettre 48N</div>
+                  </div>
+                  <input
+                    type="file"
+                    #lettre48Input
+                    id="lettre48"
+                    name="lettre48n"
+                    multiple="true"
+                    accept=".pdf,image/*"
+                    (change)="onFilesChange($event, 'lettre48n')"
+                    style="display: none;">
+                </div>
+
+                <!-- Zone d'affichage des fichiers sélectionnés -->
+                <div class="selected-files" *ngIf="getSelectedFiles('lettre48n').length > 0">
+                  <div class="file-item" *ngFor="let file of getSelectedFiles('lettre48n'); let i = index">
+                    <span class="file-name">{{ file.name }}</span>
+                    <button type="button" class="remove-btn" (click)="onRemoveFile({file: file, index: i}, 'lettre48n')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="selectedStageLabel === 'Stage obligatoire imposé par le tribunal'" class="file-upload-section">
+                <div class="custom-file-upload" (click)="triggerFileInput('court_letter')">
+                  <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M9 19l3 3 3-3M12 22V10"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="upload-text">
+                    <div class="upload-title">Parcourir les fichiers</div>
+                    <div class="upload-label">Décision de justice</div>
+                  </div>
+                  <input
+                    type="file"
+                    #courtLetterInput
+                    id="court_letter"
+                    name="Décision de justice"
+                    multiple="true"
+                    accept=".pdf,image/*"
+                    (change)="onFilesChange($event, 'decisionJustice')"
+                    style="display: none;">
+                </div>
+
+                <!-- Zone d'affichage des fichiers sélectionnés -->
+                <div class="selected-files" *ngIf="getSelectedFiles('decisionJustice').length > 0">
+                  <div class="file-item" *ngFor="let file of getSelectedFiles('decisionJustice'); let i = index">
+                    <span class="file-name">{{ file.name }}</span>
+                    <button type="button" class="remove-btn" (click)="onRemoveFile({file: file, index: i}, 'decisionJustice')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--<div class="file-upload-section">
                 <p-fileUpload
                   name="Permis de conduire"
                   [customUpload]="true"
@@ -237,23 +385,7 @@
                   mode="advanced"
                   [maxFileSize]="5000000"
                   id="driving_license"
-                ><ng-template pTemplate="content">
-                  <div class="upload-box" (click)="triggerFileSelect(i)">
-                    <div class="upload-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M9 19l3 3 3-3M12 22V10"
-                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
-                    <div class="upload-text">
-                      {{ card.title || 'Parcourir les fichiers' }}
-                    </div>
-                  </div>
-
-                  &lt;!&ndash; input caché &ndash;&gt;
-                  <input type="file" #fileInput hidden (change)="handleFile($event, i)">
-                </ng-template>
-
+                >
 
                 </p-fileUpload>
               </div>
@@ -309,8 +441,8 @@
                   [maxFileSize]="5000000"
                   id="court_letter"
                 ></p-fileUpload>
-              </div>
-            </section>-->
+              </div>-->
+            </section>
 
       <!-- Code promo -->
       <section class="form-section">
@@ -323,8 +455,9 @@
         {{ lettre48nError }}
       </div>
       <!-- RGPD -->
-      <div class="checkbox_register">
-        <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
+
+      <div style="display:flex;border:none;" class="checkbox_register">
+        <input id="acceptTerms" style="width:10px;border:none;" type="checkbox" formControlName="acceptTerms" />
         <p>
           Acceptez nos
           <a href="#" (click)="goToConditions($event)" style="text-decoration: underline;">

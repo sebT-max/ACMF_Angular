@@ -14,7 +14,9 @@ registerLocaleData(localeFr);
 bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
+
     ...appConfig.providers,
+
 
     // 👉 Pour Angular i18n
     { provide: LOCALE_ID, useValue: 'fr' },

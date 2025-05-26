@@ -164,9 +164,13 @@ h1{
   background-color: #f9f9f9;
   border: 1px solid #ddd;
 }
+
 #logo_stage_all{
   display: flex;
   justify-content: center;
+  img{
+    width: 100%;
+  }
   @media (max-width: 767px) {
     display:none;
   }

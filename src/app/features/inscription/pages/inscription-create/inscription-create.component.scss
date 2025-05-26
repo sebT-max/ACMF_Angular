@@ -8,30 +8,36 @@
   background-size: cover;
   background-attachment: fixed;
   background-position: right;
+  background:white !important;
   height: 100%;
   @media(max-width:767px) {
     flex-direction: column;
     height: 100%;
   }
   @media (max-width: 1023px) {
-    background-attachment: scroll; 
+    background-attachment: scroll;
   }
 }
 
 #inscription_container_details {
   font-family: Poppins-Medium, serif;
   background: white;
-  width: 600px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 0px 0px 185px 0px;
+  border-radius: 10px;
   padding: 30px 50px;
+  border: 1px solid #ccc;
+  margin: 3%;
+  h1{
+    text-align: center;
+    margin-bottom:20px;
+  }
   @media(min-width:768px) and (max-width:1023px) {
     padding:24px;
     width:40%;
     background: rgba(0, 0, 0, 0.6);
   }
   @media(max-width:767px) {
-    border-radius: 0px;
+    border-radius: 0;
     width:100%;
     background: rgba(0, 0, 0, 0.6);
   }
@@ -40,37 +46,35 @@
 #inscription_container_form {
   font-family: Poppins-Medium, serif;
   width: 100%;
+  display:flex;
   @media(max-width:767px) {
     height: auto;
   }
-  h2{
-    font-size:30px;
-    padding:20px;
+  p{
+    color:black;
+    text-align: left;
     @media(max-width:767px) {
       padding:30px;
     }
   }
 }
 
-// #inscription_user_datas_form{
-//   backdrop-filter: blur(10px);
-// }
 
 .stage-details {
   padding: 10px 30px;
   line-height: 48px;
   color: grey;
   font-family: Poppins-SemiBold, serif;
-  
+
   @media(min-width:768px) and (max-width:1023px) {
     width: 60%;
     padding:20px;
-   color:white;
+    color:white;
   }
 
   p {
     color: #041a3a;
-    font-size: 18px;
+    font-size: 20px;
     @media(max-width:1023px) {
       padding:0 20px;
       color:white;
@@ -90,23 +94,29 @@
       padding:20px;
     }
     @media(min-width:768px) and (max-width:1023px) {
-     color:white;
+      color:white;
     }
   }
 }
 
 form {
-  display: flex;
+  display: flex
+;
   flex-wrap: wrap;
   flex-direction: column;
   color: white;
+  background: white !important;
+  padding: 3%;
   @media(max-width:767px) {
     padding:0;
+  }
+  label{
+    margin:0;
   }
 
 
   input{
-    box-shadow: 0 0 1px grey;
+    box-shadow: 0 0 2px grey;
     border: none;
     width: 280px;
     padding: 10px;
@@ -131,8 +141,8 @@ form {
     }
 
     @media(min-width:1024px) {
-      width: 40%;
-      margin: 0.5%;
+      width: 39.70%;
+      margin: 1% 1%;
     }
   }
 
@@ -217,7 +227,7 @@ form {
   .submit-button {
     width: 80%;
     border:1px solid white;
-    background-color:  #041a3a;;
+    background-color:  #041a3a;
     margin: 50px auto 100px;
     padding: 10px;
   }
@@ -238,21 +248,28 @@ form {
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    color: black;
     @media(max-width:767px) {
       gap: 20px 80px;
     }
     h3{
       width:100%;
+      color: black;
     }
   }
 
   .file-upload-section {
-    width: 30%;
+    width: 25%;
     #driving_license,#carteId,#lettre48n,#court_letter{
       backdrop-filter:blur(10px) !important;
       display:block;
       width:200px !important;
       margin:0 auto;
+      display: flex;
+      align-items: center;
+      padding: 14px;
+      height:28px !important;
+      border-radius: 10px !important;
     }
     @media(max-width:767px) {
       width:300px;
@@ -269,7 +286,7 @@ form {
   line-height: 30px;
   color:#09192f;
   @media(max-width:1023px) {
-   display:none;
+    display:none;
   }
 
   .format{
@@ -299,4 +316,183 @@ form {
 #codePromo{
   margin-top:60px;
 }
+// Variables
+$primary-color: #1a365d;
+$text-color: #333;
+$light-gray: #f5f5f5;
+$border-color: #ddd;
+$radio-size: 20px;
+$transition: all 0.3s ease;
 
+.form-section {
+
+  label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-color;
+  }
+
+  // Container pour les radio buttons
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  // Chaque option radio
+  .radio-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    background: white;
+    /* border: 2px solid #ddd; */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $primary-color;
+      background-color: rgba($primary-color, 0.02);
+    }
+
+    // Style quand sélectionné
+    &.selected {
+      border-color: $primary-color;
+      background-color: rgba($primary-color, 0.05);
+    }
+
+    // Input radio caché
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    // Custom radio button
+    .radio-custom {
+      width: $radio-size;
+      height: $radio-size;
+      border: 2px solid $border-color;
+      border-radius: 50%;
+      margin-right: 1rem;
+      position: relative;
+      transition: $transition;
+      flex-shrink: 0;
+
+      // Point central quand sélectionné
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        background: $primary-color;
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: $transition;
+      }
+    }
+
+    // Label text
+    .radio-label {
+      color: $text-color;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    // States
+    &:hover .radio-custom {
+      border-color: $primary-color;
+    }
+
+    &.selected .radio-custom {
+      border-color: $primary-color;
+
+      &::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+}
+
+// Version alternative avec plus d'espacement
+.form-section.spaced {
+  .radio-group {
+    gap: 1rem;
+  }
+
+  .radio-option {
+    padding: 1rem 1.25rem;
+
+    .radio-label {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Version compacte
+.form-section.compact {
+  .radio-group {
+    gap: 0.5rem;
+  }
+
+  .radio-option {
+    padding: 0.5rem 0.75rem;
+
+    .radio-custom {
+      width: 16px;
+      height: 16px;
+      margin-right: 0.75rem;
+
+      &::after {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    .radio-label {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .form-section {
+    .radio-option {
+      padding: 0.75rem;
+
+      .radio-custom {
+        margin-right: 0.75rem;
+      }
+
+      .radio-label {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+#label_stage_type{
+  text-align:left;
+  font-weight:900;
+  font-family: 'Poppins-Bold', serif;
+}
+#inscription_stage_type_section{
+  padding: 1% 10%;
+}
+
+h1{
+  text-align: center;
+}
+form label{
+  text-transform: lowercase;
+}
+#infos_persos label{
+  text-align:left;
+  padding:5% 10% 3% 10%;
+  font-family: 'Poppins-Bold', serif;
+}

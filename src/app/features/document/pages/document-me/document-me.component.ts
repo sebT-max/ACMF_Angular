@@ -319,19 +319,30 @@ export class DocumentMeComponent implements OnInit, OnDestroy {
   /**
    * Télécharge un document (force le téléchargement)
    */
-  public downloadDocument(doc: DocumentDTO): void {
-    console.log('Downloading:', doc);
+  public async downloadDocument(doc: DocumentDTO): Promise<void> {
     if (!doc.fileUrl) {
       console.error('URL manquante');
       return;
     }
-    const link = document.createElement('a');
-    link.href = doc.fileUrl;
-    link.download = doc.fileName;
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+
+    try {
+      const response = await fetch(doc.fileUrl);
+      if (!response.ok) throw new Error('Erreur lors du téléchargement');
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = doc.fileName;
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Erreur téléchargement:', error);
+    }
   }
 
   public openInNewTab(doc: DocumentDTO): void {

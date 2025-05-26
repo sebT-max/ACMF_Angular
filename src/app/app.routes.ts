@@ -28,9 +28,9 @@ export const routes: Routes = [
       ((c) => c.StatistiquesAndLegisationComponent),
   },
   {
-    path: 'Conditions générales de vente',
+    path: 'conditions-generales-vente',
     loadComponent:()=>
-      import('./features/home/pages/conditions générales de vente/conditionsgeneralesdevente.component').then
+      import('./features/home/pages/conditions-générales-vente/conditionsgeneralesdevente.component').then
       ((c) => c.ConditionsGeneralesDeVenteComponent),
   },
   {

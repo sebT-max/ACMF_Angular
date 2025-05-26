@@ -6,8 +6,8 @@ import { InscriptionService } from '../../inscription-services';
 import { InscriptionFormModel } from '../../models/inscription-form.model';
 import { TokenModel } from '../../../auth/models/token.model';
 import { StageDetailsModel } from '../../../stage/models/stage-details-model';
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
-import {FileUpload, FileUploadEvent} from 'primeng/fileupload';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {FileUpload} from 'primeng/fileupload';
 import {StripeService} from '../../../../services/stripe.service';
 import {ToastrService} from 'ngx-toastr';
 import {CodePromoService} from '../../../code-promo/services/code-promo.services';
@@ -82,7 +82,6 @@ export class InscriptionCreateComponent implements OnInit {
   private readonly _stageService = inject(StageService);
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _fb = inject(FormBuilder);
-  private readonly _router = inject(Router);
   private readonly _stripeService = inject(StripeService);
   private readonly _codePromoService = inject(CodePromoService);
   private readonly messageService = inject(MessageService);
@@ -94,6 +93,7 @@ export class InscriptionCreateComponent implements OnInit {
 
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
+  accepted = false;
 
   uploadedFiles: {
     permis: File[];             // max 2
@@ -130,6 +130,7 @@ export class InscriptionCreateComponent implements OnInit {
       dateFormat: 'dd/mm/yy',
       firstDayOfWeek: 1
     });
+
     const localStorageUser = localStorage.getItem('currentUser');
     if (localStorageUser) {
       try {
@@ -140,7 +141,7 @@ export class InscriptionCreateComponent implements OnInit {
       }
     }
 
-    const stageIdFromRoute = this._router.url.split('/').pop();
+    const stageIdFromRoute = this.router.url.split('/').pop();
     if (stageIdFromRoute) {
       this.stageId = Number(stageIdFromRoute);
       this._stageService.getStageById(this.stageId).subscribe({
@@ -149,8 +150,8 @@ export class InscriptionCreateComponent implements OnInit {
       });
     }
 
+    // Initialiser le formulaire avec les valeurs par défaut
     this.inscriptionCreationForm = this._fb.group({
-      /* userId: [this.currentUser()?.id ?? null, Validators.required],*/
       user: this._fb.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -162,238 +163,31 @@ export class InscriptionCreateComponent implements OnInit {
         city: [''],
         email: ['', [Validators.required, Validators.email]],
         telephone: ['', Validators.required],
-        password:['', Validators.required],
+        password: ['', Validators.required],
       }),
       stageId: [this.stageId, Validators.required],
       stageType: ['', Validators.required],
       inscriptionStatut: ['EN_ATTENTE', Validators.required],
       codePromo: [''],
-      acceptTerms:['', Validators.required]
-
+      acceptTerms: [false, Validators.requiredTrue] // Valeur par défaut, sera remplacée si sauvegarde trouvée
     });
-  }
 
-  triggerFileSelect(index: number): void {
-    const fileUpload = document.querySelectorAll('p-fileUpload')[index];
-    const input = fileUpload?.querySelector('input[type="file"]') as HTMLInputElement;
-    if (input) {
-      input.click();
-    }
-  }
-
-  onFileSelected(event: any, card: FileUploadCard): void {
-    const file = event.files[0];
-    if (file) {
-      // Validation personnalisée
-      if (!this.validateFile(file, card)) {
-        return;
+    // Restaurer depuis le localStorage
+    const savedForm = localStorage.getItem('inscriptionForm');
+    if (savedForm) {
+      try {
+        const parsed = JSON.parse(savedForm);
+        this.inscriptionCreationForm.patchValue(parsed);
+      } catch (error) {
+        console.error("Erreur lors de la restauration du formulaire :", error);
+        localStorage.removeItem('inscriptionForm');
       }
-
-      card.file = file;
-      card.status = 'Fichier sélectionné';
-      card.isError = false;
-      card.isUploaded = false;
-    }
-  }
-
-  onFileRemoved(event: any, card: FileUploadCard): void {
-    this.removeFile(card);
-  }
-
-  removeFile(card: FileUploadCard, event?: Event): void {
-    if (event) {
-      event.stopPropagation();
     }
 
-    card.file = undefined;
-    card.status = undefined;
-    card.isUploaded = false;
-    card.isError = false;
-    card.isUploading = false;
-
-    this.fileRemoved.emit({ type: card.type });
-  }
-
-  startUpload(card: FileUploadCard, event: Event): void {
-    event.stopPropagation();
-
-    if (!card.file) return;
-
-    card.isUploading = true;
-    this.showStatus(card, 'Upload en cours...', false);
-
-    // Utiliser l'upload personnalisé
-    this.uploadFile(card.file, card);
-  }
-
-
-  private uploadFile(file: File, card: FileUploadCard): void {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('type', card.type);
-
-    // Option 1: Upload simulé
-    this.simulateUpload(file, card);
-
-    // Option 2: Vrai upload (décommentez)
-    // this.uploadToServer(formData, card);
-  }
-
-  private simulateUpload(file: File, card: FileUploadCard): void {
-    setTimeout(() => {
-      card.isUploading = false;
-      card.isUploaded = true;
-      this.showStatus(card, `${file.name} uploadé avec succès`, false);
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Upload réussi',
-        detail: `${card.subtitle} uploadé avec succès`
-      });
-
-      this.emitUploadedFiles();
-    }, 2000);
-  }
-
-  private uploadToServer(formData: FormData, card: FileUploadCard): void {
-    this.http.post(this.uploadUrl, formData, {
-      reportProgress: true,
-      observe: 'events'
-    }).subscribe({
-      next: (event: any) => {
-        if (event.type === 4) { // HttpEventType.Response
-          card.isUploading = false;
-          card.isUploaded = true;
-          this.showStatus(card, `Upload terminé avec succès`, false);
-
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Upload réussi',
-            detail: `${card.subtitle} uploadé avec succès`
-          });
-
-          this.emitUploadedFiles();
-        }
-      },
-      error: (error:any) => {
-        card.isUploading = false;
-        this.showStatus(card, 'Erreur lors de l\'upload', true);
-
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erreur d\'upload',
-          detail: 'Une erreur est survenue lors de l\'upload'
-        });
-      }
+    // Sauvegarder à chaque changement
+    this.inscriptionCreationForm.valueChanges.subscribe(value => {
+      localStorage.setItem('inscriptionForm', JSON.stringify(value));
     });
-  }
-
-  private validateFile(file: File, card: FileUploadCard): boolean {
-    // Vérifier le type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-    if (!allowedTypes.includes(file.type)) {
-      this.showStatus(card, 'Format non supporté', true);
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Format invalide',
-        detail: 'Seuls les fichiers PDF, JPG et PNG sont acceptés'
-      });
-      return false;
-    }
-
-    // Vérifier la taille
-    if (file.size > this.maxFileSize) {
-      this.showStatus(card, 'Fichier trop volumineux (max 10MB)', true);
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Fichier trop volumineux',
-        detail: 'La taille maximale autorisée est de 10MB'
-      });
-      return false;
-    }
-
-    return true;
-  }
-
-  private showStatus(card: FileUploadCard, message: string, isError: boolean = false): void {
-    card.status = message;
-    card.isError = isError;
-
-    if (isError) {
-      setTimeout(() => {
-        if (card.isError) {
-          card.status = undefined;
-          card.isError = false;
-        }
-      }, 5000);
-    }
-  }
-
-  private emitUploadedFiles(): void {
-    const uploadedFiles = this.getUploadedFiles();
-    this.filesUploaded.emit(uploadedFiles);
-  }
-
-  // Méthodes publiques pour l'intégration externe
-  getCardClasses(card: FileUploadCard): string {
-    let classes = 'card';
-
-    if (card.disabled) {
-      classes += ' disabled';
-    }
-
-    if (card.isUploaded) {
-      classes += ' uploaded';
-    }
-
-    return classes;
-  }
-
-  getStatusClasses(card: FileUploadCard): string {
-    let classes = 'upload-status';
-
-    if (card.status) {
-      classes += ' show';
-    }
-
-    if (card.isError) {
-      classes += ' error';
-    }
-
-    return classes;
-  }
-
-  getUploadedFiles(): { type: string, file: File }[] {
-    return this.cards
-      .filter(card => card.file && card.isUploaded)
-      .map(card => ({ type: card.type, file: card.file! }));
-  }
-
-  resetUpload(card: FileUploadCard): void {
-    this.removeFile(card);
-  }
-
-  resetAllUploads(): void {
-    this.cards.forEach(card => {
-      if (!card.disabled) {
-        this.resetUpload(card);
-      }
-    });
-  }
-
-  uploadHandler(event: FileUploadEvent, card: FileUploadCard): void {
-    // Cette méthode est appelée si vous utilisez l'upload automatique
-    const file = event.files[0];
-    if (file) {
-      this.uploadFile(file, card);
-    }
-  }
-
-  uPloadFiles(event: any, card: FileUploadCard): void {
-    const file = event.files[0];
-    if (file) {
-      this.uploadFile(file, card);
-    }
   }
 
   get selectedStageLabel(): string | null {
@@ -426,37 +220,19 @@ export class InscriptionCreateComponent implements OnInit {
     return ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg'].includes(file.type);
   }
 
-  uploadFiles(event?: any): void {
-    if (
-      this.uploadedFiles.permis.length === 0 &&
-      this.uploadedFiles.carteId.length === 0 &&
-      this.uploadedFiles.lettre48n.length === 0 &&
-      this.uploadedFiles.decisionJustice.length === 0
-    ) {
-      console.warn('Aucun fichier à envoyer.');
-      return;
-    }
 
-    const formData = new FormData();
-    Object.entries(this.uploadedFiles).forEach(([key, files]) => {
-      files.forEach(file => {
-        formData.append('files', file);
-      });
-    });
-
-    this._inscriptionService.createInscription(formData).subscribe({
-      next: () => console.log('Fichiers envoyés avec succès'),
-      error: (err: any) => console.error('Erreur d’envoi de fichiers :', err)
-    });
-  }
 
   onRemoveFile(event: FileRemoveEvent, field: string): void {
-    // Vérification pour s'assurer que `files` contient des fichiers
-    if (event.file) {
-      const file = event.file; // Accès au fichier supprimé
-      console.log(`Fichier supprimé :`, file);
+    if (event.file && typeof event.index === 'number') {
+      const filesArray = this.getSelectedFiles(field);
+      if (!filesArray || filesArray.length === 0) return;
+
+      // Supprime le fichier à l'index donné
+      filesArray.splice(event.index, 1);
+
+      console.log(`Fichier supprimé :`, event.file);
     } else {
-      console.log('Aucun fichier à supprimer.');
+      console.log('Aucun fichier à supprimer ou index invalide.');
     }
   }
 
@@ -482,7 +258,7 @@ export class InscriptionCreateComponent implements OnInit {
     const selected = this.stageTypes.find(type => type.value === selectedValue);
     const selectedLabel = selected ? selected.label : null;
 
-    if (selectedLabel === 'Probatoire' && this.uploadedFiles.lettre48n.length === 0) {
+    if (selectedLabel === 'PROBATOIRE' && this.uploadedFiles.lettre48n.length === 0) {
       this.lettre48nError = 'Vous devez nous fournir la lettre 48_N.';
       this.isLoading = false;
       return;
@@ -598,23 +374,16 @@ export class InscriptionCreateComponent implements OnInit {
   }
 
 
+
   goToConditions(event: Event) {
     event.preventDefault();
-
-    // Sauvegarde les données du formulaire dans le localStorage
-    localStorage.setItem(
-      'inscriptionCreationForm',
-      JSON.stringify(this.inscriptionCreationForm.value)
-    );
-
-    // Récupère l'URL actuelle (ex. /particulier/register)
+    localStorage.setItem('inscriptionForm', JSON.stringify(this.inscriptionCreationForm.value));
     const currentUrl = this.router.url;
-
-    // Navigue vers la page des CGV en passant l’URL d’origine comme query param
-    this.router.navigate(['/conditions-generales'], {
-      queryParams: {
-        redirect: encodeURIComponent(currentUrl)
-      }
+    this.router.navigate(['/conditions-generales-vente'], {
+      queryParams: { redirect: encodeURIComponent(currentUrl) }
     });
   }
 }
+
+
+

@@ -20,16 +20,19 @@ export class ConditionsGeneralesDeVenteComponent {
 
   constructor(private router: Router, private route: ActivatedRoute,private location: Location) {}
 
-  /*retour() {
-    const redirect = this.route.snapshot.queryParamMap.get('redirect') || 'particulier/register';
-    this.router.navigate([redirect], { queryParams: { accepted: true } });
-  }*/
-  goBackFromQueryParams() {
-    const redirect = this.route.snapshot.queryParams['redirect'];
-    if (redirect && redirect !== 'back') {
-      this.router.navigateByUrl(decodeURIComponent(redirect));
-    } else {
-      this.location.back();
-    }
+  returnWithConsent() {
+    localStorage.setItem('acceptTerms', 'true');
+    this.returnToPrevious();
+  }
+
+  returnWithoutConsent() {
+    localStorage.setItem('acceptTerms', 'false');
+    this.returnToPrevious();
+  }
+
+  private returnToPrevious() {
+
+    const redirect = this.route.snapshot.queryParamMap.get('redirect') || '/register';
+    this.router.navigateByUrl(decodeURIComponent(redirect));
   }
 }

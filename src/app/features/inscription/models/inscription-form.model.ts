@@ -11,5 +11,5 @@ export interface InscriptionFormModel {
   inscriptionStatut: 'EN_ATTENTE' | 'CONFIRMEE' | 'ANNULEE' | string; // adapte selon ton Enum
   stage?: StageDetailsModel;
   documents?: DocumentDTO[];
-  codePromo?:string// <-- à ajouter
+  codePromo?: string;
 }

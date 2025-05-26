@@ -21,12 +21,6 @@ export const routes: Routes = [
       import('./features/home/pages/qui-sommes-nous/aboutACMF.component').then
       ((c) => c.AboutACMFComponent),
   },
-  /*{
-    path:'Professionnels',
-    loadComponent:()=>
-      import('./features/home/pages/qui-sommes-nous/aboutACMF.component').then
-      ((c) => c.AboutACMFComponent),
-  },*/
   {
     path: 'statistiques-et-législation',
     loadComponent:()=>

@@ -9,5 +9,6 @@ export interface ParticulierDTO {
   city: string;
   email: string;
   telephone: string;
-  password: string | null; // ou masqué avec "********"
+  password: string | null;
+  qcceptTerms: boolean;// ou masqué avec "********"
 }

@@ -267,6 +267,6 @@ export class ConvocationCreateComponent implements OnInit {
       { align: 'center' }
     );
 
-    doc.save(`${this.convocation.nom} + convocation-stage.pdf`);
+    doc.save(`${this.convocation.nom}_convocation-stage.pdf`);
   }
 }

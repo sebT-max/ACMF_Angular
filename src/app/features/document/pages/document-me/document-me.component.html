@@ -192,26 +192,27 @@
               </button>
 
               <!-- Pour PDF, lien d'ouverture -->
-              <a
+             <!--<a
                 *ngIf="isPdf(doc)"
                 class="action-button secondary small"
                 [href]="doc.fileUrl"
                 target="_blank"
                 rel="noopener"
                 [attr.aria-label]="'Ouvrir ' + doc.fileName + ' dans un nouvel onglet'"
-                title="Ouvrir PDF">
+                title="Télécharger PDF">
                 📄
-              </a>
+              </a>-->
 
               <!-- Bouton télécharger pour les documents groupés -->
-              <button
+              <a
                 *ngIf="canDownload(doc)"
                 class="action-button secondary small"
                 (click)="downloadDocument(doc)"
+                [attr.download]="doc.fileName"
                 [attr.aria-label]="'Télécharger ' + doc.fileName"
                 title="Télécharger">
-                ⬇️
-              </button>
+                ⬇️  Télécharger
+              </a>
             </div>
           </article>
         </div>

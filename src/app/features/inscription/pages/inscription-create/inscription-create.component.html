@@ -1,46 +1,13 @@
 <div class="inscription-container">
-  <!-- Détails du stage -->
-  <div id="inscription_container_details" class="stage-details" *ngIf="stageDetails">
-    <div class="details-wrapper">
-      <h2>Stage à {{ stageDetails.city }}</h2>
-      <p><strong>Numéro de stage:</strong> {{ stageDetails.number }}</p>
-      <p><strong>{{ stageDetails.street }}</strong></p>
-      <p><strong>{{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</strong></p>
-      <p><strong>Prix :</strong> {{ stageDetails.price }}€</p>
-    </div>
-
-    <div class="consignes_container">
-      <h3><span class="icon">⚠️</span> <strong> Consignes à respecter !</strong></h3>
-      <div class="form-text text-muted format">
-        <ul>
-          <li>Formats acceptés : JPEG, PNG, PDF</li>
-        </ul>
-      </div>
-
-      <h4>Nom des fichiers attendus :</h4>
-      <ul>
-        <li><strong>Permis ou Avis de suspension :</strong></li>
-        <ul>
-          <li>Recto : <code>(nom_prénom)_permis_recto</code></li>
-          <li>Verso : <code>(nom_prénom)_permis_verso</code></li>
-          <li>Verso : <code>(nom_prénom)_avis_suspension</code></li>
-        </ul>
-        <li><strong>Carte d'identité :</strong></li>
-        <ul>
-          <li>Recto : <code>(nom_prénom)_identité_recto</code></li>
-          <li>Verso : <code>(nom_prénom)_identité_verso</code></li>
-        </ul>
-      </ul>
-    </div>
-  </div>
-
   <!-- Formulaire -->
   <div id="inscription_container_form">
     <form id="inscription_form" [formGroup]="inscriptionCreationForm" (ngSubmit)="handleInscription()">
       <div formGroupName="user" id="inscription_user_datas_form">
         <!-- Informations personnelles -->
-        <section class="form-section">
-          <h2>Informations personnelles</h2>
+        <section id="infos_persos" class="form-section">
+          <h1>Formulaire d'inscription</h1>
+
+          <label>Informations personnelles</label>
 
           <!-- <label for="firstName">Prénom*</label> -->
           <input id="firstName" formControlName="firstName" type="text" placeholder="Prénom" />
@@ -102,96 +69,248 @@
       <br/>
       <br>
       <!-- Type de stage -->
-      <section class="form-section">
-        <label for="stageType">Type de Stage*</label><br/>
-        <select id="stageType" formControlName="stageType">
-          <option value="" disabled selected>Sélectionner un type de stage</option>
-          <option *ngFor="let type of stageTypes" [value]="type.value">
-            {{ type.label }}
-          </option>
-        </select>
-      </section>
+      <section class="form-section" id="inscription_stage_type_section">
+        <label id="label_stage_type">Type de stage*</label>
 
-      <!-- Fichiers -->
-      <section id="inscription_form_files" class="form-section">
-        <h3>Documents à fournir<br>(<small>Si le permis vous a été retiré, veuillez nous envoyer l'avis de suspension</small>)
-        </h3>
+        <div class="radio-group">
+          <!-- Stage volontaire -->
+          <div class="radio-option"
+               [class.selected]="stageTypeControl!.value === 'VOLONTAIRE'"
+               (click)="selectStageType('VOLONTAIRE')">
+            <input
+              type="radio"
+              id="volontaire"
+              name="stageType"
+              value="VOLONTAIRE"
+              formControlName="stageType">
+            <div class="radio-custom"></div>
+            <label class="radio-label" for="volontaire">Stage volontaire</label>
+          </div>
 
-        <div class="file-upload-section">
-          <!-- <label for="permis"><strong>Permis ou Avis de suspension</strong></label> -->
-          <p-fileUpload
-            name="Permis de conduire"
-            [customUpload]="true"
-            (uploadHandler)="uploadFiles($event)"
-            (onSelect)="onFilesChange($event, 'permis')"
-            (onRemove)="onRemoveFile($event, 'permis')"
-            [multiple]="true"
-            [showUploadButton]="false"
-            [showCancelButton]="false"
-            accept=".pdf,image/*"
-            chooseLabel=" Permis de conduire"
-            mode="advanced"
-            [maxFileSize]="5000000"
-            id="driving_license"
-          ></p-fileUpload>
-        </div>
+          <!-- Stage obligatoire permis probatoire -->
+          <div class="radio-option"
+               [class.selected]="stageTypeControl!.value === 'OBLIGATOIRE'"
+               (click)="selectStageType('OBLIGATOIRE')">
+            <input
+              type="radio"
+              id="obligatoire-permis"
+              name="stageType"
+              value="OBLIGATOIRE"
+              formControlName="stageType">
+            <div class="radio-custom"></div>
+            <label class="radio-label" for="obligatoire-permis">Stage obligatoire permis probatoire</label>
+          </div>
 
-        <div class="file-upload-section">
-          <!-- <label for="carteId"><strong>Carte d'identité</strong></label> -->
-          <p-fileUpload
-            name="Carte d'identité"
-            [customUpload]="true"
-            (uploadHandler)="uploadFiles($event)"
-            (onSelect)="onFilesChange($event, 'carteId')"
-            (onRemove)="onRemoveFile($event, 'carteId')"
-            [multiple]="true"
-            [showUploadButton]="false"
-            [showCancelButton]="false"
-            accept=".pdf,image/*"
-            chooseLabel=" Carte d'identité"
-            mode="advanced"
-            [maxFileSize]="5000000"
-            id="carteId"
-          ></p-fileUpload>
-        </div>
-
-        <div *ngIf="selectedStageLabel === 'Stage obligatoire permis probatoire'" class="file-upload-section">
-          <!-- <label for="lettre48n"><strong>Lettre 48N</strong></label> -->
-          <p-fileUpload
-            name="lettre48n"
-            [customUpload]="true"
-            (uploadHandler)="uploadFiles($event)"
-            (onSelect)="onFilesChange($event, 'lettre48n')"
-            (onRemove)="onRemoveFile($event, 'lettre48n')"
-            [multiple]="true"
-            [showUploadButton]="false"
-            [showCancelButton]="false"
-            accept=".pdf,image/*"
-            chooseLabel=" Lettre 48N"
-            mode="advanced"
-            [maxFileSize]="5000000"
-            id="lettre48n"
-          ></p-fileUpload>
-        </div>
-        <div *ngIf="selectedStageLabel === 'Stage obligatoire imposé par le tribunal'" class="file-upload-section">
-          <!-- <label for="décision de justice"><strong>Décision de justice</strong></label> -->
-          <p-fileUpload
-            name="Décision de justice"
-            [customUpload]="true"
-            (uploadHandler)="uploadFiles($event)"
-            (onSelect)="onFilesChange($event, 'decisionJustice')"
-            (onRemove)="onRemoveFile($event, 'décision de justice')"
-            [multiple]="true"
-            [showUploadButton]="false"
-            [showCancelButton]="false"
-            accept=".pdf,image/*"
-            chooseLabel=" Décision de justice"
-            mode="advanced"
-            [maxFileSize]="5000000"
-            id="court_letter"
-          ></p-fileUpload>
+          <!-- Stage obligatoire imposé par le Tribunal -->
+          <div class="radio-option"
+               [class.selected]="stageTypeControl!.value === 'TRIBUNAL'"
+               (click)="selectStageType('TRIBUNAL')">
+            <input
+              type="radio"
+              id="obligatoire-tribunal"
+              name="stageType"
+              value="TRIBUNAL"
+              formControlName="stageType">
+            <div class="radio-custom"></div>
+            <label class="radio-label" for="obligatoire-tribunal">Stage obligatoire imposé par le Tribunal</label>
+          </div>
         </div>
       </section>
+
+      <div class="cards-container">
+        <div
+          *ngFor="let card of cards; let i = index"
+          [class]="getCardClasses(card)"
+          [attr.data-type]="card.type">
+
+          <!-- Upload PrimeNG caché avec design personnalisé -->
+          <div class="custom-upload-wrapper" *ngIf="!card.disabled">
+            <p-fileUpload
+              #fileUpload
+              [url]="uploadUrl"
+              [accept]="acceptedTypes"
+              [maxFileSize]="maxFileSize"
+              [auto]="false"
+              [multiple]="false"
+              [customUpload]="true"
+              [showUploadButton]="false"
+              [showCancelButton]="false"
+              [chooseLabel]="''"
+              [chooseIcon]="''"
+              (onSelect)="onFileSelected($event, card)"
+              (onRemove)="onFileRemoved($event, card)"
+              (uploadHandler)="uPloadFiles($event,card)"
+              class="custom-file-upload">
+
+              <!-- Template personnalisé pour le contenu -->
+              <ng-template pTemplate="content">
+                <div class="upload-content" (click)="triggerFileSelect(i)">
+                  <div class="card-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+                    </svg>
+                  </div>
+
+                  <h3 class="card-title">{{ card.title }}</h3>
+                  <p class="card-subtitle">{{ card.subtitle }}</p>
+
+                  <div [class]="getStatusClasses(card)" *ngIf="card.status">
+                    {{ card.status }}
+                  </div>
+
+                  <!-- Aperçu du fichier sélectionné -->
+                  <div class="file-preview" *ngIf="card.file && !card.isUploaded">
+                    <div class="file-info">
+                      <i class="pi pi-file"></i>
+                      <span class="file-name">{{ card.file.name }}</span>
+                      <button
+                        type="button"
+                        class="remove-file-btn"
+                        (click)="removeFile(card, $event)">
+                        <i class="pi pi-times"></i>
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="upload-btn"
+                      (click)="startUpload(card, $event)"
+                      [disabled]="card.isUploading">
+                    <span *ngIf="!card.isUploading">
+                      <i class="pi pi-upload"></i> Uploader
+                    </span>
+                      <span *ngIf="card.isUploading">
+                      <i class="pi pi-spin pi-spinner"></i> Upload...
+                    </span>
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+
+              <!-- Template vide pour masquer l'interface par défaut -->
+              <ng-template pTemplate="toolbar">
+                <div></div>
+              </ng-template>
+            </p-fileUpload>
+          </div>
+
+          <!-- Carte désactivée -->
+          <div class="disabled-content" *ngIf="card.disabled">
+            <div class="card-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+              </svg>
+            </div>
+
+            <h3 class="card-title">{{ card.title }}</h3>
+            <p class="card-subtitle">{{ card.subtitle }}</p>
+
+            <div class="upload-status show">
+              Non disponible
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p-toast></p-toast>
+
+
+      <!--
+            <section id="inscription_form_files" class="form-section">
+              <h3>Documents à fournir<br>(<small>Si le permis vous a été retiré, veuillez nous envoyer l'avis de suspension</small>)
+              </h3>
+
+              <div class="file-upload-section">
+                <p-fileUpload
+                  name="Permis de conduire"
+                  [customUpload]="true"
+                  (uploadHandler)="uploadFiles($event)"
+                  (onSelect)="onFilesChange($event, 'permis')"
+                  (onRemove)="onRemoveFile($event, 'permis')"
+                  [multiple]="true"
+                  [showUploadButton]="false"
+                  [showCancelButton]="false"
+                  accept=".pdf,image/*"
+                  chooseLabel=" Permis de conduire"
+                  mode="advanced"
+                  [maxFileSize]="5000000"
+                  id="driving_license"
+                ><ng-template pTemplate="content">
+                  <div class="upload-box" (click)="triggerFileSelect(i)">
+                    <div class="upload-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6h.1a5 5 0 011 9.9M9 19l3 3 3-3M12 22V10"
+                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <div class="upload-text">
+                      {{ card.title || 'Parcourir les fichiers' }}
+                    </div>
+                  </div>
+
+                  &lt;!&ndash; input caché &ndash;&gt;
+                  <input type="file" #fileInput hidden (change)="handleFile($event, i)">
+                </ng-template>
+
+
+                </p-fileUpload>
+              </div>
+
+              <div class="file-upload-section">
+                <p-fileUpload
+                  name="Carte d'identité"
+                  [customUpload]="true"
+                  (uploadHandler)="uploadFiles($event)"
+                  (onSelect)="onFilesChange($event, 'carteId')"
+                  (onRemove)="onRemoveFile($event, 'carteId')"
+                  [multiple]="true"
+                  [showUploadButton]="false"
+                  [showCancelButton]="false"
+                  accept=".pdf,image/*"
+                  chooseLabel=" Carte d'identité"
+                  mode="advanced"
+                  [maxFileSize]="5000000"
+                  id="carteId"
+                ></p-fileUpload>
+              </div>
+
+              <div *ngIf="selectedStageLabel === 'Stage obligatoire permis probatoire'" class="file-upload-section">
+                <p-fileUpload
+                  name="lettre48n"
+                  [customUpload]="true"
+                  (uploadHandler)="uploadFiles($event)"
+                  (onSelect)="onFilesChange($event, 'lettre48n')"
+                  (onRemove)="onRemoveFile($event, 'lettre48n')"
+                  [multiple]="true"
+                  [showUploadButton]="false"
+                  [showCancelButton]="false"
+                  accept=".pdf,image/*"
+                  chooseLabel=" Lettre 48N"
+                  mode="advanced"
+                  [maxFileSize]="5000000"
+                  id="lettre48"
+                ></p-fileUpload>
+              </div>
+              <div *ngIf="selectedStageLabel === 'Stage obligatoire imposé par le tribunal'" class="file-upload-section">
+                <p-fileUpload
+                  name="Décision de justice"
+                  [customUpload]="true"
+                  (uploadHandler)="uploadFiles($event)"
+                  (onSelect)="onFilesChange($event, 'decisionJustice')"
+                  (onRemove)="onRemoveFile($event, 'décision de justice')"
+                  [multiple]="true"
+                  [showUploadButton]="false"
+                  [showCancelButton]="false"
+                  accept=".pdf,image/*"
+                  chooseLabel=" Décision de justice"
+                  mode="advanced"
+                  [maxFileSize]="5000000"
+                  id="court_letter"
+                ></p-fileUpload>
+              </div>
+            </section>-->
 
       <!-- Code promo -->
       <section class="form-section">
@@ -202,6 +321,20 @@
       <!-- Erreurs -->
       <div *ngIf="lettre48nError" class="error-message">
         {{ lettre48nError }}
+      </div>
+      <!-- RGPD -->
+      <div class="checkbox_register">
+        <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
+        <p>
+          Acceptez nos
+          <a href="#" (click)="goToConditions($event)" style="text-decoration: underline;">
+            Conditions d'utilisation et notre Politique de confidentialité
+          </a>
+        </p>
+      </div>
+
+      <div *ngIf="inscriptionCreationForm.get('acceptTerms')?.invalid && inscriptionCreationForm.get('acceptTerms')?.touched" class="error-message">
+        Acceptez nos Conditions d'utilisation et notre Politique de confidentialité
       </div>
 
       <!-- Soumission -->
@@ -215,7 +348,29 @@
           </ng-container>
         </button>
       </div>
-
     </form>
+    <!-- Détails du stage -->
+    <div id="inscription_container_details" class="stage-details" *ngIf="stageDetails">
+      <div class="details-wrapper">
+        <h1>Résumé</h1>
+        <p>Stage agréé par la préfecture sous le numéro<br/>
+          {{ stageDetails.number }}</p>
+        <p>Nombre de points réccupérables à l’issue du
+          stage :<span style="font-weight:900;"><strong>4 points</strong></span></p>
+        <br>
+        <hr>
+        <br>
+        <p>Lieu: {{ stageDetails.street }}, {{ stageDetails.city }}</p>
+        <p><strong>Date: {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</strong></p>
+        <p><strong>Horaire: {{ stageDetails.organisation}}</strong></p>
+
+        <h1 style="margin-top:30%;">
+          <strong> {{ stageDetails.price }}€</strong>
+        </h1>
+      </div>
+    </div>
   </div>
 </div>
+
+
+

@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import {isConnectedGuard} from './features/auth/guards/is-connected.guard';
+import {ForgotPasswordComponent} from './features/auth/pages/forgot-password/forgot-password.component';
+import {ResetPasswordComponent} from './features/auth/pages/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -13,7 +15,7 @@ export const routes: Routes = [
     path: 'stages-infos',
     loadComponent:()=>
     import('./features/stage/pages/infos-stages/infos-stage.component').then
-((c) => c.InfosStageComponent,),
+((c) => c.InfosStageComponent),
   },
   {
     path: 'qui-sommes-nous ?',
@@ -190,4 +192,25 @@ export const routes: Routes = [
         (c) => c.CreationDevisComponent
       ),
   },
+
+  {
+    path: 'forgot-password',
+    loadComponent:()=>import('./features/auth/pages/forgot-password/forgot-password.component').then
+((c) => c.ForgotPasswordComponent),
+},
+
+
+{
+  path: 'reset-password',
+    loadComponent:()=>import
+  ('./features/auth/pages/reset-password/reset-password.component').then
+    ((c) => c.ResetPasswordComponent),
+},
+
+
+
+
+
+
+
 ];

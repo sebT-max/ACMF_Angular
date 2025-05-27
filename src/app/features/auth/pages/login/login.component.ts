@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TokenModel } from '../../models/token.model';
 import {NgIf, NgOptimizedImage} from "@angular/common";
@@ -13,7 +13,7 @@ import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
-    imports: [ReactiveFormsModule, NgIf, NgOptimizedImage],
+  imports: [ReactiveFormsModule, NgIf, NgOptimizedImage, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -43,7 +43,7 @@ export class LoginComponent {
         this.errorMessage = null;
         this._router.navigate(['/']);
       },
-      error: (error): void => {      
+      error: (error): void => {
         if (error.status === 404) {
           this.toastr.error("Adresse email inconnue", "Erreur de connexion");
         } else if (error.status === 401) {

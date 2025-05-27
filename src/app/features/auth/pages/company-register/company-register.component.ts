@@ -215,8 +215,8 @@ export class CompanyRegisterComponent implements OnInit {
 
     // Validation du mot de passe côté frontend aussi
     const password = formValue.password;
-    if (password && (password.length < 8 || password.length > 24)) {
-      this.toastr.error("Le mot de passe doit contenir entre 8 et 24 caractères", "Mot de passe invalide");
+    if (password && (password.length < 8 || password.length > 48)) {
+      this.toastr.error("Le mot de passe doit contenir entre 8 et 48 caractères", "Mot de passe invalide");
       return false;
     }
 

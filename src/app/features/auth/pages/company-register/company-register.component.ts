@@ -103,7 +103,6 @@ export class CompanyRegisterComponent implements OnInit {
     });
   }
 
-
   handleCompagnyRegisterFormSubmit(): void {
     console.log(this.companyRegisterForm.value);
 
@@ -132,6 +131,9 @@ export class CompanyRegisterComponent implements OnInit {
         // Gestion spécifique des erreurs selon ton backend
         if (error.status === 409) { // CONFLICT pour email déjà utilisé
           this.toastr.error("Cette adresse email est déjà utilisée", "Email existant");
+        } else if (error.status === 401) { // Temporaire - ton backend renvoie 401 au lieu de 400
+          // Pour l'instant, traiter comme une erreur de validation
+          this.toastr.error("Le mot de passe ne respecte pas les critères (8-24 caractères)", "Mot de passe invalide");
         } else if (error.status === 400) {
           // Gérer les différents types d'erreurs 400
           const errorMessage = error.error?.message || error.message;
@@ -201,7 +203,6 @@ export class CompanyRegisterComponent implements OnInit {
     });
   }
 
-
 // Méthode helper optionnelle pour les validations côté frontend
   private validateFormBeforeSubmit(): boolean {
     const formValue = this.companyRegisterForm.value;
@@ -214,7 +215,7 @@ export class CompanyRegisterComponent implements OnInit {
 
     // Validation du mot de passe côté frontend aussi
     const password = formValue.password;
-    if (password && (password.length < 8 || password.length > 48)) {
+    if (password && (password.length < 8 || password.length > 24)) {
       this.toastr.error("Le mot de passe doit contenir entre 8 et 24 caractères", "Mot de passe invalide");
       return false;
     }

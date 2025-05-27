@@ -173,6 +173,17 @@ export class InscriptionCreateComponent implements OnInit {
     });
 
     // Restaurer depuis le localStorage
+
+    this.restoreFormFromStorage();
+// À ajouter à la fin de ngOnInit après restoreFormFromStorage()
+    this.checkAcceptTermsFromStorage();
+
+    // Sauvegarder à chaque changement
+    this.inscriptionCreationForm.valueChanges.subscribe(value => {
+      localStorage.setItem('inscriptionForm', JSON.stringify(value));
+    });
+  }
+  private restoreFormFromStorage() {
     const savedForm = localStorage.getItem('inscriptionForm');
     if (savedForm) {
       try {
@@ -183,11 +194,23 @@ export class InscriptionCreateComponent implements OnInit {
         localStorage.removeItem('inscriptionForm');
       }
     }
+  }
 
-    // Sauvegarder à chaque changement
-    this.inscriptionCreationForm.valueChanges.subscribe(value => {
-      localStorage.setItem('inscriptionForm', JSON.stringify(value));
-    });
+  private checkAcceptTermsFromStorage() {
+    const acceptTermsValue = localStorage.getItem('acceptTerms');
+    if (acceptTermsValue === 'true') {
+      this.inscriptionCreationForm.patchValue({
+        acceptTerms: true
+      });
+      // Nettoyer le localStorage après utilisation
+      localStorage.removeItem('acceptTerms');
+    } else if (acceptTermsValue === 'false') {
+      this.inscriptionCreationForm.patchValue({
+        acceptTerms: false
+      });
+      // Nettoyer le localStorage après utilisation
+      localStorage.removeItem('acceptTerms');
+    }
   }
 
   get selectedStageLabel(): string | null {
@@ -377,7 +400,9 @@ export class InscriptionCreateComponent implements OnInit {
 
   goToConditions(event: Event) {
     event.preventDefault();
+    // Sauvegarder l'état actuel du formulaire
     localStorage.setItem('inscriptionForm', JSON.stringify(this.inscriptionCreationForm.value));
+
     const currentUrl = this.router.url;
     this.router.navigate(['/conditions-generales-vente'], {
       queryParams: { redirect: encodeURIComponent(currentUrl) }

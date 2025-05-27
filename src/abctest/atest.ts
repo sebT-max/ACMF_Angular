@@ -1,3 +1,8 @@
+
+
+
+
+/*
 //inscription-create.hmtl
 <div class="checkbox_register">
 <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
@@ -113,3 +118,4 @@ export class ConditionsGeneralesDeVenteComponent {
 //Quand je clique sur le bouton qui utilise la méthode returnWithConsent,
 //Ca me renvoie à inscription-createle checkbox d'acceptations des termes .
 //Le problème c'est que la case devrait normalement être coché
+*/

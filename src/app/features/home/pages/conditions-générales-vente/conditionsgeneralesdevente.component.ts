@@ -32,7 +32,7 @@ export class ConditionsGeneralesDeVenteComponent {
 
   private returnToPrevious() {
 
-    const redirect = this.route.snapshot.queryParamMap.get('redirect') || '/register';
+    const redirect = this.route.snapshot.queryParamMap.get('redirect') || '/company/register';
     this.router.navigateByUrl(decodeURIComponent(redirect));
   }
 }

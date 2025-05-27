@@ -166,7 +166,6 @@ footer {
   padding-top: 20px;
 
   @media (max-width: 767px) {
-    flex-direction: column;
     font-size: 12px;
   }
 
@@ -230,7 +229,6 @@ footer {
     }
 
     @media (max-width: 767px) {
-      flex-direction: column;
       gap: 10px;
       margin-bottom: 15px;
     }

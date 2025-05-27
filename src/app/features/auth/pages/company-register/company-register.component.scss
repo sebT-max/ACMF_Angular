@@ -8,11 +8,16 @@
   align-items: center;
   @media (max-width: 767px) {
     font-size: 12px;
-    background-image: url(/pic20.jpg);
+    background-image: url(/pic19.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height:100vh;
+    width:100%;
+    p{
+      margin:0;
+      backdrop-filter:  blur(3px) brightness(120%);
+    }
     h1{
       color:white;
       text-align: center;
@@ -31,10 +36,11 @@
   }
   @media (max-width: 767px) {
     font-size: 12px;
-    width:80%;
     border:none;
     box-shadow: 0 0 0 white;
     color:white;
+    padding: 0 30px;
+    width: 100%;
   }
 }
 
@@ -55,8 +61,14 @@ form{
     font-family: Poppins-ExtraLight, serif;
     padding: 16px;
     font-weight:100;
-    font-size:10px;
+    font-size:12px;
     color:black;
+    @media(max-width:767px){
+      font-size:12px;
+      backdrop-filter:  blur(2px) brightness(1px);
+      padding:0px;
+      margin:2%;
+    }
   }
   input{
     box-shadow:0px 0px 2px grey;
@@ -71,6 +83,7 @@ form{
     display:flex;
     flex-direction: row;
     justify-content: center;
+    gap: 10px;
   }
   a{
     color:grey;

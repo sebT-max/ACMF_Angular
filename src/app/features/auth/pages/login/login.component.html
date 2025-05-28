@@ -19,6 +19,8 @@
         <span *ngIf="loginForm.get('password')?.errors?.['required']">* Le mot de passe est requis.</span>
       </div>
     </div>
+    <a [routerLink]="['/forgot-password']">Mot de passe oublié ?</a>
+
     <button type="submit">Se connecter</button>
   </form>
 </div>

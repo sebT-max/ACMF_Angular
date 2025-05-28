@@ -41,7 +41,7 @@ export class ResetPasswordComponent {
       }).subscribe({
         next: () => {
           this.success = true;
-          setTimeout(() => this.router.navigate(['/login']), 3000);
+          setTimeout(() => this.router.navigate(['/users/login']), 3000);
         },
         error: () => this.error = true
       });

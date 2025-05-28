@@ -10,7 +10,8 @@ import {NgIf} from '@angular/common';
     ReactiveFormsModule,
     NgIf
   ],
-  templateUrl: './forgot-password.component.html'
+  templateUrl: './forgot-password.component.html',
+  styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent {
   private readonly _fb: FormBuilder = inject(FormBuilder);

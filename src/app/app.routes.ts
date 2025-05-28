@@ -207,10 +207,4 @@ export const routes: Routes = [
     ((c) => c.ResetPasswordComponent),
 },
 
-
-
-
-
-
-
 ];

@@ -11,7 +11,8 @@ import {API_URL} from '../../../../../core/constant';
     NgIf,
     ReactiveFormsModule
   ],
-  templateUrl: './reset-password.component.html'
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent {
   private readonly _fb: FormBuilder = inject(FormBuilder);

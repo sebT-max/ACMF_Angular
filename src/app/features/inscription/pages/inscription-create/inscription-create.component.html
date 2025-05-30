@@ -60,6 +60,10 @@
         <section class="form-section">
           <!-- <label for="password">Mot de passe*</label> -->
           <input id="password" type="password" placeholder="Mot de passe (accès à votre espace client)" formControlName="password" />
+          <br/>
+          <div style="padding: 10px 10%;">
+          <small><p>Utilisez 8 caractères ou plus avec un mélange de lettres, de chiffres et de symboles.</p></small>
+          </div>
           <div *ngIf="inscriptionCreationForm.get('password')?.invalid && inscriptionCreationForm.get('password')?.touched" class="error-message">
             <span *ngIf="inscriptionCreationForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
             <span *ngIf="inscriptionCreationForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>

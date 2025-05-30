@@ -1,18 +1,15 @@
 .conditions_infos_stages {
   text-align: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'POPPINS-MEDIUM';
   font-weight: 800;
   font-size: 60px;
   padding: 30px;
   background: transparent;
-  font-style: italic;
   color: #041a3a;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
   opacity: 0;
   animation: zoomIn 1s ease forwards;
-  margin-top:0px !important;
-
   &:after {
     content: '';
     position: absolute;
@@ -39,7 +36,6 @@
     font-weight: 800;
     font-size: 60px;
     background: transparent;
-    font-style: italic;
   }
 }
 .about_us_main_container {
@@ -178,7 +174,7 @@
     }
   }
 
-  #info_stages_content {
+  .info_stages_content {
     margin-right: 30%;
     padding-right: 10px;
     z-index: 5;
@@ -374,3 +370,19 @@
   }
 }
 
+#resumé {
+  position: relative;
+}
+
+#resumé {
+  position: relative;
+}
+
+#resumé::before {
+  content: "";
+  display: block;
+  height: 70px;       /* hauteur du header fixe */
+  margin-top: -90px;  /* négatif de cette hauteur */
+  visibility: hidden;
+  pointer-events: none;
+}

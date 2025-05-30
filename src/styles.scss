@@ -17,9 +17,7 @@ body{
   width:100%;
 }
 
-// html {
-//   scroll-behavior: smooth;
-// }
+
 
 form{
   padding: 10px;
@@ -556,9 +554,8 @@ h1{
     width: 112px;
     font-size: 20px;
     text-align: center;
-    background: #041a3a;
-    color:white;
-    border:1px solid #041a3a;
+    background: #d5dee7;
+    color: #0f2b46;
   }
   @media (min-width: 768px) and (max-width: 1023px){
     width: 240px;
@@ -1203,3 +1200,56 @@ form #stage_update{
 }
 
 
+
+
+.floating-label label {
+  position: absolute;
+  top: -2.4em;
+  left: 0.5em;
+  font-size: 16px;
+  color: #888;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+  background-color: white;
+  padding: 0 0.25em;
+}
+
+/* État flottant — focus ou champ rempli */
+.floating-label.filled label,
+.floating-label input:focus + label {
+  top: -2.4em;
+  font-size: 12px;
+  color: #333;
+}
+
+
+.floating-label {
+  position: relative;
+  margin-bottom: 1.5em;
+}
+
+.floating-label input {
+  width: 100%;
+  padding: 1.2em 0.5em 0.5em;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  outline: none;
+}
+
+.floating-label label {
+  top: -2.4em;
+  left: 0.4em;
+  font-size: 12px;
+  color: #333;
+  background:transparent;
+}
+
+.floating-label input:focus + label,
+.floating-label.filled label {
+  top: -2.4em;
+  left: 0.4em;
+  font-size: 12px;
+  color: #333;
+}

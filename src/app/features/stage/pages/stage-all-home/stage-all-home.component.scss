@@ -163,13 +163,19 @@ h1 {
     height: 50px;
     margin-top: 10px;
   }
-  
+  #stage_street{
+    display:none;
+  }
+
   .geolocation-button {
     font-size: 14px;
     padding: 8px 16px;
   }
-  
+
   .geo-icon {
     font-size: 16px;
+  }
+  #stage_home_buttons {
+    flex-direction:row-reverse
   }
 }

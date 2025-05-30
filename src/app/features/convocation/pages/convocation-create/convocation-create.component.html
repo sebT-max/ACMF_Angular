@@ -1,33 +1,33 @@
 <form #factureForm="ngForm" class="facture-form">
   <div id="form_convocation">
-    <div>
-      <label>Nom du stagiaire:</label>
-      <input type="text" name="nom" placeholder="Nom complet" [(ngModel)]="convocation.nom" required>
+    <div class="floating-label">
+      <input type="text" name="nom" placeholder=" " [(ngModel)]="convocation.nom" required appFloatingLabel>
+      <label for="nom">Nom du stagiaire:</label>
     </div>
 
-    <div>
+    <div class="floating-label">
       <label>Adresse :</label>
-      <input type="text" name="adresse" placeholder="Adresse postale" [(ngModel)]="convocation.adresse" required>
+      <input type="text" name="adresse" placeholder=" " [(ngModel)]="convocation.adresse" required appFloatingLabel>
     </div>
 
-    <div>
+    <div class="floating-label">
       <label>Numéro de permis :</label>
-      <input type="text" name="permis" placeholder="Ex: 061195100070" [(ngModel)]="convocation.permis" required>
+      <input type="text" name="permis" placeholder=" " [(ngModel)]="convocation.permis" required appFloatingLabel>
     </div>
 
-    <div>
-      <label>Date du stage :</label>
-      <input type="text" name="dateStage" placeholder="Ex: Vendredi 07 Février 2025" [(ngModel)]="convocation.dateStage" required>
+    <div class="floating-label">
+      <label>Date du stage</label>
+      <input type="text" name="dateStage" placeholder=" " [(ngModel)]="convocation.dateStage" required appFloatingLabel>
     </div>
 
-    <div>
-      <label>Horaires :</label>
-      <input type="text" name="horaires" placeholder="Ex: 08h30 à 12h30 et 13h30 à 16h30" [(ngModel)]="convocation.horaires" required>
+    <div class="floating-label">
+      <label>Horaires </label>
+      <input type="text" name="horaires" placeholder=" " [(ngModel)]="convocation.horaires" required appFloatingLabel>
     </div>
 
-    <div>
+    <div class="floating-label">
       <label>Lieu du stage :</label>
-      <input type="text" name="lieu" placeholder="Adresse du lieu" [(ngModel)]="convocation.lieu" required>
+      <input type="text" name="lieu" placeholder="Adresse du lieu" [(ngModel)]="convocation.lieu" required appFloatingLabel>
     </div>
   </div>
   <button type="button" (click)="generatePDF()">📄 Générer convocation PDF</button>
@@ -36,7 +36,7 @@
 <hr>
 <br>
 
-<div class="form_convocation_sending">
+<div>
   <h2>Envoyer le document à l'utilisateur</h2>
 
   <form [formGroup]="convocationSendingForm" (ngSubmit)="handleConvocationSending()" enctype="multipart/form-data">
@@ -55,8 +55,10 @@
       id="Convocation"
     ></p-fileUpload>
 <br>
-    <label for="destinataireEmail">Email du destinataire :</label>
-    <input type="email" formControlName="destinataireEmail" placeholder="Écrire email" required />
+    <div class="floating-label">
+      <label for="destinataireEmail">Email du destinataire :</label>
+      <input type="email" formControlName="destinataireEmail" placeholder=" " required appFloatingLabel/>
+    </div>
 
     <button type="submit" [disabled]="convocationSendingForm.invalid">Envoyer</button>
   </form>

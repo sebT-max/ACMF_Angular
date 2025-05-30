@@ -3,6 +3,7 @@ import jsPDF from 'jspdf';
 import { FormsModule } from '@angular/forms';
 import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
+import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 
 
 interface LigneFacture {
@@ -19,7 +20,8 @@ interface LigneFacture {
     FormsModule,
     DecimalPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    FloatingLabelDirective
   ],
   styleUrls: ['./creation-devis.component.scss']
 })

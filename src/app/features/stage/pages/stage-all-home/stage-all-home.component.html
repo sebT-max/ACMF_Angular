@@ -33,7 +33,7 @@
             @if (stage.distance !== null && stage.distance !== undefined && typeof stage.distance === 'number' && !isInfiniteDistance(stage.distance)) {
               Distance: {{ stage.distance | number:'1.1-1' }} km
             } @else {
-              Distance: Non disponible
+
             }
           </h3>
         </div>
@@ -42,7 +42,7 @@
         <div class="card_stages_all_datas">
           <h2> {{ stage.city }}</h2>
           <hr>
-          <p>{{ stage!.street }}</p>
+          <p id="stage_street">{{ stage!.street }}</p>
         </div>
         <div id="stage_price">
           <h4>{{ stage.price }}€

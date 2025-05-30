@@ -73,10 +73,12 @@
       </div>
 
       <div class="card_stages_remaining_places_and_distance">
-        <h3>
-          Pl. restantes :
-          <strong>{{ stage.capacity === 0 ? 'Complet' : stage.capacity }}</strong>
-        </h3>
+        @if(stage.capacity > 0){
+          <h3>Pl. restantes:<strong> {{ stage?.capacity}}</strong>
+          </h3>
+        } @else{
+          <h2 class="complet">COMPLET</h2>
+        }
         <div *ngIf="stage.distance !== undefined">
           <h3>Distance : {{ stage.distance | number:'1.0-1' }} km</h3>
         </div>
@@ -85,7 +87,7 @@
       <div class="card_stages_all_datas">
         <h2>{{ stage.city }}</h2>
         <hr />
-        <p>{{ stage.street }}</p>
+        <p id="stage_street">{{ stage.street }}</p>
       </div>
 
       <div id="stage_price">

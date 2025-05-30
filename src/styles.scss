@@ -455,7 +455,15 @@ app-document-utilisateur {
   background-color: #b41c1b;
   color:white;
   height:70px;
-  @media (max-width: 767px) {
+  @media (max-width: 430px) {
+    text-align: center;
+    margin: 10px;
+    font-size: 16px;
+    width: 120px;
+    /* padding: 6px; */
+    height: 46px;
+  }
+  @media(min-width:431px) and (max-width: 767px) {
     text-align: center;
     margin-bottom:20px;
     font-size:16px;
@@ -484,7 +492,15 @@ app-document-utilisateur {
   border-radius: 10px;
   background: white;
   margin:0 5px;
-  @media (max-width: 767px) {
+  @media (max-width: 430px) {
+    text-align: center;
+    margin: 10px;
+    font-size: 16px;
+    width: 130px;
+    /* padding: 6px; */
+    height: 46px;
+  }
+  @media (min-width: 431px) and (max-width: 767px) {
     text-align: center;
     margin-bottom:20px;
     font-size:16px;
@@ -550,12 +566,17 @@ h1{
   color:white;
   border-radius: 10px;
   width: 160px;
-  @media (max-width: 767px) {
-    width: 112px;
-    font-size: 20px;
+  @media(max-width: 430px){
+    width: 100%;
+    font-size: 24px;
     text-align: center;
-    background: #d5dee7;
-    color: #0f2b46;
+  }
+  @media (min-width: 431px) and (max-width: 767px) {
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    background: #041a3a;;
+    color: white;
   }
   @media (min-width: 768px) and (max-width: 1023px){
     width: 240px;
@@ -581,9 +602,22 @@ h1{
   color:dimgrey;
   font-family: Poppins-Medium, serif;
   border-radius: 10px;
-  @media (max-width: 767px) {
-    width:60%;
+  @media (max-width: 430px){
+    flex-direction: row;
+    width: 100%;
+    gap: 15%;
+    height: 50px;
+    padding: 16px;
+    font-size: 11px;
+  }
+  @media (min-width: 431px) and (max-width: 767px) {
+    flex-direction: row;
+    width:100%;
     backdrop-filter: blur(50px);
+    font-size:14px;
+    gap: 14%;
+    padding:16px;
+
   }
   @media (min-width: 768px) and (max-width: 1023px){
     padding: 0 7px;
@@ -599,12 +633,16 @@ h1{
   padding: 10px 20px;
   font-family: Poppins-Medium, serif;
   font-size:12px;
-  @media (max-width: 767px) {
-    width:100%;
+
+  @media(max-width:430px){
+    width: 50%;
+    font-size:18px;
+  }
+  @media (min-width:431px) and (max-width: 767px) {
+    width: 100%;
     text-align: center;
-    margin-top:20px;
     h2{
-      font-size:24px;
+      font-size:36px;
     }
     hr{
       margin:5px;
@@ -626,18 +664,18 @@ h1{
   font-family: Poppins-Medium, serif;
   font-size: 20px;
   @media (max-width: 430px) {
-    width:100%;
+    width: 50%;
     text-align: center;
-    margin-bottom:20px;
-    font-size:36px;
-    color:white;
+    font-size: 30px;
+    color: white;
+    padding:0px;
   }
   @media(min-width: 431px) and (max-width: 767px) {
-    padding: 28px;
+    padding: 5px;
     font-family: Poppins-Medium, serif;
     width: 100%;
-    font-size: 40px;
-    color:white;
+    font-size: 30px;
+    color: white;
   }
 }
 
@@ -1204,7 +1242,7 @@ form #stage_update{
 
 .floating-label label {
   position: absolute;
-  top: -2.4em;
+  top: -2.5em;
   left: 0.5em;
   font-size: 16px;
   color: #888;
@@ -1217,7 +1255,7 @@ form #stage_update{
 /* État flottant — focus ou champ rempli */
 .floating-label.filled label,
 .floating-label input:focus + label {
-  top: -2.4em;
+  top: -2.5em;
   font-size: 12px;
   color: #333;
 }
@@ -1239,7 +1277,7 @@ form #stage_update{
 }
 
 .floating-label label {
-  top: -2.4em;
+  top: -2.5em;
   left: 0.4em;
   font-size: 12px;
   color: #333;
@@ -1248,8 +1286,12 @@ form #stage_update{
 
 .floating-label input:focus + label,
 .floating-label.filled label {
-  top: -2.4em;
+  top: -2.5em;
   left: 0.4em;
   font-size: 12px;
   color: #333;
+}
+
+.complet{
+  font-family:Poppins-Bold,sans-serif;
 }

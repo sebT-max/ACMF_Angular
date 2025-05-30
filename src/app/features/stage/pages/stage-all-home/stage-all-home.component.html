@@ -26,9 +26,13 @@
           {{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM':'fr' }}
         </div>
         <div class="card_stages_remaining_places_and_distance">
-          <h3>Pl. restantes:
-            <strong>{{ stage?.capacity === 0 ? "Complet" : stage?.capacity }}</strong>
-          </h3>
+          @if(stage.capacity > 0){
+            <h3>Pl. restantes:<strong> {{ stage?.capacity}}</strong>
+            </h3>
+          } @else{
+            <h2 class="complet">COMPLET</h2>
+            }
+
           <h3>
             @if (stage.distance !== null && stage.distance !== undefined && typeof stage.distance === 'number' && !isInfiniteDistance(stage.distance)) {
               Distance: {{ stage.distance | number:'1.1-1' }} km

@@ -61,11 +61,11 @@
   }
   @media (max-width: 767px) {
     width:100%;
-    text-align:center;
+    text-align:left;
     font-size: 16px;
     border-radius: 0;
     height:auto;
-
+    background: #041a3a;;
     h2{
       display: none;
     }
@@ -73,7 +73,7 @@
       display: none;
     }
     p{
-      color:black;
+      color:white;
     }
   }
   @media (min-width: 768px) and (max-width: 1023px) {
@@ -168,7 +168,7 @@
     width: 100%;
     flex-direction: row;
     padding: 10px;
-    background: white;
+    background: #041a3a;;
     border-radius:0;
   }
 

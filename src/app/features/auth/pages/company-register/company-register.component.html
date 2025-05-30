@@ -7,18 +7,18 @@
     <h1>S'inscrire</h1>
     <p>Inscrivez-vous gratuitement pour accéder à nos services</p>
     <!-- Nom de l'entreprise -->
-    <div>
-    <!--  <label for="name">Nom de l'entreprise</label>-->
-      <input id="name" name="companyName" type="text" placeholder="Nom de l'entreprise" formControlName="name" required />
+    <div class="floating-label">
+    <label for="name">Nom de l'entreprise*</label>
+      <input id="name" name="companyName" type="text" placeholder=" " formControlName="name" required />
       <div *ngIf="companyRegisterForm.get('name')?.invalid && companyRegisterForm.get('name')?.touched" class="error-message">
         Le nom de l'entreprise est requis.
       </div>
     </div>
 
     <!-- Email -->
-    <div>
-      <!--<label for="email">Email</label>-->
-      <input id="email" name="email" type="email" placeholder="email" formControlName="email" required />
+    <div class="floating-label">
+      <label for="email">Email*</label>
+      <input id="email" name="email" type="email" placeholder=" " formControlName="email" required />
       <div *ngIf="companyRegisterForm.get('email')?.invalid && companyRegisterForm.get('email')?.touched" class="error-message">
         <span *ngIf="companyRegisterForm.get('email')?.errors?.['required']">L'email est requis.</span>
         <span *ngIf="companyRegisterForm.get('email')?.errors?.['email']">L'email n'est pas valide.</span>
@@ -26,18 +26,18 @@
     </div>
 
     <!-- Mot de passe -->
-    <div>
-      <!--<label for="password">Mot de passe</label>-->
-      <input id="password" name="password" type="password" placeholder="Mot de passe" formControlName="password" required />
+    <div class="floating-label">
+      <label for="password">Mot de passe*</label>
+      <input id="password" name="password" type="password" placeholder=" " formControlName="password" required />
       <div *ngIf="companyRegisterForm.get('password')?.invalid && companyRegisterForm.get('password')?.touched" class="error-message">
         <span *ngIf="companyRegisterForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
         <span *ngIf="companyRegisterForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
       </div>
     </div>
     <!-- Téléphone -->
-    <div>
-      <!--<label for="telephone">Téléphone :</label>-->
-      <input id="telephone" type="text" placeholder="Téléphone*" formControlName="telephone" />
+    <div class="floating-label">
+      <label for="telephone">Téléphone*</label>
+      <input id="telephone" type="text" placeholder=" " formControlName="telephone" />
       <div *ngIf="companyRegisterForm.get('telephone')?.invalid && companyRegisterForm.get('telephone')?.touched" class="error-message">
         Le téléphone est requis.
       </div>

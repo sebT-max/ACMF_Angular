@@ -1,17 +1,17 @@
 <form [formGroup]="codePromoCreationForm" id="stage_creation_form" (ngSubmit)="handleCodePromoCreation()">
 
-  <div>
+  <div class="floating-label">
     <label for="code">Code</label>
-    <input id="code" type="text" placeholder="Code" formControlName="code" required>
+    <input id="code" type="text" placeholder=" " formControlName="code" required appFloatingLabel>
   </div>
-  <div>
-    <label for="reduction">Réduction</label>
-    <input id="reduction" type="number" placeholder="Réduction(en %)" formControlName="reduction" required>
+  <div class="floating-label">
+    <label for="reduction">Réduction (en %)</label>
+    <input id="reduction" type="number" placeholder=" " formControlName="reduction" required appFloatingLabel>
   </div>
 
-  <div>
+  <div class="floating-label">
     <label for="expiry_date">Date d'expiration</label>
-    <input id="expiry_date" type="date" placeholder="Date d'expiration" formControlName="expiry_date" required>
+    <input id="expiry_date" type="date" placeholder=" " formControlName="expiry_date" required appFloatingLabel>
   </div>
 
   <button type="submit">Créer Code Promo</button>

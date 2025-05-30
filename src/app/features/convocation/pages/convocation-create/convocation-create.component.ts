@@ -14,6 +14,7 @@ import {FileRemoveEvent, FileUpload} from 'primeng/fileupload';
 import {ConvocationDTO} from '../../models/ConvocationDTO';
 import {ConvocationFormDTO} from '../models/ConvocationFormDTO';
 import {ConvocationService} from '../../Services/convocation.service';
+import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 
 @Component({
   selector: 'app-convocation-create',
@@ -21,10 +22,8 @@ import {ConvocationService} from '../../Services/convocation.service';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterLink,
-    NgForOf,
     FileUpload,
-    JsonPipe
+    FloatingLabelDirective
   ],
   templateUrl: './convocation-create.component.html',
   styleUrls: ['./convocation-create.component.scss']

@@ -1,7 +1,7 @@
 .infos_stages_container {
   padding: 2%;
   line-height: 32px;
-  font-family: 'Poppins', system-ui, sans-serif;
+  font-family: 'Poppins-Medium', sans-serif;
   background-image: url(/pic4.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -260,20 +260,18 @@
   }
 }
 
-#conditions_infos_stages {
+.conditions_infos_stages {
   text-align: center;
   font-family: 'Poppins', sans-serif;
   font-weight: 800;
   font-size: 60px;
   padding: 30px;
   background: transparent;
-  font-style: italic;
   color: #041a3a;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
-  opacity: 0;
+  opacity: 1;
   animation: zoomIn 1s ease forwards;
-  margin-top:0px !important;
 
   &:after {
     content: '';
@@ -301,7 +299,6 @@
     font-weight: 800;
     font-size: 60px;
     background: transparent;
-    font-style: italic;
   }
 }
 

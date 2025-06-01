@@ -8,6 +8,13 @@
           <h1>Formulaire d'inscription</h1>
 
           <label>Informations personnelles</label>
+          <div style="padding:0 10%;"><p><small>Si c'est pour une réinsciption, et que vous ne devez pas mettre à jour vos informations personnelles. Connectez-vous.
+          Ensuite, téléversez des fichiers si nécessaire et appuyez sur paiement.</small></p></div>
+          <br>
+          <input id="email" formControlName="email" type="email" placeholder="Email" />
+          <input id="telephone" formControlName="telephone" type="tel" placeholder="Téléphone" />
+
+
 
           <!-- <label for="firstName">Prénom*</label> -->
           <input id="firstName" formControlName="firstName" type="text" placeholder="Prénom" />
@@ -50,10 +57,7 @@
           <!-- <h3>Contact</h3> -->
 
           <!-- <label for="telephone">Téléphone*</label> -->
-          <input id="telephone" formControlName="telephone" type="tel" placeholder="Téléphone" />
-
           <!-- <label for="email">Email*</label> -->
-          <input id="email" formControlName="email" type="email" placeholder="Email" />
         </section>
 
         <!-- Mot de passe -->

@@ -1,12 +1,17 @@
 import {DocumentDTO} from '../../inscription/models/DocumentDTO';
 
 export interface RegisterFormModel {
-  lastname: string;
   firstname: string;
-  email: string;
-  password: string;
-  telephone: string;
+  lastname: string;
+  otherNames: string[];
   birthdate: string;
+  birthplace:string;
+  streetAndNumber: string;
+  zipCode:string;
+  city:string;
+  email: string;
+  telephone: string;
+  password: string;
   acceptTerms:boolean;
   roleId: number;
   documents?: any;

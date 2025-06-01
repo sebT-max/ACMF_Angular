@@ -16,6 +16,9 @@ import {DatePicker} from 'primeng/datepicker';
 import {Toast} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {HttpClient} from '@angular/common/http';
+import {RegisterFormModel} from '../../../auth/models/register-form.model';
+import {debounceTime, distinctUntilChanged} from 'rxjs';
+import {AuthService} from '../../../auth/services/auth.service';
 
 interface FileUploadCard {
   type: string;
@@ -83,13 +86,14 @@ export class InscriptionCreateComponent implements OnInit {
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _fb = inject(FormBuilder);
   private readonly _stripeService = inject(StripeService);
+  private readonly _authService = inject(AuthService);
   private readonly _codePromoService = inject(CodePromoService);
   private readonly messageService = inject(MessageService);
   constructor(private toastr: ToastrService,private primengConfig: PrimeNG,private router: Router, private route: ActivatedRoute, private messagerieService: MessageService, private http: HttpClient,) {
   }
 
   inscriptionCreationForm!: FormGroup;
-  currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
+  currentUser: WritableSignal<RegisterFormModel | null> = signal<RegisterFormModel | null>(null);
 
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
@@ -116,6 +120,7 @@ export class InscriptionCreateComponent implements OnInit {
     {value: 'PROBATOIRE', label: 'Stage obligatoire permis probatoire'},
     {value: 'TRIBUNAL', label: 'Stage obligatoire imposé par le tribunal'}
   ];
+  userExists = false;
 
 
   ngOnInit(): void {
@@ -151,26 +156,96 @@ export class InscriptionCreateComponent implements OnInit {
     }
 
     // Initialiser le formulaire avec les valeurs par défaut
-    this.inscriptionCreationForm = this._fb.group({
-      user: this._fb.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        otherNames: [''],
-        birthdate: ['', Validators.required],
-        birthplace: [''],
-        streetAndNumber: [''],
-        zipCode: [''],
-        city: [''],
-        email: ['', [Validators.required, Validators.email]],
-        telephone: ['', Validators.required],
-        password: ['', Validators.required],
-      }),
-      stageId: [this.stageId, Validators.required],
-      stageType: ['', Validators.required],
-      inscriptionStatut: ['EN_ATTENTE', Validators.required],
-      codePromo: [''],
-      acceptTerms: [false, Validators.requiredTrue] // Valeur par défaut, sera remplacée si sauvegarde trouvée
-    });
+    if (this.currentUser()) {
+      // Utilisateur connecté → formulaire partiellement prérempli et readonly
+      const currentUser = this.currentUser()!;
+      this.inscriptionCreationForm = this._fb.group({
+        user: this._fb.group({
+          firstName: [{ value: currentUser.firstname, disabled: true }],
+          lastName: [{ value: currentUser.lastname, disabled: true }],
+          otherNames: [{ value: currentUser.otherNames || '', disabled: true }],
+          birthdate: [{ value: currentUser.birthdate, disabled: true }],
+          birthplace: [{ value: currentUser.birthplace || '', disabled: true }],
+          streetAndNumber: [{ value: currentUser.streetAndNumber || '', disabled: true }],
+          zipCode: [{ value: currentUser.zipCode || '', disabled: true }],
+          city: [{ value: currentUser.city || '', disabled: true }],
+          email: [{ value: currentUser.email, disabled: true }],
+          telephone: [{ value: currentUser.telephone, disabled: true }],
+          password: [''] // inutilisé
+        }),
+        stageId: [this.stageId, Validators.required],
+        stageType: ['', Validators.required],
+        inscriptionStatut: ['EN_ATTENTE', Validators.required],
+        codePromo: [''],
+        acceptTerms: [false, Validators.requiredTrue]
+      });
+    } else {
+      // Utilisateur NON connecté → formulaire complet
+      this.inscriptionCreationForm = this._fb.group({
+        user: this._fb.group({
+          firstName: ['', Validators.required],
+          lastName: ['', Validators.required],
+          otherNames: [''],
+          birthdate: ['', Validators.required],
+          birthplace: [''],
+          streetAndNumber: [''],
+          zipCode: [''],
+          city: [''],
+          email: ['', [Validators.required, Validators.email]],
+          telephone: ['', Validators.required],
+          password: ['', Validators.required]
+        }),
+        stageId: [this.stageId, Validators.required],
+        stageType: ['', Validators.required],
+        inscriptionStatut: ['EN_ATTENTE', Validators.required],
+        codePromo: [''],
+        acceptTerms: [false, Validators.requiredTrue]
+      });
+
+      // Détection d'email déjà existant
+      this.inscriptionCreationForm.get('user.email')?.valueChanges
+        .pipe(debounceTime(400), distinctUntilChanged())
+        .subscribe(email => {
+          this._authService.getUserByEmail(email).subscribe({
+            next: userData => {
+              // Utilisateur trouvé → préremplissage
+              const userGroup = this.inscriptionCreationForm.get('user') as FormGroup;
+              userGroup.patchValue({
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                otherNames: userData.otherNames || '',
+                birthdate: userData.birthdate,
+                birthplace: userData.birthplace || '',
+                streetAndNumber: userData.streetAndNumber || '',
+                zipCode: userData.zipCode || '',
+                city: userData.city || '',
+                telephone: userData.telephone || ''
+              });
+
+              // Supprimer mot de passe
+              userGroup.get('password')?.clearValidators();
+              userGroup.get('password')?.setValue('');
+              userGroup.get('password')?.updateValueAndValidity();
+
+              this.userExists = true;
+            },
+            error: err => {
+              if (err.status === 404) {
+                // Utilisateur non trouvé
+                this.userExists = false;
+                const pwdControl = this.inscriptionCreationForm.get('user.password');
+                pwdControl?.setValidators(Validators.required);
+                pwdControl?.updateValueAndValidity();
+              } else {
+                // Autre erreur réseau ou serveur
+                console.error('Erreur API getUserByEmail', err);
+              }
+            }
+          });
+        });
+
+    }
+
 
     // Restaurer depuis le localStorage
 
@@ -330,6 +405,7 @@ export class InscriptionCreateComponent implements OnInit {
       documents: [],
       codePromo: this.inscriptionCreationForm.value.codePromo || null
     };
+    console.log(inscriptionData);
     const formData = new FormData();
     formData.append('request', new Blob([JSON.stringify(inscriptionData)], {type: 'application/json'}));
 

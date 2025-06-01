@@ -18,6 +18,7 @@ export class StripeService {
       amount: amount,
       productName: this.generateProductName(stage)
     };
+    console.log(checkoutData)
 
     return this.http.post<{ url: string }>(
       `${API_URL}payments/create-checkout-session`,

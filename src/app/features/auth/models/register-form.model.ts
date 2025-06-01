@@ -7,7 +7,7 @@ export interface RegisterFormModel {
   birthdate: string;
   birthplace:string;
   streetAndNumber: string;
-  zipCode:number;
+  zipCode:string;
   city:string;
   email: string;
   telephone: string;

@@ -8,6 +8,7 @@ import { UserResponseModel } from '../models/user-response.model';
 import { CompanyRegisterFormModel } from '../models/company-register-form-model';
 import { CompanyTokenModel } from '../models/CompanyTokenModel';
 import {API_URL} from '../../../../core/constant';
+import {ParticulierDTO} from '../../inscription/models/ParticulierDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -194,14 +195,22 @@ export class AuthService {
 
   getUserById(id: number): Observable<UserResponseModel> {
     return this._httpClient.get<UserResponseModel>(
-      `${API_URL}user/${id}`,
+      `${API_URL}users/${id}`,
       this.getAuthOptions(),
     );
   }
 
+  getUserByEmail(email: string): Observable<ParticulierDTO> {
+    const encodedEmail = encodeURIComponent(email);
+    return this._httpClient.get<ParticulierDTO>(
+    `${API_URL}users/email/${encodedEmail}`,
+    this.getAuthOptions(),
+    )
+        ;}
+
   getUsers(): Observable<UserResponseModel[]> {
     return this._httpClient.get<UserResponseModel[]>(
-      `${API_URL}user/all`,
+      `${API_URL}users/all`,
       this.getAuthOptions(),
     );
   }

@@ -1,3 +1,4 @@
+/*
 import {Component, inject, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import {
@@ -144,3 +145,4 @@ export class RegisterComponent implements OnInit {
     });
   }
 }
+*/

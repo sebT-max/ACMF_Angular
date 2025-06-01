@@ -1,3 +1,4 @@
+/*
 .register_form_container {
   width: 100%;
   margin: 0 auto;
@@ -130,7 +131,7 @@ form{
   font-size: 12px;
   margin-top: 5px;
   width: auto;
-  /* padding: 5px; */
+  !* padding: 5px; *!
   transition-delay: 2s;
   position: absolute;
   transform: translate(10px, 25px);
@@ -156,7 +157,7 @@ form div {
   flex-direction: column;
   align-items: center;
 }
-/*.upload-box {
+!*.upload-box {
   width: 300px !important;
 }
 !* Styles pour le modal *!
@@ -210,7 +211,8 @@ form div {
 
 .upload-container p-fileUpload {
   width: 100%;
-}*/
+}*!
 
 
 
+*/

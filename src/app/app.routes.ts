@@ -35,13 +35,13 @@ export const routes: Routes = [
       import('./features/home/pages/conditions-générales-vente/conditionsgeneralesdevente.component').then
       ((c) => c.ConditionsGeneralesDeVenteComponent),
   },
-  {
+ /* {
     path: 'particulier/register',
     loadComponent: () =>
       import('./features/auth/pages/register/register.component').then(
         (c) => c.RegisterComponent,
       ),
-  },
+  },*/
   {
     path: 'company/register',
     loadComponent: () =>

@@ -16,6 +16,7 @@ import {DatePicker} from 'primeng/datepicker';
 import {Toast} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {HttpClient} from '@angular/common/http';
+import {RegisterFormModel} from '../../../auth/models/register-form.model';
 
 interface FileUploadCard {
   type: string;
@@ -89,7 +90,7 @@ export class InscriptionCreateComponent implements OnInit {
   }
 
   inscriptionCreationForm!: FormGroup;
-  currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
+  currentUser: WritableSignal<RegisterFormModel | null> = signal<RegisterFormModel | null>(null);
 
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
@@ -151,26 +152,52 @@ export class InscriptionCreateComponent implements OnInit {
     }
 
     // Initialiser le formulaire avec les valeurs par défaut
-    this.inscriptionCreationForm = this._fb.group({
-      user: this._fb.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        otherNames: [''],
-        birthdate: ['', Validators.required],
-        birthplace: [''],
-        streetAndNumber: [''],
-        zipCode: [''],
-        city: [''],
-        email: ['', [Validators.required, Validators.email]],
-        telephone: ['', Validators.required],
-        password: ['', Validators.required],
-      }),
-      stageId: [this.stageId, Validators.required],
-      stageType: ['', Validators.required],
-      inscriptionStatut: ['EN_ATTENTE', Validators.required],
-      codePromo: [''],
-      acceptTerms: [false, Validators.requiredTrue] // Valeur par défaut, sera remplacée si sauvegarde trouvée
-    });
+    if (this.currentUser()) {
+      const currentUser = this.currentUser()!;
+      this.inscriptionCreationForm = this._fb.group({
+        user: this._fb.group({
+          firstName: [{ value: currentUser.firstname, disabled: true }],
+          lastName: [{ value: currentUser.lastname, disabled: true }],
+          otherNames: [{ value: currentUser.otherNames || '', disabled: true }],
+          birthdate: [{ value: currentUser.birthdate, disabled: true }],
+          birthplace: [{ value: currentUser.birthplace || '', disabled: true }],
+          streetAndNumber: [{ value: currentUser.streetAndNumber || '', disabled: true }],
+          zipCode: [{ value: currentUser.zipCode || '', disabled: true }],
+          city: [{ value: currentUser.city || '', disabled: true }],
+          email: [{ value: currentUser.email, disabled: true }],
+          telephone: [{ value: currentUser.telephone, disabled: true }],
+          password: [''], // Champ inutile ici
+        }),
+        stageId: [this.stageId, Validators.required],
+        stageType: ['', Validators.required],
+        inscriptionStatut: ['EN_ATTENTE', Validators.required],
+        codePromo: [''],
+        acceptTerms: [false, Validators.requiredTrue]
+      });
+    } else {
+      // Utilisateur NON connecté : formulaire complet
+      this.inscriptionCreationForm = this._fb.group({
+        user: this._fb.group({
+          firstName: ['', Validators.required],
+          lastName: ['', Validators.required],
+          otherNames: [''],
+          birthdate: ['', Validators.required],
+          birthplace: [''],
+          streetAndNumber: [''],
+          zipCode: [''],
+          city: [''],
+          email: ['', [Validators.required, Validators.email]],
+          telephone: ['', Validators.required],
+          password: ['', Validators.required],
+        }),
+        stageId: [this.stageId, Validators.required],
+        stageType: ['', Validators.required],
+        inscriptionStatut: ['EN_ATTENTE', Validators.required],
+        codePromo: [''],
+        acceptTerms: [false, Validators.requiredTrue]
+      });
+    }
+
 
     // Restaurer depuis le localStorage
 

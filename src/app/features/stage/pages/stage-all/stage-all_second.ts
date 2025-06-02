@@ -19,13 +19,11 @@ import {PrimeNG} from 'primeng/config';
   templateUrl: './stage-all.component.html',
   imports: [
     StageDetailsComponent,
-    DatePipe,
     FormsModule,
     RouterLink,
     NgIf,
     DecimalPipe,
     ReactiveFormsModule,
-    NgOptimizedImage,
     CalendarModule,
     DatePicker
   ],

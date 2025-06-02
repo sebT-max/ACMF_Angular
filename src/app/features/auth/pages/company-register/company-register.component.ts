@@ -179,7 +179,7 @@ export class CompanyRegisterComponent implements OnInit {
             if (loginResponse) {
               console.log('Connexion automatique réussie !');
               this.toastr.success("Vous êtes maintenant connecté !", "Connexion réussie");
-              this._router.navigate(['/dashboard']); // Ou ta route d'accueil
+              this._router.navigate(['/dashboard-company']); // Ou ta route d'accueil
             } else {
               console.error('Réponse login vide');
               this.toastr.warning("Inscription réussie, mais veuillez vous connecter manuellement", "Connexion manuelle requise");

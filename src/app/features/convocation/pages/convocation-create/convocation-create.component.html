@@ -36,7 +36,7 @@
 <hr>
 <br>
 
-<div>
+<div style="padding:0 16%;">
   <h2>Envoyer le document à l'utilisateur</h2>
 
   <form [formGroup]="convocationSendingForm" (ngSubmit)="handleConvocationSending()" enctype="multipart/form-data">
@@ -54,12 +54,11 @@
       [maxFileSize]="5000000"
       id="Convocation"
     ></p-fileUpload>
-<br>
+    <br>
     <div class="floating-label">
       <label for="destinataireEmail">Email du destinataire :</label>
-      <input type="email" formControlName="destinataireEmail" placeholder=" " required appFloatingLabel/>
+      <input  id="destinataireEmail" type="email" formControlName="destinataireEmail" placeholder=" " required appFloatingLabel/>
     </div>
-
     <button type="submit" [disabled]="convocationSendingForm.invalid">Envoyer</button>
   </form>
 </div>

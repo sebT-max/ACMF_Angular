@@ -7,6 +7,7 @@ import {FileUpload} from 'primeng/fileupload';
 import {TokenModel} from '../auth/models/token.model';
 import {DocumentService} from '../document/pages/services/document.services';
 import {ToastrService} from 'ngx-toastr';
+import {FloatingLabelDirective} from '../../shared/floating-label/floating-label.directives';
 
 
 interface LigneFacture {
@@ -25,15 +26,14 @@ interface LigneFacture {
     NgForOf,
     NgIf,
     FileUpload,
-    JsonPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FloatingLabelDirective
   ],
   styleUrls: ['./facture.component.scss']
 })
 export class FactureComponent implements OnInit {
   private readonly _fb = inject(FormBuilder);
   private readonly documentService = inject(DocumentService);
-
   factureSendingForm!: FormGroup;
   currentUser: WritableSignal<TokenModel | null> = signal<TokenModel | null>(null);
 
@@ -42,13 +42,10 @@ export class FactureComponent implements OnInit {
   };
   fontsLoaded = false;
 
-  async ngOnInit(): Promise<void> {
-    try {
-      await this.loadScript('assets/fonts/Poppins-Regular-normal.js');
-      this.fontsLoaded = true;
-    } catch (error) {
-      console.error('Erreur chargement police', error);
-    }
+  ngOnInit(): void {
+    this.loadScript('assets/fonts/Poppins-Regular-normal.js')
+      .then(() => this.fontsLoaded = true)
+      .catch(error => console.error('Erreur chargement police', error));
 
     const localStorageUser = localStorage.getItem('currentUser');
     if (localStorageUser) {
@@ -62,10 +59,15 @@ export class FactureComponent implements OnInit {
 
     this.factureSendingForm = this._fb.group({
       userId: [this.currentUser()?.id ?? null, Validators.required],
-      documentType: ['FACTURE', Validators.required],
+      documentType: ['FACTURE', Validators.required], // fixé
       destinataireEmail: ['', [Validators.required, Validators.email]],
     });
+    console.log(this.factureSendingForm.value)
   }
+
+
+  //Fin ngOnInit
+
   onFilesChange(event: any): void {
     const files: File[] = event.files || [];
 
@@ -102,11 +104,13 @@ export class FactureComponent implements OnInit {
   handleFactureSending(): void {
     const formData = new FormData();
     const email = this.factureSendingForm.get('destinataireEmail')?.value;
+    console.log('Email récupéré:', email);
 
     if (!email) {
       this.toastr.error('Veuillez remplir l’email du destinataire.');
       return;
     }
+
 
     formData.append('type', 'FACTURE');
     formData.append('destinataireEmail', email);
@@ -127,8 +131,6 @@ export class FactureComponent implements OnInit {
       }
     });
   }
-
-
 
   entreprise = {
     nom: 'ACF Actions Conduite France',

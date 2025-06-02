@@ -10,8 +10,7 @@ import {PrimeNG} from 'primeng/config';
   imports: [
     DatePicker,
     FormsModule,
-    ReactiveFormsModule,
-    RouterLink
+    ReactiveFormsModule
   ],
   templateUrl: './stage-update.component.html',
   styleUrls: ['./stage-update.component.scss']  // Correction ici

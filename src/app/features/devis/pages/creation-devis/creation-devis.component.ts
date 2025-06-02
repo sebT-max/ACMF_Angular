@@ -20,8 +20,7 @@ interface LigneFacture {
     FormsModule,
     DecimalPipe,
     NgForOf,
-    NgIf,
-    FloatingLabelDirective
+    NgIf
   ],
   styleUrls: ['./creation-devis.component.scss']
 })

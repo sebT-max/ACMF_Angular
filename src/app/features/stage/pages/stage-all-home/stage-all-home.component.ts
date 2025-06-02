@@ -17,8 +17,7 @@ import { environment } from '../../../../../environments/environment';
     FormsModule,
     RouterLink,
     NgIf,
-    DecimalPipe,
-    NgForOf // Ajout de NgForOf qui pourrait être nécessaire
+    DecimalPipe
   ],
   styleUrls: ['./stage-all-home.component.scss']
 })
@@ -27,12 +26,12 @@ export class StageAllHomeComponent implements OnInit {
   @Input() limit: number | null = null;
 
   private readonly _router: Router = inject(Router);
-  
+
   stageHomes: StageWithDistance[] = [];
   selectedStage: StageWithDistance | null = null;
   userLatitude: number | null = null;
   userLongitude: number | null = null;
-  
+
   // Propriétés pour le bouton de géolocalisation
   isGeolocating: boolean = false;
   geoError: string | null = null;
@@ -50,7 +49,7 @@ export class StageAllHomeComponent implements OnInit {
   ngOnInit() {
     // On charge les stages d'abord sans géolocalisation
     this.loadStages();
-    
+
     // On peut ensuite tenter une géolocalisation automatique si souhaité
     // Commenté pour permettre l'utilisation du bouton explicite
     // this.tryAutomaticGeolocation();
@@ -203,16 +202,16 @@ export class StageAllHomeComponent implements OnInit {
       // Gérer les cas où distance est null ou undefined
       const distanceA = a.distance ?? Number.POSITIVE_INFINITY;
       const distanceB = b.distance ?? Number.POSITIVE_INFINITY;
-      
+
       // Priorité à la distance
       if (distanceA !== distanceB) {
         // Mettre les distances infinies (non calculables) à la fin
         if (!isFinite(distanceA)) return 1;
         if (!isFinite(distanceB)) return -1;
-        
+
         return distanceA - distanceB;
       }
-      
+
       // Si les distances sont égales, trier par date
       return new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime();
     });

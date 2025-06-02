@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-upload',
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './admin-upload.component.html',
   styleUrl: './admin-upload.component.scss'

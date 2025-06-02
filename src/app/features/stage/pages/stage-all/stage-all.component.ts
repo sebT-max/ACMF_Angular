@@ -21,13 +21,11 @@ import {DateRangePipe} from '../../../../shared/pipes/date-range/date-range.pipe
   styleUrls: ['./stage-all.component.scss'],
   imports: [
     StageDetailsComponent,
-    DatePipe,
     FormsModule,
     RouterLink,
     NgIf,
     DecimalPipe,
     ReactiveFormsModule,
-    NgOptimizedImage,
     CalendarModule,
     DatePicker,
     NgForOf,

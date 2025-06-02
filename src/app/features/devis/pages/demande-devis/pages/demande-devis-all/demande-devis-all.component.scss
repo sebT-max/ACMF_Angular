@@ -149,8 +149,13 @@ td{
   tbody, tr, td {
     display: block;
     width: 100%;
+    background: white !important;
   }
   thead{
     display:none;
+  }
+  tr{
+    background:#041a3a !important;
+    padding:10px;
   }
 }

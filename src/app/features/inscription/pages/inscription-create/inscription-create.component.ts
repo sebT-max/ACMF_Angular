@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { StageService } from '../../../stage/services/stage.service';
 import { InscriptionService } from '../../inscription-services';
 import { InscriptionFormModel } from '../../models/inscription-form.model';
-import { TokenModel } from '../../../auth/models/token.model';
 import { StageDetailsModel } from '../../../stage/models/stage-details-model';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {FileUpload} from 'primeng/fileupload';
@@ -44,9 +43,7 @@ interface FileRemoveEvent {
     NgIf,
     NgForOf,
     DatePipe,
-    FileUpload,
-    DatePicker,
-    Toast
+    DatePicker
   ],
   templateUrl: './inscription-create.component.html',
   styleUrls: ['./inscription-create.component.scss'],

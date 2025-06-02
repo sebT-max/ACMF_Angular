@@ -140,12 +140,12 @@
 <br>
 <hr>
 <br>
-<div class="form_convocation_sending">
+<div style="padding:0 10%;">
   <h2>Envoyer la facture à l'utilisateur</h2>
 
   <form [formGroup]="factureSendingForm" (ngSubmit)="handleFactureSending()" enctype="multipart/form-data">
     <p-fileUpload
-      name="Convocation"
+      name="Facture"
       [customUpload]="true"
       (onSelect)="onFilesChange($event)"
       (onRemove)="onRemoveFile($event)"
@@ -156,11 +156,13 @@
       chooseLabel="Charger la facture"
       mode="advanced"
       [maxFileSize]="5000000"
-      id="Convocation"
+      id="Facture"
     ></p-fileUpload>
     <br>
-    <label for="destinataireEmail">Email du destinataire :</label>
-    <input type="email" formControlName="destinataireEmail" placeholder="Écrire email" required />
+    <div class="floating-label">
+      <label for="destinataireEmail">Email du destinataire :</label>
+      <input id="destinataireEmail" type="email" formControlName="destinataireEmail" placeholder=" " required appFloatingLabel />
+    </div>
     <button type="submit" [disabled]="factureSendingForm.invalid">Envoyer</button>
   </form>
 </div>

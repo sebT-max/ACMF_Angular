@@ -1,19 +1,10 @@
 import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import jsPDF from 'jspdf';
-import {RouterLink} from '@angular/router';
-import {JsonPipe, NgForOf} from '@angular/common';
 import {TokenModel} from '../../../auth/models/token.model';
 import {ToastrService} from 'ngx-toastr';
-import {InscriptionService} from '../../../inscription/inscription-services';
 import {DocumentService} from '../../../document/pages/services/document.services';
-import {async} from 'rxjs';
-import {InscriptionFormModel} from '../../../inscription/models/inscription-form.model';
-import {DocumentDTO} from '../../../inscription/models/DocumentDTO';
-import {FileRemoveEvent, FileUpload} from 'primeng/fileupload';
-import {ConvocationDTO} from '../../models/ConvocationDTO';
-import {ConvocationFormDTO} from '../models/ConvocationFormDTO';
-import {ConvocationService} from '../../Services/convocation.service';
+import {FileUpload} from 'primeng/fileupload';
 import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 
 @Component({

@@ -5,8 +5,7 @@ import {NgOptimizedImage} from "@angular/common";
 @Component({
   selector: 'app-footer',
     imports: [
-        RouterLink,
-        NgOptimizedImage
+        RouterLink
     ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'

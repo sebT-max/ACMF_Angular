@@ -12,9 +12,7 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
   selector: 'app-stage-details',
   templateUrl: './stage-details.component.html',
   styleUrls: ['./stage-details.component.scss'],
-  imports: [
-    DatePipe
-  ],
+  imports: [],
   standalone: true
 })
 export class StageDetailsComponent implements AfterViewInit, OnDestroy {

@@ -10,7 +10,6 @@ import {DocumentMeComponent} from '../../features/document/pages/document-me/doc
   imports: [
     DatePipe,
     CommonModule,
-    InscriptionStatutPipe,
     DocumentMeComponent
   ],
   templateUrl: './client-dashboard.component.html',

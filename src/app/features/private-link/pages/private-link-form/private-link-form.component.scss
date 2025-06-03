@@ -15,6 +15,9 @@
 
   h1{
     margin:20px 0;
+    @media (max-width: 767px) {
+      text-align:center;
+    }
   }
 }
 
@@ -35,9 +38,12 @@ form{
   background:transparent;
   color:grey;
   padding:40px 0px;
-  width:50%;
+  width:100%;
   div{
-    width:45%;
+    width:90%;
+    @media(min-width:768px){
+      width:45%;
+    }
   }
   h1{
     color:white;
@@ -60,9 +66,10 @@ form{
     background:whitesmoke;
     &:focus{
      background:white;
-    color:black !important;
+     color:black !important;
     }
   }
+
   #acceptTerms{
     box-shadow:0px 0px 0px white;
     width:10px;
@@ -212,11 +219,20 @@ p-button{
 .p-fileupload-header{
   display:flex;
 }
-.p-fileupload-file-actions
 
-{
-  margin-left: auto;
-  background: white !important;
+form #birthdatePrivateLinks{
+  margin: 10px auto 0;
+  height: 53px;
+  width:90%;
+  @media(min-width:768px){
+    width:45%;
+  }
+  span{
+    height: 53px;
+  }
+}
+.p-datepicker{
+  height: 53px !important;
 }
 
 

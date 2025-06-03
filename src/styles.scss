@@ -688,7 +688,7 @@ h1{
   max-width: 400px;
   border: 0.5px solid #ccc;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-  height: 44px;
+  height: 53px;
   font-size: 1rem;
   background-color: white;
 }
@@ -1021,6 +1021,11 @@ form #stage_update{
     height:88px !important;
     border-radius: 10px !important;
   }
+}
+.p-fileupload-file-actions
+{
+  margin-left: auto;
+  background: white !important;
 }
 
 .upload-container {

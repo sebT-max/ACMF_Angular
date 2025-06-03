@@ -52,17 +52,12 @@ export class AuthService {
     }
   }
   getCompanyByEmailPublic(email: string): Observable<CompanyTokenModel> {
-    console.log('Appel API pour obtenir l\'entreprise avec l\'email:', email); // Affiche l'email utilisé
-
+    console.log('Appel API readonly pour entreprise avec email:', email);
     return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`).pipe(
-      tap((resp: CompanyTokenModel) => {
-        console.log('Réponse de l\'API:', resp); // Affiche la réponse de l'API
-        this.currentCompany.set(resp);
-        localStorage.setItem('currentCompany', JSON.stringify(resp));
-      }),
+      tap((resp) => console.log('Réponse entreprise readonly:', resp)),
       catchError(err => {
-        console.error('Erreur API:', err);
-        return throwError(() => new Error('Erreur lors de l\'appel API'));
+        console.error('Erreur API readonly:', err);
+        return throwError(() => new Error('Erreur lors de la récupération de l\'entreprise'));
       })
     );
   }

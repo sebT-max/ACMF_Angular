@@ -2,18 +2,21 @@
   <form [formGroup]="privateLinkForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="register_form">
     <h1>Formulaire d'inscription</h1>
     <div class="floating-label">
+      <label for="lastname">Nom*</label>
       <input id="lastname" type="text" placeholder=" " formControlName="lastname" required  appFloatingLabel />
       <div *ngIf="privateLinkForm.get('lastname')?.invalid && privateLinkForm.get('lastname')?.touched" class="error-message">
         Le nom est requis.
       </div>
     </div>
     <div class="floating-label">
+      <label for="firstname">Prénom(s)*</label>
       <input id="firstname" type="text" placeholder=" " formControlName="firstname" required  appFloatingLabel/>
       <div *ngIf="privateLinkForm.get('firstname')?.invalid && privateLinkForm.get('firstname')?.touched" class="error-message">
         Le prénom est requis.
       </div>
     </div>
     <div class="floating-label">
+      <label for="email">Adresse e-mail*</label>
       <input id="email" type="email" placeholder=" " formControlName="email" required  appFloatingLabel/>
       <div *ngIf="privateLinkForm.get('email')?.invalid && privateLinkForm.get('email')?.touched" class="error-message">
         <span *ngIf="privateLinkForm.get('email')?.errors?.['required']">L'email est requis.</span>
@@ -21,19 +24,34 @@
       </div>
     </div>
     <div class="floating-label">
+      <label for="password">Mot de passe (accès à votre espace)*</label>
       <input id="password" type="password" placeholder=" " formControlName="password" required  appFloatingLabel/>
       <div *ngIf="privateLinkForm.get('password')?.invalid && privateLinkForm.get('password')?.touched" class="error-message">
         <span *ngIf="privateLinkForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
         <span *ngIf="privateLinkForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>
       </div>
     </div>
-    <div class="floating-label">
+    <p-datepicker
+      [showIcon]="false"
+      [showButtonBar]="true"
+      [readonlyInput]="true"
+      dateFormat="dd/mm/yy"
+      id="birthdate"
+      formControlName="birthdate"
+      placeholder="Date de naissance"
+    ></p-datepicker>
+    <div *ngIf="privateLinkForm.get('birthDate')?.invalid && privateLinkForm.get('birthDate')?.touched" class="error-message">
+      La date de naissance est requise.
+    </div>
+    <!--<div class="floating-label">
+      <label for="birthDate">Date de naissance*</label>
       <input id="birthDate" type="date" placeholder=" " formControlName="birthDate" required  appFloatingLabel />
       <div *ngIf="privateLinkForm.get('birthDate')?.invalid && privateLinkForm.get('birthDate')?.touched" class="error-message">
         La date de naissance est requise.
       </div>
-    </div>
+    </div>-->
     <div class="floating-label">
+      <label for="telephone">Téléphone*</label>
       <input id="telephone" type="text" placeholder=" " formControlName="telephone" required  appFloatingLabel />
       <div *ngIf="privateLinkForm.get('telephone')?.invalid && privateLinkForm.get('telephone')?.touched" class="error-message">
         Le téléphone est requis.

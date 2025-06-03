@@ -21,6 +21,7 @@ td{
   line-height:36px;
   font-family:Poppins-Medium,serif;
   padding:10px;
+  border: 1px solid white;
   div{
     margin:0 20px;
     line-height: 30px;
@@ -41,10 +42,7 @@ th{
   font-family: Poppins-SemiBold,serif;
 }
 tr{
-  border:2px solid grey;
-  @media(min-width: 1023px){
-    border: 2px solid white;
-  }
+  border: 20px solid white;
 }
 
 button{
@@ -166,6 +164,7 @@ inscriptions_stages_datas_th{
 }
 .details-cell {
   width: 40%;
+  border-right:1px solid white;
   @media(max-width: 1023px){
     width:100%;
   }
@@ -248,6 +247,12 @@ inscriptions_stages_datas_th{
   border-radius: 5px;
   @media(max-width: 767px){
     padding:2%;
+  }
+  @media(min-width: 768px)and (max-width: 1439px){
+    width:100%;
+  }
+  @media(min-width: 1440px){
+    width:1200px;
   }
 }
 .header-section {

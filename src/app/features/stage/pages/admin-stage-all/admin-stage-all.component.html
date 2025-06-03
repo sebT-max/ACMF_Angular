@@ -36,7 +36,8 @@
       <thead>
       <tr>
         <th>Date</th>
-        <th>Détails</th>
+        <th>Numéro et adresse</th>
+        <th>Horaires et prix</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -47,15 +48,21 @@
             <td class="date-cell">
               <p class="dates"><strong>{{ stage?.dateDebut | date:'d':'fr' }} & {{ stage?.dateFin | date:'d MMMM yyyy':'fr' }}</strong></p>
 
-              <p class="capacity">Capacité restante : {{ stage?.capacity }}</p>
+              <p class="capacity">Pl. restantes : {{ stage?.capacity }}</p>
             </td>
             <td class="details-cell">
               <div class="details-grid">
                 <div class="location-details">
-                  <p><strong>Ville :</strong> {{ stage.city }}</p>
-                  <p><strong>Numéro de stage :</strong> {{ stage.number }}</p>
-                  <p><strong>Rue :</strong> {{ stage.street }}</p>
+                  <p><strong>N°:</strong> {{ stage.number }}</p>
+                  <p><strong></strong> {{ stage.city }}</p>
+                  <p><strong></strong> {{ stage.street }}</p>
                 </div>
+
+
+              </div>
+            </td>
+            <td class="details-cell">
+              <div class="details-grid">
                 <div class="org-details">
                   <p>{{ stage.organisation }}</p>
                   <p><strong>Prix :</strong> {{ stage.price }}€</p>

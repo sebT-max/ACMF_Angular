@@ -22,10 +22,9 @@ td{
   font-family: Poppins-Medium, serif;
   padding: 12px 20px;
   div{
-    margin:0px 20px;
     line-height: 30px;
     @media(max-width: 767px){
-     text-align:center;
+     text-align:left;
     }
   }
   button{
@@ -38,12 +37,13 @@ th{
   font-size: 28px;
   color:#041a3a;
   font-family: Poppins-SemiBold,serif;
+  @media(max-width: 1023px){
+    padding:20px;
+    font-size: 20px;
+  }
 }
 tr{
-  border:2px solid grey;
-  @media(min-width: 1023px){
-    border: 2px solid white;
-  }
+  border:20px solid white;
 }
 
 button{
@@ -161,15 +161,20 @@ inscriptions_stages_datas_th{
   }
 }
 .date-cell {
-  width: 25%;
+  width: 22%;
   background-color: #041a3a;
   color:white;
+  text-align:center;
   @media (max-width: 767px) {
     display: block;
     width: 100%;
     font-size: 1.6rem;
     background-color: rgb(4 26 58);
     color: white;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    font-size: 12px;
+    width:18%;
   }
   .dates{
     @media (max-width: 767px) {
@@ -197,22 +202,32 @@ inscriptions_stages_datas_th{
   }
 }
 .details-cell {
-  width: 40%;
+  width: 22%;
+  border-right: 1px solid white;
   @media (max-width: 767px) {
     display: block;
     width: 100%;
+    border:1px solid white;
+  }
+
+  @media (min-width:768px) and (max-width: 1023px) {
+    font-size:12px;
   }
 
   .details-grid {
-    gap: 20px;
+    display:flex;
+    flex-wrap: wrap;
+
     @media(max-width: 430px){
       width:100%;
       gap:0;
     }
 
+    @media(min-width: 1024px){
+      width:100%;
+      gap:0;
+    }
     .location-details, .org-details {
-      flex: 1;
-
       p {
         margin: 5px 0;
       }
@@ -220,7 +235,7 @@ inscriptions_stages_datas_th{
   }
 }
 .actions-cell {
-  width: 15%;
+  width: 13%;
   @media(max-width: 767px){
     width:100%;
   }
@@ -239,6 +254,10 @@ inscriptions_stages_datas_th{
     font-weight: normal;
     @media(max-width: 767px){
       width:100%;
+    }
+    @media(min-width: 768px)and (max-width: 1023px){
+      width:100%;
+      font-size:12px;
     }
     &.edit {
       background-color: #041a3a;
@@ -314,8 +333,11 @@ inscriptions_stages_datas_th{
   @media(max-width: 767px){
     padding:2%;
   }
-  @media(min-width: 768px){
-    width:765px;
+  @media(min-width: 768px)and (max-width: 1439px){
+    width:100%;
+  }
+  @media(min-width: 1440px){
+    width:1200px;
   }
 }
 .header-section {
@@ -418,7 +440,7 @@ inscriptions_stages_datas_th{
 
   .results-count {
     font-weight: 500;
-    color: #041a3a !important;
+    color: #ffffff !important;
   }
 
   .no-results {

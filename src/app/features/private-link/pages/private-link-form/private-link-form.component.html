@@ -31,13 +31,29 @@
         <span *ngIf="privateLinkForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>
       </div>
     </div>
+
+    <div class="floating-label">
+      <label for="streetAndNumber"> Rue et numéro*</label>
+      <input id="streetAndNumber" formControlName="streetAndNumber" type="text" placeholder=" " />
+    </div>
+
+    <div class="floating-label">
+      <label for="zipCode">Code Postal*</label>
+        <input id="zipCode" formControlName="zipCode" type="number" placeholder=" " />
+    </div>
+
+    <div class="floating-label">
+      <label for="city">Ville</label>
+      <input id="city" formControlName="city" type="text" placeholder=" " />
+    </div>
+
     <p-datepicker
       [showIcon]="false"
       [showButtonBar]="true"
       [readonlyInput]="true"
       dateFormat="dd/mm/yy"
       id="birthdatePrivateLinks"
-      formControlName="birthdate"
+      formControlName="birthDate"
       placeholder="Date de naissance"
     ></p-datepicker>
     <div *ngIf="privateLinkForm.get('birthDate')?.invalid && privateLinkForm.get('birthDate')?.touched" class="error-message">
@@ -50,6 +66,14 @@
         La date de naissance est requise.
       </div>
     </div>-->
+    <div class="floating-label">
+      <label for="birthPlace">Lieu de naissance*</label>
+      <input id="birthPlace" type="text" placeholder=" " formControlName="birthPlace" required  appFloatingLabel />
+      <div *ngIf="privateLinkForm.get('birthPlace')?.invalid && privateLinkForm.get('birthPlace')?.touched" class="error-message">
+        Le téléphone est requis.
+      </div>
+    </div>
+
     <div class="floating-label">
       <label for="telephone">Téléphone*</label>
       <input id="telephone" type="text" placeholder=" " formControlName="telephone" required  appFloatingLabel />

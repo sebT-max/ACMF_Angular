@@ -24,76 +24,79 @@
 
   <div *ngIf="activeTab === 'inscriptions'" class="tab-content">
     <h2>Inscriptions</h2>
+    <div class="company_dashboard_tab_bg">
 
     <ng-container *ngIf="inscriptions.length > 0; else noInscriptions">
-      <table>
-        <thead>
-        <tr>
-          <th>Données du stage</th>
-          <th>Documents</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let inscription of inscriptions">
-          <td style="text-align:left;display:flex;flex-wrap:wrap;">
-            <div>
-              <strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}<br />
-              <strong>Email:</strong>
-              <a [href]="'mailto:' + inscription?.userEmail">
-                {{ inscription.userEmail }}
-              </a><br />
-              <strong>Téléphone:</strong> {{ inscription.userPhone}}<br />
-            </div>
-            <br>
-
-            <ng-container *ngIf="inscription.stageId; else loading">
+        <table>
+          <thead>
+          <tr>
+            <th>Données du stage</th>
+            <th>Documents</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let inscription of inscriptions">
+            <td style="text-align:left;display:flex;flex-wrap:wrap;">
               <div>
-                <strong>Adresse du stage:</strong> {{ inscription.stageCity }},
-                {{ inscription.stageStreet }}<br />
-                <strong>Organisation:</strong> {{ inscription.stageOrganisation }}<br />
-                <strong>Date:</strong>
-                {{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
-                {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}<br />
+                <strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}<br />
+                <strong>Email:</strong>
+                <a [href]="'mailto:' + inscription?.userEmail">
+                  {{ inscription.userEmail }}
+                </a><br />
+                <strong>Téléphone:</strong> {{ inscription.userPhone}}<br />
               </div>
-              <div>
-                <strong>Type de stage:</strong> {{ inscription.stageType }}<br />
-                <strong>Statut:</strong>
-                {{ inscription.inscriptionStatut | inscriptionStatut }}
-              </div>
-            </ng-container>
+              <br>
 
-            <ng-template #loading>
-              <span>Chargement...</span>
-            </ng-template>
-          </td>
+              <ng-container *ngIf="inscription.stageId; else loading">
+                <div>
+                  <strong>Adresse du stage:</strong> {{ inscription.stageCity }},
+                  {{ inscription.stageStreet }}<br />
+                  <strong>Organisation:</strong> {{ inscription.stageOrganisation }}<br />
+                  <strong>Date:</strong>
+                  {{ inscription.stageDateDebut | date: 'd MMMM yyyy' : 'fr' }} &rarr;
+                  {{ inscription.stageDateFin | date: 'd MMMM yyyy' : 'fr' }}<br />
+                </div>
+                <div>
+                  <strong>Type de stage:</strong> {{ inscription.stageType }}<br />
+                  <strong>Statut:</strong>
+                  {{ inscription.inscriptionStatut | inscriptionStatut }}
+                </div>
+              </ng-container>
 
-          <td style="text-align:center;">
-            <ng-container *ngIf="(inscription.documents?.length || 0) > 0; else noDocuments">
-              <div *ngFor="let doc of inscription.documents">
-                <button class="text-primary" (click)="viewFile(doc.fileUrl)">
-                  {{ doc.fileName }}
-                </button>
-              </div>
-            </ng-container>
-            <ng-template #noDocuments>
-              <p style="font-size: 16px;">Pas de documents chargés</p>
-            </ng-template>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+              <ng-template #loading>
+                <span>Chargement...</span>
+              </ng-template>
+            </td>
+
+            <td style="text-align:center;">
+              <ng-container *ngIf="(inscription.documents?.length || 0) > 0; else noDocuments">
+                <div *ngFor="let doc of inscription.documents">
+                  <button class="text-primary" (click)="viewFile(doc.fileUrl)">
+                    {{ doc.fileName }}
+                  </button>
+                </div>
+              </ng-container>
+              <ng-template #noDocuments>
+                <p style="font-size: 16px;">Pas de documents chargés</p>
+              </ng-template>
+            </td>
+          </tr>
+          </tbody>
+        </table>
     </ng-container>
+    </div>
 
     <ng-template #noInscriptions>
-      <p>Aucune inscription trouvée.</p>
+
+      <p id="inscription_not_found">Aucune inscription trouvée.</p>
     </ng-template>
   </div>
 
 <div *ngIf="activeTab === 'Liens privés'" class="tab-content">
   <h2>Liens privés</h2>
   @if (privateLinks.length > 0) {
-
+<div class="company_dashboard_tab_bg">
     <table id="private_links_table">
       <thead>
       <tr>
@@ -105,28 +108,27 @@
 
       @for(privateLink of privateLinks; track privateLink.id){
         <tr>
-          <td>{{privateLink.stageInfo.city}} {{privateLink.stageInfo.street}} <br>{{privateLink.stageInfo.startDate | date:'d':'fr'}}-{{privateLink.stageInfo.endDate | date:'d/MM/yyyy':'fr'}}
+          <td>
+            <h3>{{privateLink.stageInfo.city}}</h3>
+              <br>
+              {{privateLink.stageInfo.street}}
+              <br>
+              {{privateLink.stageInfo.startDate | date:'d':'fr'}}-{{privateLink.stageInfo.endDate | date:'d/MM/yyyy':'fr'}}
 
           </td>
           <td>
-        <div class="token-container">
-          <input
-            [type]="isTokenVisible ? 'text' : 'password'"
-            [value]="privateLink.token"
-            readonly
-            class="token-input"
-          />
-          <a [href]="WEBSITE_URL+privateLink.entrepriseNom+'/inscription/employee/'+privateLink.token">Lien</a>
-          <button (click)="toggleTokenVisibility()" class="eye-icon">
-            <i [ngClass]="isTokenVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-          </button>
-        </div>
+            <div class="token-container">
+              <a [href]="WEBSITE_URL+privateLink.entrepriseNom+'/inscription/employee/'+privateLink.token"> Lien d'inscription</a>
+            </div>
           </td>
 
-        <td>{{privateLink.expirationDate | date:'d MMMM yyyy - HH:MM':'fr'}}</td>
+        <td>
+          <p>Expire le </p>
+          {{privateLink.expirationDate | date:'d MMMM yyyy - HH:MM':'fr'}}</td>
         </tr>
           }
     </table>
+</div>
     }
 
     @else{

@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="floating-label">
-      <label for="password">Mot de passe (accès à votre espace)*</label>
+      <label for="password">Mot de passe*</label>
       <input id="password" type="password" placeholder=" " formControlName="password" required  appFloatingLabel/>
       <div *ngIf="privateLinkForm.get('password')?.invalid && privateLinkForm.get('password')?.touched" class="error-message">
         <span *ngIf="privateLinkForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
@@ -36,7 +36,7 @@
       [showButtonBar]="true"
       [readonlyInput]="true"
       dateFormat="dd/mm/yy"
-      id="birthdate"
+      id="birthdatePrivateLinks"
       formControlName="birthdate"
       placeholder="Date de naissance"
     ></p-datepicker>

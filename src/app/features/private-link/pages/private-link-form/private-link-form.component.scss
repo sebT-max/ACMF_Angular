@@ -10,7 +10,7 @@
   background-attachment: fixed;
 
   @media (max-width: 1023px) {
-    background-attachment: scroll; 
+    background-attachment: scroll;
   }
 
   h1{
@@ -211,6 +211,12 @@ p-button{
 }
 .p-fileupload-header{
   display:flex;
+}
+.p-fileupload-file-actions
+
+{
+  margin-left: auto;
+  background: white !important;
 }
 
 

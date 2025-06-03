@@ -9,6 +9,7 @@ import {CommonModule} from '@angular/common';
 import {CgvModalComponent} from '../../../cgv-modal/cgv-modal.component';
 import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 import {DatePicker} from 'primeng/datepicker';
+import { PrimeNG } from 'primeng/config';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class PrivateLinkFormComponent implements OnInit {
   private readonly _route = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _toastr = inject(ToastrService);
+  private readonly primengConfig = inject(PrimeNG);
+
 
   errorMessage: string | null = null;
 
@@ -44,12 +47,27 @@ export class PrivateLinkFormComponent implements OnInit {
   showModal = false;
 
   ngOnInit(): void {
+    this.primengConfig.setTranslation({
+      dayNames: ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"],
+      dayNamesShort: ["dim","lun","mar","mer","jeu","ven","sam"],
+      dayNamesMin: ["D","L","M","M","J","V","S"],
+      monthNames: ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"],
+      monthNamesShort: ["janv","févr","mars","avr","mai","juin","juil","août","sept","oct","nov","déc"],
+      today: 'Aujourd\'hui',
+      clear: 'Effacer',
+      dateFormat: 'dd/mm/yy',
+      firstDayOfWeek: 1
+    });
     this.privateLinkForm = this._fb.group({
       lastname: [null, [Validators.required]],
       firstname: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       birthDate: [null, [Validators.required]],
+      birthPlace: [null, [Validators.required]],
+      streetAndNumber: [null, [Validators.required]],
+      zipCode: [null, [Validators.required]],
+      city: [null, [Validators.required]],
       telephone: [null, [Validators.required]],
       acceptTerms: [null, [Validators.required]],
       roleId:[4, [Validators.required]]
@@ -177,8 +195,19 @@ export class PrivateLinkFormComponent implements OnInit {
     formData.append('firstname', this.privateLinkForm.value.firstname);
     formData.append('email', this.privateLinkForm.value.email);
     formData.append('password', this.privateLinkForm.value.password);
-    formData.append('birthdate', this.privateLinkForm.value.birthDate); // ici : bien adapté
+    const birthDate = this.privateLinkForm.value.birthDate;
+    if (birthDate) {
+      // Convertir en format ISO (YYYY-MM-DD)
+      const formattedDate = birthDate instanceof Date
+        ? birthDate.toISOString().split('T')[0]  // YYYY-MM-DD
+        : birthDate;
+      formData.append('birthdate', formattedDate);
+    } // ici : bien adapté
     formData.append('telephone', this.privateLinkForm.value.telephone);
+    formData.append('birthplace', this.privateLinkForm.value.birthplace);
+    formData.append('streetAndNumber', this.privateLinkForm.value.streetAndNumber);
+    formData.append('zipCode', this.privateLinkForm.value.zipCode);
+    formData.append('city', this.privateLinkForm.value.city);
     formData.append('acceptTerms', this.privateLinkForm.value.acceptTerms);
     formData.append('roleId', this.privateLinkForm.value.roleId);
 
@@ -193,6 +222,7 @@ export class PrivateLinkFormComponent implements OnInit {
     [...this.uploadedFiles.permis, ...this.uploadedFiles.carteId].forEach(file => {
       formData.append('files', file, file.name); // clé unique "files" pour tous les documents
     });
+    console.log(formData)
 
     this.isLoading = true;
     const token = this._route.snapshot.paramMap.get('token');
@@ -202,7 +232,6 @@ export class PrivateLinkFormComponent implements OnInit {
       this.isLoading = false;
       return;
     }
-
     this._privateLinkService.submitInscription(token, formData).subscribe({
       next: (res: any) => {
         const message = res?.message || 'Inscription envoyée avec succès !';

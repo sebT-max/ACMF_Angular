@@ -7,12 +7,13 @@ import { PrivateLinkService } from '../../services/private-link.services';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {CgvModalComponent} from '../../../cgv-modal/cgv-modal.component';
+import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 
 
 @Component({
   selector: 'app-private-link-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FileUpload,CgvModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, FileUpload, CgvModalComponent, FloatingLabelDirective],
   templateUrl: './private-link-form.component.html',
   styleUrl: './private-link-form.component.scss'
 })

@@ -9,7 +9,7 @@
     <!-- Nom de l'entreprise -->
     <div class="floating-label">
     <label for="name">Nom de l'entreprise*</label>
-      <input id="name" name="companyName" type="text" placeholder=" " formControlName="name" required />
+      <input id="name" name="companyName" type="text" placeholder=" " formControlName="name" required appFloatingLabel />
       <div *ngIf="companyRegisterForm.get('name')?.invalid && companyRegisterForm.get('name')?.touched" class="error-message">
         Le nom de l'entreprise est requis.
       </div>
@@ -18,7 +18,7 @@
     <!-- Email -->
     <div class="floating-label">
       <label for="email">Email*</label>
-      <input id="email" name="email" type="email" placeholder=" " formControlName="email" required />
+      <input id="email" name="email" type="email" placeholder=" " formControlName="email" required appFloatingLabel />
       <div *ngIf="companyRegisterForm.get('email')?.invalid && companyRegisterForm.get('email')?.touched" class="error-message">
         <span *ngIf="companyRegisterForm.get('email')?.errors?.['required']">L'email est requis.</span>
         <span *ngIf="companyRegisterForm.get('email')?.errors?.['email']">L'email n'est pas valide.</span>
@@ -28,7 +28,7 @@
     <!-- Mot de passe -->
     <div class="floating-label">
       <label for="password">Mot de passe*</label>
-      <input id="password" name="password" type="password" placeholder=" " formControlName="password" required />
+      <input id="password" name="password" type="password" placeholder=" " formControlName="password" required  appFloatingLabel />
       <div *ngIf="companyRegisterForm.get('password')?.invalid && companyRegisterForm.get('password')?.touched" class="error-message">
         <span *ngIf="companyRegisterForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
         <span *ngIf="companyRegisterForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
@@ -37,7 +37,7 @@
     <!-- Téléphone -->
     <div class="floating-label">
       <label for="telephone">Téléphone*</label>
-      <input id="telephone" type="text" placeholder=" " formControlName="telephone" />
+      <input id="telephone" type="text" placeholder=" " formControlName="telephone" required  appFloatingLabel />
       <div *ngIf="companyRegisterForm.get('telephone')?.invalid && companyRegisterForm.get('telephone')?.touched" class="error-message">
         Le téléphone est requis.
       </div>

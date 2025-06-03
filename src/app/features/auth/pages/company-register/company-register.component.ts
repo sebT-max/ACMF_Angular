@@ -10,6 +10,7 @@ import {catchError, EMPTY} from 'rxjs';
 import {LoginFormModel} from '../../models/login-form.model';
 import {TokenModel} from '../../models/token.model';
 import {ToastrService} from 'ngx-toastr';
+import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 
 
 @Component({
@@ -20,7 +21,8 @@ import {ToastrService} from 'ngx-toastr';
     CheckboxModule,
     FormsModule,
     NgOptimizedImage,
-    RouterLink
+    RouterLink,
+    FloatingLabelDirective
   ],
   templateUrl: './company-register.component.html',
   styleUrl: './company-register.component.scss'

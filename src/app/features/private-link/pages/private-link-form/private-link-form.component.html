@@ -1,40 +1,40 @@
 <div class="register_form_container">
   <form [formGroup]="privateLinkForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="register_form">
     <h1>Formulaire d'inscription</h1>
-    <div>
-      <input id="lastname" type="text" placeholder="Nom" formControlName="lastname" />
+    <div class="floating-label">
+      <input id="lastname" type="text" placeholder=" " formControlName="lastname" required  appFloatingLabel />
       <div *ngIf="privateLinkForm.get('lastname')?.invalid && privateLinkForm.get('lastname')?.touched" class="error-message">
         Le nom est requis.
       </div>
     </div>
-    <div>
-      <input id="firstname" type="text" placeholder="Prénom" formControlName="firstname" />
+    <div class="floating-label">
+      <input id="firstname" type="text" placeholder=" " formControlName="firstname" required  appFloatingLabel/>
       <div *ngIf="privateLinkForm.get('firstname')?.invalid && privateLinkForm.get('firstname')?.touched" class="error-message">
         Le prénom est requis.
       </div>
     </div>
-    <div>
-      <input id="email" type="email" placeholder="Email" formControlName="email" />
+    <div class="floating-label">
+      <input id="email" type="email" placeholder=" " formControlName="email" required  appFloatingLabel/>
       <div *ngIf="privateLinkForm.get('email')?.invalid && privateLinkForm.get('email')?.touched" class="error-message">
         <span *ngIf="privateLinkForm.get('email')?.errors?.['required']">L'email est requis.</span>
         <span *ngIf="privateLinkForm.get('email')?.errors?.['email']">Format d'email invalide.</span>
       </div>
     </div>
-    <div>
-      <input id="password" type="password" placeholder="Mot de passe" formControlName="password" />
+    <div class="floating-label">
+      <input id="password" type="password" placeholder=" " formControlName="password" required  appFloatingLabel/>
       <div *ngIf="privateLinkForm.get('password')?.invalid && privateLinkForm.get('password')?.touched" class="error-message">
         <span *ngIf="privateLinkForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
         <span *ngIf="privateLinkForm.get('password')?.errors?.['minlength']">Minimum 6 caractères.</span>
       </div>
     </div>
-    <div>
-      <input id="birthDate" type="date" formControlName="birthDate" />
+    <div class="floating-label">
+      <input id="birthDate" type="date" placeholder=" " formControlName="birthDate" required  appFloatingLabel />
       <div *ngIf="privateLinkForm.get('birthDate')?.invalid && privateLinkForm.get('birthDate')?.touched" class="error-message">
         La date de naissance est requise.
       </div>
     </div>
-    <div>
-      <input id="telephone" type="text" placeholder="Téléphone" formControlName="telephone" />
+    <div class="floating-label">
+      <input id="telephone" type="text" placeholder=" " formControlName="telephone" required  appFloatingLabel />
       <div *ngIf="privateLinkForm.get('telephone')?.invalid && privateLinkForm.get('telephone')?.touched" class="error-message">
         Le téléphone est requis.
       </div>

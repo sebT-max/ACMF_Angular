@@ -107,14 +107,19 @@
 
 
 #private_links_table {
-  width: 90%;
   background: rgba(0, 0, 0, 0.05);
   font-size: 20px;
   border-radius: 0 0 10px 10px;
   margin: 0 auto;
+  border-collapse: collapse;
+
+  @media(min-width:1440px){
+    padding:10%;
+  }
 
   td {
     width: 33%;
+    border: 1px solid white;
     @media(max-width: 767px) {
       width: 90%;
     }
@@ -130,6 +135,10 @@
     @media(max-width: 767px) {
       display: none;
     }
+  }
+
+  tr:nth-child(even) {
+    background: rgba(171, 184, 203, 0.4);
   }
   .token-container {
     display: flex;
@@ -185,7 +194,14 @@ td{
   padding: 20px;
 }
 
-
+#private_link_table{
+  @media(min-width: 1024px){
+    width:80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+}
 
 
 

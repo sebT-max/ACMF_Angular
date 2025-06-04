@@ -24,7 +24,14 @@
         <span *ngIf="companyRegisterForm.get('email')?.errors?.['email']">L'email n'est pas valide.</span>
       </div>
     </div>
-
+    <!-- Téléphone -->
+    <div class="floating-label">
+      <label for="telephone">Téléphone*</label>
+      <input id="telephone" type="text" placeholder=" " formControlName="telephone" required  appFloatingLabel />
+      <div *ngIf="companyRegisterForm.get('telephone')?.invalid && companyRegisterForm.get('telephone')?.touched" class="error-message">
+        Le téléphone est requis.
+      </div>
+    </div>
     <!-- Mot de passe -->
     <div class="floating-label">
       <label for="password">Mot de passe*</label>
@@ -34,14 +41,9 @@
         <span *ngIf="companyRegisterForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
       </div>
     </div>
-    <!-- Téléphone -->
-    <div class="floating-label">
-      <label for="telephone">Téléphone*</label>
-      <input id="telephone" type="text" placeholder=" " formControlName="telephone" required  appFloatingLabel />
-      <div *ngIf="companyRegisterForm.get('telephone')?.invalid && companyRegisterForm.get('telephone')?.touched" class="error-message">
-        Le téléphone est requis.
-      </div>
-    </div>
+    <small><p>Votre mot de passe doit contenir 8 caractères ou plus avec un mélange de lettres, de chiffres et de symboles.</p></small>
+
+
     <!-- RGPD -->
     <div class="checkbox_register">
       <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
@@ -56,6 +58,22 @@
     <div *ngIf="companyRegisterForm.get('acceptTerms')?.invalid && companyRegisterForm.get('acceptTerms')?.touched" class="error-message">
       Acceptez nos Conditions d'utilisation et notre Politique de confidentialité
     </div>
+    <!--Fin RGPD-->
+    <!-- ROP -->
+    <div class="checkbox_register">
+      <input id="acceptTermsRop" type="checkbox" formControlName="acceptTermsRop" />
+      <p>
+        Acceptez notre
+        <a href="#" (click)="goToRop($event)" style="text-decoration: underline;">
+          Règlement intérieur
+        </a>
+      </p>
+    </div>
+
+    <div *ngIf="companyRegisterForm.get('acceptTermsRop')?.invalid && companyRegisterForm.get('acceptTermsRop')?.touched" class="error-message">
+      Vous devez accepter le règlement intérieur pour continuer.
+    </div>
+    <!--Fin ROP-->
 
     <!-- Erreur serveur -->
     <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">

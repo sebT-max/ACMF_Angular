@@ -50,6 +50,7 @@ export class CompanyRegisterComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(6)]],
       telephone: [null, [Validators.required]],
       acceptTerms: [false, Validators.requiredTrue],
+      acceptTermsRop: [false, Validators.requiredTrue],
       roleId: [3, [Validators.required]]
     });
 
@@ -57,6 +58,8 @@ export class CompanyRegisterComponent implements OnInit {
     this.restoreFormFromStorage();
 // À ajouter à la fin de ngOnInit après restoreFormFromStorage()
     this.checkAcceptTermsFromStorage();
+
+    this.checkAcceptTermsRopFromStorage();
 
     // Sauvegarder à chaque changement
     this.companyRegisterForm.valueChanges.subscribe(value => {
@@ -93,17 +96,23 @@ export class CompanyRegisterComponent implements OnInit {
       localStorage.removeItem('acceptTerms');
     }
   }
-
-
-  goToConditions(event: Event) {
-    event.preventDefault();
-    localStorage.setItem('registerForm', JSON.stringify(this.companyRegisterForm.value));
-
-    const currentUrl = this.router.url;
-    this.router.navigate(['/conditions-generales-vente'], {
-      queryParams: {redirect: encodeURIComponent(currentUrl)}
-    });
+  private checkAcceptTermsRopFromStorage() {
+    const acceptTermsValue = localStorage.getItem('acceptTermsRop');
+    if (acceptTermsValue === 'true') {
+      this.companyRegisterForm.patchValue({
+        acceptTermsRop: true
+      });
+      // Nettoyer le localStorage après utilisation
+      localStorage.removeItem('acceptTermsRop');
+    } else if (acceptTermsValue === 'false') {
+      this.companyRegisterForm.patchValue({
+        acceptTermsRop: false
+      });
+      // Nettoyer le localStorage après utilisation
+      localStorage.removeItem('acceptTermsRop');
+    }
   }
+
 
   handleCompagnyRegisterFormSubmit(): void {
     console.log(this.companyRegisterForm.value);
@@ -122,6 +131,7 @@ export class CompanyRegisterComponent implements OnInit {
       password: this.companyRegisterForm.get('password')!.value,
       telephone: this.companyRegisterForm.get('telephone')!.value,
       acceptTerms: this.companyRegisterForm.get('acceptTerms')!.value,
+      acceptTermsRop: this.companyRegisterForm.get('acceptTermsRop')!.value,
       roleId: 3
     };
 
@@ -214,6 +224,10 @@ export class CompanyRegisterComponent implements OnInit {
       this.toastr.error("Vous devez accepter les termes et conditions", "Validation requise");
       return false;
     }
+    if (!formValue.acceptTermsRop) {
+      this.toastr.error("Vous devez accepter le règlement intérieur", "Validation requise");
+      return false;
+    }
 
     // Validation du mot de passe côté frontend aussi
     const password = formValue.password;
@@ -223,5 +237,24 @@ export class CompanyRegisterComponent implements OnInit {
     }
 
     return true;
+  }
+  goToConditions(event: Event) {
+    event.preventDefault();
+    localStorage.setItem('registerForm', JSON.stringify(this.companyRegisterForm.value));
+
+    const currentUrl = this.router.url;
+    this.router.navigate(['/conditions-generales-vente'], {
+      queryParams: {redirect: encodeURIComponent(currentUrl)}
+    });
+  }
+  goToRop(event: Event) {
+    event.preventDefault();
+    // Sauvegarder l'état actuel du formulaire
+    localStorage.setItem('registerForm', JSON.stringify(this.companyRegisterForm.value));
+
+    const currentUrl = this.router.url;
+    this.router.navigate(['/règlement-intérieur'], {
+      queryParams: { redirect: encodeURIComponent(currentUrl) }
+    });
   }
 }

@@ -106,8 +106,11 @@ form{
   .checkbox_register{
     display:flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
+    p{
+      padding:0;
+    }
     @media(max-width:360px){
       padding:0px;
     }
@@ -174,4 +177,16 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+button{
+  background-color: #041a3a;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width:100%;
 }

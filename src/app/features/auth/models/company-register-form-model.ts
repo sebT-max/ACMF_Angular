@@ -4,5 +4,6 @@ export interface CompanyRegisterFormModel {
   password: string;
   telephone: string;
   acceptTerms:boolean;
+  acceptTermsRop: boolean;
   roleId?:number;
 }

@@ -21,8 +21,7 @@ import {WEBSITE_URL} from "../../../core/constant";
     NgForOf,
     NgIf,
     DemandeDevisComponent,
-    InscriptionStatutPipe,
-    NgClass
+    InscriptionStatutPipe
   ],
   templateUrl: './company-dashboard.component.html',
   styleUrl: './company-dashboard.component.scss'

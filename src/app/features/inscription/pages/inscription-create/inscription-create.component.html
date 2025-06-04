@@ -306,6 +306,22 @@
         <div *ngIf="inscriptionCreationForm.get('acceptTerms')?.invalid && inscriptionCreationForm.get('acceptTerms')?.touched" class="error-message">
           Vous devez accepter les conditions pour continuer.
         </div>
+        <!--Fin RGPD-->
+        <!-- ROP -->
+        <div class="checkbox_register">
+          <input id="acceptTermsRop" type="checkbox" formControlName="acceptTermsRop" />
+          <p>
+            Acceptez nos
+            <a href="#" (click)="goToRop($event)" style="text-decoration: underline;color:red;">
+              Règlement intérieur
+            </a>
+          </p>
+        </div>
+
+        <div *ngIf="inscriptionCreationForm.get('acceptTermsRop')?.invalid && inscriptionCreationForm.get('acceptTermsRop')?.touched" class="error-message">
+          Vous devez accepter le règlement intérieur pour continuer.
+        </div>
+        <!--Fin ROP-->
         <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
           <ng-container *ngIf="isLoading">
             <span class="spinner-inline"></span> Chargement...

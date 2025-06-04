@@ -35,6 +35,12 @@ export const routes: Routes = [
       import('./features/home/pages/conditions-générales-vente/conditionsgeneralesdevente.component').then
       ((c) => c.ConditionsGeneralesDeVenteComponent),
   },
+  {
+    path: 'règlement-intérieur',
+    loadComponent:()=>
+      import('./features/home/pages/rules-of-procedure/rules-of-procedure.component').then
+      ((c) => c.RulesOfProcedureComponent),
+  },
  /* {
     path: 'particulier/register',
     loadComponent: () =>

@@ -174,7 +174,8 @@ export class InscriptionCreateComponent implements OnInit {
         stageType: ['', Validators.required],
         inscriptionStatut: ['EN_ATTENTE', Validators.required],
         codePromo: [''],
-        acceptTerms: [false, Validators.requiredTrue]
+        acceptTerms: [false, Validators.requiredTrue],
+        acceptTermsRop: [false, Validators.requiredTrue]
       });
     } else {
       // Utilisateur NON connecté → formulaire complet
@@ -196,7 +197,8 @@ export class InscriptionCreateComponent implements OnInit {
         stageType: ['', Validators.required],
         inscriptionStatut: ['EN_ATTENTE', Validators.required],
         codePromo: [''],
-        acceptTerms: [false, Validators.requiredTrue]
+        acceptTerms: [false, Validators.requiredTrue],
+        acceptTermsRop: [false, Validators.requiredTrue]
       });
 
       // Détection d'email déjà existant
@@ -249,6 +251,7 @@ export class InscriptionCreateComponent implements OnInit {
     this.restoreFormFromStorage();
 // À ajouter à la fin de ngOnInit après restoreFormFromStorage()
     this.checkAcceptTermsFromStorage();
+    this.checkAcceptTermsRopFromStorage();
 
     // Sauvegarder à chaque changement
     this.inscriptionCreationForm.valueChanges.subscribe(value => {
@@ -282,6 +285,22 @@ export class InscriptionCreateComponent implements OnInit {
       });
       // Nettoyer le localStorage après utilisation
       localStorage.removeItem('acceptTerms');
+    }
+  }
+  private checkAcceptTermsRopFromStorage() {
+    const acceptTermsValue = localStorage.getItem('acceptTermsRop');
+    if (acceptTermsValue === 'true') {
+      this.inscriptionCreationForm.patchValue({
+        acceptTermsRop: true
+      });
+      // Nettoyer le localStorage après utilisation
+      localStorage.removeItem('acceptTermsRop');
+    } else if (acceptTermsValue === 'false') {
+      this.inscriptionCreationForm.patchValue({
+        acceptTermsRop: false
+      });
+      // Nettoyer le localStorage après utilisation
+      localStorage.removeItem('acceptTermsRop');
     }
   }
 
@@ -478,6 +497,16 @@ export class InscriptionCreateComponent implements OnInit {
 
     const currentUrl = this.router.url;
     this.router.navigate(['/conditions-generales-vente'], {
+      queryParams: { redirect: encodeURIComponent(currentUrl) }
+    });
+  }
+  goToRop(event: Event) {
+    event.preventDefault();
+    // Sauvegarder l'état actuel du formulaire
+    localStorage.setItem('inscriptionForm', JSON.stringify(this.inscriptionCreationForm.value));
+
+    const currentUrl = this.router.url;
+    this.router.navigate(['/règlement-intérieur'], {
       queryParams: { redirect: encodeURIComponent(currentUrl) }
     });
   }

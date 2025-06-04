@@ -1,52 +1,48 @@
 <form [formGroup]="stageCreationForm" class="register_form" (ngSubmit)="handleStageCreation()">
-  <!--<div>
-    <label for="dateDeStage"></label>
-    <input id="dateDeStage" type="date" selectionMode="range" placeholder="Date de stage" formControlName="dateDeStage" required>
-  </div>-->
-  <h1>Créer un stage</h1>
+    <h1>Créer un stage</h1>
+    <div>
+      <p-datepicker
+        selectionMode="range"
+        id="dateDeStage"
+        formControlName="dateDeStage"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        [readonlyInput]="true"
+        dateFormat="dd/mm/yy"
+        placeholder="Sélectionnez les dates"
+        [required]="true"
+        id="stage_create"
+        >
+      </p-datepicker>
+    </div>
 
-  <p-datepicker
-    selectionMode="range"
-    id="dateDeStage"
-    formControlName="dateDeStage"
-    [showIcon]="true"
-    [showButtonBar]="true"
-    [readonlyInput]="true"
-    dateFormat="dd/mm/yy"
-    placeholder="Sélectionnez les dates"
-    [required]="true"
-    id="stage_create"
-    >
-  </p-datepicker>
+    <div>
+      <input id="price" type="number" placeholder="prix" formControlName="price" required>
+    </div>
 
+    <div>
+      <input id="city" type="text" placeholder="Ville" formControlName="city" required>
+    </div>
 
-  <div>
-    <input id="price" type="number" placeholder="prix" formControlName="price" required>
-  </div>
+    <div>
+      <input id="street" type="text" placeholder="Rue" formControlName="street" required>
+    </div>
 
-  <div>
-    <input id="city" type="text" placeholder="Ville" formControlName="city" required>
-  </div>
+    <div>
+      <input id="number" type="text" placeholder="Numéro de stage" formControlName="number" required>
+    </div>
 
-  <div>
-    <input id="street" type="text" placeholder="Rue" formControlName="street" required>
-  </div>
+    <div>
+      <input id="capacity" type="text" placeholder="Capacité" formControlName="capacity" required>
+    </div>
 
-  <div>
-    <input id="number" type="text" placeholder="Numéro de stage" formControlName="number" required>
-  </div>
+    <div>
+      <input id="organisation" type="text" placeholder="organisation" formControlName="organisation" required>
+    </div>
 
-  <div>
-    <input id="capacity" type="text" placeholder="Capacité" formControlName="capacity" required>
-  </div>
-
-  <div>
-    <input id="organisation" type="text" placeholder="organisation" formControlName="organisation" required>
-  </div>
-
-  <button type="submit">Créer stage</button>
-  <div class="margin_top_130"></div>
-  <button><a  routerLink="/stages/all"> > Voir tous les stages</a></button>
-  <div class="margin_top_130"></div>
+    <button type="submit">Créer stage</button>
+    <div class="margin_top_130"></div>
+    <button><a  routerLink="/stages/all"> > Voir tous les stages</a></button>
+    <div class="margin_top_130"></div>
 </form>
 

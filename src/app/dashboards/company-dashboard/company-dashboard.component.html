@@ -96,39 +96,42 @@
 <div *ngIf="activeTab === 'Liens privés'" class="tab-content">
   <h2>Liens privés</h2>
   @if (privateLinks.length > 0) {
-<div class="company_dashboard_tab_bg">
-    <table id="private_links_table">
-      <thead>
-      <tr>
-        <th>Stage</th>
-        <th>Lien</th>
-        <th>Date d'expiration</th>
-      </tr>
-      </thead>
+    <div class="company_dashboard_tab_bg" id="private_link_table">
+      <div class="bg_white padding_10 border_radius_10">
+        <table id="private_links_table">
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Lien</th>
+              <th>Date d'expiration</th>
+            </tr>
+          </thead>
 
-      @for(privateLink of privateLinks; track privateLink.id){
-        <tr>
-          <td>
-            <h3>{{privateLink.stageInfo.city}}</h3>
-              <br>
-              {{privateLink.stageInfo.street}}
-              <br>
-              {{privateLink.stageInfo.startDate | date:'d':'fr'}}-{{privateLink.stageInfo.endDate | date:'d/MM/yyyy':'fr'}}
+          @for(privateLink of privateLinks; track privateLink.id){
+            <tr>
+              <td>
+                <h3>{{privateLink.stageInfo.city}}</h3>
+                  <br>
+                  {{privateLink.stageInfo.street}}
+                  <br>
+                  {{privateLink.stageInfo.startDate | date:'d':'fr'}}-{{privateLink.stageInfo.endDate | date:'d/MM/yyyy':'fr'}}
 
-          </td>
-          <td>
-            <div class="token-container">
-              <a [href]="WEBSITE_URL+privateLink.entrepriseNom+'/inscription/employee/'+privateLink.token"> Lien d'inscription</a>
-            </div>
-          </td>
+              </td>
+              <td>
+                <div class="token-container">
+                  <a class="border_radius_10" [href]="WEBSITE_URL+privateLink.entrepriseNom+'/inscription/employee/'+privateLink.token"> Lien d'inscription</a>
+                </div>
+              </td>
 
-        <td>
-          <p>Expire le </p>
-          {{privateLink.expirationDate | date:'d MMMM yyyy - HH:MM':'fr'}}</td>
-        </tr>
-          }
-    </table>
-</div>
+              <td>
+                <p>Expire le </p>
+                {{privateLink.expirationDate | date:'d MMMM yyyy - HH:MM':'fr'}}
+              </td>
+            </tr>
+              }
+        </table>
+      </div>
+    </div>
     }
 
     @else{

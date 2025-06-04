@@ -205,7 +205,12 @@ table tr:nth-child(even) {
   width: 100%;
   }
 }
-
+.padding_10{
+  padding:10px;
+}
+.border_radius_10{
+  border-radius:10px;
+}
 .card {
   background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
   border: 1px solid rgba(255, 255, 255, 0.2);

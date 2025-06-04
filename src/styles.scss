@@ -834,7 +834,6 @@ form #birthdate{
 }
 
 form #stage_create{
-  padding:16px;
   display: inline-block;
   box-shadow:0 0 2px grey;
   border-radius:10px;
@@ -842,11 +841,9 @@ form #stage_create{
   width:80%;
   height: 55px !important;
   @media(min-width:768px) and (max-width:1023px){
-    padding:16px;
     width:50%;
   }
   @media(min-width:1024px){
-    padding:16px;
     width:30%;
   }
 }
@@ -1299,4 +1296,15 @@ form #stage_update{
 
 .complet{
   font-family:Poppins-Bold,sans-serif;
+}
+
+.company_dashboard_tab_bg {
+  background: rgba(0, 0, 0, 0.16);
+  padding: 20px;
+  height:100vh;
+
+  @media(min-width:1440px){
+    margin: 0 auto;
+    border-radius: 10px;
+  }
 }

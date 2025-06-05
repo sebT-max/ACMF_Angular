@@ -91,7 +91,7 @@ export class InscriptionCreateComponent implements OnInit {
 
   inscriptionCreationForm!: FormGroup;
   currentUser: WritableSignal<RegisterFormModel | null> = signal<RegisterFormModel | null>(null);
-
+  userConnected = this._authService.currentUser;
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
   accepted = false;
@@ -160,8 +160,7 @@ export class InscriptionCreateComponent implements OnInit {
         user: this._fb.group({
           firstName: [{ value: currentUser.firstname, disabled: true }],
           lastName: [{ value: currentUser.lastname, disabled: true }],
-          otherNames: [{ value: currentUser.otherNames || '', disabled: true }],
-          birthdate: [currentUser.birthdate],
+          birthdate: [{ value: new Date(currentUser.birthdate), disabled: false }],
           birthplace: [{ value: currentUser.birthplace || '', disabled: true }],
           streetAndNumber: [currentUser.streetAndNumber || ''],
           zipCode: [currentUser.zipCode || ''],
@@ -183,7 +182,6 @@ export class InscriptionCreateComponent implements OnInit {
         user: this._fb.group({
           firstName: ['', Validators.required],
           lastName: ['', Validators.required],
-          otherNames: [''],
           birthdate: ['', Validators.required],
           birthplace: [''],
           streetAndNumber: [''],
@@ -212,8 +210,7 @@ export class InscriptionCreateComponent implements OnInit {
               userGroup.patchValue({
                 firstName: userData.firstName,
                 lastName: userData.lastName,
-                otherNames: userData.otherNames || '',
-                birthdate: userData.birthdate,
+                birthdate: userData.birthdate ? new Date(userData.birthdate) : null,
                 birthplace: userData.birthplace || '',
                 streetAndNumber: userData.streetAndNumber || '',
                 zipCode: userData.zipCode || '',
@@ -414,7 +411,7 @@ export class InscriptionCreateComponent implements OnInit {
 
   private proceedWithInscription(finalPrice: number): void {
     const inscriptionData: InscriptionFormModel = {
-      user: this.inscriptionCreationForm.value.user,
+      user: this.inscriptionCreationForm.get('user')?.getRawValue(),
       stageId: this.stageId,
       stageType: this.inscriptionCreationForm.value.stageType,
       inscriptionStatut: this.inscriptionCreationForm.value.inscriptionStatut,
@@ -509,6 +506,22 @@ export class InscriptionCreateComponent implements OnInit {
     this.router.navigate(['/règlement-intérieur'], {
       queryParams: { redirect: encodeURIComponent(currentUrl) }
     });
+  }
+  parseDate(dateStr: string): Date | null {
+    if (!dateStr) return null;
+
+    // Format ISO (ex: "1990-05-12")
+    if (/\d{4}-\d{2}-\d{2}/.test(dateStr)) {
+      return new Date(dateStr);
+    }
+
+    // Format FR (ex: "12/05/1990")
+    if (/\d{2}\/\d{2}\/\d{4}/.test(dateStr)) {
+      const [day, month, year] = dateStr.split('/');
+      return new Date(+year, +month - 1, +day);
+    }
+
+    return null;
   }
 }
 

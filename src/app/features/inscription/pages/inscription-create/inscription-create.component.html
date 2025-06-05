@@ -8,9 +8,11 @@
           <h1>Formulaire d'inscription</h1>
 
           <label>Informations personnelles</label>
+
           <div style="padding:0 10%;"><p><small>Si c'est pour une réinsciption, et que vous ne devez pas mettre à jour vos informations personnelles. Connectez-vous.
           Ensuite, téléversez des fichiers si nécessaire et appuyez sur paiement.</small></p></div>
           <br>
+
           <input id="email" formControlName="email" type="email" placeholder="Email" />
           <input id="telephone" formControlName="telephone" type="tel" placeholder="Téléphone" />
 
@@ -22,8 +24,19 @@
           <!-- <label for="lastName">Nom*</label> -->
           <input id="lastName" formControlName="lastName" type="text" placeholder="Nom" />
 
-          <!-- <label for="lastName">Nom*</label> -->
-          <input id="otherNames" formControlName="otherNames" type="text" placeholder="Autres noms" />
+          <!-- Adresse -->
+          <section class="form-section">
+            <!-- <h3>Adresse</h3> -->
+
+            <!-- <label for="streetAndNumber">Rue et numéro*</label> -->
+            <input id="streetAndNumber" formControlName="streetAndNumber" type="text" placeholder="Rue et numéro" />
+
+            <!-- <label for="zipCode">Code Postal*</label> -->
+            <input id="zipCode" formControlName="zipCode" type="text" placeholder="Code postal" />
+
+            <!-- <label for="city">Ville*</label> -->
+            <input id="city" formControlName="city" type="text" placeholder="Ville" />
+          </section>
 
           <p-datepicker
             [showIcon]="false"
@@ -38,19 +51,6 @@
           <input id="birthplace" formControlName="birthplace" type="text" placeholder="Lieu de naissance" />
         </section>
 
-        <!-- Adresse -->
-        <section class="form-section">
-          <!-- <h3>Adresse</h3> -->
-
-          <!-- <label for="streetAndNumber">Rue et numéro*</label> -->
-          <input id="streetAndNumber" formControlName="streetAndNumber" type="text" placeholder="Rue et numéro" />
-
-          <!-- <label for="zipCode">Code Postal*</label> -->
-          <input id="zipCode" formControlName="zipCode" type="number" placeholder="Code postal" />
-
-          <!-- <label for="city">Ville*</label> -->
-          <input id="city" formControlName="city" type="text" placeholder="Ville" />
-        </section>
 
         <!-- Contact -->
         <section class="form-section">
@@ -61,7 +61,7 @@
         </section>
 
         <!-- Mot de passe -->
-        <section class="form-section">
+        <section class="form-section" *ngIf="!userConnected()">
           <!-- <label for="password">Mot de passe*</label> -->
           <input id="password" type="password" placeholder="Mot de passe (accès à votre espace client)" formControlName="password" />
           <br/>
@@ -344,8 +344,8 @@
         <hr>
         <br>
         <p>Lieu: {{ stageDetails.street }}, {{ stageDetails.city }}</p>
-        <p><strong>Date: {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</strong></p>
-        <p><strong>Horaire: {{ stageDetails.organisation}}</strong></p>
+        <p><strong>Dates: {{ stageDetails.dateDebut | date:'d':'fr' }} & {{ stageDetails.dateFin | date:'d MMMM yyyy':'fr' }}</strong></p>
+        <p><strong>Horaires: {{ stageDetails.organisation}}</strong></p>
 
         <h1 id="inscription_stage_price">
            {{ stageDetails.price }},00€

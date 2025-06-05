@@ -67,9 +67,10 @@ export class StageAllComponent implements OnInit {
 
       this._stageService.getAllStage().subscribe(stages => {
         console.log('Stages reçus :', stages);
-        this.stages = stages;
-        this.filteredStages = [...stages];
-        this.getUserLocation();  // va appliquer filtre 50km si géolocalisation ok, sinon affiche tout
+        // Filtrer immédiatement pour ne garder que les stages futurs
+        this.stages = this.filterFutureStages(stages);
+        this.filteredStages = [...this.stages];
+        this.getUserLocation();  // va appliquer filtre 100km si géolocalisation ok, sinon affiche tout
       });
     });
 
@@ -86,9 +87,23 @@ export class StageAllComponent implements OnInit {
     });
   }
 
+  /**
+   * Filtre pour ne garder que les stages qui commencent dans le futur (> aujourd'hui)
+   */
+  private filterFutureStages(stages: StageWithDistance[]): StageWithDistance[] {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // Fin de la journée actuelle
+
+    return stages.filter(stage => {
+      const stageDate = new Date(stage.dateDebut);
+      return stageDate > today;
+    });
+  }
+
   get hasMoreStages(): boolean {
     return this.limit !== null && this.stages.length === this.limit;
   }
+
   toggleFilters() {
     this.showFilters = !this.showFilters;
   }
@@ -112,13 +127,13 @@ export class StageAllComponent implements OnInit {
         this.userLatitude = userLat;
         this.userLongitude = userLon;
 
-        // Étape 1 : calcul de la distance pour chaque stage
+        // Étape 1 : calcul de la distance pour chaque stage (déjà filtrés pour être futurs)
         let nearbyStages = this.stages
           .map(stage => ({
             ...stage,
             distance: this.calculateDistance(stage.latitude, stage.longitude, userLat, userLon)
           }))
-          .filter(stage => stage.distance !== undefined && stage.distance <= 100); // filtre 50 km
+          .filter(stage => stage.distance !== undefined && stage.distance <= 100); // filtre 100 km
 
         // Étape 2 : filtrage date si une date est sélectionnée
         if (this.selectedDate) {
@@ -129,7 +144,7 @@ export class StageAllComponent implements OnInit {
 
         // Étape 3 : mise à jour de l'affichage
         this.filteredStages = nearbyStages;
-        console.log('Stages proches (≤50 km) :', this.filteredStages);
+        console.log('Stages proches (≤100 km) :', this.filteredStages);
 
         this.currentPage = 1;
         this.paginate();
@@ -146,10 +161,9 @@ export class StageAllComponent implements OnInit {
    *          Chargement des stages
    *  =============================== */
   async loadStagesWithDistance(): Promise<void> {
-    const now = new Date();
-
     const processStages = async (stages: StageWithDistance[]) => {
-      const futureStages = stages.filter(stage => new Date(stage.dateDebut) >= now);
+      // Filtrer pour ne garder que les stages futurs
+      const futureStages = this.filterFutureStages(stages);
 
       for (const stage of futureStages) {
         if (
@@ -198,7 +212,8 @@ export class StageAllComponent implements OnInit {
   loadStages(): void {
     this._stageService.getAllStage().subscribe({
       next: stages => {
-        const futureStages = stages.filter(stage => new Date(stage.dateDebut) >= new Date());
+        // Utiliser la méthode centralisée pour filtrer les stages futurs
+        const futureStages = this.filterFutureStages(stages);
         this.stages = this.sortStagesByDate(futureStages);
       },
       error: err => console.error('Erreur de chargement des stages', err)
@@ -245,13 +260,13 @@ export class StageAllComponent implements OnInit {
     if (validPlace) {
       const [lon, lat] = validPlace;
 
-      // Calcul des distances et filtrage à 50 km
+      // Calcul des distances et filtrage à 100 km (stages déjà filtrés pour être futurs)
       this.filteredStages = this.stages
         .map(stage => ({
           ...stage,
           distance: this.calculateDistance(stage.latitude, stage.longitude, lat, lon)
         }))
-        .filter(stage => stage.distance <= 50);
+        .filter(stage => stage.distance <= 100);
 
       // Filtrage par date (si applicable)
       if (this.selectedDate) {
@@ -277,8 +292,6 @@ export class StageAllComponent implements OnInit {
     return stageDate >= twoWeeksBefore && stageDate <= twoWeeksAfter;
   }
 
-
-
   private filterStagesByUserLocation(): void {
     if (this.userLatitude !== null && this.userLongitude !== null) {
       this.filteredStages = this.stages.map(stage => ({
@@ -294,7 +307,7 @@ export class StageAllComponent implements OnInit {
       ? this.stages.filter(stage =>
         this.isWithinTwoWeeks(stage.dateDebut, this.selectedDate!)
       )
-      : [...this.stages];
+      : [...this.stages]; // Les stages sont déjà filtrés pour être futurs
 
     this.currentPage = 1;
     this.paginate();
@@ -318,6 +331,7 @@ export class StageAllComponent implements OnInit {
     const selectedTime = date.getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
 
+    // Filtrer parmi les stages déjà futurs
     this.filteredStages = this.stages.filter(stage => {
       const stageTime = new Date(stage.dateDebut).getTime();
       return stageTime >= selectedTime - twoWeeks && stageTime <= selectedTime + twoWeeks;
@@ -329,11 +343,6 @@ export class StageAllComponent implements OnInit {
   /** ===============================
    *         Pagination
    *  =============================== */
-  /*paginate(): void {
-    const start = (this.currentPage - 1) * this.pageSize;
-    const end = start + this.pageSize;
-    this.paginatedStages = this.filteredStages.slice(start, end);
-  }*/
   paginate(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -341,13 +350,13 @@ export class StageAllComponent implements OnInit {
     console.log('Paginate -> paginatedStages:', this.paginatedStages);
   }
 
-
   /** ===============================
-   *       Détails d’un stage
+   *       Détails d'un stage
    *  =============================== */
   selectStage(stage: StageDetailsModel): void {
     this.selectedStage = this.selectedStage?.id === stage.id ? null : stage;
   }
+
   changePage(page: number): void {
     this.currentPage = page;
     this.paginate();
@@ -371,29 +380,32 @@ export class StageAllComponent implements OnInit {
       this.onSearch(); // ça relance getCoordinatesFromAddress + filtrage distance
     } else {
       // Sinon on revient à la position de l'utilisateur
-      this.getUserLocation(); // contient maintenant le filtre à 50 km
+      this.getUserLocation(); // contient maintenant le filtre à 100 km
     }
     // Réinitialiser la pagination
     this.currentPage = 1;
     this.paginate();
   }
+
   closeDetails(): void {
     this.selectedStage = null;
   }
+
   resetFilters(): void {
     this.searchTerm = '';
     this.selectedDate = null;
     this.userLatitude = null;
     this.userLongitude = null;
     this.getUserLocation();
-    this.filteredStages = [...this.stages];
+    this.filteredStages = [...this.stages]; // Les stages sont déjà filtrés pour être futurs
     this.currentPage = 1;
     this.paginate();
   }
+
   clearSearchTerm(): void {
     this.searchTerm = '';
     this.getUserLocation();
-    this.filteredStages = [...this.stages];
+    this.filteredStages = [...this.stages]; // Les stages sont déjà filtrés pour être futurs
     this.currentPage = 1;
     this.paginate();
   }

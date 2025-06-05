@@ -1,7 +1,6 @@
 export interface ParticulierDTO {
   firstName: string;
   lastName: string;
-  otherNames: string;
   birthdate: string;
   birthplace: string;
   streetAndNumber: string;

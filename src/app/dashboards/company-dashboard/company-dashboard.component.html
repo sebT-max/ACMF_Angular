@@ -39,7 +39,7 @@
           <tr *ngFor="let inscription of inscriptions">
             <td style="text-align:left;display:flex;flex-wrap:wrap;">
               <div>
-                <strong>Stagiaire: </strong>{{ inscription.userLastName }} {{ inscription.userFirstName }}<br />
+                <strong>Stagiaire: </strong>{{ inscription.userLastname }} {{ inscription.userFirstname }}<br />
                 <strong>Email:</strong>
                 <a [href]="'mailto:' + inscription?.userEmail">
                   {{ inscription.userEmail }}

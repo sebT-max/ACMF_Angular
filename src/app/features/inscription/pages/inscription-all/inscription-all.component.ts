@@ -113,8 +113,8 @@ export class InscriptionAllComponent implements OnInit{
           (inscription.stageStreet && inscription.stageStreet.toLowerCase().includes(searchTermLower)) ||
           (inscription.stageOrganisation && inscription.stageOrganisation.toLowerCase().includes(searchTermLower)) ||
           (inscription.stagePrice && inscription.stagePrice.toString().includes(searchTermLower)) ||
-          (inscription.userFirstName && inscription.userFirstName.toString().includes(searchTermLower)) ||
-          (inscription.userLastName && inscription.userLastName.toString().includes(searchTermLower)) ||
+          (inscription.userFirstname && inscription.userFirstname.toString().includes(searchTermLower)) ||
+          (inscription.userLastname && inscription.userLastname.toString().includes(searchTermLower)) ||
           (inscription.userEmail && inscription.userEmail.toString().includes(searchTermLower)) ||
           (inscription.userPhone && inscription.userPhone.toString().includes(searchTermLower)) ||
           (inscription.inscriptionStatut && inscription.inscriptionStatut.toUpperCase().includes(searchTermLower)) ||

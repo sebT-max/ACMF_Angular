@@ -18,6 +18,9 @@ import {HttpClient} from '@angular/common/http';
 import {RegisterFormModel} from '../../../auth/models/register-form.model';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {AuthService} from '../../../auth/services/auth.service';
+import {ParticulierDTO} from '../../models/ParticulierDTO';
+import {CgvModalComponent} from '../../../../modals/cgv-modal/cgv-modal.component';
+import {RoiModalComponent} from '../../../../modals/roi-modal/roi-modal.component';
 
 interface FileUploadCard {
   type: string;
@@ -43,7 +46,9 @@ interface FileRemoveEvent {
     NgIf,
     NgForOf,
     DatePipe,
-    DatePicker
+    DatePicker,
+    CgvModalComponent,
+    RoiModalComponent
   ],
   templateUrl: './inscription-create.component.html',
   styleUrls: ['./inscription-create.component.scss'],
@@ -90,7 +95,7 @@ export class InscriptionCreateComponent implements OnInit {
   }
 
   inscriptionCreationForm!: FormGroup;
-  currentUser: WritableSignal<RegisterFormModel | null> = signal<RegisterFormModel | null>(null);
+  currentUser: WritableSignal<ParticulierDTO | null> = signal<ParticulierDTO | null>(null);
   userConnected = this._authService.currentUser;
   stageId!: number;
   stageDetails: StageDetailsModel | null = null;
@@ -118,7 +123,8 @@ export class InscriptionCreateComponent implements OnInit {
     {value: 'TRIBUNAL', label: 'Stage obligatoire imposé par le tribunal'}
   ];
   userExists = false;
-
+  showCVGModal = false;
+  showRoiModal = false;
 
   ngOnInit(): void {
     this.primengConfig.setTranslation({
@@ -158,10 +164,10 @@ export class InscriptionCreateComponent implements OnInit {
       const currentUser = this.currentUser()!;
       this.inscriptionCreationForm = this._fb.group({
         user: this._fb.group({
-          firstName: [{ value: currentUser.firstname, disabled: true }],
-          lastName: [{ value: currentUser.lastname, disabled: true }],
+          firstname: [{ value: currentUser.firstname, disabled: false }],
+          lastname: [{ value: currentUser.lastname, disabled: false }],
           birthdate: [{ value: new Date(currentUser.birthdate), disabled: false }],
-          birthplace: [{ value: currentUser.birthplace || '', disabled: true }],
+          birthplace: [{ value: currentUser.birthplace || '', disabled: false }],
           streetAndNumber: [currentUser.streetAndNumber || ''],
           zipCode: [currentUser.zipCode || ''],
           city: [currentUser.city || ''],
@@ -176,12 +182,12 @@ export class InscriptionCreateComponent implements OnInit {
         acceptTerms: [false, Validators.requiredTrue],
         acceptTermsRop: [false, Validators.requiredTrue]
       });
-    } else {
+      } else {
       // Utilisateur NON connecté → formulaire complet
       this.inscriptionCreationForm = this._fb.group({
         user: this._fb.group({
-          firstName: ['', Validators.required],
-          lastName: ['', Validators.required],
+          firstname: ['', Validators.required],
+          lastname: ['', Validators.required],
           birthdate: ['', Validators.required],
           birthplace: [''],
           streetAndNumber: [''],
@@ -208,8 +214,8 @@ export class InscriptionCreateComponent implements OnInit {
               // Utilisateur trouvé → préremplissage
               const userGroup = this.inscriptionCreationForm.get('user') as FormGroup;
               userGroup.patchValue({
-                firstName: userData.firstName,
-                lastName: userData.lastName,
+                firstName: userData.firstname,
+                lastname: userData.lastname,
                 birthdate: userData.birthdate ? new Date(userData.birthdate) : null,
                 birthplace: userData.birthplace || '',
                 streetAndNumber: userData.streetAndNumber || '',
@@ -487,26 +493,26 @@ export class InscriptionCreateComponent implements OnInit {
 
 
 
-  goToConditions(event: Event) {
+  openCVGModal(event: Event) {
     event.preventDefault();
-    // Sauvegarder l'état actuel du formulaire
-    localStorage.setItem('inscriptionForm', JSON.stringify(this.inscriptionCreationForm.value));
-
-    const currentUrl = this.router.url;
-    this.router.navigate(['/conditions-generales-vente'], {
-      queryParams: { redirect: encodeURIComponent(currentUrl) }
-    });
+    this.showCVGModal = true;
   }
-  goToRop(event: Event) {
+
+  onCGVModalAccepted() {
+    this.showCVGModal = false;
+    this.inscriptionCreationForm.get('acceptTerms')?.setValue(true); // coche la case
+  }
+
+
+  openRoiModal(event: Event) {
     event.preventDefault();
-    // Sauvegarder l'état actuel du formulaire
-    localStorage.setItem('inscriptionForm', JSON.stringify(this.inscriptionCreationForm.value));
-
-    const currentUrl = this.router.url;
-    this.router.navigate(['/règlement-intérieur'], {
-      queryParams: { redirect: encodeURIComponent(currentUrl) }
-    });
+    this.showRoiModal = true;
   }
+  onRoiModalAccepted() {
+    this.showRoiModal = false;
+    this.inscriptionCreationForm.get('acceptTermsRop')?.setValue(true); // coche la case
+  }
+
   parseDate(dateStr: string): Date | null {
     if (!dateStr) return null;
 
@@ -524,6 +530,3 @@ export class InscriptionCreateComponent implements OnInit {
     return null;
   }
 }
-
-
-

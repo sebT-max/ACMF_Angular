@@ -1,0 +1,115 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeModal()" aria-label="Fermer">&times;</button>
+
+
+    <div id="logo_conditions">
+      <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf" priority width="208" height="160" />
+    </div>
+
+    <h1 id="conditions_main_title">RÈGLEMENT INTÉRIEUR ACTION CONDUITE FRANCE</h1>
+    <p class="text_center padding_10" style="text-align: center;">Applicable aux stagiaires dans le cadre des stages de sensibilisation à la sécurité routière</p>
+
+    <div id="conditions_generales_container">
+      <ol>
+        <li>
+          <h1>Règles de conduite générales</h1>
+          <p>Il est formellement interdit au stagiaire de :</p>
+          <div>
+            <ul>
+              <li>
+                Utiliser son téléphone portable en salle (appels, SMS, vidéos). Des pauses sont prévues
+                à cet effet.
+              </li>
+              <li>
+                Utiliser un ordinateur portable, une tablette ou tout autre moyen informatique pendant
+                la formation.
+              </li>
+              <li>
+                Lire des journaux, magazines ou tout autre support non lié à la formation.
+              </li>
+              <li>
+                Introduire des boissons alcoolisées ou des substances psychoactives dans la salle.
+              </li>
+              <li>
+                Se présenter en état d’ivresse ou sous l’emprise de stupéfiants, quelle qu’en soit la
+                nature.
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <h1>Respect mutuel et discrétion</h1>
+          <div>
+            <ul>
+              <li>
+                Chaque stagiaire s’engage à faire preuve de discrétion concernant les faits et
+                témoignages partagés durant le stage.
+              </li>
+              <li>
+                L’usage du téléphone pour filmer les participants ou les animateurs, à leur insu, est
+                strictement interdit.
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li>
+          <h1>Horaires et durée du stage</h1>
+          <div>
+            <ul>
+              <li>
+                Les stagiaires doivent respecter les horaires et la durée du stage fixés par la loi et le
+                centre.
+              </li>
+              <li>
+                Ils doivent également se conformer à toute modification d’horaires décidée par les
+                animateurs ou le directeur du stage.
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <h1>Cas d’exclusion</h1>
+          <p>
+            Conformément à l’annexe 5 de l’arrêté du 26 juin 2012 relatif aux conditions d’exploitation
+            des établissements de sensibilisation à la sécurité routière (Journal officiel du 30/06/2012):
+          </p>
+          <p style="color:red;">
+            “Désintéressement visible pour la formation dispensée. Comportement faisant
+            manifestement apparaître la consommation de produit psycho-actifs. Non respect des
+            horaires”
+          </p>
+          <p>
+            <strong>Tout comportement contraire au présent règlement, tout agissement inapproprié envers
+              un autre stagiaire, un animateur ou un membre du personnel pourra entraîner :</strong>
+          </p>
+          <ul>
+            <li>
+              <strong>Une exclusion définitive du stage</strong>
+            </li>
+            <li>
+              <strong>L'absence de remboursement</strong>
+            </li>
+            <li>
+              <strong>La non-délivrance de l’attestation de fin de stage</strong>
+            </li>
+          </ul>
+          <p>Le directeur du stage informera alors l’autorité administrative ou judiciaire compétente de
+            la sanction prise.</p>
+      </ol>
+
+        <br/>
+        <hr>
+        <br/>
+        <br/>
+        <label>
+          <input type="checkbox" [(ngModel)]="checked">
+        </label>
+        <button [disabled]="!checked" (click)="onAccept()">J'accepte les conditions</button>
+      </div>
+  </div>
+</div>

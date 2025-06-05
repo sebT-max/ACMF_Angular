@@ -1,9 +1,9 @@
-<div class="modal-overlay" (click)="closeModal()">
+<div class="modal-overlay" (click)="closeCVGModal()">
 <div class="modal-content" (click)="$event.stopPropagation()">
   <div routerLink="/" id="logo_conditions">
     <img ngSrc="/LOGO%20BLEU_small.png" alt="logo_acf" priority width="208" height="160" />
   </div>
-  <button class="close-button" (click)="closeModal()" aria-label="Fermer">&times;</button>
+  <button class="close-button" (click)="closeCVGModal()" aria-label="Fermer">&times;</button>
   <h1 id="conditions_main_title">Conditions générales de vente</h1>
   <div id="conditions_generales_container">
 
@@ -55,6 +55,6 @@
     <label>
       <input type="checkbox" [(ngModel)]="checked">
     </label>
-    <button [disabled]="!checked" (click)="onAccept()">J'accepte les conditions</button>
+    <button [disabled]="!checked" (click)="onAcceptCGV()">J'accepte les conditions</button>
   </div>
 </div>

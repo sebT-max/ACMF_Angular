@@ -19,10 +19,10 @@
 
 
           <!-- <label for="firstName">Prénom*</label> -->
-          <input id="firstName" formControlName="firstName" type="text" placeholder="Prénom" />
+          <input id="firstname" formControlName="firstname" type="text" placeholder="Prénom(s)" />
 
           <!-- <label for="lastName">Nom*</label> -->
-          <input id="lastName" formControlName="lastName" type="text" placeholder="Nom" />
+          <input id="lastname" formControlName="lastname" type="text" placeholder="Nom" />
 
           <!-- Adresse -->
           <section class="form-section">
@@ -74,8 +74,47 @@
           </div>
         </section>
       </div>
-      <br/>
-      <br>
+
+      <!-- RGPD -->
+      <div class="checkbox_register">
+        <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
+        <p>
+          Acceptez nos
+          <a href="#" (click)="openCVGModal($event)" style="text-decoration: underline;color:red;">
+            conditions générales
+          </a>
+        </p>
+      </div>
+
+      <div *ngIf="inscriptionCreationForm.get('acceptTerms')?.invalid && inscriptionCreationForm.get('acceptTerms')?.touched" class="error-message">
+        Vous devez accepter les conditions pour continuer.
+      </div>
+      <app-cgv-modal *ngIf="showCVGModal" (accepted)="onCGVModalAccepted()" (close)="showCVGModal = false"></app-cgv-modal>
+
+
+
+      <div class="checkbox_register">
+        <input id="acceptTermsRop" type="checkbox" formControlName="acceptTermsRop" />
+        <p>
+          Acceptez notre
+          <a href="#" (click)="openRoiModal($event)" style="text-decoration: underline;color:red;">
+            règlement intérieur
+          </a>
+        </p>
+      </div>
+
+      <div *ngIf="inscriptionCreationForm.get('acceptTermsRop')?.invalid && inscriptionCreationForm.get('acceptTermsRop')?.touched" class="error-message">
+        Vous devez accepter les conditions pour continuer.
+      </div>
+      <app-roi-modal *ngIf="showRoiModal" (accepted)="onRoiModalAccepted()" (close)="showRoiModal = false"></app-roi-modal>
+      <!--Fin ROP-->
+
+
+
+
+
+
+
       <!-- Type de stage -->
       <section class="form-section" id="inscription_stage_type_section">
         <label id="label_stage_type">Type de stage*</label>
@@ -291,37 +330,8 @@
         <div *ngIf="lettre48nError" class="error-message">
           {{ lettre48nError }}
         </div>
-        <!-- RGPD -->
 
-        <div class="checkbox_register">
-          <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
-          <p>
-            Acceptez nos
-            <a href="#" (click)="goToConditions($event)" style="text-decoration: underline;color:red;">
-              Conditions d'utilisation et notre Politique de confidentialité
-            </a>
-          </p>
-        </div>
 
-        <div *ngIf="inscriptionCreationForm.get('acceptTerms')?.invalid && inscriptionCreationForm.get('acceptTerms')?.touched" class="error-message">
-          Vous devez accepter les conditions pour continuer.
-        </div>
-        <!--Fin RGPD-->
-        <!-- ROP -->
-        <div class="checkbox_register">
-          <input id="acceptTermsRop" type="checkbox" formControlName="acceptTermsRop" />
-          <p>
-            Acceptez nos
-            <a href="#" (click)="goToRop($event)" style="text-decoration: underline;color:red;">
-              Règlement intérieur
-            </a>
-          </p>
-        </div>
-
-        <div *ngIf="inscriptionCreationForm.get('acceptTermsRop')?.invalid && inscriptionCreationForm.get('acceptTermsRop')?.touched" class="error-message">
-          Vous devez accepter le règlement intérieur pour continuer.
-        </div>
-        <!--Fin ROP-->
         <button type="submit" [disabled]="inscriptionCreationForm.invalid || isLoading" class="submit-button">
           <ng-container *ngIf="isLoading">
             <span class="spinner-inline"></span> Chargement...

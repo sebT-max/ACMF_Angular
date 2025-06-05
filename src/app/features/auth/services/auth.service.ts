@@ -39,6 +39,7 @@ export class AuthService {
     }
   }
 
+
   private loadCompanyFromLocalStorage() {
     const localStorageCompany = localStorage.getItem('currentCompany');
     if (localStorageCompany) {
@@ -51,6 +52,11 @@ export class AuthService {
       }
     }
   }
+
+  getCurrentUser(): Observable<ParticulierDTO> {
+    return this._httpClient.get<ParticulierDTO>(`${API_URL}particulier/me`);
+  }
+
   getCompanyByEmailPublic(email: string): Observable<CompanyTokenModel> {
     console.log('Appel API readonly pour entreprise avec email:', email);
     return this._httpClient.get<CompanyTokenModel>(`${API_URL}company/email/${email}`).pipe(

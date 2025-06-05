@@ -4,8 +4,8 @@ export interface PrivateLinkFormData {
   entrepriseId: number;
   entrepriseNom: string;
   stageId:number;
-  userFirstName: string;
-  userLastName: string;
+  userFirstname: string;
+  userLastname: string;
   stageCity: string;
   stageStreet: string;
   userEmail: string;

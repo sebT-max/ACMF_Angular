@@ -6,7 +6,7 @@ import { InscriptionService } from '../../../inscription/inscription-services';
 import { PrivateLinkService } from '../../services/private-link.services';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {CgvModalComponent} from '../../../cgv-modal/cgv-modal.component';
+import {CgvModalComponent} from '../../../../modals/cgv-modal/cgv-modal.component';
 import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 import {DatePicker} from 'primeng/datepicker';
 import { PrimeNG } from 'primeng/config';

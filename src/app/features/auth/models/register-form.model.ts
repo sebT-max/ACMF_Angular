@@ -1,17 +1,9 @@
 import {DocumentDTO} from '../../inscription/models/DocumentDTO';
+import {ParticulierDTO} from '../../inscription/models/ParticulierDTO';
 
-export interface RegisterFormModel {
-  firstname: string;
-  lastname: string;
-  birthdate: string;
-  birthplace:string;
-  streetAndNumber: string;
-  zipCode:string;
-  city:string;
-  email: string;
-  telephone: string;
+export interface RegisterFormModel extends Omit<ParticulierDTO, 'password'> {
   password: string;
-  acceptTerms:boolean;
+  acceptTerms: boolean;
   roleId: number;
   documents?: any;
 }

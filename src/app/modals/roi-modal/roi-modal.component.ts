@@ -1,20 +1,17 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterLink} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-cgv-modal',
+  selector: 'app-roi-modal',
   imports: [
     NgOptimizedImage,
-    ReactiveFormsModule,
-    RouterLink,
     FormsModule
   ],
-  templateUrl: './cgv-modal.component.html',
-  styleUrl: './cgv-modal.component.scss'
+  templateUrl: './roi-modal.component.html',
+  styleUrl: './roi-modal.component.scss'
 })
-export class CgvModalComponent {
+export class RoiModalComponent {
   @Output() accepted = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
   checked = false;

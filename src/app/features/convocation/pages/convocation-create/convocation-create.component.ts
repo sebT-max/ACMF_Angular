@@ -14,6 +14,7 @@ import {FloatingLabelDirective} from '../../../../shared/floating-label/floating
     FormsModule,
     ReactiveFormsModule,
     FileUpload,
+    FloatingLabelDirective,
     FloatingLabelDirective
   ],
   templateUrl: './convocation-create.component.html',

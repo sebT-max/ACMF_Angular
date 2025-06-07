@@ -6,7 +6,6 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import {FloatingLabelDirective} from './shared/floating-label/floating-label.directives';
 
 registerLocaleData(localeFr);
 

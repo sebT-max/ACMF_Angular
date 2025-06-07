@@ -1,32 +1,31 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appFloatingLabel]',
-  standalone: true
+  selector: '[appFloatingLabel]'
 })
-export class FloatingLabelDirective {
+export class FloatingLabelDirective implements AfterViewInit {
 
-  constructor(private el: ElementRef<HTMLInputElement>) {}
-
-  @HostListener('input')
-  @HostListener('blur')
-  onChange(): void {
-    this.toggleLabel();
-  }
+  constructor(private el: ElementRef) {}
 
   ngAfterViewInit(): void {
     this.toggleLabel();
   }
 
+  @HostListener('input')
+  @HostListener('blur')
+  onInputOrBlur(): void {
+    this.toggleLabel();
+  }
+
   private toggleLabel(): void {
-    const input = this.el.nativeElement;
+    const input = this.el.nativeElement as HTMLInputElement;
     const parent = input.closest('.floating-label');
-    if (parent) {
-      if (input.value) {
-        parent.classList.add('filled');
-      } else {
-        parent.classList.remove('filled');
-      }
+    if (!parent) return;
+
+    if (input.value && input.value.trim() !== '') {
+      parent.classList.add('filled');
+    } else {
+      parent.classList.remove('filled');
     }
   }
 }

@@ -7,8 +7,6 @@ import {FileUpload} from 'primeng/fileupload';
 import {TokenModel} from '../auth/models/token.model';
 import {DocumentService} from '../document/pages/services/document.services';
 import {ToastrService} from 'ngx-toastr';
-import {FloatingLabelDirective} from '../../shared/floating-label/floating-label.directives';
-
 
 interface LigneFacture {
   description: string;
@@ -26,8 +24,7 @@ interface LigneFacture {
     NgForOf,
     NgIf,
     FileUpload,
-    ReactiveFormsModule,
-    FloatingLabelDirective
+    ReactiveFormsModule
   ],
   styleUrls: ['./facture.component.scss']
 })

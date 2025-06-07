@@ -15,7 +15,7 @@ import { PrimeNG } from 'primeng/config';
 @Component({
   selector: 'app-private-link-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FileUpload, CgvModalComponent, FloatingLabelDirective, DatePicker],
+  imports: [CommonModule, ReactiveFormsModule, FileUpload, CgvModalComponent, FloatingLabelDirective, DatePicker, FloatingLabelDirective],
   templateUrl: './private-link-form.component.html',
   styleUrl: './private-link-form.component.scss'
 })

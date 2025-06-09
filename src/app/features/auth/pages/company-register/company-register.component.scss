@@ -167,15 +167,6 @@ form{
       line-height: 50px;
     }
   }
-.error-message {
-  font-size: 12px;
-  margin-top: 5px;
-  width: auto;
-  transition-delay: 2s;
-  position: absolute;
-  transform: translate(10px, 20px);
-  color: red;
-}
 
 .color_black{
   color: black;
@@ -198,4 +189,79 @@ button{
   cursor: pointer;
   transition: background-color 0.3s ease;
   width:100%;
+}
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggle-password img {
+  width: 20px;
+  height: 20px;
+}
+.password-container {
+  position: relative;
+
+  input {
+    width: 100%;
+    padding-right: 2.5rem;
+  }
+
+  .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    z-index: 10;
+    padding: 0;
+    width: auto;
+    height: auto;
+
+    @media(max-width: 767px) {
+      width: 10%;
+    }
+  }
+
+  .eye-icon:hover {
+    color: #007bff;
+  }
+}
+
+.error-message {
+  font-size: 12px;
+  color: white;
+  background: red;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  @media(max-width:767px) {
+    font-size:10px;
+  }
+}
+.is-invalid {
+  border: 1px solid red;
+}
+
+#pw_rules{
+  @media(max-width:767px) {
+    font-size:10px;
+    color:white;
+    font-weight:bold;
+    backdrop-filter:  blur(2px);
+  }
 }

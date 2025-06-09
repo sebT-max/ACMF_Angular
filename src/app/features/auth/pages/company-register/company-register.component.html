@@ -6,13 +6,12 @@
   <form [formGroup]="companyRegisterForm" class="register_form" (ngSubmit)="handleCompanyRegisterFormSubmit()">
     <h1>S'inscrire</h1>
     <p>Inscrivez-vous gratuitement pour accéder à nos services</p>
-
     <!-- Nom de l'entreprise -->
     <div class="floating-label">
       <input id="name" name="companyName" type="text" placeholder=" " formControlName="name"
-             [class.is-invalid]="name?.invalid && (name?.touched || name?.dirty)" required appFloatingLabel />
+             [class.is-invalid]="name?.invalid && (name?.touched || submitted)" required appFloatingLabel />
       <label for="name">Nom de l'entreprise*</label>
-      <div *ngIf="name?.invalid && (name?.touched || name?.dirty)" class="error-message">
+      <div *ngIf="name?.invalid && (name?.touched || submitted)" class="error-message">
         <span *ngIf="name?.errors?.['required']">Le nom de l'entreprise est requis.</span>
       </div>
     </div>
@@ -20,9 +19,9 @@
     <!-- Email -->
     <div class="floating-label">
       <input id="email" name="email" type="email" placeholder=" " formControlName="email"
-             [class.is-invalid]="email?.invalid && (email?.touched || email?.dirty)" required appFloatingLabel />
+             [class.is-invalid]="email?.invalid && (email?.touched || submitted)" required appFloatingLabel />
       <label for="email">Email*</label>
-      <div *ngIf="email?.invalid && (email?.touched || email?.dirty)" class="error-message">
+      <div *ngIf="email?.invalid && (email?.touched || submitted)" class="error-message">
         <span *ngIf="email?.errors?.['required']">L'email est requis.</span>
         <span *ngIf="email?.errors?.['email']">L'email n'est pas valide.</span>
       </div>
@@ -31,9 +30,9 @@
     <!-- Téléphone -->
     <div class="floating-label">
       <input id="telephone" type="text" placeholder=" " formControlName="telephone"
-             [class.is-invalid]="telephone?.invalid && (telephone?.touched || telephone?.dirty)" required appFloatingLabel />
+             [class.is-invalid]="telephone?.invalid && (telephone?.touched || submitted)" required appFloatingLabel />
       <label for="telephone">Téléphone*</label>
-      <div *ngIf="telephone?.invalid && (telephone?.touched || telephone?.dirty)" class="error-message">
+      <div *ngIf="telephone?.invalid && (telephone?.touched || submitted)" class="error-message">
         <span *ngIf="telephone?.errors?.['required']">Le téléphone est requis.</span>
       </div>
     </div>
@@ -42,13 +41,13 @@
     <div class="floating-label password-container">
       <input id="password" name="password" [type]="showPassword ? 'text' : 'password'" placeholder=" "
              formControlName="password"
-             [class.is-invalid]="password?.invalid && (password?.touched || password?.dirty)" required appFloatingLabel />
+             [class.is-invalid]="password?.invalid && (password?.touched || submitted)" required appFloatingLabel />
       <label for="password">Mot de passe*</label>
       <button type="button" class="eye-icon" (click)="togglePasswordVisibility()"
               aria-label="Afficher ou masquer le mot de passe">
         <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
       </button>
-      <div *ngIf="password?.invalid && (password?.touched || password?.dirty)" class="error-message">
+      <div *ngIf="password?.invalid && (password?.touched || submitted)" class="error-message">
         <span *ngIf="password?.errors?.['required']">Le mot de passe est requis.</span>
         <span *ngIf="password?.errors?.['minlength']">Le mot de passe doit contenir au moins 8 caractères.</span>
       </div>
@@ -68,7 +67,7 @@
           Conditions d'utilisation et notre Politique de confidentialité
         </a>
       </p>
-      <div *ngIf="acceptTerms?.invalid && (acceptTerms?.touched || acceptTerms?.dirty || submitted)" class="error-message">
+      <div *ngIf="acceptTerms?.invalid && (acceptTerms?.touched || submitted)" class="error-message">
         Vous devez accepter les conditions pour continuer.
       </div>
     </div>
@@ -82,10 +81,11 @@
           Règlement intérieur
         </a>
       </p>
-      <div *ngIf="acceptTermsRop?.invalid && (acceptTermsRop?.touched || acceptTermsRop?.dirty || submitted)" class="error-message">
+      <div *ngIf="acceptTermsRop?.invalid && (acceptTermsRop?.touched || submitted)" class="error-message">
         Vous devez accepter le règlement intérieur.
       </div>
     </div>
+
 
     <!-- Erreur serveur -->
     <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">

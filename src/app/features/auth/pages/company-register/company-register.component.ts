@@ -164,7 +164,7 @@ export class CompanyRegisterComponent implements OnInit {
           this.toastr.error("Cette adresse email est déjà utilisée", "Email existant");
         } else if (error.status === 401) { // Temporaire - ton backend renvoie 401 au lieu de 400
           // Pour l'instant, traiter comme une erreur de validation
-          this.toastr.error("Le mot de passe ne respecte pas les critères (8-24 caractères)", "Mot de passe invalide");
+          this.toastr.error("Le mot de passe ne respecte pas les critères", "Mot de passe invalide");
         } else if (error.status === 400) {
           // Gérer les différents types d'erreurs 400
           const errorMessage = error.error?.message || error.message;

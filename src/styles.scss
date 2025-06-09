@@ -29,9 +29,6 @@ form{
   #acceptTerms, #acceptTermsRop {
     box-shadow: 0 0 0 white;
     width: 13px;
-    @media(max-width: 430px){
-      transform: translate(0px,-5px);
-    }
   }
   .checkbox_register{
     display: flex;

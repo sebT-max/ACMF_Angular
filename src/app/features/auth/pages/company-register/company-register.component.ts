@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CompanyRegisterFormModel} from '../../models/company-register-form-model';
-import {NgIf, NgOptimizedImage} from '@angular/common';
+import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {CheckboxModule} from 'primeng/checkbox';
 import {CompanyTokenModel} from '../../models/CompanyTokenModel';
 import {catchError, EMPTY} from 'rxjs';
@@ -22,7 +22,8 @@ import {FloatingLabelDirective} from '../../../../shared/floating-label/floating
     FormsModule,
     NgOptimizedImage,
     RouterLink,
-    FloatingLabelDirective
+    FloatingLabelDirective,
+    NgClass
   ],
   templateUrl: './company-register.component.html',
   styleUrl: './company-register.component.scss'
@@ -37,7 +38,8 @@ export class CompanyRegisterComponent implements OnInit {
   CompanyRegisterFormModel!: CompanyRegisterFormModel;
   errorMessage: string | null = null; // Ajout de la gestion d'erreur
   isLoading = false;
-
+  showPassword = false;
+  submitted = false;
 
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute) {
 
@@ -47,12 +49,13 @@ export class CompanyRegisterComponent implements OnInit {
     this.companyRegisterForm = this._formBuilder.group({
       name: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(6)]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
       telephone: [null, [Validators.required]],
       acceptTerms: [false, Validators.requiredTrue],
       acceptTermsRop: [false, Validators.requiredTrue],
       roleId: [3, [Validators.required]]
     });
+
 
 
     this.restoreFormFromStorage();
@@ -112,13 +115,21 @@ export class CompanyRegisterComponent implements OnInit {
       localStorage.removeItem('acceptTermsRop');
     }
   }
+  get name() { return this.companyRegisterForm.get('name'); }
+  get email() { return this.companyRegisterForm.get('email'); }
+  get telephone() { return this.companyRegisterForm.get('telephone'); }
+  get password() { return this.companyRegisterForm.get('password'); }
+  get acceptTerms() { return this.companyRegisterForm.get('acceptTerms'); }
+  get acceptTermsRop() { return this.companyRegisterForm.get('acceptTermsRop'); }
 
 
-  handleCompagnyRegisterFormSubmit(): void {
+  handleCompanyRegisterFormSubmit(): void {
     console.log(this.companyRegisterForm.value);
+    this.submitted = true;
 
     if (this.companyRegisterForm.invalid) {
       console.log("formulaire invalide");
+      this.companyRegisterForm.markAllAsTouched();  // <-- ici
       this.toastr.error("Veuillez corriger les erreurs dans le formulaire", "Formulaire invalide");
       return;
     }
@@ -134,11 +145,19 @@ export class CompanyRegisterComponent implements OnInit {
       acceptTermsRop: this.companyRegisterForm.get('acceptTermsRop')!.value,
       roleId: 3
     };
+    if (this.companyRegisterForm.invalid) {
+      this.companyRegisterForm.markAllAsTouched(); // <-- ajoute ceci
+      this.toastr.error("Veuillez corriger les erreurs dans le formulaire", "Formulaire invalide");
+      return;
+    }
 
     this.$_authService.entrepriseRegister(this.CompanyRegisterFormModel).pipe(
       catchError((error) => {
         console.error("Erreur d'enregistrement", error);
         this.isLoading = false;
+        console.log("error.message", error.message);
+        console.log("error.error", error.error);
+        console.log("error.error.message", error.error?.message);
 
         // Gestion spécifique des erreurs selon ton backend
         if (error.status === 409) { // CONFLICT pour email déjà utilisé
@@ -152,7 +171,7 @@ export class CompanyRegisterComponent implements OnInit {
 
           if (errorMessage.includes("mot de passe") || errorMessage.includes("password")) {
             this.toastr.error(errorMessage, "Mot de passe invalide");
-          } else if (errorMessage.includes("termes") || errorMessage.includes("conditions")) {
+          } else if (errorMessage.includes("terms") || errorMessage.includes("conditions")) {
             this.toastr.error("Vous devez accepter les termes et conditions", "Conditions requises");
           } else if (errorMessage.includes("Email déjà utilisé")) {
             this.toastr.error("Cette adresse email est déjà utilisée", "Email existant");
@@ -192,6 +211,8 @@ export class CompanyRegisterComponent implements OnInit {
               console.log('Connexion automatique réussie !');
               this.toastr.success("Vous êtes maintenant connecté !", "Connexion réussie");
               this._router.navigate(['/dashboard-company']); // Ou ta route d'accueil
+              localStorage.removeItem('inscriptionForm');
+              localStorage.removeItem('registerForm');
             } else {
               console.error('Réponse login vide');
               this.toastr.warning("Inscription réussie, mais veuillez vous connecter manuellement", "Connexion manuelle requise");
@@ -235,13 +256,11 @@ export class CompanyRegisterComponent implements OnInit {
       this.toastr.error("Le mot de passe doit contenir entre 8 et 48 caractères", "Mot de passe invalide");
       return false;
     }
-
     return true;
   }
   goToConditions(event: Event) {
     event.preventDefault();
     localStorage.setItem('registerForm', JSON.stringify(this.companyRegisterForm.value));
-
     const currentUrl = this.router.url;
     this.router.navigate(['/conditions-generales-vente'], {
       queryParams: {redirect: encodeURIComponent(currentUrl)}
@@ -256,5 +275,9 @@ export class CompanyRegisterComponent implements OnInit {
     this.router.navigate(['/règlement-intérieur'], {
       queryParams: { redirect: encodeURIComponent(currentUrl) }
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

@@ -1,51 +1,66 @@
 <div class="register_form_container">
   <div class="aside_form">
-    <img ngSrc="/LOGO%20BLANC_small.png" alt="logo_acf"  priority width="308" height="280" id="logo_register_form">
+    <img ngSrc="/LOGO%20BLANC_small.png" alt="logo_acf" priority width="308" height="280" id="logo_register_form">
   </div>
 
-  <form [formGroup]="companyRegisterForm" class="register_form" (ngSubmit)="handleCompagnyRegisterFormSubmit()">
+  <form [formGroup]="companyRegisterForm" class="register_form" (ngSubmit)="handleCompanyRegisterFormSubmit()">
     <h1>S'inscrire</h1>
     <p>Inscrivez-vous gratuitement pour accéder à nos services</p>
+
     <!-- Nom de l'entreprise -->
     <div class="floating-label">
-      <input id="name" name="companyName" type="text" placeholder=" " formControlName="name" required appFloatingLabel />
+      <input id="name" name="companyName" type="text" placeholder=" " formControlName="name"
+             [class.is-invalid]="name?.invalid && (name?.touched || name?.dirty)" required appFloatingLabel />
       <label for="name">Nom de l'entreprise*</label>
-      <!--<div *ngIf="companyRegisterForm.get('name')?.invalid && companyRegisterForm.get('name')?.touched" class="error-message">
-        Le nom de l'entreprise est requis.
-      </div>-->
+      <div *ngIf="name?.invalid && (name?.touched || name?.dirty)" class="error-message">
+        <span *ngIf="name?.errors?.['required']">Le nom de l'entreprise est requis.</span>
+      </div>
     </div>
 
     <!-- Email -->
     <div class="floating-label">
-      <input id="email" name="email" type="email" placeholder=" " formControlName="email" required appFloatingLabel />
+      <input id="email" name="email" type="email" placeholder=" " formControlName="email"
+             [class.is-invalid]="email?.invalid && (email?.touched || email?.dirty)" required appFloatingLabel />
       <label for="email">Email*</label>
-      <!--<div *ngIf="companyRegisterForm.get('email')?.invalid && companyRegisterForm.get('email')?.touched" class="error-message">
-        <span *ngIf="companyRegisterForm.get('email')?.errors?.['required']">L'email est requis.</span>
-        <span *ngIf="companyRegisterForm.get('email')?.errors?.['email']">L'email n'est pas valide.</span>
-      </div>-->
+      <div *ngIf="email?.invalid && (email?.touched || email?.dirty)" class="error-message">
+        <span *ngIf="email?.errors?.['required']">L'email est requis.</span>
+        <span *ngIf="email?.errors?.['email']">L'email n'est pas valide.</span>
+      </div>
     </div>
+
     <!-- Téléphone -->
     <div class="floating-label">
-      <input id="telephone" type="text" placeholder=" " formControlName="telephone" required appFloatingLabel />
+      <input id="telephone" type="text" placeholder=" " formControlName="telephone"
+             [class.is-invalid]="telephone?.invalid && (telephone?.touched || telephone?.dirty)" required appFloatingLabel />
       <label for="telephone">Téléphone*</label>
-     <!-- <div *ngIf="companyRegisterForm.get('telephone')?.invalid && companyRegisterForm.get('telephone')?.touched" class="error-message">
-        Le téléphone est requis.
-      </div>-->
+      <div *ngIf="telephone?.invalid && (telephone?.touched || telephone?.dirty)" class="error-message">
+        <span *ngIf="telephone?.errors?.['required']">Le téléphone est requis.</span>
+      </div>
     </div>
-    <!-- Mot de passe -->
-    <div class="floating-label">
-      <input id="password" name="password" type="password" placeholder=" " formControlName="password" required appFloatingLabel />
-       <label for="password">Mot de passe*</label>
-     <!-- <div *ngIf="companyRegisterForm.get('password')?.invalid && companyRegisterForm.get('password')?.touched" class="error-message">
-        <span *ngIf="companyRegisterForm.get('password')?.errors?.['required']">Le mot de passe est requis.</span>
-        <span *ngIf="companyRegisterForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
-      </div>-->
-    </div>
-    <small><p style="padding:0;margin:0;">Votre mot de passe doit contenir 8 caractères ou plus avec un mélange de lettres, de chiffres et de symboles.</p></small>
 
+    <!-- Mot de passe -->
+    <div class="floating-label password-container">
+      <input id="password" name="password" [type]="showPassword ? 'text' : 'password'" placeholder=" "
+             formControlName="password"
+             [class.is-invalid]="password?.invalid && (password?.touched || password?.dirty)" required appFloatingLabel />
+      <label for="password">Mot de passe*</label>
+      <button type="button" class="eye-icon" (click)="togglePasswordVisibility()"
+              aria-label="Afficher ou masquer le mot de passe">
+        <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+      </button>
+      <div *ngIf="password?.invalid && (password?.touched || password?.dirty)" class="error-message">
+        <span *ngIf="password?.errors?.['required']">Le mot de passe est requis.</span>
+        <span *ngIf="password?.errors?.['minlength']">Le mot de passe doit contenir au moins 8 caractères.</span>
+      </div>
+    </div>
+    <small>
+      <p id="pw_rules" style="padding:0;margin:0;">
+        Votre mot de passe doit contenir 8 caractères ou plus avec un mélange de lettres, de chiffres et de symboles.
+      </p>
+    </small>
 
     <!-- RGPD -->
-    <div class="checkbox_register"  style="margin-bottom:0;">
+    <div class="checkbox_register" style="margin-bottom:0;">
       <input id="acceptTerms" type="checkbox" formControlName="acceptTerms" />
       <p>
         Acceptez nos
@@ -53,12 +68,11 @@
           Conditions d'utilisation et notre Politique de confidentialité
         </a>
       </p>
+      <div *ngIf="acceptTerms?.invalid && (acceptTerms?.touched || acceptTerms?.dirty || submitted)" class="error-message">
+        Vous devez accepter les conditions pour continuer.
+      </div>
     </div>
 
-    <div *ngIf="companyRegisterForm.get('acceptTerms')?.invalid && companyRegisterForm.get('acceptTerms')?.touched" class="error-message">
-      Acceptez nos Conditions d'utilisation et notre Politique de confidentialité
-    </div>
-    <!--Fin RGPD-->
     <!-- ROP -->
     <div class="checkbox_register" style="margin-top:10px;">
       <input id="acceptTermsRop" type="checkbox" formControlName="acceptTermsRop" />
@@ -68,12 +82,10 @@
           Règlement intérieur
         </a>
       </p>
+      <div *ngIf="acceptTermsRop?.invalid && (acceptTermsRop?.touched || acceptTermsRop?.dirty || submitted)" class="error-message">
+        Vous devez accepter le règlement intérieur.
+      </div>
     </div>
-
-    <div *ngIf="companyRegisterForm.get('acceptTermsRop')?.invalid && companyRegisterForm.get('acceptTermsRop')?.touched" class="error-message">
-      Vous devez accepter le règlement intérieur pour continuer.
-    </div>
-    <!--Fin ROP-->
 
     <!-- Erreur serveur -->
     <div *ngIf="errorMessage" class="error-message" style="margin-top: 1rem;">
@@ -81,15 +93,10 @@
     </div>
 
     <!-- Bouton -->
-  <!--  <button [disabled]="isLoading || companyRegisterForm.invalid" style="margin-top: 1rem;">
-      {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
-    </button>-->
-    <button
-      [disabled]="isLoading || companyRegisterForm.invalid"
-    >
+    <button [disabled]="isLoading || companyRegisterForm.invalid">
       {{ isLoading ? 'Création en cours...' : 'S’inscrire' }}
     </button>
 
-    <p> <br>Vous avez déjà un compte ?<a routerLink="/users/login"> Connectez-vous</a></p>
+    <p><br>Vous avez déjà un compte ? <a routerLink="/users/login">Connectez-vous</a></p>
   </form>
 </div>

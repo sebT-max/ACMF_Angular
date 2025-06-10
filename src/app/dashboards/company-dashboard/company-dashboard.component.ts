@@ -2,15 +2,11 @@ import {Component, inject, OnInit} from '@angular/core';
 import {InscriptionService} from '../../features/inscription/inscription-services';
 import {StageService} from '../../features/stage/services/stage.service';
 import {StageDetailsModel} from '../../features/stage/models/stage-details-model';
-import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {DemandeDevisComponent} from '../../features/devis/pages/demande-devis/pages/demande-devis-create/demande-devis.component';
-import {Router} from '@angular/router';
 import {InscriptionStatutPipe} from '../../shared/pipes/inscription-statut/inscription-statut.pipe';
 import {PrivateLinkService} from '../../features/private-link/services/private-link.services';
 import {PrivateLinkModel} from '../../features/private-link/Model/PrivateLinkModel';
-import {
-  PrivateLinkFormComponent
-} from '../../features/private-link/pages/private-link-form/private-link-form.component';
 import {InscriptionListResponse} from '../../features/inscription/models/InscriptionListResponse';
 import {WEBSITE_URL} from "../../../core/constant";
 
@@ -29,7 +25,6 @@ import {WEBSITE_URL} from "../../../core/constant";
 export class CompanyDashboardComponent implements OnInit {
   private readonly _inscriptionService = inject(InscriptionService);
   private readonly _stageService = inject(StageService);
-  private readonly _router: Router = inject(Router);
   private readonly _privateLinkService: PrivateLinkService= inject(PrivateLinkService);
 
   inscriptions: InscriptionListResponse[] = [];

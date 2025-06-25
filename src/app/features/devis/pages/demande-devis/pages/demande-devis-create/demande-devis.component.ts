@@ -4,13 +4,15 @@ import {Router, RouterLink} from "@angular/router";
 import {DemandeDevisService} from '../../services/demande-devis.services';
 import {DemandeDevisModel} from '../../models/DemandeDevisModel';
 import {NgIf} from '@angular/common';
+import {FloatingLabelDirective} from '../../../../../../shared/floating-label/floating-label.directives';
 
 
 @Component({
   selector: 'app-demande-devis',
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    FloatingLabelDirective
   ],
   templateUrl: './demande-devis.component.html',
   styleUrl: './demande-devis.component.scss'

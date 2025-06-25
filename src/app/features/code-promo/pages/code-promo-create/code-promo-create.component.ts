@@ -3,11 +3,13 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {Router} from '@angular/router';
 import {CodePromoService} from '../../services/code-promo.services';
 import {CodePromoFormModel} from '../../models/code-promo-Form.Model';
+import {FloatingLabelDirective} from '../../../../shared/floating-label/floating-label.directives';
 
 @Component({
   selector: 'app-code-promo-create',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FloatingLabelDirective
   ],
   templateUrl: './code-promo-create.component.html',
   styleUrl: './code-promo-create.component.scss'

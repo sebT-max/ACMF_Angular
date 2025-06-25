@@ -45,6 +45,7 @@ export class PrivateLinkFormComponent implements OnInit {
   entrepriseId?: number;
   isLoading = false;
   showModal = false;
+  submitted = false;
 
   ngOnInit(): void {
     this.primengConfig.setTranslation({
